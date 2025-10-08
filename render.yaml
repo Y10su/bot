@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: html-to-pdf-converter
+    env: static
+    buildCommand: ""
+    startCommand: "npx serve -s . -l $PORT"
+    publish: .
