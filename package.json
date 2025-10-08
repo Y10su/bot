@@ -1,1 +1,15 @@
-
+{
+  "name": "html-to-pdf-converter",
+  "version": "1.0.0",
+  "description": "موقع تحويل HTML إلى PDF مع دعم العربية",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve -s . -l $PORT"
+  },
+  "dependencies": {
+    "serve": "^14.2.0"
+  },
+  "keywords": ["html", "pdf", "converter", "arabic"],
+  "author": "سلطان اليافعي",
+  "license": "MIT"
+}
