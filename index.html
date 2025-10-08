@@ -3,17 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرر ملفات PDF</title>
+    <title>PDF Pro - محرر ملفات PDF متكامل</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #4a6fa5;
-            --secondary-color: #166088;
-            --accent-color: #4fc3a1;
-            --light-color: #f8f9fa;
-            --dark-color: #343a40;
-            --danger-color: #e74c3c;
-            --warning-color: #f39c12;
-            --success-color: #2ecc71;
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4cc9f0;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4bb543;
+            --warning: #ff9f1c;
+            --danger: #e63946;
+            --gray: #6c757d;
+            --transition: all 0.3s ease;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
         }
         
         * {
@@ -24,117 +29,344 @@
         }
         
         body {
-            background-color: #f5f7fa;
-            color: var(--dark-color);
+            background-color: #f5f7ff;
+            color: var(--dark);
             line-height: 1.6;
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 0 20px;
         }
         
+        /* التصميم العلوي */
         header {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             padding: 20px 0;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
         
-        header h1 {
-            text-align: center;
-            font-size: 2.2rem;
-            margin-bottom: 10px;
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        header p {
-            text-align: center;
-            opacity: 0.9;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: 700;
         }
         
-        .app-container {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 20px;
+        .logo i {
+            color: var(--accent);
         }
         
-        .tools-panel {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
         }
         
-        .tools-panel h2 {
-            color: var(--primary-color);
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .tool-group {
-            margin-bottom: 25px;
-        }
-        
-        .tool-group h3 {
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-            color: var(--secondary-color);
-        }
-        
-        .btn {
-            display: block;
-            width: 100%;
-            padding: 12px 15px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            background-color: var(--primary-color);
+        nav a {
             color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 15px;
+            border-radius: 30px;
+            transition: var(--transition);
+        }
+        
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        
+        /* قسم البطل */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6eeff 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            color: var(--gray);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* قسم الخدمات */
+        .services {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
             text-align: center;
         }
         
-        .btn:hover {
-            background-color: var(--secondary-color);
-            transform: translateY(-2px);
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
         }
         
-        .btn-danger {
-            background-color: var(--danger-color);
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: white;
+            font-size: 1.8rem;
         }
         
-        .btn-danger:hover {
-            background-color: #c0392b;
+        .service-card h3 {
+            margin-bottom: 15px;
+            color: var(--dark);
         }
         
-        .btn-success {
-            background-color: var(--success-color);
+        .service-card p {
+            color: var(--gray);
+            margin-bottom: 20px;
         }
         
-        .btn-success:hover {
-            background-color: #27ae60;
+        .service-link {
+            display: inline-block;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: var(--transition);
         }
         
-        .btn-warning {
-            background-color: var(--warning-color);
+        .service-link:hover {
+            color: var(--secondary);
         }
         
-        .btn-warning:hover {
-            background-color: #e67e22;
+        /* قسم المميزات */
+        .features {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #f5f7ff 0%, #e6eeff 100%);
         }
         
-        .btn-accent {
-            background-color: var(--accent-color);
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
         }
         
-        .btn-accent:hover {
-            background-color: #3da58a;
+        .feature-item {
+            text-align: center;
+            padding: 30px 20px;
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .feature-item h3 {
+            margin-bottom: 15px;
+        }
+        
+        .feature-item p {
+            color: var(--gray);
+        }
+        
+        /* التذييل */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #adb5bd;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-right: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+        
+        /* صفحات الخدمات */
+        .service-page {
+            padding: 80px 0;
+            min-height: 70vh;
+        }
+        
+        .service-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .service-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .service-header p {
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .service-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: start;
+        }
+        
+        .upload-area {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+        
+        .upload-area h2 {
+            margin-bottom: 20px;
+            color: var(--dark);
+        }
+        
+        .file-drop-zone {
+            border: 2px dashed #dee2e6;
+            border-radius: var(--radius);
+            padding: 40px 20px;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .file-drop-zone:hover {
+            border-color: var(--primary);
+            background: rgba(67, 97, 238, 0.05);
+        }
+        
+        .file-drop-zone i {
+            font-size: 3rem;
+            color: var(--gray);
+            margin-bottom: 15px;
         }
         
         .file-input {
@@ -142,60 +374,123 @@
         }
         
         .file-label {
-            display: block;
-            padding: 12px 15px;
-            background-color: var(--light-color);
-            border: 2px dashed #ccc;
-            border-radius: 5px;
-            text-align: center;
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
             cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            font-weight: 500;
         }
         
         .file-label:hover {
-            border-color: var(--primary-color);
-            background-color: #e9ecef;
+            background: var(--secondary);
+        }
+        
+        .tools-panel {
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .tools-panel h2 {
+            margin-bottom: 25px;
+            color: var(--dark);
+            text-align: center;
+        }
+        
+        .tool-group {
+            margin-bottom: 25px;
+        }
+        
+        .tool-group h3 {
+            margin-bottom: 15px;
+            color: var(--secondary);
+            font-size: 1.1rem;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 12px;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary);
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .btn:hover {
+            background: var(--secondary);
+            transform: translateY(-2px);
+        }
+        
+        .btn-success {
+            background: var(--success);
+        }
+        
+        .btn-success:hover {
+            background: #3a9a35;
+        }
+        
+        .btn-warning {
+            background: var(--warning);
+        }
+        
+        .btn-warning:hover {
+            background: #e68a00;
+        }
+        
+        .btn-danger {
+            background: var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background: #c1121f;
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #2bb2d9;
         }
         
         .preview-area {
-            background-color: white;
-            border-radius: 10px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            min-height: 500px;
-            display: flex;
-            flex-direction: column;
+            background: white;
+            border-radius: var(--radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            grid-column: 1 / -1;
+            margin-top: 20px;
         }
         
-        .preview-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .preview-area h2 {
             margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .preview-header h2 {
-            color: var(--primary-color);
+            color: var(--dark);
         }
         
         .preview-content {
-            flex: 1;
+            min-height: 200px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding: 20px;
+            padding: 40px 20px;
+            border: 2px dashed #dee2e6;
+            border-radius: var(--radius);
+            color: var(--gray);
         }
         
-        .preview-placeholder {
-            text-align: center;
-            color: #6c757d;
-        }
-        
-        .preview-placeholder i {
+        .preview-content i {
             font-size: 4rem;
             margin-bottom: 20px;
             color: #dee2e6;
@@ -209,13 +504,13 @@
         }
         
         .page-thumbnail {
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            padding: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
             text-align: center;
-            background-color: #f8f9fa;
+            background: #f8f9fa;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
         }
         
         .page-thumbnail:hover {
@@ -224,427 +519,333 @@
         }
         
         .page-thumbnail.selected {
-            border-color: var(--accent-color);
-            background-color: #e8f5f1;
+            border-color: var(--accent);
+            background: #e8f5f1;
         }
         
         .page-number {
             margin-top: 10px;
             font-weight: bold;
-            color: var(--secondary-color);
+            color: var(--secondary);
         }
         
-        .page-controls {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
+        .breadcrumb {
+            margin-bottom: 30px;
         }
         
-        .page-controls button {
-            flex: 1;
-            padding: 5px;
-            font-size: 0.8rem;
+        .breadcrumb a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
         }
         
-        .status-bar {
-            background-color: var(--light-color);
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-            font-size: 0.9rem;
-            color: #6c757d;
+        .breadcrumb a:hover {
+            color: var(--secondary);
         }
         
-        .hidden {
-            display: none;
-        }
-        
-        .loading {
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .loading::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
-            animation: loading 1.5s infinite;
-        }
-        
-        @keyframes loading {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        /* التجاوب مع الشاشات المختلفة */
+        @media (max-width: 992px) {
+            .service-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
         }
         
         @media (max-width: 768px) {
-            .app-container {
-                grid-template-columns: 1fr;
+            .header-content {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            nav ul {
+                gap: 15px;
+            }
+            
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>محرر ملفات PDF</h1>
-            <p>قم بتحرير ومعالجة ملفات PDF بسهولة عبر المتصفح</p>
-        </header>
-        
-        <div class="app-container">
-            <div class="tools-panel">
-                <h2>أدوات التحكم</h2>
-                
-                <div class="tool-group">
-                    <h3>تحميل الملفات</h3>
-                    <input type="file" id="pdfFile" class="file-input" accept=".pdf">
-                    <label for="pdfFile" class="file-label">تحميل ملف PDF</label>
-                    
-                    <input type="file" id="imageFiles" class="file-input" accept="image/*" multiple>
-                    <label for="imageFiles" class="file-label">تحميل صور لتحويلها إلى PDF</label>
+    <!-- التصميم العلوي -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>PDF Pro</span>
                 </div>
-                
-                <div class="tool-group">
-                    <h3>معالجة الصفحات</h3>
-                    <button class="btn btn-danger" id="deletePages">حذف الصفحات المحددة</button>
-                    <button class="btn" id="extractPages">استخراج الصفحات المحددة</button>
-                    <button class="btn" id="reorderPages">إعادة ترتيب الصفحات</button>
-                    <button class="btn" id="rotatePages">تدوير الصفحات</button>
-                </div>
-                
-                <div class="tool-group">
-                    <h3>دمج وتقسيم</h3>
-                    <button class="btn btn-accent" id="mergePDFs">دمج ملفات PDF</button>
-                    <button class="btn" id="splitPDF">تقسيم PDF</button>
-                </div>
-                
-                <div class="tool-group">
-                    <h3>تحويل</h3>
-                    <button class="btn btn-success" id="imagesToPDF">تحويل الصور إلى PDF</button>
-                    <button class="btn" id="pdfToImages">تحويل PDF إلى صور</button>
-                </div>
-                
-                <div class="tool-group">
-                    <h3>حفظ وتحميل</h3>
-                    <button class="btn btn-warning" id="downloadPDF">تحميل PDF</button>
-                    <button class="btn" id="resetAll">إعادة تعيين الكل</button>
-                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html" class="active">الرئيسية</a></li>
+                        <li><a href="merge-pdf.html">دمج PDF</a></li>
+                        <li><a href="split-pdf.html">تقسيم PDF</a></li>
+                        <li><a href="convert-pdf.html">تحويل PDF</a></li>
+                        <li><a href="edit-pdf.html">تحرير PDF</a></li>
+                    </ul>
+                </nav>
             </div>
-            
-            <div class="preview-area">
-                <div class="preview-header">
-                    <h2>معاينة الملف</h2>
-                    <div id="fileInfo">لا يوجد ملف محمل</div>
+        </div>
+    </header>
+
+    <!-- الصفحة الرئيسية -->
+    <section class="hero">
+        <div class="container">
+            <h1>أداة تحرير PDF متكاملة وسهلة الاستخدام</h1>
+            <p>قم بدمج، تقسيم، تحويل وتحرير ملفات PDF بسهولة مع واجهة عربية بسيطة. جميع الأدوات مجانية ولا تحتاج لتسجيل.</p>
+            <a href="#services" class="cta-button">ابدأ الآن مجانًا</a>
+        </div>
+    </section>
+
+    <!-- قسم الخدمات -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>خدماتنا المتكاملة</h2>
+                <p>اختر من بين مجموعة أدوات PDF القوية التي نقدمها</p>
+            </div>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-object-group"></i>
+                    </div>
+                    <h3>دمج ملفات PDF</h3>
+                    <p>اجمع عدة ملفات PDF في ملف واحد بترتيب تختاره بنفسك</p>
+                    <a href="merge-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
                 </div>
                 
-                <div class="preview-content">
-                    <div class="preview-placeholder" id="previewPlaceholder">
-                        <i>📄</i>
-                        <h3>لم يتم تحميل أي ملف بعد</h3>
-                        <p>قم بتحميل ملف PDF أو صور لبدء التحرير</p>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-cut"></i>
                     </div>
-                    
-                    <div id="pdfViewer" class="hidden">
-                        <div class="page-thumbnails" id="pageThumbnails">
-                            <!-- سيتم إضافة معاينات الصفحات هنا -->
-                        </div>
-                    </div>
-                    
-                    <div id="imagePreview" class="hidden">
-                        <div class="page-thumbnails" id="imageThumbnails">
-                            <!-- سيتم إضافة معاينات الصور هنا -->
-                        </div>
-                    </div>
+                    <h3>تقسيم ملف PDF</h3>
+                    <p>قسّم ملف PDF كبير إلى عدة ملفات أصغر حسب الصفحات التي تختارها</p>
+                    <a href="split-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
                 </div>
                 
-                <div class="status-bar" id="statusBar">
-                    جاهز للاستخدام
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-exchange-alt"></i>
+                    </div>
+                    <h3>تحويل PDF</h3>
+                    <p>حوّل ملفات PDF إلى Word، Excel، PowerPoint أو صور والعكس</p>
+                    <a href="convert-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3>تحرير PDF</h3>
+                    <p>عدّل على ملفات PDF مباشرة - أضف نص، صور، توقيع أو احذف صفحات</p>
+                    <a href="edit-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>حماية PDF</h3>
+                    <p>أضف كلمة مرور لملفاتك أو ارفع الحماية عن الملفات المحمية</p>
+                    <a href="protect-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-sort-amount-down"></i>
+                    </div>
+                    <h3>تنظيم PDF</h3>
+                    <p>غيّر ترتيب الصفحات، أدرها أو احذف الصفحات التي لا تحتاجها</p>
+                    <a href="organize-pdf.html" class="service-link">استخدم الأداة <i class="fas fa-arrow-left"></i></a>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- قسم المميزات -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>لماذا تختار PDF Pro؟</h2>
+                <p>نقدم أفضل تجربة لمعالجة ملفات PDF عبر الإنترنت</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>آمن وخاص</h3>
+                    <p>ملفاتك تبقى خاصة ولا يتم تخزينها على خوادمنا بعد الانتهاء من المعالجة</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>سريع وفعال</h3>
+                    <p>معالجة سريعة لملفات PDF دون الحاجة لتحميل برامج إضافية</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>واجهة عربية</h3>
+                    <p>واجهة مستخدم كاملة باللغة العربية سهلة الاستخدام للجميع</p>
+                </div>
+                
+                <div class="feature-item">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>يعمل على جميع الأجهزة</h3>
+                    <p>استخدم الأداة على هاتفك، حاسوبك أو جهازك اللوحي دون مشاكل</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>PDF Pro</h3>
+                    <p>أداة متكاملة لمعالجة ملفات PDF عبر الإنترنت. سريعة، آمنة وسهلة الاستخدام.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>الخدمات</h3>
+                    <ul class="footer-links">
+                        <li><a href="merge-pdf.html">دمج PDF</a></li>
+                        <li><a href="split-pdf.html">تقسيم PDF</a></li>
+                        <li><a href="convert-pdf.html">تحويل PDF</a></li>
+                        <li><a href="edit-pdf.html">تحرير PDF</a></li>
+                        <li><a href="protect-pdf.html">حماية PDF</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>روابط سريعة</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">الرئيسية</a></li>
+                        <li><a href="#">عن الموقع</a></li>
+                        <li><a href="#">الأسئلة الشائعة</a></li>
+                        <li><a href="#">اتصل بنا</a></li>
+                        <li><a href="#">سياسة الخصوصية</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2023 PDF Pro. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        // متغيرات التطبيق
-        let currentPDF = null;
-        let selectedPages = new Set();
-        let uploadedImages = [];
-        
-        // عناصر DOM
-        const pdfFileInput = document.getElementById('pdfFile');
-        const imageFilesInput = document.getElementById('imageFiles');
-        const previewPlaceholder = document.getElementById('previewPlaceholder');
-        const pdfViewer = document.getElementById('pdfViewer');
-        const imagePreview = document.getElementById('imagePreview');
-        const pageThumbnails = document.getElementById('pageThumbnails');
-        const imageThumbnails = document.getElementById('imageThumbnails');
-        const fileInfo = document.getElementById('fileInfo');
-        const statusBar = document.getElementById('statusBar');
-        
-        // أزرار التحكم
-        const deletePagesBtn = document.getElementById('deletePages');
-        const extractPagesBtn = document.getElementById('extractPages');
-        const reorderPagesBtn = document.getElementById('reorderPages');
-        const rotatePagesBtn = document.getElementById('rotatePages');
-        const mergePDFsBtn = document.getElementById('mergePDFs');
-        const splitPDFBtn = document.getElementById('splitPDF');
-        const imagesToPDFBtn = document.getElementById('imagesToPDF');
-        const pdfToImagesBtn = document.getElementById('pdfToImages');
-        const downloadPDFBtn = document.getElementById('downloadPDF');
-        const resetAllBtn = document.getElementById('resetAll');
-        
-        // معالجة تحميل ملف PDF
-        pdfFileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file && file.type === 'application/pdf') {
-                loadPDF(file);
-            } else {
-                updateStatus('الرجاء اختيار ملف PDF صالح', 'error');
-            }
-        });
-        
-        // معالجة تحميل الصور
-        imageFilesInput.addEventListener('change', function(e) {
-            const files = Array.from(e.target.files);
-            const imageFiles = files.filter(file => file.type.startsWith('image/'));
+        // كود JavaScript للتعامل مع تحميل الملفات والمعاينة
+        document.addEventListener('DOMContentLoaded', function() {
+            // محاكاة تحميل ملف PDF
+            const fileInputs = document.querySelectorAll('.file-input');
+            const fileLabels = document.querySelectorAll('.file-label');
+            const dropZones = document.querySelectorAll('.file-drop-zone');
             
-            if (imageFiles.length > 0) {
-                loadImages(imageFiles);
-            } else {
-                updateStatus('الرجاء اختيار ملفات صور صالحة', 'error');
-            }
-        });
-        
-        // دالة تحميل PDF
-        function loadPDF(file) {
-            updateStatus('جاري تحميل ملف PDF...', 'loading');
+            fileLabels.forEach((label, index) => {
+                label.addEventListener('click', () => {
+                    fileInputs[index].click();
+                });
+            });
             
-            // محاكاة لتحميل PDF (في تطبيق حقيقي، سنستخدم pdf.js أو مكتبة مشابهة)
-            setTimeout(() => {
-                currentPDF = {
-                    name: file.name,
-                    size: (file.size / (1024 * 1024)).toFixed(2) + ' MB',
-                    pages: 5 // محاكاة لعدد الصفحات
-                };
-                
-                displayPDFInfo();
-                renderPageThumbnails();
-                updateStatus('تم تحميل ملف PDF بنجاح', 'success');
-            }, 1500);
-        }
-        
-        // دالة تحميل الصور
-        function loadImages(files) {
-            updateStatus('جاري تحميل الصور...', 'loading');
-            
-            uploadedImages = [];
-            
-            // محاكاة لتحميل الصور
-            files.forEach((file, index) => {
-                const reader = new FileReader();
-                
-                reader.onload = function(e) {
-                    uploadedImages.push({
-                        id: index,
-                        name: file.name,
-                        url: e.target.result,
-                        size: (file.size / 1024).toFixed(2) + ' KB'
-                    });
-                    
-                    if (uploadedImages.length === files.length) {
-                        displayImageThumbnails();
-                        updateStatus(`تم تحميل ${files.length} صورة`, 'success');
+            fileInputs.forEach(input => {
+                input.addEventListener('change', function(e) {
+                    if (this.files.length > 0) {
+                        const fileName = this.files[0].name;
+                        const fileSize = (this.files[0].size / (1024 * 1024)).toFixed(2);
+                        alert(`تم تحميل الملف: ${fileName} (${fileSize} MB)`);
+                        
+                        // محاكاة معاينة الملف
+                        const previewContent = document.querySelector('.preview-content');
+                        if (previewContent) {
+                            previewContent.innerHTML = `
+                                <i class="fas fa-file-pdf"></i>
+                                <h3>${fileName}</h3>
+                                <p>حجم الملف: ${fileSize} MB</p>
+                                <div class="page-thumbnails">
+                                    <div class="page-thumbnail">
+                                        <div style="width: 100px; height: 140px; background: #f0f0f0; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
+                                            <span>الصفحة 1</span>
+                                        </div>
+                                        <div class="page-number">الصفحة 1</div>
+                                    </div>
+                                    <div class="page-thumbnail">
+                                        <div style="width: 100px; height: 140px; background: #f0f0f0; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
+                                            <span>الصفحة 2</span>
+                                        </div>
+                                        <div class="page-number">الصفحة 2</div>
+                                    </div>
+                                </div>
+                            `;
+                        }
                     }
-                };
-                
-                reader.readAsDataURL(file);
-            });
-        }
-        
-        // عرض معلومات PDF
-        function displayPDFInfo() {
-            previewPlaceholder.classList.add('hidden');
-            pdfViewer.classList.remove('hidden');
-            imagePreview.classList.add('hidden');
-            
-            fileInfo.textContent = `${currentPDF.name} - ${currentPDF.size} - ${currentPDF.pages} صفحة`;
-        }
-        
-        // عرض معاينات صفحات PDF
-        function renderPageThumbnails() {
-            pageThumbnails.innerHTML = '';
-            
-            for (let i = 1; i <= currentPDF.pages; i++) {
-                const pageThumbnail = document.createElement('div');
-                pageThumbnail.className = 'page-thumbnail';
-                pageThumbnail.dataset.page = i;
-                
-                pageThumbnail.innerHTML = `
-                    <div style="width: 100px; height: 140px; background: #f0f0f0; margin: 0 auto; display: flex; align-items: center; justify-content: center; border: 1px solid #ddd;">
-                        <span>الصفحة ${i}</span>
-                    </div>
-                    <div class="page-number">الصفحة ${i}</div>
-                    <div class="page-controls">
-                        <button class="btn" onclick="togglePageSelection(${i})">تحديد</button>
-                    </div>
-                `;
-                
-                pageThumbnails.appendChild(pageThumbnail);
-            }
-        }
-        
-        // عرض معاينات الصور
-        function displayImageThumbnails() {
-            previewPlaceholder.classList.add('hidden');
-            pdfViewer.classList.add('hidden');
-            imagePreview.classList.remove('hidden');
-            
-            imageThumbnails.innerHTML = '';
-            
-            uploadedImages.forEach(image => {
-                const imageThumbnail = document.createElement('div');
-                imageThumbnail.className = 'page-thumbnail';
-                
-                imageThumbnail.innerHTML = `
-                    <img src="${image.url}" alt="${image.name}" style="max-width: 100px; max-height: 140px; margin: 0 auto; display: block;">
-                    <div class="page-number">${image.name}</div>
-                    <div class="page-controls">
-                        <button class="btn btn-danger" onclick="removeImage(${image.id})">حذف</button>
-                    </div>
-                `;
-                
-                imageThumbnails.appendChild(imageThumbnail);
+                });
             });
             
-            fileInfo.textContent = `${uploadedImages.length} صورة محملة`;
-        }
-        
-        // تبديل تحديد الصفحة
-        function togglePageSelection(pageNum) {
-            const pageElement = document.querySelector(`.page-thumbnail[data-page="${pageNum}"]`);
-            
-            if (selectedPages.has(pageNum)) {
-                selectedPages.delete(pageNum);
-                pageElement.classList.remove('selected');
-            } else {
-                selectedPages.add(pageNum);
-                pageElement.classList.add('selected');
-            }
-            
-            updateStatus(`الصفحات المحددة: ${Array.from(selectedPages).join(', ')}`);
-        }
-        
-        // حذف صورة
-        function removeImage(imageId) {
-            uploadedImages = uploadedImages.filter(img => img.id !== imageId);
-            displayImageThumbnails();
-        }
-        
-        // تحديث شريط الحالة
-        function updateStatus(message, type = 'info') {
-            statusBar.textContent = message;
-            
-            // إزالة أي classes سابقة
-            statusBar.classList.remove('loading', 'success', 'error');
-            
-            if (type === 'loading') {
-                statusBar.classList.add('loading');
-            } else if (type === 'success') {
-                statusBar.style.color = 'var(--success-color)';
-            } else if (type === 'error') {
-                statusBar.style.color = 'var(--danger-color)';
-            } else {
-                statusBar.style.color = '#6c757d';
-            }
-        }
-        
-        // معالجة أزرار التحكم
-        deletePagesBtn.addEventListener('click', function() {
-            if (selectedPages.size === 0) {
-                updateStatus('الرجاء تحديد صفحات للحذف', 'error');
-                return;
-            }
-            
-            updateStatus(`جاري حذف الصفحات: ${Array.from(selectedPages).join(', ')}`, 'loading');
-            
-            // محاكاة لحذف الصفحات
-            setTimeout(() => {
-                currentPDF.pages -= selectedPages.size;
-                selectedPages.clear();
-                renderPageThumbnails();
-                updateStatus('تم حذف الصفحات المحددة', 'success');
-            }, 1500);
-        });
-        
-        imagesToPDFBtn.addEventListener('click', function() {
-            if (uploadedImages.length === 0) {
-                updateStatus('لا توجد صور محملة للتحويل', 'error');
-                return;
-            }
-            
-            updateStatus('جاري تحويل الصور إلى PDF...', 'loading');
-            
-            // محاكاة للتحويل
-            setTimeout(() => {
-                currentPDF = {
-                    name: 'ملف_من_الصور.pdf',
-                    size: '1.2 MB',
-                    pages: uploadedImages.length
-                };
+            // إضافة تأثيرات للسحب والإفلات
+            dropZones.forEach(zone => {
+                zone.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '#4361ee';
+                    this.style.backgroundColor = 'rgba(67, 97, 238, 0.1)';
+                });
                 
-                displayPDFInfo();
-                renderPageThumbnails();
-                uploadedImages = [];
-                updateStatus('تم تحويل الصور إلى PDF بنجاح', 'success');
-            }, 2000);
-        });
-        
-        downloadPDFBtn.addEventListener('click', function() {
-            if (!currentPDF) {
-                updateStatus('لا يوجد ملف PDF للتحميل', 'error');
-                return;
-            }
-            
-            updateStatus('جاري تحضير ملف PDF للتحميل...', 'loading');
-            
-            // محاكاة للتحميل
-            setTimeout(() => {
-                updateStatus('تم تحميل ملف PDF بنجاح', 'success');
+                zone.addEventListener('dragleave', function() {
+                    this.style.borderColor = '#dee2e6';
+                    this.style.backgroundColor = 'transparent';
+                });
                 
-                // في تطبيق حقيقي، سنقوم بإنشاء رابط تحميل
-                alert('سيبدأ تحميل ملف PDF في تطبيق حقيقي');
-            }, 1500);
-        });
-        
-        resetAllBtn.addEventListener('click', function() {
-            currentPDF = null;
-            selectedPages.clear();
-            uploadedImages = [];
+                zone.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    this.style.borderColor = '#dee2e6';
+                    this.style.backgroundColor = 'transparent';
+                    
+                    if (e.dataTransfer.files.length > 0) {
+                        const fileInput = this.closest('.upload-area').querySelector('.file-input');
+                        fileInput.files = e.dataTransfer.files;
+                        const event = new Event('change', { bubbles: true });
+                        fileInput.dispatchEvent(event);
+                    }
+                });
+            });
             
-            previewPlaceholder.classList.remove('hidden');
-            pdfViewer.classList.add('hidden');
-            imagePreview.classList.add('hidden');
-            
-            fileInfo.textContent = 'لا يوجد ملف محمل';
-            updateStatus('تم إعادة تعيين الكل', 'success');
-            
-            // إعادة تعيين مدخلات الملفات
-            pdfFileInput.value = '';
-            imageFilesInput.value = '';
-        });
-        
-        // إضافة معالجات للأزرار الأخرى (للتوضيح فقط)
-        const otherButtons = [
-            extractPagesBtn, reorderPagesBtn, rotatePagesBtn, 
-            mergePDFsBtn, splitPDFBtn, pdfToImagesBtn
-        ];
-        
-        otherButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                updateStatus(`هذه الميزة ستكون متاحة في النسخة الكاملة من التطبيق`, 'info');
+            // إضافة تأثيرات للأزرار
+            const buttons = document.querySelectorAll('.btn');
+            buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 150);
+                    
+                    // محاكاة المعالجة
+                    const serviceName = this.closest('.tools-panel') ? 
+                        this.closest('.tools-panel').querySelector('h2').textContent : 
+                        'الخدمة';
+                    alert(`جاري معالجة ${serviceName}... (هذه محاكاة للوظيفة)`);
+                });
             });
         });
     </script>
