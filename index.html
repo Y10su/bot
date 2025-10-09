@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول النص إلى كلام</title>
+    <title>محول النص العربي إلى كلام</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -76,10 +76,12 @@
             background: rgba(255, 255, 255, 0.15);
             backdrop-filter: blur(5px);
             color: white;
-            font-size: 1rem;
+            font-size: 1.2rem;
             resize: vertical;
             transition: all 0.3s ease;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: right;
+            direction: rtl;
         }
         
         textarea:focus {
@@ -90,6 +92,7 @@
         
         textarea::placeholder {
             color: rgba(255, 255, 255, 0.6);
+            text-align: right;
         }
         
         .controls {
@@ -138,6 +141,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            margin-bottom: 10px;
         }
         
         .range-value {
@@ -299,6 +303,20 @@
             color: rgba(255, 255, 255, 0.7);
         }
         
+        .info-box {
+            background: rgba(255, 193, 7, 0.2);
+            border: 1px solid rgba(255, 193, 7, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .info-box i {
+            color: #ffc107;
+            margin-right: 8px;
+        }
+        
         footer {
             margin-top: 30px;
             text-align: center;
@@ -324,12 +342,12 @@
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-robot"></i> محول النص إلى كلام</h1>
-            <p class="subtitle">حوّل أي نص إلى صوت بشري طبيعي مع خيارات متعددة</p>
+            <h1><i class="fas fa-robot"></i> محول النص العربي إلى كلام</h1>
+            <p class="subtitle">حوّل أي نص عربي إلى صوت بشري طبيعي مع خيارات متعددة</p>
         </header>
         
         <div class="input-section">
-            <textarea id="text-input" placeholder="اكتب أو الصق النص الذي تريد تحويله إلى كلام هنا...">مرحباً! هذا عرض تجريبي لمحول النص إلى كلام. يمكنك كتابة أي نص وسنقوم بتحويله إلى صوت.</textarea>
+            <textarea id="text-input" placeholder="اكتب أو الصق النص العربي الذي تريد تحويله إلى كلام هنا..."></textarea>
         </div>
         
         <div class="controls">
@@ -414,6 +432,11 @@
                 </div>
             </div>
         </div>
+        
+        <div class="info-box">
+            <i class="fas fa-info-circle"></i>
+            <span>لأفضل تجربة، استخدم متصفح Chrome أو Edge مع تحديثات حديثة</span>
+        </div>
     </div>
     
     <footer>
@@ -455,7 +478,11 @@
             }
             
             if (textInput.value.trim() !== '') {
+                // إنشاء كائن النطق
                 utterance = new SpeechSynthesisUtterance(textInput.value);
+                
+                // تعيين اللغة إلى العربية
+                utterance.lang = 'ar-SA';
                 
                 // تعيين إعدادات الصوت
                 utterance.rate = parseFloat(rateInput.value);
@@ -483,7 +510,7 @@
                 
                 synth.speak(utterance);
             } else {
-                statusEl.textContent = 'يرجى إدخال نص أولاً';
+                statusEl.textContent = 'يرجى إدخال نص عربي أولاً';
                 statusEl.className = 'status stopped';
             }
         });
@@ -551,6 +578,23 @@
         // تهيئة أولية
         window.addEventListener('load', () => {
             statusEl.textContent = 'جاهز للاستخدام';
+            
+            // إضافة نص تجريبي عند النقر على الزر
+            document.getElementById('play-btn').addEventListener('click', function() {
+                if (textInput.value.trim() === '') {
+                    // نصوص عربية تجريبية
+                    const sampleTexts = [
+                        "مرحباً بك في موقع تحويل النص العربي إلى كلام. هذا عرض تجريبي للتقنية.",
+                        "يمكنك كتابة أي نص عربي تريده في المربع أعلاه وسنقوم بتحويله إلى صوت مسموع.",
+                        "التقنية تدعم اللغة العربية بشكل كامل وتعمل مباشرة في متصفحك دون الحاجة إلى برامج إضافية.",
+                        "جرب تغيير سرعة الصوت ونبرته لتجربة أفضل تناسب احتياجاتك.",
+                        "شكراً لاستخدامك موقع تحويل النص إلى كلام. نتمنى لك تجربة ممتعة."
+                    ];
+                    
+                    const randomText = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
+                    textInput.value = randomText;
+                }
+            });
         });
     </script>
 </body>
