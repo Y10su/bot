@@ -3,598 +3,567 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول النص العربي إلى كلام</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>بحث عن المعادن</title>
     <style>
+        /* تنسيقات عامة */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #f72585;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --gray: #6c757d;
-            --success: #4cc9f0;
+            font-family: 'Arial', 'Segoe UI', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+            padding: 20px;
+        }
+        
+        /* تنسيق الصفحات */
+        .page {
+            background: white;
+            width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto 20px auto;
+            padding: 2cm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            position: relative;
+            page-break-after: always;
+        }
+        
+        /* تنسيق العنوان الرئيسي */
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 28px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        
+        h2 {
+            color: #2980b9;
+            margin: 20px 0 15px 0;
+            font-size: 22px;
+            border-right: 4px solid #3498db;
+            padding-right: 10px;
+        }
+        
+        h3 {
+            color: #16a085;
+            margin: 15px 0 10px 0;
+            font-size: 18px;
+        }
+        
+        /* تنسيق النصوص */
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 16px;
+        }
+        
+        ul, ol {
+            margin: 15px 0;
+            padding-right: 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        /* تنسيق الجداول */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+        
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        /* تنسيق الصفحة الأولى */
+        .first-page {
             display: flex;
             flex-direction: column;
-            align-items: center;
             justify-content: center;
-            padding: 20px;
-            color: var(--light);
-        }
-        
-        .container {
-            max-width: 800px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            background: linear-gradient(to right, #f72585, #4cc9f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        
-        .subtitle {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-        }
-        
-        .input-section {
-            margin-bottom: 25px;
-        }
-        
-        textarea {
-            width: 100%;
-            height: 150px;
-            padding: 15px;
-            border-radius: 12px;
-            border: none;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(5px);
-            color: white;
-            font-size: 1.2rem;
-            resize: vertical;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: right;
-            direction: rtl;
-        }
-        
-        textarea:focus {
-            outline: none;
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 0 2px var(--accent);
-        }
-        
-        textarea::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-            text-align: right;
-        }
-        
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .control-group {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .control-title {
-            display: flex;
             align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-            color: var(--success);
-            font-weight: 600;
-        }
-        
-        .control-title i {
-            font-size: 1.2rem;
-        }
-        
-        select, input[type="range"] {
-            width: 100%;
-            padding: 10px;
-            border-radius: 8px;
-            border: none;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            font-size: 1rem;
-        }
-        
-        select option {
-            background: #3a0ca3;
-            color: white;
-        }
-        
-        .range-container {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .range-value {
-            min-width: 40px;
             text-align: center;
-            font-weight: 600;
-            color: var(--success);
         }
         
-        input[type="range"] {
-            -webkit-appearance: none;
-            height: 8px;
-            background: rgba(255, 255, 255, 0.2);
+        .first-page h1 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #2c3e50;
+            border: none;
+        }
+        
+        .first-page .info {
+            margin-top: 50px;
+            font-size: 18px;
+            line-height: 2;
+        }
+        
+        /* تنسيق الصفحة الأخيرة */
+        .last-page {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .references {
+            margin-top: 30px;
+        }
+        
+        .references h2 {
+            margin-bottom: 20px;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+        }
+        
+        /* تنسيق الأرقام الصفحات */
+        .page-number {
+            position: absolute;
+            bottom: 1cm;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        /* تنسيق زر الطباعة */
+        .print-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .print-button:hover {
+            background-color: #2980b9;
+        }
+        
+        /* إخفاء زر الطباعة عند الطباعة */
+        @media print {
+            .print-button {
+                display: none;
+            }
+            
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .page {
+                box-shadow: none;
+                margin: 0;
+            }
+        }
+        
+        /* تنسيق الصور */
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ddd;
             border-radius: 5px;
         }
         
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background: var(--accent);
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .image-caption {
+            font-style: italic;
+            margin-top: 5px;
+            color: #7f8c8d;
+            font-size: 14px;
         }
         
-        input[type="range"]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 25px;
-        }
-        
-        button {
-            flex: 1;
+        /* تنسيق الاقتباسات */
+        blockquote {
+            background-color: #f9f9f9;
+            border-right: 5px solid #3498db;
+            margin: 20px 0;
             padding: 15px;
-            border: none;
-            border-radius: 12px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            font-style: italic;
         }
         
-        .play-btn {
-            background: var(--primary);
-            color: white;
-        }
-        
-        .play-btn:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .pause-btn {
-            background: var(--accent);
-            color: white;
-        }
-        
-        .pause-btn:hover {
-            background: #e11574;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .stop-btn {
-            background: var(--gray);
-            color: white;
-        }
-        
-        .stop-btn:hover {
-            background: #5a6268;
-            transform: translateY(-3px);
-            box-shadow: 0 7px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .status {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 1.1rem;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-bottom: 20px;
-            min-height: 54px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .status.playing {
-            color: var(--success);
-            border-color: var(--success);
-        }
-        
-        .status.paused {
-            color: #ffc107;
-            border-color: #ffc107;
-        }
-        
-        .status.stopped {
-            color: var(--gray);
-        }
-        
-        .voice-gallery {
-            margin-top: 30px;
-        }
-        
-        .gallery-title {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.3rem;
-            color: var(--success);
-        }
-        
-        .voice-cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-        }
-        
-        .voice-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .voice-card:hover, .voice-card.active {
-            background: rgba(67, 97, 238, 0.3);
-            border-color: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .voice-icon {
-            font-size: 2rem;
-            margin-bottom: 10px;
-            color: var(--accent);
-        }
-        
-        .voice-name {
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        
-        .voice-desc {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .info-box {
-            background: rgba(255, 193, 7, 0.2);
-            border: 1px solid rgba(255, 193, 7, 0.5);
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 20px;
-            text-align: center;
-        }
-        
-        .info-box i {
-            color: #ffc107;
-            margin-right: 8px;
-        }
-        
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .controls {
-                grid-template-columns: 1fr;
-            }
-            
-            .voice-cards {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
+        /* تنسيق الكلمات المهمة */
+        .keyword {
+            background-color: #e1f5fe;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1><i class="fas fa-robot"></i> محول النص العربي إلى كلام</h1>
-            <p class="subtitle">حوّل أي نص عربي إلى صوت بشري طبيعي مع خيارات متعددة</p>
-        </header>
-        
-        <div class="input-section">
-            <textarea id="text-input" placeholder="اكتب أو الصق النص العربي الذي تريد تحويله إلى كلام هنا..."></textarea>
+    <button class="print-button" onclick="window.print()">طباعة البحث PDF</button>
+
+    <!-- الصفحة الأولى -->
+    <div class="page first-page">
+        <h1>بحث عن المعادن</h1>
+        <div class="image-container">
+            <!-- صورة رمزية للمعادن -->
+            <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="50" width="100" height="100" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
+                <polygon points="70,70 130,70 150,100 130,130 70,130 50,100" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
+                <circle cx="100" cy="100" r="30" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
+                <rect x="85" y="85" width="30" height="30" fill="#f1c40f" stroke="#f39c12" stroke-width="2"/>
+            </svg>
         </div>
-        
-        <div class="controls">
-            <div class="control-group">
-                <div class="control-title">
-                    <i class="fas fa-voice"></i>
-                    <span>اختر الصوت</span>
-                </div>
-                <select id="voice-select">
-                    <option value="female1">صوت أنثوي ناعم</option>
-                    <option value="female2">صوت أنثوي روبوت</option>
-                    <option value="male1">صوت ذكوري عميق</option>
-                    <option value="male2">صوت ذكوري روبوت</option>
-                    <option value="child">صوت طفل</option>
-                </select>
-            </div>
-            
-            <div class="control-group">
-                <div class="control-title">
-                    <i class="fas fa-sliders-h"></i>
-                    <span>إعدادات الصوت</span>
-                </div>
-                <div class="range-container">
-                    <span>سرعة:</span>
-                    <input type="range" id="rate" min="0.5" max="2" step="0.1" value="1">
-                    <span class="range-value" id="rate-value">1</span>
-                </div>
-                <div class="range-container">
-                    <span>نبرة:</span>
-                    <input type="range" id="pitch" min="0.5" max="2" step="0.1" value="1">
-                    <span class="range-value" id="pitch-value">1</span>
-                </div>
-            </div>
+        <div class="info">
+            <p>مقدم من: عبدالله عمر</p>
+            <p>الصف: 304</p>
+            <p>المادة: علوم الأرض</p>
+            <p>التاريخ: ١٤٤٥/٠٦/١٥</p>
         </div>
-        
-        <div class="buttons">
-            <button class="play-btn" id="play-btn">
-                <i class="fas fa-play"></i> تشغيل
-            </button>
-            <button class="pause-btn" id="pause-btn">
-                <i class="fas fa-pause"></i> إيقاف مؤقت
-            </button>
-            <button class="stop-btn" id="stop-btn">
-                <i class="fas fa-stop"></i> إيقاف
-            </button>
-        </div>
-        
-        <div class="status" id="status">
-            جاهز للاستخدام
-        </div>
-        
-        <div class="voice-gallery">
-            <h3 class="gallery-title">معرض الأصوات</h3>
-            <div class="voice-cards">
-                <div class="voice-card active" data-voice="female1">
-                    <div class="voice-icon">
-                        <i class="fas fa-female"></i>
-                    </div>
-                    <div class="voice-name">صوت أنثوي ناعم</div>
-                    <div class="voice-desc">صوت طبيعي وأنثوي</div>
-                </div>
-                <div class="voice-card" data-voice="female2">
-                    <div class="voice-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="voice-name">أنثى روبوت</div>
-                    <div class="voice-desc">صوت آلي بتقنية عالية</div>
-                </div>
-                <div class="voice-card" data-voice="male1">
-                    <div class="voice-icon">
-                        <i class="fas fa-male"></i>
-                    </div>
-                    <div class="voice-name">صوت ذكوري</div>
-                    <div class="voice-desc">صوت رجولي عميق</div>
-                </div>
-                <div class="voice-card" data-voice="male2">
-                    <div class="voice-icon">
-                        <i class="fas fa-robot"></i>
-                    </div>
-                    <div class="voice-name">ذكر روبوت</div>
-                    <div class="voice-desc">صوت آلي ذكوري</div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="info-box">
-            <i class="fas fa-info-circle"></i>
-            <span>لأفضل تجربة، استخدم متصفح Chrome أو Edge مع تحديثات حديثة</span>
-        </div>
+        <div class="page-number">١</div>
     </div>
-    
-    <footer>
-        <p>تم التطوير باستخدام Web Speech API | يعمل مباشرة في المتصفح دون الحاجة لخوادم خارجية</p>
-    </footer>
+
+    <!-- الصفحة الثانية -->
+    <div class="page">
+        <h1>المقدمة</h1>
+        <p>تعتبر <span class="keyword">المعادن</span> من أهم الثروات الطبيعية التي وهبها الله تعالى للإنسان، فهي أساس التطور الصناعي والاقتصادي في العالم. وتلعب المعادن دوراً حيوياً في حياتنا اليومية، حيث تدخل في صناعة几乎所有 المنتجات التي نستخدمها، من الهواتف الذكية إلى السيارات والمباني.</p>
+        
+        <p>يوجد في الطبيعة أكثر من ٥٠٠٠ نوع من المعادن، ولكن فقط حوالي ١٠٠ نوع منها شائع الاستخدام. وتختلف المعادن في خصائصها الفيزيائية والكيميائية، مما يجعل كل معدن فريداً في استعمالاته وتطبيقاته.</p>
+        
+        <h2>أهمية دراسة المعادن</h2>
+        <p>تكتسب دراسة المعادن أهمية كبيرة للأسباب التالية:</p>
+        <ul>
+            <li>المعادن أساسية للصناعة والتكنولوجيا الحديثة</li>
+            <li>تساهم في النمو الاقتصادي للدول</li>
+            <li>توفير فرص عمل في قطاع التعدين والصناعات المرتبطة</li>
+            <li>المساهمة في تحقيق الأمن الوطني من خلال توفير المواد الخام الاستراتيجية</li>
+        </ul>
+        
+        <div class="image-container">
+            <!-- صورة رمزية للتعدين -->
+            <svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="80" width="200" height="40" fill="#7f8c8d"/>
+                <rect x="100" y="60" width="100" height="20" fill="#95a5a6"/>
+                <polygon points="120,60 180,60 200,80 100,80" fill="#bdc3c7"/>
+                <circle cx="130" cy="100" r="8" fill="#34495e"/>
+                <circle cx="170" cy="100" r="8" fill="#34495e"/>
+            </svg>
+            <div class="image-caption">رسم تخطيطي يوضح عملية التعدين</div>
+        </div>
+        
+        <div class="page-number">٢</div>
+    </div>
+
+    <!-- الصفحة الثالثة -->
+    <div class="page">
+        <h1>تعريف المعادن وخصائصها</h1>
+        
+        <h2>تعريف المعادن</h2>
+        <p>يمكن تعريف <span class="keyword">المعدن</span> بأنه مادة صلبة طبيعية غير عضوية، لها تركيب كيميائي محدد وتركيب بلوري منتظم. وتتشكل المعادن في الطبيعة من خلال عمليات جيولوجية مختلفة.</p>
+        
+        <h2>الخصائص الأساسية للمعادن</h2>
+        
+        <h3>١. البنية البلورية</h3>
+        <p>تتميز المعادن بوجود ترتيب ذري منتظم يشكل ما يعرف بالبنية البلورية. وهناك سبعة أنظمة بلورية رئيسية تختلف في أطوال المحاور البلورية والزوايا بينها.</p>
+        
+        <h3>٢. الخواص الفيزيائية</h3>
+        <ul>
+            <li><strong>اللمعان:</strong> قدرة المعدن على عكس الضوء</li>
+            <li><strong>الصلابة:</strong> مقاومة المعدن للخدش</li>
+            <li><strong>الانفصام:</strong> قابلية المعدن للانكسار على طول مستويات معينة</li>
+            <li><strong>اللون:</strong> قد يكون اللون خاصية مميزة للمعدن</li>
+            <li><strong>الوزن النوعي:</strong> كثافة المعدن مقارنة بكثافة الماء</li>
+        </ul>
+        
+        <h3>٣. الخواص الكيميائية</h3>
+        <p>تتعلق الخواص الكيميائية للمعادن بقدرتها على التفاعل مع العناصر الأخرى وتكوين مركبات جديدة. وتختلف المعادن في نشاطها الكيميائي، فبعضها شديد التفاعل مثل الصوديوم، وبعضها خامل مثل الذهب.</p>
+        
+        <table>
+            <tr>
+                <th>المعدن</th>
+                <th>الصلابة (مقياس موس)</th>
+                <th>الوزن النوعي</th>
+                <th>الانفصام</th>
+            </tr>
+            <tr>
+                <td>الذهب</td>
+                <td>2.5-3</td>
+                <td>19.3</td>
+                <td>لا يوجد</td>
+            </tr>
+            <tr>
+                <td>الماس</td>
+                <td>10</td>
+                <td>3.5</td>
+                <td>ممتاز</td>
+            </tr>
+            <tr>
+                <td>الكوارتز</td>
+                <td>7</td>
+                <td>2.65</td>
+                <td>ضعيف</td>
+            </tr>
+            <tr>
+                <td>الجبس</td>
+                <td>2</td>
+                <td>2.3</td>
+                <td>جيد</td>
+            </tr>
+        </table>
+        
+        <div class="page-number">٣</div>
+    </div>
+
+    <!-- الصفحة الرابعة -->
+    <div class="page">
+        <h1>تصنيف المعادن</h1>
+        
+        <p>يمكن تصنيف المعادن بعدة طرق حسب الخصائص المشتركة بينها. وأهم طرق التصنيف هي:</p>
+        
+        <h2>١. التصنيف حسب التركيب الكيميائي</h2>
+        <p>يعتمد هذا التصنيف على العناصر الكيميائية المكونة للمعدن، وينقسم إلى:</p>
+        
+        <h3>أ. المعادن العنصرية</h3>
+        <p>تتكون من عنصر واحد فقط، مثل الذهب والفضة والنحاس والكبريت.</p>
+        
+        <h3>ب. المعادن الكبريتيدية</h3>
+        <p>تتكون من اتحاد الكبريت مع عنصر آخر، مثل الجالينا (كبريتيد الرصاص) والبيريت (كبريتيد الحديد).</p>
+        
+        <h3>ج. المعادن الأكاسيد</h3>
+        <p>تتكون من اتحاد الأكسجين مع عنصر آخر، مثل الهيماتيت (أكسيد الحديد) والكوراندوم (أكسيد الألومنيوم).</p>
+        
+        <h3>د. المعادن الكربونات</h3>
+        <p>تتكون من اتحاد مجموعة الكربونات مع عنصر، مثل الكالسيت (كربونات الكالسيوم) والدولوميت (كربونات الكالسيوم والمغنيسيوم).</p>
+        
+        <h2>٢. التصنيف حسب الاستخدام</h2>
+        <p>ينقسم هذا التصنيف إلى:</p>
+        
+        <h3>أ. المعادن الفلزية</h3>
+        <p>وتشمل الحديد والنحاس والألومنيوم والذهب والفضة وغيرها، وتستخدم في الصناعات المختلفة.</p>
+        
+        <h3>ب. المعادن اللافلزية</h3>
+        <p>وتشمل الفوسفات والكبريت والملح الصخري وغيرها، وتستخدم في الصناعات الكيميائية والزراعة.</p>
+        
+        <h3>ج. معادن الطاقة</h3>
+        <p>وتشمل الفحم الحجري والنفط والغاز الطبيعي واليورانيوم.</p>
+        
+        <blockquote>
+            "التصنيف العلمي للمعادن يساعد في فهم خصائصها وتوقع سلوكها في مختلف الظروف، مما يسهل عملية استخراجها واستخدامها بشكل أمثل."
+        </blockquote>
+        
+        <div class="page-number">٤</div>
+    </div>
+
+    <!-- الصفحة الخامسة -->
+    <div class="page">
+        <h1>استخراج المعادن وتجهيزها</h1>
+        
+        <h2>طرق استخراج المعادن</h2>
+        
+        <h3>١. التعدين السطحي</h3>
+        <p>يستخدم عندما تكون الرواسب قريبة من سطح الأرض، ويشمل:</p>
+        <ul>
+            <li>التعدين بالحفرة المفتوحة</li>
+            <li>التعدين بالجرف</li>
+            <li>التعدين بالنضح</li>
+        </ul>
+        
+        <h3>٢. التعدين تحت الأرضي</h3>
+        <p>يستخدم عندما تكون الرواسب عميقة تحت سطح الأرض، ويشمل:</p>
+        <ul>
+            <li>التعدين بالأنفاق</li>
+            <li>التعدين بالحجرة والعمود</li>
+            <li>التعدين بالانحدار</li>
+        </ul>
+        
+        <h2>تجهيز المعادن</h2>
+        <p>بعد استخراج الخام، يمر بعدة عمليات لتجهيزه للاستخدام:</p>
+        
+        <h3>١. التكسير والطحن</h3>
+        <p>يتم تكسير الصخور الكبيرة إلى قطع صغيرة ثم طحنها إلى مسحوق ناعم.</p>
+        
+        <h3>٢. الفصل</h3>
+        <p>يفصل المعدن المرغوب فيه عن الشوائب باستخدام طرق مختلفة مثل:</p>
+        <ul>
+            <li>الفصل بالجاذبية</li>
+            <li>الفصل المغناطيسي</li>
+            <li>التعويم</li>
+        </ul>
+        
+        <h3>٣. التحميص والصهر</h3>
+        <p>تستخدم الحرارة لفصل المعدن عن الشوائب وتحويله إلى حالة نقية.</p>
+        
+        <h3>٤. التنقية</h3>
+        <p>تستخدم طرق كيميائية أو كهربائية لتنقية المعدن وزيادة درجة نقاوته.</p>
+        
+        <div class="image-container">
+            <!-- رسم تخطيطي لعملية استخراج المعادن -->
+            <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
+                <rect x="50" y="150" width="200" height="30" fill="#7f5539"/>
+                <rect x="100" y="120" width="100" height="30" fill="#9c6644"/>
+                <rect x="120" y="90" width="60" height="30" fill="#b07d62"/>
+                <polygon points="140,90 160,90 170,70 130,70" fill="#d4a574"/>
+                <circle cx="150" cy="60" r="20" fill="#e76f51"/>
+                <path d="M150,40 L150,20 M140,30 L160,30" stroke="#e76f51" stroke-width="3"/>
+            </svg>
+            <div class="image-caption">رسم تخطيطي يوضح مراحل استخراج وتجهيز المعادن</div>
+        </div>
+        
+        <div class="page-number">٥</div>
+    </div>
+
+    <!-- الصفحة السادسة -->
+    <div class="page">
+        <h1>استخدامات المعادن وأهميتها الاقتصادية</h1>
+        
+        <h2>الاستخدامات الرئيسية للمعادن</h2>
+        
+        <h3>١. في الصناعة</h3>
+        <ul>
+            <li>الحديد: صناعة السيارات والمباني والجسور</li>
+            <li>الألومنيوم: صناعة الطائرات وعلب المشروبات</li>
+            <li>النحاس: صناعة الأسلاك الكهربائية والأنابيب</li>
+            <li>الزنك: طلاء المعادن لمنع الصدأ</li>
+        </ul>
+        
+        <h3>٢. في البناء</h3>
+        <p>تستخدم المعادن بشكل واسع في البناء، مثل الحديد في الخرسانة المسلحة، والألومنيوم في النوافذ والأبواب، والنحاس في أسقف المباني.</p>
+        
+        <h3>٣. في الإلكترونيات</h3>
+        <p>تدخل المعادن في صناعة جميع الأجهزة الإلكترونية، مثل الذهب في الدوائر المتكاملة، والفضة في التوصيلات، والنحاس في الأسلاك.</p>
+        
+        <h3>٤. في الطب</h3>
+        <p>تستخدم بعض المعادن في المجال الطبي، مثل التيتانيوم في زراعة العظام، والفضة في المضادات الحيوية، والذهب في علاج بعض الأمراض.</p>
+        
+        <h2>الأهمية الاقتصادية للمعادن</h2>
+        
+        <p>تلعب المعادن دوراً حيوياً في الاقتصاد العالمي للأسباب التالية:</p>
+        <ul>
+            <li>تشكل أساس الصناعات التحويلية</li>
+            <li>تساهم في الناتج المحلي للدول الغنية بالمعادن</li>
+            <li>توفير فرص عمل مباشرة وغير مباشرة</li>
+            <li>المساهمة في تحقيق الأمن القومي من خلال توفير المواد الخام الاستراتيجية</li>
+        </ul>
+        
+        <table>
+            <tr>
+                <th>المعدن</th>
+                <th>أهم الدول المنتجة</th>
+                <th>الاستخدامات الرئيسية</th>
+            </tr>
+            <tr>
+                <td>الحديد</td>
+                <td>الصين، أستراليا، البرازيل</td>
+                <td>البناء، السيارات، الصناعات</td>
+            </tr>
+            <tr>
+                <td>النحاس</td>
+                <td>تشيلي، الصين، بيرو</td>
+                <td>الأسلاك الكهربائية، الأنابيب</td>
+            </tr>
+            <tr>
+                <td>الألومنيوم</td>
+                <td>الصين، روسيا، كندا</td>
+                <td>الطائرات، التغليف، البناء</td>
+            </tr>
+            <tr>
+                <td>الذهب</td>
+                <td>الصين، أستراليا، روسيا</td>
+                <td>المجوهرات، الاستثمار، الإلكترونيات</td>
+            </tr>
+        </table>
+        
+        <div class="page-number">٦</div>
+    </div>
+
+    <!-- الصفحة السابعة -->
+    <div class="page last-page">
+        <h1>المصادر والمراجع</h1>
+        
+        <div class="references">
+            <h2>المراجع العربية</h2>
+            <ol>
+                <li>الجهني، أحمد. (٢٠٢٠). "علم المعادن: الأسس والتطبيقات". دار الكتب العلمية.</li>
+                <li>الغامدي، محمد. (٢٠١٨). "الثروة المعدنية في المملكة العربية السعودية". وزارة الطاقة والصناعة والثروة المعدنية.</li>
+                <li>العتيبي، فهد. (٢٠١٩). "الجيولوجيا الاقتصادية والمعادن". مكتبة العبيكان.</li>
+            </ol>
+            
+            <h2>المراجع الأجنبية</h2>
+            <ol>
+                <li>Klein, C., & Dutrow, B. (2007). Manual of Mineral Science. John Wiley & Sons.</li>
+                <li>Evans, A. M. (1993). Ore Geology and Industrial Minerals: An Introduction. Blackwell Science.</li>
+                <li>Guilbert, J. M., & Park, C. F. (2007). The Geology of Ore Deposits. Waveland Press.</li>
+            </ol>
+            
+            <h2>المواقع الإلكترونية</h2>
+            <ol>
+                <li>هيئة المساحة الجيولوجية السعودية: www.gsi.gov.sa</li>
+                <li>الجمعية السعودية لعلوم الأرض: www.ssg.org.sa</li>
+                <li>موقع المعادن العالمية: www.minerals.net</li>
+            </ol>
+        </div>
+        
+        <div class="footer">
+            <p>إعداد: عبدالله عمر</p>
+            <p>الصف: ٣٠٤</p>
+            <p>جميع الحقوق محفوظة © ٢٠٢٣</p>
+        </div>
+        
+        <div class="page-number">٧</div>
+    </div>
 
     <script>
-        // عناصر DOM
-        const textInput = document.getElementById('text-input');
-        const voiceSelect = document.getElementById('voice-select');
-        const rateInput = document.getElementById('rate');
-        const rateValue = document.getElementById('rate-value');
-        const pitchInput = document.getElementById('pitch');
-        const pitchValue = document.getElementById('pitch-value');
-        const playBtn = document.getElementById('play-btn');
-        const pauseBtn = document.getElementById('pause-btn');
-        const stopBtn = document.getElementById('stop-btn');
-        const statusEl = document.getElementById('status');
-        const voiceCards = document.querySelectorAll('.voice-card');
-        
-        // تهيئة الـ SpeechSynthesis
-        const synth = window.speechSynthesis;
-        let utterance = null;
-        
-        // تحديث قيم المدخلات
-        rateInput.addEventListener('input', () => {
-            rateValue.textContent = rateInput.value;
-        });
-        
-        pitchInput.addEventListener('input', () => {
-            pitchValue.textContent = pitchInput.value;
-        });
-        
-        // تشغيل الكلام
-        playBtn.addEventListener('click', () => {
-            if (synth.speaking && !synth.paused) {
-                synth.resume();
-                return;
-            }
-            
-            if (textInput.value.trim() !== '') {
-                // إنشاء كائن النطق
-                utterance = new SpeechSynthesisUtterance(textInput.value);
-                
-                // تعيين اللغة إلى العربية
-                utterance.lang = 'ar-SA';
-                
-                // تعيين إعدادات الصوت
-                utterance.rate = parseFloat(rateInput.value);
-                utterance.pitch = parseFloat(pitchInput.value);
-                
-                // اختيار نوع الصوت بناءً على الاختيار
-                const selectedVoice = voiceSelect.value;
-                setVoiceProperties(utterance, selectedVoice);
-                
-                // الأحداث
-                utterance.onstart = () => {
-                    statusEl.textContent = 'جاري التشغيل...';
-                    statusEl.className = 'status playing';
-                };
-                
-                utterance.onend = () => {
-                    statusEl.textContent = 'تم الانتهاء من التشغيل';
-                    statusEl.className = 'status stopped';
-                };
-                
-                utterance.onerror = (event) => {
-                    statusEl.textContent = 'حدث خطأ: ' + event.error;
-                    statusEl.className = 'status stopped';
-                };
-                
-                synth.speak(utterance);
-            } else {
-                statusEl.textContent = 'يرجى إدخال نص عربي أولاً';
-                statusEl.className = 'status stopped';
-            }
-        });
-        
-        // إيقاف مؤقت
-        pauseBtn.addEventListener('click', () => {
-            if (synth.speaking && !synth.paused) {
-                synth.pause();
-                statusEl.textContent = 'متوقف مؤقتاً';
-                statusEl.className = 'status paused';
-            }
-        });
-        
-        // إيقاف
-        stopBtn.addEventListener('click', () => {
-            synth.cancel();
-            statusEl.textContent = 'تم الإيقاف';
-            statusEl.className = 'status stopped';
-        });
-        
-        // تغيير الأصوات من البطاقات
-        voiceCards.forEach(card => {
-            card.addEventListener('click', () => {
-                voiceCards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                voiceSelect.value = card.getAttribute('data-voice');
-            });
-        });
-        
-        // دالة لتعيين خصائص الصوت
-        function setVoiceProperties(utterance, voiceType) {
-            switch(voiceType) {
-                case 'female1':
-                    utterance.rate = 1;
-                    utterance.pitch = 1.2;
-                    break;
-                case 'female2':
-                    utterance.rate = 0.9;
-                    utterance.pitch = 1.1;
-                    break;
-                case 'male1':
-                    utterance.rate = 1;
-                    utterance.pitch = 0.8;
-                    break;
-                case 'male2':
-                    utterance.rate = 1.1;
-                    utterance.pitch = 0.7;
-                    break;
-                case 'child':
-                    utterance.rate = 1.2;
-                    utterance.pitch = 1.5;
-                    break;
-                default:
-                    utterance.rate = 1;
-                    utterance.pitch = 1;
-            }
-            
-            // تحديث واجهة المستخدم مع القيم الجديدة
-            rateInput.value = utterance.rate;
-            rateValue.textContent = utterance.rate;
-            pitchInput.value = utterance.pitch;
-            pitchValue.textContent = utterance.pitch;
-        }
-        
-        // تهيئة أولية
-        window.addEventListener('load', () => {
-            statusEl.textContent = 'جاهز للاستخدام';
-            
-            // إضافة نص تجريبي عند النقر على الزر
-            document.getElementById('play-btn').addEventListener('click', function() {
-                if (textInput.value.trim() === '') {
-                    // نصوص عربية تجريبية
-                    const sampleTexts = [
-                        "مرحباً بك في موقع تحويل النص العربي إلى كلام. هذا عرض تجريبي للتقنية.",
-                        "يمكنك كتابة أي نص عربي تريده في المربع أعلاه وسنقوم بتحويله إلى صوت مسموع.",
-                        "التقنية تدعم اللغة العربية بشكل كامل وتعمل مباشرة في متصفحك دون الحاجة إلى برامج إضافية.",
-                        "جرب تغيير سرعة الصوت ونبرته لتجربة أفضل تناسب احتياجاتك.",
-                        "شكراً لاستخدامك موقع تحويل النص إلى كلام. نتمنى لك تجربة ممتعة."
-                    ];
-                    
-                    const randomText = sampleTexts[Math.floor(Math.random() * sampleTexts.length)];
-                    textInput.value = randomText;
+        // إضافة تأثيرات بسيطة عند التمرير
+        window.addEventListener('scroll', function() {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                const pageTop = page.getBoundingClientRect().top;
+                const pageBottom = page.getBoundingClientRect().bottom;
+                if (pageTop < window.innerHeight && pageBottom > 0) {
+                    page.style.opacity = 1;
+                    page.style.transform = 'translateY(0)';
                 }
             });
+        });
+
+        // تهيئة الصفحات عند التحميل
+        document.addEventListener('DOMContentLoaded', function() {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => {
+                page.style.opacity = 0;
+                page.style.transform = 'translateY(20px)';
+                page.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            });
+
+            // تفعيل التأثير بعد فترة قصيرة
+            setTimeout(() => {
+                window.dispatchEvent(new Event('scroll'));
+            }, 100);
         });
     </script>
 </body>
