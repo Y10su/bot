@@ -10,14 +10,15 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
         }
         
         body {
-            background-color: #f5f5f5;
+            background-color: #f8f9fa;
             color: #333;
-            line-height: 1.6;
-            padding: 20px;
+            line-height: 1.7;
+            padding: 15px;
+            font-size: 16px;
         }
         
         /* تنسيق الصفحة بحجم A4 */
@@ -26,8 +27,8 @@
             min-height: 29.7cm;
             margin: 0 auto;
             background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            padding: 2.5cm;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            padding: 2cm;
             position: relative;
         }
         
@@ -36,14 +37,18 @@
             body {
                 background: white;
                 padding: 0;
+                margin: 0;
+                font-size: 14px;
             }
             
             .a4-container {
                 box-shadow: none;
-                padding: 2cm;
+                padding: 1.5cm;
                 margin: 0;
                 max-width: none;
                 min-height: auto;
+                width: 100%;
+                height: 100%;
             }
             
             .print-btn {
@@ -52,6 +57,22 @@
             
             .page-break {
                 page-break-after: always;
+            }
+            
+            /* منع انقسام العناصر بين الصفحات */
+            h1, h2, h3, h4, h5, h6 {
+                page-break-after: avoid;
+                page-break-inside: avoid;
+            }
+            
+            p, ul, ol, blockquote, table, img {
+                page-break-inside: avoid;
+            }
+            
+            /* ضبط الهوامش للطباعة */
+            @page {
+                size: A4;
+                margin: 1.5cm;
             }
         }
         
@@ -63,108 +84,194 @@
             background: #2c5e8c;
             color: white;
             border: none;
-            padding: 10px 15px;
-            border-radius: 4px;
+            padding: 12px 18px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
             z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
         
         .print-btn:hover {
             background: #1e4266;
+            transform: translateY(-2px);
         }
         
         /* تنسيقات المحتوى */
         header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             border-bottom: 2px solid #2c5e8c;
-            padding-bottom: 20px;
+            padding-bottom: 25px;
         }
         
         h1 {
             color: #2c5e8c;
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 32px;
+            margin-bottom: 15px;
+            font-weight: bold;
         }
         
         h2 {
             color: #2c5e8c;
-            font-size: 22px;
-            margin: 20px 0 15px;
-            border-right: 3px solid #2c5e8c;
-            padding-right: 10px;
+            font-size: 24px;
+            margin: 25px 0 18px;
+            border-right: 4px solid #2c5e8c;
+            padding-right: 12px;
+            font-weight: 600;
         }
         
         h3 {
             color: #2c5e8c;
-            font-size: 18px;
-            margin: 15px 0 10px;
+            font-size: 20px;
+            margin: 20px 0 12px;
+            font-weight: 600;
         }
         
         p {
-            margin-bottom: 15px;
+            margin-bottom: 18px;
             text-align: justify;
             font-size: 16px;
         }
         
         .intro {
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
             color: #444;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            line-height: 1.8;
+            background-color: #f0f7ff;
+            padding: 20px;
+            border-radius: 8px;
+            border-right: 4px solid #2c5e8c;
         }
         
         .section {
-            margin-bottom: 30px;
+            margin-bottom: 35px;
         }
         
         .highlight {
             background-color: #e8f4ff;
-            padding: 15px;
-            border-right: 3px solid #2c5e8c;
-            margin: 15px 0;
-            border-radius: 4px;
+            padding: 20px;
+            border-right: 4px solid #2c5e8c;
+            margin: 20px 0;
+            border-radius: 8px;
         }
         
         ul, ol {
-            margin-right: 20px;
-            margin-bottom: 15px;
+            margin-right: 25px;
+            margin-bottom: 20px;
         }
         
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+            padding-right: 10px;
         }
         
         .quote {
             font-style: italic;
             color: #555;
-            border-right: 2px solid #ccc;
-            padding-right: 15px;
-            margin: 15px 0;
+            border-right: 3px solid #2c5e8c;
+            padding-right: 20px;
+            margin: 20px 0;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 6px;
         }
         
         .conclusion {
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-radius: 4px;
-            margin-top: 30px;
-            border: 1px solid #ddd;
+            background-color: #f0f7ff;
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 35px;
+            border: 1px solid #d1e3f8;
         }
         
         footer {
             text-align: center;
-            margin-top: 40px;
-            padding-top: 20px;
+            margin-top: 45px;
+            padding-top: 25px;
             border-top: 1px solid #ddd;
             color: #666;
-            font-size: 14px;
+            font-size: 15px;
+        }
+        
+        .info-box {
+            background-color: #fff9e6;
+            border: 1px solid #ffd966;
+            border-radius: 8px;
+            padding: 18px;
+            margin: 20px 0;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+            margin: 20px 0;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: right;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        
+        /* تصميم متجاوب */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+                font-size: 15px;
+            }
+            
+            .a4-container {
+                padding: 1.5cm;
+            }
+            
+            h1 {
+                font-size: 26px;
+            }
+            
+            h2 {
+                font-size: 22px;
+            }
+            
+            h3 {
+                font-size: 18px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .a4-container {
+                padding: 1cm;
+            }
+            
+            h1 {
+                font-size: 22px;
+            }
+            
+            h2 {
+                font-size: 20px;
+            }
         }
     </style>
 </head>
 <body>
-    <button class="print-btn" onclick="window.print()">طباعة البحث PDF</button>
+    <button class="print-btn" onclick="window.print()">🖨️ طباعة البحث PDF</button>
     
     <div class="a4-container">
         <header>
@@ -181,9 +288,12 @@
             
             <p>كان جابر بن حيان تلميذاً للإمام جعفر الصادق، وتأثر به كثيراً في منهجه العلمي والفكري. كما كان مرتبطاً ببيت الحكمة في بغداد، الذي كان مركزاً علمياً مهماً في ذلك العصر.</p>
             
-            <div class="highlight">
-                <h3>منهج جابر بن حيان العلمي</h3>
-                <p>تميز جابر بن حيان بمنهجية علمية دقيقة تجمع بين النظرية والتطبيق. كان يؤكد دائماً على أهمية التجربة والمشاهدة الدقيقة، ورفض قبول النظريات دون اختبارها عملياً. هذا المنهج جعله يضع أساساً للكيمياء الحديثة يعتمد على التجريب والقياس الدقيق.</p>
+            <div class="info-box">
+                <h3>معلومات سريعة</h3>
+                <p><strong>الميلاد:</strong> 721 م في طوس، خراسان</p>
+                <p><strong>الوفاة:</strong> 815 م في الكوفة، العراق</p>
+                <p><strong>مجال التخصص:</strong> الكيمياء، الطب، الفلسفة، الفلك</p>
+                <p><strong>الألقاب:</strong> أبو الكيمياء، الأستاذ الأعظم</p>
             </div>
         </div>
         
@@ -193,19 +303,20 @@
             <h3>التجارب العلمية والأجهزة</h3>
             <p>اخترع جابر بن حيان العديد من الأجهزة المخبرية التي لا تزال تستخدم في المختبرات الحديثة، منها:</p>
             <ul>
-                <li>الإنبيق: جهاز للتقطير</li>
-                <liالمِرقاة: جهاز للترشيح</li>
-                <li>القرع: وعاء للتسخين</li>
-                <li>الأمبيق: جهاز للتكثيف</li>
+                <li><strong>الإنبيق:</strong> جهاز للتقطير</li>
+                <li><strong>المِرقاة:</strong> جهاز للترشيح</li>
+                <li><strong>القرع:</strong> وعاء للتسخين</li>
+                <li><strong>الأمبيق:</strong> جهاز للتكثيف</li>
             </ul>
             
             <h3>العمليات الكيميائية</h3>
             <p>طور جابر بن حيان العديد من العمليات الكيميائية الأساسية:</p>
             <ol>
-                <li>التقطير: فصل السوائل حسب درجات غليانها</li>
-                <li>التبلور: تنقية المواد الصلبة</li>
-                <li>الترشيح: فصل المواد الصلبة عن السوائل</li>
-                <li>التكليس: تسخين المواد لإزالة الرطوبة</li>
+                <li><strong>التقطير:</strong> فصل السوائل حسب درجات غليانها</li>
+                <li><strong>التبلور:</strong> تنقية المواد الصلبة</li>
+                <li><strong>الترشيح:</strong> فصل المواد الصلبة عن السوائل</li>
+                <li><strong>التكليس:</strong> تسخين المواد لإزالة الرطوبة</li>
+                <li><strong>التصعيد:</strong> تحويل المواد الصلبة إلى بخار ثم إعادة تكثيفها</li>
             </ol>
             
             <div class="quote">
@@ -221,37 +332,61 @@
             <h3>الأحماض والمعادن</h3>
             <p>اكتشف جابر بن حيان العديد من الأحماض التي شكلت نقلة نوعية في الكيمياء، منها:</p>
             <ul>
-                <li>حمض النيتريك (الماء الحاد)</li>
-                <li>حمض الهيدروكلوريك (روح الملح)</li>
-                <li>حمض الكبريتيك (زيت الزاج)</li>
-                <li>ماء الذهب (الماء الملكي)</li>
+                <li><strong>حمض النيتريك:</strong> (الماء الحاد)</li>
+                <li><strong>حمض الهيدروكلوريك:</strong> (روح الملح)</li>
+                <li><strong>حمض الكبريتيك:</strong> (زيت الزاج)</li>
+                <li><strong>ماء الذهب:</strong> (الماء الملكي)</li>
             </ul>
             
             <p>كما درس خواص المعادن واستطاع تحضير العديد من المركبات الكيميائية مثل كبريتيد الزئبق وكربونات الرصاص.</p>
             
             <h3>نظرية الاتحاد الكيميائي</h3>
             <p>طور جابر بن حيان نظرية الاتحاد الكيميائي التي تنص على أن المعادن تتكون من اتحاد الزئبق والكبريت بنسب مختلفة. وعلى الرغم من عدم دقة هذه النظرية من الناحية العلمية الحديثة، إلا أنها شكلت أساساً لفهم التفاعلات الكيميائية لقرون طويلة.</p>
+            
+            <div class="highlight">
+                <h3>منهج جابر بن حيان العلمي</h3>
+                <p>تميز جابر بن حيان بمنهجية علمية دقيقة تجمع بين النظرية والتطبيق. كان يؤكد دائماً على أهمية التجربة والمشاهدة الدقيقة، ورفض قبول النظريات دون اختبارها عملياً. هذا المنهج جعله يضع أساساً للكيمياء الحديثة يعتمد على التجريب والقياس الدقيق.</p>
+            </div>
         </div>
         
         <div class="section">
             <h2>مؤلفات جابر بن حيان</h2>
             <p>ألف جابر بن حيان ما يزيد عن 3000 مخطوطة وكتاب في مختلف فروع العلم، لكن لم يصلنا منها سوى بضع مئات. من أهم مؤلفاته:</p>
             
-            <ul>
-                <li>كتاب الكيمياء (أو كتاب الرحمة)</li>
-                <li>كتاب الموازين</li>
-                <li>كتاب الخواص</li>
-                <li>كتاب السموم ودفع مضارها</li>
-                <li>كتاب الأسرار</li>
-                <li>كتاب التدابير</li>
-            </ul>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>اسم الكتاب</th>
+                            <th>المحتوى</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>كتاب الكيمياء (أو كتاب الرحمة)</td>
+                            <td>يشرح فيه أساسيات الكيمياء وعملياتها الرئيسية</td>
+                        </tr>
+                        <tr>
+                            <td>كتاب الموازين</td>
+                            <td>يتناول فيه النظريات الكيميائية ونظرية الاتحاد</td>
+                        </tr>
+                        <tr>
+                            <td>كتاب الخواص</td>
+                            <td>يبحث في خواص المواد والعناصر الكيميائية</td>
+                        </tr>
+                        <tr>
+                            <td>كتاب السموم ودفع مضارها</td>
+                            <td>أول كتاب منهجي في علم السموم وترياقها</td>
+                        </tr>
+                        <tr>
+                            <td>كتاب الأسرار</td>
+                            <td>يتناول العمليات الكيميائية السرية والتجارب</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
             
             <p>تمت ترجمة العديد من كتبه إلى اللاتينية في القرن الثاني عشر، وأثرت بشكل كبير على تطور الكيمياء في أوروبا خلال العصور الوسطى وعصر النهضة.</p>
-            
-            <div class="highlight">
-                <h3>تأثير جابر بن حيان على العلم الحديث</h3>
-                <p>يعتبر جابر بن حيان أول من حول الكيمياء من مجال غامض قائم على الخرافات إلى علم تجريبي قائم على الملاحظة والتجربة. وضع الأسس التي بنى عليها العلماء اللاحقون مثل الرازي وابن سينا، ثم العلماء الأوروبيون مثل روبرت بويل وأنطوان لافوازييه.</p>
-            </div>
         </div>
         
         <div class="page-break"></div>
@@ -267,6 +402,11 @@
             
             <h3>الفلك والرياضيات</h3>
             <p>كان له إسهامات في الفلك والرياضيات، حيث درس حركة الكواكب وحاول ربط الظواهر الكيميائية بالظواهر الفلكية، كما طور نظريات في الهندسة والحساب.</p>
+            
+            <div class="highlight">
+                <h3>تأثير جابر بن حيان على العلم الحديث</h3>
+                <p>يعتبر جابر بن حيان أول من حول الكيمياء من مجال غامض قائم على الخرافات إلى علم تجريبي قائم على الملاحظة والتجربة. وضع الأسس التي بنى عليها العلماء اللاحقون مثل الرازي وابن سينا، ثم العلماء الأوروبيون مثل روبرت بويل وأنطوان لافوازييه.</p>
+            </div>
         </div>
         
         <div class="section">
@@ -280,9 +420,35 @@
                 <li>القياس الكمي واستخدام الموازين الدقيقة</li>
                 <li>تصنيف المواد والتفاعلات بشكل منهجي</li>
                 <li>الربط بين النظرية والتطبيق</li>
+                <li>الاهتمام بالدقة في الوصف والتسمية</li>
             </ol>
             
             <p>هذا المنهج العلمي الدقيق جعل من جابر بن حيان رائداً للمنهج العلمي الحديث الذي ظهر لاحقاً في أوروبا خلال عصر النهضة.</p>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <div class="section">
+            <h2>إسهامات أخرى</h2>
+            
+            <h3>في الصناعة</h3>
+            <p>ساهم جابر بن حيان في تطوير العديد من الصناعات مثل:</p>
+            <ul>
+                <li>صناعة الزجاج وتلوينه</li>
+                <li>صناعة الحبر والمقاوم للرطوبة</li>
+                <li>صناعة السبائك المعدنية</li>
+                <li>تحضير المواد المقاومة للصدأ</li>
+                <li>صناعة العطور والمركبات العطرية</li>
+            </ul>
+            
+            <h3>في التصنيف العلمي</h3>
+            <p>قام جابر بن حيان بتصنيف المواد إلى:</p>
+            <ul>
+                <li><strong>الأجسام:</strong> المعادن مثل الذهب والفضة</li>
+                <li><strong>الأرواح:</strong> المواد المتطايرة مثل الكبريت والزئبق</li>
+                <li><strong>الأحجار:</strong> المواد غير القابلة للطرق والسحب</li>
+                <li><strong>الزاجات:</strong> الأملاح القابلة للذوبان</li>
+            </ul>
         </div>
         
         <div class="conclusion">
@@ -290,6 +456,8 @@
             <p>يُعتبر جابر بن حيان بحق مؤسس علم الكيمياء الحديثة، حيث حول هذا العلم من مجرد حرفة تقوم على المحاولة والخطأ إلى علم قائم على التجربة والملاحظة الدقيقة. كانت إسهاماته العلمية أساساً لتطور الكيمياء عبر العصور، ولا تزال العديد من مبادئه وأجهزته مستخدمة حتى اليوم.</p>
             
             <p>لم يقتصر تأثير جابر بن حيان على الكيمياء فقط، بل امتد إلى الطب والصيدلة والفلسفة والعلوم الأخرى. يبقى نموذجاً للعالم المسلم الذي جمع بين المعرفة النظرية والتطبيق العملي، وساهم في إثراء الحضارة الإنسانية بمنهجه العلمي الرصين.</p>
+            
+            <p>إن دراسة حياة وإسهامات جابر بن حيان تذكرنا بأهمية المنهج العلمي القائم على التجربة والملاحظة، وتؤكد على الدور الحضاري الذي لعبته الأمة الإسلامية في تطور العلوم والمعرفة الإنسانية.</p>
         </div>
         
         <footer>
@@ -315,6 +483,16 @@
                         left: 0;
                         top: 0;
                         width: 100%;
+                    }
+                    
+                    /* منع انقسام العناصر بين الصفحات */
+                    h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, table, .section, .highlight, .info-box, .conclusion {
+                        page-break-inside: avoid;
+                    }
+                    
+                    /* ضبط الهوامش الداخلية للطباعة */
+                    .a4-container {
+                        padding: 1.5cm !important;
                     }
                 }
             `;
