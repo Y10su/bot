@@ -1,503 +1,239 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بحث حول مؤسس علم الكيمياء</title>
-    <style>
-        /* تنسيقات عامة */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Arial', 'Helvetica Neue', Helvetica, sans-serif;
-        }
-        
-        body {
-            background-color: #f8f9fa;
-            color: #333;
-            line-height: 1.7;
-            padding: 15px;
-            font-size: 16px;
-        }
-        
-        /* تنسيق الصفحة بحجم A4 */
-        .a4-container {
-            max-width: 21cm;
-            min-height: 29.7cm;
-            margin: 0 auto;
-            background: white;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
-            padding: 2cm;
-            position: relative;
-        }
-        
-        /* تنسيقات الطباعة */
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-                margin: 0;
-                font-size: 14px;
-            }
-            
-            .a4-container {
-                box-shadow: none;
-                padding: 1.5cm;
-                margin: 0;
-                max-width: none;
-                min-height: auto;
-                width: 100%;
-                height: 100%;
-            }
-            
-            .print-btn {
-                display: none;
-            }
-            
-            .page-break {
-                page-break-after: always;
-            }
-            
-            /* منع انقسام العناصر بين الصفحات */
-            h1, h2, h3, h4, h5, h6 {
-                page-break-after: avoid;
-                page-break-inside: avoid;
-            }
-            
-            p, ul, ol, blockquote, table, img {
-                page-break-inside: avoid;
-            }
-            
-            /* ضبط الهوامش للطباعة */
-            @page {
-                size: A4;
-                margin: 1.5cm;
-            }
-        }
-        
-        /* زر الطباعة */
-        .print-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #2c5e8c;
-            color: white;
-            border: none;
-            padding: 12px 18px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            z-index: 1000;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
-            transition: all 0.3s ease;
-        }
-        
-        .print-btn:hover {
-            background: #1e4266;
-            transform: translateY(-2px);
-        }
-        
-        /* تنسيقات المحتوى */
-        header {
-            text-align: center;
-            margin-bottom: 35px;
-            border-bottom: 2px solid #2c5e8c;
-            padding-bottom: 25px;
-        }
-        
-        h1 {
-            color: #2c5e8c;
-            font-size: 32px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        
-        h2 {
-            color: #2c5e8c;
-            font-size: 24px;
-            margin: 25px 0 18px;
-            border-right: 4px solid #2c5e8c;
-            padding-right: 12px;
-            font-weight: 600;
-        }
-        
-        h3 {
-            color: #2c5e8c;
-            font-size: 20px;
-            margin: 20px 0 12px;
-            font-weight: 600;
-        }
-        
-        p {
-            margin-bottom: 18px;
-            text-align: justify;
-            font-size: 16px;
-        }
-        
-        .intro {
-            font-size: 18px;
-            font-weight: 600;
-            color: #444;
-            margin-bottom: 30px;
-            line-height: 1.8;
-            background-color: #f0f7ff;
-            padding: 20px;
-            border-radius: 8px;
-            border-right: 4px solid #2c5e8c;
-        }
-        
-        .section {
-            margin-bottom: 35px;
-        }
-        
-        .highlight {
-            background-color: #e8f4ff;
-            padding: 20px;
-            border-right: 4px solid #2c5e8c;
-            margin: 20px 0;
-            border-radius: 8px;
-        }
-        
-        ul, ol {
-            margin-right: 25px;
-            margin-bottom: 20px;
-        }
-        
-        li {
-            margin-bottom: 10px;
-            padding-right: 10px;
-        }
-        
-        .quote {
-            font-style: italic;
-            color: #555;
-            border-right: 3px solid #2c5e8c;
-            padding-right: 20px;
-            margin: 20px 0;
-            background-color: #f9f9f9;
-            padding: 15px;
-            border-radius: 6px;
-        }
-        
-        .conclusion {
-            background-color: #f0f7ff;
-            padding: 25px;
-            border-radius: 8px;
-            margin-top: 35px;
-            border: 1px solid #d1e3f8;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 45px;
-            padding-top: 25px;
-            border-top: 1px solid #ddd;
-            color: #666;
-            font-size: 15px;
-        }
-        
-        .info-box {
-            background-color: #fff9e6;
-            border: 1px solid #ffd966;
-            border-radius: 8px;
-            padding: 18px;
-            margin: 20px 0;
-        }
-        
-        .table-container {
-            overflow-x: auto;
-            margin: 20px 0;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: right;
-        }
-        
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f9f9f9;
-        }
-        
-        /* تصميم متجاوب */
-        @media (max-width: 768px) {
-            body {
-                padding: 10px;
-                font-size: 15px;
-            }
-            
-            .a4-container {
-                padding: 1.5cm;
-            }
-            
-            h1 {
-                font-size: 26px;
-            }
-            
-            h2 {
-                font-size: 22px;
-            }
-            
-            h3 {
-                font-size: 18px;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .a4-container {
-                padding: 1cm;
-            }
-            
-            h1 {
-                font-size: 22px;
-            }
-            
-            h2 {
-                font-size: 20px;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>إذاعة - اليوم العالمي للعصا البيضاء</title>
+
+  <style>
+    /* صفحة A4 طباعة */
+    @page { size: A4; margin: 20mm; }
+    html,body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, "Segoe UI", "Helvetica Neue", "Noto Naskh Arabic", "Arial", sans-serif;
+      color: #111;
+      background: #fff;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      -webkit-print-color-adjust: exact; /* يساعد Safari على طباعة الألوان بشكل أفضل */
+    }
+
+    /* عام */
+    .container {
+      max-width: 21cm; /* عرض A4 */
+      margin: 0 auto;
+      padding: 18mm; /* مسافة داخل الصفحة */
+      box-sizing: border-box;
+    }
+
+    header { text-align: center; margin-bottom: 8mm; }
+    h1 {
+      font-size: 20pt;
+      margin: 0 0 6px 0;
+      letter-spacing: 0.5px;
+    }
+    .subtitle { font-size: 10pt; color:#555; margin-bottom: 6mm; }
+
+    section {
+      margin-bottom: 8mm;
+      line-height: 1.6;
+      font-size: 14pt;
+    }
+
+    .label {
+      display:block;
+      font-weight:700;
+      margin-bottom:6px;
+    }
+
+    .name {
+      display:inline-block;
+      min-width: 130px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: #f3f4f6;
+      margin-left: 8px;
+      font-weight:600;
+      cursor:text;
+    }
+    /* اجعل الحقول قابلة للتعديل بصريًا */
+    [contenteditable]:focus {
+      outline: 2px dashed #66a3ff;
+      background: #fff;
+    }
+
+    /* أيقونات/تزيين الفقرات */
+    .emoji { margin-left:6px; }
+
+    /* زر الطباعة */
+    .controls {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    .print-btn {
+      background:#0b76ef;
+      color:#fff;
+      border:none;
+      padding:10px 18px;
+      font-size:14px;
+      border-radius:6px;
+      cursor:pointer;
+      box-shadow: 0 2px 6px rgba(11,118,239,0.25);
+    }
+    .print-btn:active { transform: translateY(1px); }
+
+    /* عند الطباعة.. أخفي زر الطباعة و اجعل الخلفية بيضاء */
+    @media print {
+      .print-btn, .controls { display: none !important; }
+      body { background: #fff; }
+      .container { padding: 0; margin: 0; }
+      /* تأكد أن النص لا يخرج عن الحواف */
+      html,body { -webkit-print-color-adjust: exact; }
+    }
+
+    /* تحسين المسافات للطبعة */
+    .small { font-size:12pt; color:#333; }
+  </style>
 </head>
 <body>
-    <button class="print-btn" onclick="window.print()">🖨️ طباعة البحث PDF</button>
-    
-    <div class="a4-container">
-        <header>
-            <h1>جابر بن حيان: مؤسس علم الكيمياء الحديثة</h1>
-        </header>
-        
-        <div class="intro">
-            يُعتبر جابر بن حيان من أعظم علماء العصر الذهبي للإسلام، وأول من وضع أسس المنهج العلمي التجريبي في الكيمياء. أطلق عليه العديد من الألقاب مثل "أبو الكيمياء" و"الأستاذ الأعظم"، حيث أسس قواعد هذا العلم ورفعه من مجرد حرفة إلى علم قائم بذاته.
-        </div>
-        
-        <div class="section">
-            <h2>حياة جابر بن حيان</h2>
-            <p>ولد جابر بن حيان بن عبد الله الأزدي عام 721 ميلادية في مدينة طوس بخراسان (إيران حالياً). نشأ في عائلة متعلمة، حيث كان والده صيدلانياً، مما أتاح له فرصة التعلم منذ صغره. انتقل إلى الكوفة في العراق حيث قضى معظم حياته وتوفي فيها حوالي عام 815 ميلادية.</p>
-            
-            <p>كان جابر بن حيان تلميذاً للإمام جعفر الصادق، وتأثر به كثيراً في منهجه العلمي والفكري. كما كان مرتبطاً ببيت الحكمة في بغداد، الذي كان مركزاً علمياً مهماً في ذلك العصر.</p>
-            
-            <div class="info-box">
-                <h3>معلومات سريعة</h3>
-                <p><strong>الميلاد:</strong> 721 م في طوس، خراسان</p>
-                <p><strong>الوفاة:</strong> 815 م في الكوفة، العراق</p>
-                <p><strong>مجال التخصص:</strong> الكيمياء، الطب، الفلسفة، الفلك</p>
-                <p><strong>الألقاب:</strong> أبو الكيمياء، الأستاذ الأعظم</p>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>إسهامات جابر بن حيان في الكيمياء</h2>
-            
-            <h3>التجارب العلمية والأجهزة</h3>
-            <p>اخترع جابر بن حيان العديد من الأجهزة المخبرية التي لا تزال تستخدم في المختبرات الحديثة، منها:</p>
-            <ul>
-                <li><strong>الإنبيق:</strong> جهاز للتقطير</li>
-                <li><strong>المِرقاة:</strong> جهاز للترشيح</li>
-                <li><strong>القرع:</strong> وعاء للتسخين</li>
-                <li><strong>الأمبيق:</strong> جهاز للتكثيف</li>
-            </ul>
-            
-            <h3>العمليات الكيميائية</h3>
-            <p>طور جابر بن حيان العديد من العمليات الكيميائية الأساسية:</p>
-            <ol>
-                <li><strong>التقطير:</strong> فصل السوائل حسب درجات غليانها</li>
-                <li><strong>التبلور:</strong> تنقية المواد الصلبة</li>
-                <li><strong>الترشيح:</strong> فصل المواد الصلبة عن السوائل</li>
-                <li><strong>التكليس:</strong> تسخين المواد لإزالة الرطوبة</li>
-                <li><strong>التصعيد:</strong> تحويل المواد الصلبة إلى بخار ثم إعادة تكثيفها</li>
-            </ol>
-            
-            <div class="quote">
-                "إن واجب المشتغل في الكيمياء هو العمل وإجراء التجارب، وإن المعرفة لا تحصل إلا بها."
-            </div>
-        </div>
-        
-        <div class="page-break"></div>
-        
-        <div class="section">
-            <h2>اكتشافات جابر بن حيان الكيميائية</h2>
-            
-            <h3>الأحماض والمعادن</h3>
-            <p>اكتشف جابر بن حيان العديد من الأحماض التي شكلت نقلة نوعية في الكيمياء، منها:</p>
-            <ul>
-                <li><strong>حمض النيتريك:</strong> (الماء الحاد)</li>
-                <li><strong>حمض الهيدروكلوريك:</strong> (روح الملح)</li>
-                <li><strong>حمض الكبريتيك:</strong> (زيت الزاج)</li>
-                <li><strong>ماء الذهب:</strong> (الماء الملكي)</li>
-            </ul>
-            
-            <p>كما درس خواص المعادن واستطاع تحضير العديد من المركبات الكيميائية مثل كبريتيد الزئبق وكربونات الرصاص.</p>
-            
-            <h3>نظرية الاتحاد الكيميائي</h3>
-            <p>طور جابر بن حيان نظرية الاتحاد الكيميائي التي تنص على أن المعادن تتكون من اتحاد الزئبق والكبريت بنسب مختلفة. وعلى الرغم من عدم دقة هذه النظرية من الناحية العلمية الحديثة، إلا أنها شكلت أساساً لفهم التفاعلات الكيميائية لقرون طويلة.</p>
-            
-            <div class="highlight">
-                <h3>منهج جابر بن حيان العلمي</h3>
-                <p>تميز جابر بن حيان بمنهجية علمية دقيقة تجمع بين النظرية والتطبيق. كان يؤكد دائماً على أهمية التجربة والمشاهدة الدقيقة، ورفض قبول النظريات دون اختبارها عملياً. هذا المنهج جعله يضع أساساً للكيمياء الحديثة يعتمد على التجريب والقياس الدقيق.</p>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>مؤلفات جابر بن حيان</h2>
-            <p>ألف جابر بن حيان ما يزيد عن 3000 مخطوطة وكتاب في مختلف فروع العلم، لكن لم يصلنا منها سوى بضع مئات. من أهم مؤلفاته:</p>
-            
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>اسم الكتاب</th>
-                            <th>المحتوى</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>كتاب الكيمياء (أو كتاب الرحمة)</td>
-                            <td>يشرح فيه أساسيات الكيمياء وعملياتها الرئيسية</td>
-                        </tr>
-                        <tr>
-                            <td>كتاب الموازين</td>
-                            <td>يتناول فيه النظريات الكيميائية ونظرية الاتحاد</td>
-                        </tr>
-                        <tr>
-                            <td>كتاب الخواص</td>
-                            <td>يبحث في خواص المواد والعناصر الكيميائية</td>
-                        </tr>
-                        <tr>
-                            <td>كتاب السموم ودفع مضارها</td>
-                            <td>أول كتاب منهجي في علم السموم وترياقها</td>
-                        </tr>
-                        <tr>
-                            <td>كتاب الأسرار</td>
-                            <td>يتناول العمليات الكيميائية السرية والتجارب</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <p>تمت ترجمة العديد من كتبه إلى اللاتينية في القرن الثاني عشر، وأثرت بشكل كبير على تطور الكيمياء في أوروبا خلال العصور الوسطى وعصر النهضة.</p>
-        </div>
-        
-        <div class="page-break"></div>
-        
-        <div class="section">
-            <h2>جابر بن حيان والعلوم الأخرى</h2>
-            
-            <h3>الطب والصيدلة</h3>
-            <p>كان لجابر بن حيان إسهامات كبيرة في مجال الطب والصيدلة، حيث طور العديد من الأدوية والعلاجات المستخلصة من النباتات والمعادن. كما وضع أسساً للكيمياء الصيدلانية من خلال تحضير المركبات الطبية بطرق علمية دقيقة.</p>
-            
-            <h3>الفلسفة</h3>
-            <p>كان جابر بن حيان فيلسوفاً بالإضافة إلى كونه عالماً، حيث جمع بين المنهج التجريبي والنظرة الفلسفية للطبيعة. تأثر بالفلاسفة اليونانيين لكنه أضاف إليها المنهج التجريبي الذي ميز الحضارة الإسلامية.</p>
-            
-            <h3>الفلك والرياضيات</h3>
-            <p>كان له إسهامات في الفلك والرياضيات، حيث درس حركة الكواكب وحاول ربط الظواهر الكيميائية بالظواهر الفلكية، كما طور نظريات في الهندسة والحساب.</p>
-            
-            <div class="highlight">
-                <h3>تأثير جابر بن حيان على العلم الحديث</h3>
-                <p>يعتبر جابر بن حيان أول من حول الكيمياء من مجال غامض قائم على الخرافات إلى علم تجريبي قائم على الملاحظة والتجربة. وضع الأسس التي بنى عليها العلماء اللاحقون مثل الرازي وابن سينا، ثم العلماء الأوروبيون مثل روبرت بويل وأنطوان لافوازييه.</p>
-            </div>
-        </div>
-        
-        <div class="section">
-            <h2>المنهج التجريبي عند جابر بن حيان</h2>
-            <p>يتميز منهج جابر بن حيان بالدقة والتنظيم، ويمكن تلخيصه في النقاط التالية:</p>
-            
-            <ol>
-                <li>الاعتماد على التجربة والمشاهدة كأساس للمعرفة</li>
-                <li>التوثيق الدقيق للنتائج والملاحظات</li>
-                <li>التكرار للتأكد من صحة النتائج</li>
-                <li>القياس الكمي واستخدام الموازين الدقيقة</li>
-                <li>تصنيف المواد والتفاعلات بشكل منهجي</li>
-                <li>الربط بين النظرية والتطبيق</li>
-                <li>الاهتمام بالدقة في الوصف والتسمية</li>
-            </ol>
-            
-            <p>هذا المنهج العلمي الدقيق جعل من جابر بن حيان رائداً للمنهج العلمي الحديث الذي ظهر لاحقاً في أوروبا خلال عصر النهضة.</p>
-        </div>
-        
-        <div class="page-break"></div>
-        
-        <div class="section">
-            <h2>إسهامات أخرى</h2>
-            
-            <h3>في الصناعة</h3>
-            <p>ساهم جابر بن حيان في تطوير العديد من الصناعات مثل:</p>
-            <ul>
-                <li>صناعة الزجاج وتلوينه</li>
-                <li>صناعة الحبر والمقاوم للرطوبة</li>
-                <li>صناعة السبائك المعدنية</li>
-                <li>تحضير المواد المقاومة للصدأ</li>
-                <li>صناعة العطور والمركبات العطرية</li>
-            </ul>
-            
-            <h3>في التصنيف العلمي</h3>
-            <p>قام جابر بن حيان بتصنيف المواد إلى:</p>
-            <ul>
-                <li><strong>الأجسام:</strong> المعادن مثل الذهب والفضة</li>
-                <li><strong>الأرواح:</strong> المواد المتطايرة مثل الكبريت والزئبق</li>
-                <li><strong>الأحجار:</strong> المواد غير القابلة للطرق والسحب</li>
-                <li><strong>الزاجات:</strong> الأملاح القابلة للذوبان</li>
-            </ul>
-        </div>
-        
-        <div class="conclusion">
-            <h2>خاتمة</h2>
-            <p>يُعتبر جابر بن حيان بحق مؤسس علم الكيمياء الحديثة، حيث حول هذا العلم من مجرد حرفة تقوم على المحاولة والخطأ إلى علم قائم على التجربة والملاحظة الدقيقة. كانت إسهاماته العلمية أساساً لتطور الكيمياء عبر العصور، ولا تزال العديد من مبادئه وأجهزته مستخدمة حتى اليوم.</p>
-            
-            <p>لم يقتصر تأثير جابر بن حيان على الكيمياء فقط، بل امتد إلى الطب والصيدلة والفلسفة والعلوم الأخرى. يبقى نموذجاً للعالم المسلم الذي جمع بين المعرفة النظرية والتطبيق العملي، وساهم في إثراء الحضارة الإنسانية بمنهجه العلمي الرصين.</p>
-            
-            <p>إن دراسة حياة وإسهامات جابر بن حيان تذكرنا بأهمية المنهج العلمي القائم على التجربة والملاحظة، وتؤكد على الدور الحضاري الذي لعبته الأمة الإسلامية في تطور العلوم والمعرفة الإنسانية.</p>
-        </div>
-        
-        <footer>
-            بحث حول مؤسس علم الكيمياء الحديثة - جابر بن حيان
-        </footer>
+  <div class="container">
+    <div class="controls">
+      <button class="print-btn" onclick="printPage()">🖨️ طباعة الصفحة (A4)</button>
     </div>
 
-    <script>
-        // تأكد من أن الصفحة جاهزة للطباعة
-        document.addEventListener('DOMContentLoaded', function() {
-            // تعديل تنسيقات الطباعة لضمان عدم تجاوز المحتوى للصفحة
-            const style = document.createElement('style');
-            style.innerHTML = `
-                @media print {
-                    body * {
-                        visibility: hidden;
-                    }
-                    .a4-container, .a4-container * {
-                        visibility: visible;
-                    }
-                    .a4-container {
-                        position: absolute;
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                    }
-                    
-                    /* منع انقسام العناصر بين الصفحات */
-                    h1, h2, h3, h4, h5, h6, p, ul, ol, blockquote, table, .section, .highlight, .info-box, .conclusion {
-                        page-break-inside: avoid;
-                    }
-                    
-                    /* ضبط الهوامش الداخلية للطباعة */
-                    .a4-container {
-                        padding: 1.5cm !important;
-                    }
-                }
-            `;
-            document.head.appendChild(style);
-        });
-    </script>
+    <header>
+      <h1>إذاعة مدرسية: اليوم العالمي للعصا البيضاء</h1>
+      <div class="subtitle">نص مُعد لتلاوة المقدم — كل فقرة مسبوقة باسم الطالب (اضغط لتعديل الاسم)</div>
+    </header>
+
+    <section>
+      <span class="label">📖 المقدمة:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true" aria-label="اسم الطالب">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        بسم الله الرحمن الرحيم<br/>
+        الحمد لله الذي علم الإنسان ما لم يعلم، وفضّل بعضنا على بعض درجات، والصلاة والسلام على سيدنا محمدٍ خير من علّم وأرشد وهذّب.<br/>
+        أما بعد…<br/>
+        مديرنا الفاضل، معلمونا الكرام، زملاؤنا الأعزاء…<br/>
+        السلام عليكم ورحمة الله وبركاته.<br/>
+        يسرّنا أن نقدم لكم إذاعتنا لهذا اليوم بعنوان <strong>“اليوم العالمي للعصا البيضاء”</strong>، هذا اليوم الذي نعبّر فيه عن تقديرنا واحترامنا للمكفوفين وضعاف البصر، فهم رمز للإرادة والقوة والتحدي.
+      </p>
+    </section>
+
+    <section>
+      <span class="label">🌿 فقرة القرآن الكريم:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        والآن نترككم مع آياتٍ من كتاب الله الكريم، يتلوها علينا الطالب <strong>(يُذكر اسم الطالب)</strong>.<br/>
+        <em>﴿ فَإِنَّهَا لَا تَعْمَى الْأَبْصَارُ وَلَٰكِن تَعْمَى الْقُلُوبُ الَّتِي فِي الصُّدُورِ ﴾</em><br/>
+        <strong>صدق الله العظيم.</strong>
+      </p>
+      <div class="small"><strong>📢 بعد الفقرة:</strong> صدق الله العظيم، جزى الله القارئ خيرًا.</div>
+    </section>
+
+    <section>
+      <span class="label">🌼 فقرة الحديث الشريف:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        والآن مع حديثٍ نبويٍّ شريف، يقدمه لنا الطالب <strong>(يُذكر اسم الطالب)</strong>.<br/>
+        “إن الله لا ينظر إلى صوركم وأموالكم، ولكن ينظر إلى قلوبكم وأعمالكم.” — رواه مسلم.
+      </p>
+      <div class="small"><strong>📢 بعد الفقرة:</strong> بارك الله فيك، ونسأل الله أن يجعلنا من الذين يعملون بأقوال نبيهم ﷺ.</div>
+    </section>
+
+    <section>
+      <span class="label">💬 فقرة الكلمة:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        في كل عام يحتفل العالم في <strong>15 أكتوبر</strong> باليوم العالمي للعصا البيضاء، وهو يوم مخصص لدعم المكفوفين والتوعية بحقوقهم.
+        العصا البيضاء ليست مجرد أداة يستخدمها الكفيف، بل هي رمز للثقة والاستقلال والكرامة.
+        علينا أن نتعلم كيف نتعامل مع الكفيف باحترام، وأن نساعده بطريقة لبقة عندما يحتاج إلى المساعدة، دون أن نشعره بالشفقة.
+        فقد يفقد الإنسان بصره، لكنه لا يفقد بصيرته ولا إرادته.
+      </p>
+      <div class="small"><strong>📢 بعد الفقرة:</strong> شكرًا للطالب على هذه الكلمة المعبرة.</div>
+    </section>
+
+    <section>
+      <span class="label">🎵 فقرة شعرية:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        قال الشاعر:<br/>
+        وما ضعفُ من ضاعَ البصرْ 🌤️<br/>
+        ولكنَّ مَن ضلَّ الفكرْ<br/>
+        فبالعزمِ والإيمانِ نحيا ✨<br/>
+        ويشرقُ في القلبِ النورُ والبصرْ
+      </p>
+      <div class="small"><strong>📢 بعد الفقرة:</strong> شكرًا على هذا الإلقاء الجميل.</div>
+    </section>
+
+    <section>
+      <span class="label">💡 فقرة معلومات سريعة:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <ul class="small">
+        <li>العصا البيضاء تُستخدم لتمييز المكفوفين أثناء سيرهم في الطريق.</li>
+        <li>اللون الأبيض يرمز للنقاء والسلام.</li>
+        <li>تم الاعتراف باليوم العالمي للعصا البيضاء رسميًا عام 1964م.</li>
+        <li>من واجبنا احترام الكفيف وترك مساحة آمنة له أثناء سيره.</li>
+      </ul>
+      <div class="small"><strong>📢 بعد الفقرة:</strong> معلومات مفيدة ورائعة، شكرًا لك.</div>
+    </section>
+
+    <section>
+      <span class="label">🕊️ الخاتمة:</span>
+      <div>
+        <strong>📢 الطالب:</strong>
+        <span class="name" contenteditable="true">اكتب اسم الطالب هنا</span>
+      </div>
+      <p class="small">
+        وفي ختام إذاعتنا لهذا اليوم…<br/>
+        دعونا نتذكر دائمًا أن القوة ليست في النظر، بل في الإصرار والأمل والعزيمة.<br/>
+        فلنكن عونًا ودعمًا لكل من فقد بصره، ولنتعلم أن نتعامل معهم بوعي ورحمة.<br/>
+        شكرًا لحسن استماعكم، والسلام عليكم ورحمة الله وبركاته. 🤍
+      </p>
+    </section>
+
+    <footer style="text-align:center; font-size:11pt; color:#666; margin-top:6mm;">
+      — تم التحضير للطباعة بصيغة A4 —<br/>
+      (اضغط على اسم الطالب لتعديله قبل الطباعة)
+    </footer>
+  </div>
+
+  <script>
+    function printPage() {
+      // إخفاء التركيز من الحقول قبل الطباعة (Safari sometimes shows caret)
+      document.activeElement.blur?.();
+      // Safari sometimes needs a small delay to render correct print layout
+      setTimeout(function(){ window.print(); }, 150);
+    }
+
+    // منع إضافة سطر جديد عند الضغط Enter داخل حقل الاسم (يحافظ على سطر واحد)
+    document.querySelectorAll('.name').forEach(function(el){
+      el.addEventListener('keydown', function(e){
+        if(e.key === 'Enter') {
+          e.preventDefault();
+          el.blur();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
