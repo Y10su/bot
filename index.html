@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بحث عن المعادن</title>
+    <title>بحث حول مؤسس علم الكيمياء</title>
     <style>
         /* تنسيقات عامة */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial', 'Segoe UI', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -20,550 +20,305 @@
             padding: 20px;
         }
         
-        /* تنسيق الصفحات */
-        .page {
-            background: white;
-            width: 21cm;
+        /* تنسيق الصفحة بحجم A4 */
+        .a4-container {
+            max-width: 21cm;
             min-height: 29.7cm;
-            margin: 0 auto 20px auto;
-            padding: 2cm;
+            margin: 0 auto;
+            background: white;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            padding: 2.5cm;
             position: relative;
-            page-break-after: always;
         }
         
-        /* تنسيق العنوان الرئيسي */
-        h1 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 30px;
-            font-size: 28px;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+        /* تنسيقات الطباعة */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .a4-container {
+                box-shadow: none;
+                padding: 2cm;
+                margin: 0;
+                max-width: none;
+                min-height: auto;
+            }
+            
+            .print-btn {
+                display: none;
+            }
+            
+            .page-break {
+                page-break-after: always;
+            }
         }
         
-        h2 {
-            color: #2980b9;
-            margin: 20px 0 15px 0;
-            font-size: 22px;
-            border-right: 4px solid #3498db;
-            padding-right: 10px;
-        }
-        
-        h3 {
-            color: #16a085;
-            margin: 15px 0 10px 0;
-            font-size: 18px;
-        }
-        
-        /* تنسيق النصوص */
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-            font-size: 16px;
-        }
-        
-        ul, ol {
-            margin: 15px 0;
-            padding-right: 30px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        /* تنسيق الجداول */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: right;
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-            font-weight: bold;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        
-        /* تنسيق الصفحة الأولى */
-        .first-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
-        
-        .first-page h1 {
-            font-size: 36px;
-            margin-bottom: 40px;
-            color: #2c3e50;
-            border: none;
-        }
-        
-        .first-page .info {
-            margin-top: 50px;
-            font-size: 18px;
-            line-height: 2;
-        }
-        
-        /* تنسيق الصفحة الأخيرة */
-        .last-page {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        .references {
-            margin-top: 30px;
-        }
-        
-        .references h2 {
-            margin-bottom: 20px;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 50px;
-            padding-top: 20px;
-            border-top: 1px solid #ddd;
-        }
-        
-        /* تنسيق الأرقام الصفحات */
-        .page-number {
-            position: absolute;
-            bottom: 1cm;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 14px;
-            color: #7f8c8d;
-        }
-        
-        /* تنسيق زر الطباعة */
-        .print-button {
+        /* زر الطباعة */
+        .print-btn {
             position: fixed;
             top: 20px;
             left: 20px;
-            background-color: #3498db;
+            background: #2c5e8c;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 10px 15px;
+            border-radius: 4px;
             cursor: pointer;
             font-size: 16px;
             z-index: 1000;
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
         
-        .print-button:hover {
-            background-color: #2980b9;
+        .print-btn:hover {
+            background: #1e4266;
         }
         
-        /* إخفاء زر الطباعة عند الطباعة */
-        @media print {
-            .print-button {
-                display: none;
-            }
-            
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .page {
-                box-shadow: none;
-                margin: 0;
-            }
-        }
-        
-        /* تنسيق الصور */
-        .image-container {
+        /* تنسيقات المحتوى */
+        header {
             text-align: center;
-            margin: 20px 0;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2c5e8c;
+            padding-bottom: 20px;
         }
         
-        .image-container img {
-            max-width: 100%;
-            height: auto;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        h1 {
+            color: #2c5e8c;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
         
-        .image-caption {
-            font-style: italic;
-            margin-top: 5px;
-            color: #7f8c8d;
-            font-size: 14px;
+        h2 {
+            color: #2c5e8c;
+            font-size: 22px;
+            margin: 20px 0 15px;
+            border-right: 3px solid #2c5e8c;
+            padding-right: 10px;
         }
         
-        /* تنسيق الاقتباسات */
-        blockquote {
-            background-color: #f9f9f9;
-            border-right: 5px solid #3498db;
-            margin: 20px 0;
-            padding: 15px;
-            font-style: italic;
+        h3 {
+            color: #2c5e8c;
+            font-size: 18px;
+            margin: 15px 0 10px;
         }
         
-        /* تنسيق الكلمات المهمة */
-        .keyword {
-            background-color: #e1f5fe;
-            padding: 2px 5px;
-            border-radius: 3px;
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            font-size: 16px;
+        }
+        
+        .intro {
+            font-size: 18px;
             font-weight: bold;
+            color: #444;
+            margin-bottom: 25px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .highlight {
+            background-color: #e8f4ff;
+            padding: 15px;
+            border-right: 3px solid #2c5e8c;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        ul, ol {
+            margin-right: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .quote {
+            font-style: italic;
+            color: #555;
+            border-right: 2px solid #ccc;
+            padding-right: 15px;
+            margin: 15px 0;
+        }
+        
+        .conclusion {
+            background-color: #f9f9f9;
+            padding: 20px;
+            border-radius: 4px;
+            margin-top: 30px;
+            border: 1px solid #ddd;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #ddd;
+            color: #666;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <button class="print-button" onclick="window.print()">طباعة البحث PDF</button>
-
-    <!-- الصفحة الأولى -->
-    <div class="page first-page">
-        <h1>بحث عن المعادن</h1>
-        <div class="image-container">
-            <!-- صورة رمزية للمعادن -->
-            <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="50" width="100" height="100" fill="#95a5a6" stroke="#7f8c8d" stroke-width="2"/>
-                <polygon points="70,70 130,70 150,100 130,130 70,130 50,100" fill="#3498db" stroke="#2980b9" stroke-width="2"/>
-                <circle cx="100" cy="100" r="30" fill="#e74c3c" stroke="#c0392b" stroke-width="2"/>
-                <rect x="85" y="85" width="30" height="30" fill="#f1c40f" stroke="#f39c12" stroke-width="2"/>
-            </svg>
-        </div>
-        <div class="info">
-            <p>مقدم من: عبدالله عمر</p>
-            <p>الصف: 304</p>
-            <p>المادة: علوم الأرض</p>
-            <p>التاريخ: ١٤٤٥/٠٦/١٥</p>
-        </div>
-        <div class="page-number">١</div>
-    </div>
-
-    <!-- الصفحة الثانية -->
-    <div class="page">
-        <h1>المقدمة</h1>
-        <p>تعتبر <span class="keyword">المعادن</span> من أهم الثروات الطبيعية التي وهبها الله تعالى للإنسان، فهي أساس التطور الصناعي والاقتصادي في العالم. وتلعب المعادن دوراً حيوياً في حياتنا اليومية، حيث تدخل في صناعة几乎所有 المنتجات التي نستخدمها، من الهواتف الذكية إلى السيارات والمباني.</p>
+    <button class="print-btn" onclick="window.print()">طباعة البحث PDF</button>
+    
+    <div class="a4-container">
+        <header>
+            <h1>جابر بن حيان: مؤسس علم الكيمياء الحديثة</h1>
+        </header>
         
-        <p>يوجد في الطبيعة أكثر من ٥٠٠٠ نوع من المعادن، ولكن فقط حوالي ١٠٠ نوع منها شائع الاستخدام. وتختلف المعادن في خصائصها الفيزيائية والكيميائية، مما يجعل كل معدن فريداً في استعمالاته وتطبيقاته.</p>
-        
-        <h2>أهمية دراسة المعادن</h2>
-        <p>تكتسب دراسة المعادن أهمية كبيرة للأسباب التالية:</p>
-        <ul>
-            <li>المعادن أساسية للصناعة والتكنولوجيا الحديثة</li>
-            <li>تساهم في النمو الاقتصادي للدول</li>
-            <li>توفير فرص عمل في قطاع التعدين والصناعات المرتبطة</li>
-            <li>المساهمة في تحقيق الأمن الوطني من خلال توفير المواد الخام الاستراتيجية</li>
-        </ul>
-        
-        <div class="image-container">
-            <!-- صورة رمزية للتعدين -->
-            <svg width="300" height="150" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="80" width="200" height="40" fill="#7f8c8d"/>
-                <rect x="100" y="60" width="100" height="20" fill="#95a5a6"/>
-                <polygon points="120,60 180,60 200,80 100,80" fill="#bdc3c7"/>
-                <circle cx="130" cy="100" r="8" fill="#34495e"/>
-                <circle cx="170" cy="100" r="8" fill="#34495e"/>
-            </svg>
-            <div class="image-caption">رسم تخطيطي يوضح عملية التعدين</div>
+        <div class="intro">
+            يُعتبر جابر بن حيان من أعظم علماء العصر الذهبي للإسلام، وأول من وضع أسس المنهج العلمي التجريبي في الكيمياء. أطلق عليه العديد من الألقاب مثل "أبو الكيمياء" و"الأستاذ الأعظم"، حيث أسس قواعد هذا العلم ورفعه من مجرد حرفة إلى علم قائم بذاته.
         </div>
         
-        <div class="page-number">٢</div>
-    </div>
-
-    <!-- الصفحة الثالثة -->
-    <div class="page">
-        <h1>تعريف المعادن وخصائصها</h1>
-        
-        <h2>تعريف المعادن</h2>
-        <p>يمكن تعريف <span class="keyword">المعدن</span> بأنه مادة صلبة طبيعية غير عضوية، لها تركيب كيميائي محدد وتركيب بلوري منتظم. وتتشكل المعادن في الطبيعة من خلال عمليات جيولوجية مختلفة.</p>
-        
-        <h2>الخصائص الأساسية للمعادن</h2>
-        
-        <h3>١. البنية البلورية</h3>
-        <p>تتميز المعادن بوجود ترتيب ذري منتظم يشكل ما يعرف بالبنية البلورية. وهناك سبعة أنظمة بلورية رئيسية تختلف في أطوال المحاور البلورية والزوايا بينها.</p>
-        
-        <h3>٢. الخواص الفيزيائية</h3>
-        <ul>
-            <li><strong>اللمعان:</strong> قدرة المعدن على عكس الضوء</li>
-            <li><strong>الصلابة:</strong> مقاومة المعدن للخدش</li>
-            <li><strong>الانفصام:</strong> قابلية المعدن للانكسار على طول مستويات معينة</li>
-            <li><strong>اللون:</strong> قد يكون اللون خاصية مميزة للمعدن</li>
-            <li><strong>الوزن النوعي:</strong> كثافة المعدن مقارنة بكثافة الماء</li>
-        </ul>
-        
-        <h3>٣. الخواص الكيميائية</h3>
-        <p>تتعلق الخواص الكيميائية للمعادن بقدرتها على التفاعل مع العناصر الأخرى وتكوين مركبات جديدة. وتختلف المعادن في نشاطها الكيميائي، فبعضها شديد التفاعل مثل الصوديوم، وبعضها خامل مثل الذهب.</p>
-        
-        <table>
-            <tr>
-                <th>المعدن</th>
-                <th>الصلابة (مقياس موس)</th>
-                <th>الوزن النوعي</th>
-                <th>الانفصام</th>
-            </tr>
-            <tr>
-                <td>الذهب</td>
-                <td>2.5-3</td>
-                <td>19.3</td>
-                <td>لا يوجد</td>
-            </tr>
-            <tr>
-                <td>الماس</td>
-                <td>10</td>
-                <td>3.5</td>
-                <td>ممتاز</td>
-            </tr>
-            <tr>
-                <td>الكوارتز</td>
-                <td>7</td>
-                <td>2.65</td>
-                <td>ضعيف</td>
-            </tr>
-            <tr>
-                <td>الجبس</td>
-                <td>2</td>
-                <td>2.3</td>
-                <td>جيد</td>
-            </tr>
-        </table>
-        
-        <div class="page-number">٣</div>
-    </div>
-
-    <!-- الصفحة الرابعة -->
-    <div class="page">
-        <h1>تصنيف المعادن</h1>
-        
-        <p>يمكن تصنيف المعادن بعدة طرق حسب الخصائص المشتركة بينها. وأهم طرق التصنيف هي:</p>
-        
-        <h2>١. التصنيف حسب التركيب الكيميائي</h2>
-        <p>يعتمد هذا التصنيف على العناصر الكيميائية المكونة للمعدن، وينقسم إلى:</p>
-        
-        <h3>أ. المعادن العنصرية</h3>
-        <p>تتكون من عنصر واحد فقط، مثل الذهب والفضة والنحاس والكبريت.</p>
-        
-        <h3>ب. المعادن الكبريتيدية</h3>
-        <p>تتكون من اتحاد الكبريت مع عنصر آخر، مثل الجالينا (كبريتيد الرصاص) والبيريت (كبريتيد الحديد).</p>
-        
-        <h3>ج. المعادن الأكاسيد</h3>
-        <p>تتكون من اتحاد الأكسجين مع عنصر آخر، مثل الهيماتيت (أكسيد الحديد) والكوراندوم (أكسيد الألومنيوم).</p>
-        
-        <h3>د. المعادن الكربونات</h3>
-        <p>تتكون من اتحاد مجموعة الكربونات مع عنصر، مثل الكالسيت (كربونات الكالسيوم) والدولوميت (كربونات الكالسيوم والمغنيسيوم).</p>
-        
-        <h2>٢. التصنيف حسب الاستخدام</h2>
-        <p>ينقسم هذا التصنيف إلى:</p>
-        
-        <h3>أ. المعادن الفلزية</h3>
-        <p>وتشمل الحديد والنحاس والألومنيوم والذهب والفضة وغيرها، وتستخدم في الصناعات المختلفة.</p>
-        
-        <h3>ب. المعادن اللافلزية</h3>
-        <p>وتشمل الفوسفات والكبريت والملح الصخري وغيرها، وتستخدم في الصناعات الكيميائية والزراعة.</p>
-        
-        <h3>ج. معادن الطاقة</h3>
-        <p>وتشمل الفحم الحجري والنفط والغاز الطبيعي واليورانيوم.</p>
-        
-        <blockquote>
-            "التصنيف العلمي للمعادن يساعد في فهم خصائصها وتوقع سلوكها في مختلف الظروف، مما يسهل عملية استخراجها واستخدامها بشكل أمثل."
-        </blockquote>
-        
-        <div class="page-number">٤</div>
-    </div>
-
-    <!-- الصفحة الخامسة -->
-    <div class="page">
-        <h1>استخراج المعادن وتجهيزها</h1>
-        
-        <h2>طرق استخراج المعادن</h2>
-        
-        <h3>١. التعدين السطحي</h3>
-        <p>يستخدم عندما تكون الرواسب قريبة من سطح الأرض، ويشمل:</p>
-        <ul>
-            <li>التعدين بالحفرة المفتوحة</li>
-            <li>التعدين بالجرف</li>
-            <li>التعدين بالنضح</li>
-        </ul>
-        
-        <h3>٢. التعدين تحت الأرضي</h3>
-        <p>يستخدم عندما تكون الرواسب عميقة تحت سطح الأرض، ويشمل:</p>
-        <ul>
-            <li>التعدين بالأنفاق</li>
-            <li>التعدين بالحجرة والعمود</li>
-            <li>التعدين بالانحدار</li>
-        </ul>
-        
-        <h2>تجهيز المعادن</h2>
-        <p>بعد استخراج الخام، يمر بعدة عمليات لتجهيزه للاستخدام:</p>
-        
-        <h3>١. التكسير والطحن</h3>
-        <p>يتم تكسير الصخور الكبيرة إلى قطع صغيرة ثم طحنها إلى مسحوق ناعم.</p>
-        
-        <h3>٢. الفصل</h3>
-        <p>يفصل المعدن المرغوب فيه عن الشوائب باستخدام طرق مختلفة مثل:</p>
-        <ul>
-            <li>الفصل بالجاذبية</li>
-            <li>الفصل المغناطيسي</li>
-            <li>التعويم</li>
-        </ul>
-        
-        <h3>٣. التحميص والصهر</h3>
-        <p>تستخدم الحرارة لفصل المعدن عن الشوائب وتحويله إلى حالة نقية.</p>
-        
-        <h3>٤. التنقية</h3>
-        <p>تستخدم طرق كيميائية أو كهربائية لتنقية المعدن وزيادة درجة نقاوته.</p>
-        
-        <div class="image-container">
-            <!-- رسم تخطيطي لعملية استخراج المعادن -->
-            <svg width="300" height="200" viewBox="0 0 300 200" xmlns="http://www.w3.org/2000/svg">
-                <rect x="50" y="150" width="200" height="30" fill="#7f5539"/>
-                <rect x="100" y="120" width="100" height="30" fill="#9c6644"/>
-                <rect x="120" y="90" width="60" height="30" fill="#b07d62"/>
-                <polygon points="140,90 160,90 170,70 130,70" fill="#d4a574"/>
-                <circle cx="150" cy="60" r="20" fill="#e76f51"/>
-                <path d="M150,40 L150,20 M140,30 L160,30" stroke="#e76f51" stroke-width="3"/>
-            </svg>
-            <div class="image-caption">رسم تخطيطي يوضح مراحل استخراج وتجهيز المعادن</div>
+        <div class="section">
+            <h2>حياة جابر بن حيان</h2>
+            <p>ولد جابر بن حيان بن عبد الله الأزدي عام 721 ميلادية في مدينة طوس بخراسان (إيران حالياً). نشأ في عائلة متعلمة، حيث كان والده صيدلانياً، مما أتاح له فرصة التعلم منذ صغره. انتقل إلى الكوفة في العراق حيث قضى معظم حياته وتوفي فيها حوالي عام 815 ميلادية.</p>
+            
+            <p>كان جابر بن حيان تلميذاً للإمام جعفر الصادق، وتأثر به كثيراً في منهجه العلمي والفكري. كما كان مرتبطاً ببيت الحكمة في بغداد، الذي كان مركزاً علمياً مهماً في ذلك العصر.</p>
+            
+            <div class="highlight">
+                <h3>منهج جابر بن حيان العلمي</h3>
+                <p>تميز جابر بن حيان بمنهجية علمية دقيقة تجمع بين النظرية والتطبيق. كان يؤكد دائماً على أهمية التجربة والمشاهدة الدقيقة، ورفض قبول النظريات دون اختبارها عملياً. هذا المنهج جعله يضع أساساً للكيمياء الحديثة يعتمد على التجريب والقياس الدقيق.</p>
+            </div>
         </div>
         
-        <div class="page-number">٥</div>
-    </div>
-
-    <!-- الصفحة السادسة -->
-    <div class="page">
-        <h1>استخدامات المعادن وأهميتها الاقتصادية</h1>
-        
-        <h2>الاستخدامات الرئيسية للمعادن</h2>
-        
-        <h3>١. في الصناعة</h3>
-        <ul>
-            <li>الحديد: صناعة السيارات والمباني والجسور</li>
-            <li>الألومنيوم: صناعة الطائرات وعلب المشروبات</li>
-            <li>النحاس: صناعة الأسلاك الكهربائية والأنابيب</li>
-            <li>الزنك: طلاء المعادن لمنع الصدأ</li>
-        </ul>
-        
-        <h3>٢. في البناء</h3>
-        <p>تستخدم المعادن بشكل واسع في البناء، مثل الحديد في الخرسانة المسلحة، والألومنيوم في النوافذ والأبواب، والنحاس في أسقف المباني.</p>
-        
-        <h3>٣. في الإلكترونيات</h3>
-        <p>تدخل المعادن في صناعة جميع الأجهزة الإلكترونية، مثل الذهب في الدوائر المتكاملة، والفضة في التوصيلات، والنحاس في الأسلاك.</p>
-        
-        <h3>٤. في الطب</h3>
-        <p>تستخدم بعض المعادن في المجال الطبي، مثل التيتانيوم في زراعة العظام، والفضة في المضادات الحيوية، والذهب في علاج بعض الأمراض.</p>
-        
-        <h2>الأهمية الاقتصادية للمعادن</h2>
-        
-        <p>تلعب المعادن دوراً حيوياً في الاقتصاد العالمي للأسباب التالية:</p>
-        <ul>
-            <li>تشكل أساس الصناعات التحويلية</li>
-            <li>تساهم في الناتج المحلي للدول الغنية بالمعادن</li>
-            <li>توفير فرص عمل مباشرة وغير مباشرة</li>
-            <li>المساهمة في تحقيق الأمن القومي من خلال توفير المواد الخام الاستراتيجية</li>
-        </ul>
-        
-        <table>
-            <tr>
-                <th>المعدن</th>
-                <th>أهم الدول المنتجة</th>
-                <th>الاستخدامات الرئيسية</th>
-            </tr>
-            <tr>
-                <td>الحديد</td>
-                <td>الصين، أستراليا، البرازيل</td>
-                <td>البناء، السيارات، الصناعات</td>
-            </tr>
-            <tr>
-                <td>النحاس</td>
-                <td>تشيلي، الصين، بيرو</td>
-                <td>الأسلاك الكهربائية، الأنابيب</td>
-            </tr>
-            <tr>
-                <td>الألومنيوم</td>
-                <td>الصين، روسيا، كندا</td>
-                <td>الطائرات، التغليف، البناء</td>
-            </tr>
-            <tr>
-                <td>الذهب</td>
-                <td>الصين، أستراليا، روسيا</td>
-                <td>المجوهرات، الاستثمار، الإلكترونيات</td>
-            </tr>
-        </table>
-        
-        <div class="page-number">٦</div>
-    </div>
-
-    <!-- الصفحة السابعة -->
-    <div class="page last-page">
-        <h1>المصادر والمراجع</h1>
-        
-        <div class="references">
-            <h2>المراجع العربية</h2>
+        <div class="section">
+            <h2>إسهامات جابر بن حيان في الكيمياء</h2>
+            
+            <h3>التجارب العلمية والأجهزة</h3>
+            <p>اخترع جابر بن حيان العديد من الأجهزة المخبرية التي لا تزال تستخدم في المختبرات الحديثة، منها:</p>
+            <ul>
+                <li>الإنبيق: جهاز للتقطير</li>
+                <liالمِرقاة: جهاز للترشيح</li>
+                <li>القرع: وعاء للتسخين</li>
+                <li>الأمبيق: جهاز للتكثيف</li>
+            </ul>
+            
+            <h3>العمليات الكيميائية</h3>
+            <p>طور جابر بن حيان العديد من العمليات الكيميائية الأساسية:</p>
             <ol>
-                <li>الجهني، أحمد. (٢٠٢٠). "علم المعادن: الأسس والتطبيقات". دار الكتب العلمية.</li>
-                <li>الغامدي، محمد. (٢٠١٨). "الثروة المعدنية في المملكة العربية السعودية". وزارة الطاقة والصناعة والثروة المعدنية.</li>
-                <li>العتيبي، فهد. (٢٠١٩). "الجيولوجيا الاقتصادية والمعادن". مكتبة العبيكان.</li>
+                <li>التقطير: فصل السوائل حسب درجات غليانها</li>
+                <li>التبلور: تنقية المواد الصلبة</li>
+                <li>الترشيح: فصل المواد الصلبة عن السوائل</li>
+                <li>التكليس: تسخين المواد لإزالة الرطوبة</li>
             </ol>
             
-            <h2>المراجع الأجنبية</h2>
+            <div class="quote">
+                "إن واجب المشتغل في الكيمياء هو العمل وإجراء التجارب، وإن المعرفة لا تحصل إلا بها."
+            </div>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <div class="section">
+            <h2>اكتشافات جابر بن حيان الكيميائية</h2>
+            
+            <h3>الأحماض والمعادن</h3>
+            <p>اكتشف جابر بن حيان العديد من الأحماض التي شكلت نقلة نوعية في الكيمياء، منها:</p>
+            <ul>
+                <li>حمض النيتريك (الماء الحاد)</li>
+                <li>حمض الهيدروكلوريك (روح الملح)</li>
+                <li>حمض الكبريتيك (زيت الزاج)</li>
+                <li>ماء الذهب (الماء الملكي)</li>
+            </ul>
+            
+            <p>كما درس خواص المعادن واستطاع تحضير العديد من المركبات الكيميائية مثل كبريتيد الزئبق وكربونات الرصاص.</p>
+            
+            <h3>نظرية الاتحاد الكيميائي</h3>
+            <p>طور جابر بن حيان نظرية الاتحاد الكيميائي التي تنص على أن المعادن تتكون من اتحاد الزئبق والكبريت بنسب مختلفة. وعلى الرغم من عدم دقة هذه النظرية من الناحية العلمية الحديثة، إلا أنها شكلت أساساً لفهم التفاعلات الكيميائية لقرون طويلة.</p>
+        </div>
+        
+        <div class="section">
+            <h2>مؤلفات جابر بن حيان</h2>
+            <p>ألف جابر بن حيان ما يزيد عن 3000 مخطوطة وكتاب في مختلف فروع العلم، لكن لم يصلنا منها سوى بضع مئات. من أهم مؤلفاته:</p>
+            
+            <ul>
+                <li>كتاب الكيمياء (أو كتاب الرحمة)</li>
+                <li>كتاب الموازين</li>
+                <li>كتاب الخواص</li>
+                <li>كتاب السموم ودفع مضارها</li>
+                <li>كتاب الأسرار</li>
+                <li>كتاب التدابير</li>
+            </ul>
+            
+            <p>تمت ترجمة العديد من كتبه إلى اللاتينية في القرن الثاني عشر، وأثرت بشكل كبير على تطور الكيمياء في أوروبا خلال العصور الوسطى وعصر النهضة.</p>
+            
+            <div class="highlight">
+                <h3>تأثير جابر بن حيان على العلم الحديث</h3>
+                <p>يعتبر جابر بن حيان أول من حول الكيمياء من مجال غامض قائم على الخرافات إلى علم تجريبي قائم على الملاحظة والتجربة. وضع الأسس التي بنى عليها العلماء اللاحقون مثل الرازي وابن سينا، ثم العلماء الأوروبيون مثل روبرت بويل وأنطوان لافوازييه.</p>
+            </div>
+        </div>
+        
+        <div class="page-break"></div>
+        
+        <div class="section">
+            <h2>جابر بن حيان والعلوم الأخرى</h2>
+            
+            <h3>الطب والصيدلة</h3>
+            <p>كان لجابر بن حيان إسهامات كبيرة في مجال الطب والصيدلة، حيث طور العديد من الأدوية والعلاجات المستخلصة من النباتات والمعادن. كما وضع أسساً للكيمياء الصيدلانية من خلال تحضير المركبات الطبية بطرق علمية دقيقة.</p>
+            
+            <h3>الفلسفة</h3>
+            <p>كان جابر بن حيان فيلسوفاً بالإضافة إلى كونه عالماً، حيث جمع بين المنهج التجريبي والنظرة الفلسفية للطبيعة. تأثر بالفلاسفة اليونانيين لكنه أضاف إليها المنهج التجريبي الذي ميز الحضارة الإسلامية.</p>
+            
+            <h3>الفلك والرياضيات</h3>
+            <p>كان له إسهامات في الفلك والرياضيات، حيث درس حركة الكواكب وحاول ربط الظواهر الكيميائية بالظواهر الفلكية، كما طور نظريات في الهندسة والحساب.</p>
+        </div>
+        
+        <div class="section">
+            <h2>المنهج التجريبي عند جابر بن حيان</h2>
+            <p>يتميز منهج جابر بن حيان بالدقة والتنظيم، ويمكن تلخيصه في النقاط التالية:</p>
+            
             <ol>
-                <li>Klein, C., & Dutrow, B. (2007). Manual of Mineral Science. John Wiley & Sons.</li>
-                <li>Evans, A. M. (1993). Ore Geology and Industrial Minerals: An Introduction. Blackwell Science.</li>
-                <li>Guilbert, J. M., & Park, C. F. (2007). The Geology of Ore Deposits. Waveland Press.</li>
+                <li>الاعتماد على التجربة والمشاهدة كأساس للمعرفة</li>
+                <li>التوثيق الدقيق للنتائج والملاحظات</li>
+                <li>التكرار للتأكد من صحة النتائج</li>
+                <li>القياس الكمي واستخدام الموازين الدقيقة</li>
+                <li>تصنيف المواد والتفاعلات بشكل منهجي</li>
+                <li>الربط بين النظرية والتطبيق</li>
             </ol>
             
-            <h2>المواقع الإلكترونية</h2>
-            <ol>
-                <li>هيئة المساحة الجيولوجية السعودية: www.gsi.gov.sa</li>
-                <li>الجمعية السعودية لعلوم الأرض: www.ssg.org.sa</li>
-                <li>موقع المعادن العالمية: www.minerals.net</li>
-            </ol>
+            <p>هذا المنهج العلمي الدقيق جعل من جابر بن حيان رائداً للمنهج العلمي الحديث الذي ظهر لاحقاً في أوروبا خلال عصر النهضة.</p>
         </div>
         
-        <div class="footer">
-            <p>إعداد: عبدالله عمر</p>
-            <p>الصف: ٣٠٤</p>
-            <p>جميع الحقوق محفوظة © ٢٠٢٣</p>
+        <div class="conclusion">
+            <h2>خاتمة</h2>
+            <p>يُعتبر جابر بن حيان بحق مؤسس علم الكيمياء الحديثة، حيث حول هذا العلم من مجرد حرفة تقوم على المحاولة والخطأ إلى علم قائم على التجربة والملاحظة الدقيقة. كانت إسهاماته العلمية أساساً لتطور الكيمياء عبر العصور، ولا تزال العديد من مبادئه وأجهزته مستخدمة حتى اليوم.</p>
+            
+            <p>لم يقتصر تأثير جابر بن حيان على الكيمياء فقط، بل امتد إلى الطب والصيدلة والفلسفة والعلوم الأخرى. يبقى نموذجاً للعالم المسلم الذي جمع بين المعرفة النظرية والتطبيق العملي، وساهم في إثراء الحضارة الإنسانية بمنهجه العلمي الرصين.</p>
         </div>
         
-        <div class="page-number">٧</div>
+        <footer>
+            بحث حول مؤسس علم الكيمياء الحديثة - جابر بن حيان
+        </footer>
     </div>
 
     <script>
-        // إضافة تأثيرات بسيطة عند التمرير
-        window.addEventListener('scroll', function() {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                const pageTop = page.getBoundingClientRect().top;
-                const pageBottom = page.getBoundingClientRect().bottom;
-                if (pageTop < window.innerHeight && pageBottom > 0) {
-                    page.style.opacity = 1;
-                    page.style.transform = 'translateY(0)';
-                }
-            });
-        });
-
-        // تهيئة الصفحات عند التحميل
+        // تأكد من أن الصفحة جاهزة للطباعة
         document.addEventListener('DOMContentLoaded', function() {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => {
-                page.style.opacity = 0;
-                page.style.transform = 'translateY(20px)';
-                page.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            });
-
-            // تفعيل التأثير بعد فترة قصيرة
-            setTimeout(() => {
-                window.dispatchEvent(new Event('scroll'));
-            }, 100);
+            // تعديل تنسيقات الطباعة لضمان عدم تجاوز المحتوى للصفحة
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @media print {
+                    body * {
+                        visibility: hidden;
+                    }
+                    .a4-container, .a4-container * {
+                        visibility: visible;
+                    }
+                    .a4-container {
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+                        width: 100%;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
         });
     </script>
 </body>
