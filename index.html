@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حل أسئلة الإدارة: التوجيه والقيادة</title>
+    <title>خرائط مفاهيمية للتوجيه</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -27,118 +27,6 @@
             .no-print {
                 display: none !important;
             }
-            
-            h1 {
-                font-size: 20pt;
-                margin-bottom: 0.8cm;
-                text-align: center;
-            }
-            
-            .side-heading {
-                font-size: 14pt;
-                margin: 0.4cm 0 0.3cm 0;
-                border-right: 4px solid #DC2626;
-                padding-right: 0.4cm;
-                font-weight: bold;
-                color: #991B1B;
-            }
-            
-            .sub-heading {
-                font-size: 12pt;
-                margin: 0.3cm 0 0.2cm 0;
-                font-weight: 600;
-                color: #374151;
-            }
-            
-            p {
-                margin-bottom: 0.3cm;
-                text-align: justify;
-            }
-            
-            table {
-                font-size: 9pt;
-                margin: 0.3cm 0;
-                border-collapse: collapse;
-                width: 100%;
-            }
-            
-            th, td {
-                border: 1px solid #ddd;
-                padding: 8px;
-                text-align: right;
-            }
-            
-            th {
-                background-color: #f2f2f2;
-            }
-            
-            .info-box {
-                margin: 0.2cm 0;
-                padding: 0.4cm;
-                page-break-inside: avoid;
-            }
-            
-            ul, ol {
-                margin: 0.15cm 0;
-            }
-            
-            li {
-                margin-bottom: 0.1cm;
-            }
-            
-            .answer-box {
-                background: #F0F9FF;
-                padding: 10px;
-                margin: 8px 0;
-                border-right: 3px solid #3B82F6;
-                border-radius: 5px;
-            }
-            
-            .concept-map {
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                margin: 20px 0;
-            }
-            
-            .map-node {
-                background: white;
-                border: 2px solid #3B82F6;
-                border-radius: 8px;
-                padding: 10px 15px;
-                margin: 8px;
-                text-align: center;
-                font-weight: 600;
-                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-                width: 180px;
-            }
-            
-            .map-connector {
-                width: 2px;
-                background: #3B82F6;
-                height: 20px;
-            }
-            
-            .map-row {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-            
-            .map-center {
-                background: #1E40AF;
-                color: white;
-            }
-            
-            .correct {
-                color: green;
-                font-weight: bold;
-            }
-            
-            .incorrect {
-                color: red;
-                font-weight: bold;
-            }
         }
         
         body {
@@ -157,51 +45,50 @@
             width: 100%;
         }
         
-        .side-heading {
-            border-right: 4px solid #DC2626;
-            padding-right: 15px;
-            margin: 20px 0 10px 0;
+        .student-name {
+            text-align: left;
+            color: #374151;
             font-weight: 600;
-            color: #991B1B;
+            margin-bottom: 20px;
             font-size: 18px;
         }
         
-        .sub-heading {
+        .concept-map-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .map-node {
+            background: white;
+            border: 2px solid #3B82F6;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 8px;
+            text-align: center;
             font-weight: 600;
-            color: #374151;
-            margin: 15px 0 8px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 200px;
         }
         
-        .info-box {
-            background: #FEF2F2;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #EF4444;
-            border-radius: 8px 0 0 8px;
+        .map-connector {
+            width: 2px;
+            background: #3B82F6;
+            height: 25px;
         }
         
-        .highlight-box {
-            background: #F0F9FF;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #3B82F6;
-            border-radius: 8px 0 0 8px;
+        .map-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
         
-        .warning-box {
-            background: #FFFBEB;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #F59E0B;
-            border-radius: 8px 0 0 8px;
-        }
-        
-        .answer-box {
-            background: #F0F9FF;
-            padding: 12px;
-            margin: 10px 0;
-            border-right: 3px solid #3B82F6;
-            border-radius: 5px;
+        .map-center {
+            background: #1E40AF;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
         }
         
         .design-2 .main-title {
@@ -209,33 +96,9 @@
             border-bottom: 3px solid #3B82F6;
         }
         
-        .design-2 .side-heading {
-            border-right: 4px solid #3B82F6;
-            color: #1E40AF;
-        }
-        
-        .design-2 .info-box {
-            background: #F0F9FF;
-            border-right: 3px solid #3B82F6;
-        }
-        
-        .design-2 .highlight-box {
-            background: #ECFDF5;
-            border-right: 3px solid #10B981;
-        }
-        
-        .design-2 .warning-box {
-            background: #FEF3C7;
-            border-right: 3px solid #F59E0B;
-        }
-        
-        .design-2 .answer-box {
-            background: #ECFDF5;
-            border-right: 3px solid #10B981;
-        }
-        
         .design-2 .map-node {
             border: 2px solid #10B981;
+            background: #ECFDF5;
         }
         
         .design-2 .map-connector {
@@ -245,6 +108,22 @@
         .design-2 .map-center {
             background: #047857;
         }
+        
+        .design-2 .student-name {
+            color: #1E40AF;
+        }
+        
+        .node-1 { background: #FEF3C7; border-color: #F59E0B; }
+        .node-2 { background: #FEF2F2; border-color: #EF4444; }
+        .node-3 { background: #F0F9FF; border-color: #3B82F6; }
+        .node-4 { background: #ECFDF5; border-color: #10B981; }
+        .node-5 { background: #F3E8FF; border-color: #8B5CF6; }
+        
+        .design-2 .node-1 { background: #FEF7CD; border-color: #EAB308; }
+        .design-2 .node-2 { background: #FECACA; border-color: #DC2626; }
+        .design-2 .node-3 { background: #BFDBFE; border-color: #2563EB; }
+        .design-2 .node-4 { background: #A7F3D0; border-color: #059669; }
+        .design-2 .node-5 { background: #DDD6FE; border-color: #7C3AED; }
     </style>
 </head>
 <body class="bg-white text-black" dir="rtl">
@@ -259,447 +138,109 @@
     <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
 
         <!-- التصميم الأول -->
-        
-        <!-- الصفحة الأولى - التصميم الأول -->
         <div>
-            <h1 class="main-title">حل أسئلة الإدارة: التوجيه والقيادة</h1>
-
-            <div class="side-heading">الإجابة عن أسئلة التوجيه (IMG_6473)</div>
+            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
             
-            <div class="sub-heading">مفهوم التوجيه</div>
+            <div class="student-name">عمل الطالب: سلطان مروان اليافعي</div>
             
-            <div class="answer-box">
-                <p>التوجيه هو العملية الإدارية التي تهدف إلى توجيه جهود المرؤوسين وتوجيههم نحو تحقيق أهداف المنظمة بكفاءة وفعالية. يتكون التوجيه من عدة عناصر رئيسية:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>التوجيه والإرشاد:</strong> توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل</li>
-                    <li><strong>التواصل الفعال:</strong> نقل المعلومات والتعليمات بشكل واضح ومباشر</li>
-                    <li><strong>التحفيز:</strong> تشجيع العاملين على بذل أقصى جهودهم</li>
-                    <li><strong>الرقابة والمتابعة:</strong> متابعة سير العمل وتصحيح الانحرافات</li>
-                    <li><strong>التقييم:</strong> تقييم أداء المرؤوسين وتقديم التغذية الراجعة</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">أهمية التوجيه في تحقيق أهداف المنظمة</div>
-            
-            <div class="answer-box">
-                <p>تكمن أهمية التوجيه في تحقيق أهداف المنظمة من خلال:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li>تحسين أداء العاملين وزيادة إنتاجيتهم</li>
-                    <li>تحقيق التكامل بين جهود الأفراد والجماعات</li>
-                    <li>توجيه الطاقات والمواهب نحو تحقيق الأهداف المشتركة</li>
-                    <li>تحسين الروح المعنوية للعاملين وزيادة ولائهم للمنظمة</li>
-                    <li>تسهيل عملية التغيير والتطوير داخل المنظمة</li>
-                    <li>تحقيق الاستقرار الوظيفي وتقليل معدل دوران العمل</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">تقييم الجمل (ضع علامة ✓ أو ✗)</div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th width="80%">الجملة</th>
-                        <th width="20%">التقييم</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>الخطط الجيّدة والتنظيم تكفيلان تضمان قيام الأفراد بإنجاز ما يكلفون به من أعمال تلقائياً، أو بأوامر من إرادتهم.</td>
-                        <td class="incorrect">✗ (غير صحيحة)</td>
-                    </tr>
-                    <tr>
-                        <td>تكمن أهمية التوجيه في مساعدة الرؤوساء على مواجهة الصعوبات التي قد تواجههم أثناء أداء عملهم.</td>
-                        <td class="correct">✓ (صحيحة)</td>
-                    </tr>
-                    <tr>
-                        <td>من طرق التوجيه التشجيع والتحفيز والاتصالات المتبادلة.</td>
-                        <td class="correct">✓ (صحيحة)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="side-heading">خريطة مفاهيمية لعناصر التوجيه</div>
-            
-            <div class="concept-map">
+            <div class="concept-map-container">
                 <div class="map-node map-center">عناصر التوجيه</div>
                 <div class="map-connector"></div>
+                
                 <div class="map-row">
-                    <div class="map-node">التوجيه والإرشاد</div>
-                    <div class="map-node">التواصل الفعال</div>
-                    <div class="map-node">التحفيز</div>
+                    <div class="map-node node-1">التوجيه والإرشاد</div>
+                    <div class="map-node node-2">التواصل الفعال</div>
+                    <div class="map-node node-3">التحفيز</div>
                 </div>
+                
                 <div class="map-connector"></div>
+                
                 <div class="map-row">
-                    <div class="map-node">الرقابة والمتابعة</div>
-                    <div class="map-node">التقييم</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة الثانية - التصميم الأول -->
-        <div class="page-break">
-            <div class="side-heading">الإجابة عن أسئلة القيادة (IMG_6475)</div>
-            
-            <div class="sub-heading">مفهوم القيادة</div>
-            
-            <div class="answer-box">
-                <p>القيادة هي عملية التأثير في الآخرين وتوجيههم نحو تحقيق أهداف محددة. وهي تشمل القدرة على إلهام وتحفيز الأفراد والجماعات لتحقيق النتائج المرجوة بكفاءة وفعالية. تعتمد القيادة على مجموعة من المهارات والصفات الشخصية التي تمكن القائد من التأثير الإيجابي في مرؤوسيه.</p>
-            </div>
-            
-            <div class="sub-heading">أنماط القيادة</div>
-            
-            <div class="answer-box">
-                <p>توجد عدة أنماط للقيادة، ومن أهمها:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>القيادة الديمقراطية:</strong> تشجع على مشاركة المرؤوسين في اتخاذ القرارات</li>
-                    <li><strong>القيادة الأوتوقراطية:</strong> يتركز اتخاذ القرارات بيد القائد وحده</li>
-                    <li><strong>القيادة التحويلية:</strong> تركز على إحداث تغيير إيجابي في المنظمة</li>
-                    <li><strong>القيادة التبادلية:</strong> تقوم على تبادل المنافع بين القائد والمرؤوسين</li>
-                    <li><strong>القيادة الموقفية:</strong> تتكيف مع الظروف والمتغيرات المختلفة</li>
-                    <li><strong>القيادة الخادمة:</strong> تركز على خدمة احتياجات المرؤوسين وتطويرهم</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">المهارات التي يحتاجها القائد</div>
-            
-            <div class="answer-box">
-                <p>يحتاج القائد إلى مجموعة متنوعة من المهارات، أهمها:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>المهارات الفنية:</strong> المعرفة المتخصصة في مجال العمل</li>
-                    <li><strong>المهارات الإنسانية:</strong> القدرة على التعامل مع الآخرين بفعالية</li>
-                    <li><strong>المهارات المفاهيمية:</strong> القدرة على الرؤية الشاملة وتحليل المشكلات</li>
-                    <li><strong>مهارات التواصل:</strong> القدرة على نقل الأفكار والمعلومات بوضوح</li>
-                    <li><strong>مهارات التحفيز:</strong> القدرة على تحفيز المرؤوسين وتشجيعهم</li>
-                    <li><strong>مهارات حل المشكلات:</strong> القدرة على تحليل المشكلات واتخاذ القرارات المناسبة</li>
-                    <li><strong>مهارات التفاوض:</strong> القدرة على إدارة المفاوضات والوصول إلى حلول مقبولة</li>
-                </ul>
-            </div>
-
-            <div class="side-heading">خريطة مفاهيمية لأنماط القيادة</div>
-            
-            <div class="concept-map">
-                <div class="map-node map-center">أنماط القيادة</div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">ديمقراطية</div>
-                    <div class="map-node">أوتوقراطية</div>
-                    <div class="map-node">تحويلية</div>
-                </div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">تبادلية</div>
-                    <div class="map-node">موقفية</div>
-                    <div class="map-node">خادمة</div>
+                    <div class="map-node node-4">الرقابة والمتابعة</div>
+                    <div class="map-node node-5">التقييم</div>
                 </div>
             </div>
-        </div>
-
-        <!-- الصفحة الثالثة - التصميم الأول -->
-        <div class="page-break">
-            <div class="side-heading">الإجابة عن أسئلة التمويل والتدريب (IMG_6474)</div>
             
-            <div class="sub-heading">تقسيمات أنواع الحوافز</div>
-            
-            <div class="answer-box">
-                <p>تنقسم الحوافز إلى ثلاثة أنواع رئيسية:</p>
-                <ol style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>الحوافز المادية:</strong> تشمل الأجور والمرتبات والمكافآت والعلاوات والمشاركة في الأرباح.</li>
-                    <li><strong>الحوافز المعنوية:</strong> تشمل التقدير والثناء والشكر والترقية والتكريم.</li>
-                    <li><strong>الحوافز الاجتماعية:</strong> تشمل توفير بيئة عمل مناسبة وعلاقات إنسانية جيدة والمشاركة في اتخاذ القرارات.</li>
-                </ol>
-            </div>
-            
-            <div class="sub-heading">أنواع التدريب مع توضيح القصور بكل نوع</div>
-            
-            <div class="answer-box">
-                <p>أهم أنواع التدريب وقصور كل نوع:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>التدريب الداخلي:</strong> يتم داخل المنظمة
-                        <br><span style="color: #991B1B;">القصور: قد لا يتوفر الخبراء المتخصصين، محدودية التنوع في الخبرات</span>
-                    </li>
-                    <li><strong>التدريب الخارجي:</strong> يتم خارج المنظمة في مراكز متخصصة
-                        <br><span style="color: #991B1B;">القصور: تكلفة عالية، قد لا يراعي خصوصية المنظمة</span>
-                    </li>
-                    <li><strong>التدريب أثناء العمل:</strong> يتم أثناء أداء المهام الفعلية
-                        <br><span style="color: #991B1B;">القصور: قد يؤثر على الإنتاجية، صعوبة التركيز في بيئة العمل</span>
-                    </li>
-                    <li><strong>التدريب عن بعد:</strong> باستخدام التقنيات الحديثة
-                        <br><span style="color: #991B1B;">القصور: نقص التفاعل المباشر، صعوبة المتابعة والتقييم</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">ربط العناصر مع القائمة</div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th width="30%">العمود الأول</th>
-                        <th width="40%">الإجابة</th>
-                        <th width="15%">i</th>
-                        <th width="15%">↑</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>الحوافز السلبية</td>
-                        <td>تخفيض النفقات</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>فوائد التدريب</td>
-                        <td>يهيئ المنظمة لمواجهة التحديات المستقبلية</td>
-                        <td>3</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>الحوافز الإيجابية</td>
-                        <td>تستخدم لتحسين الأداء وتعزيز السلوك الإيجابي</td>
-                        <td>5</td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td>التدريب الخارجي</td>
-                        <td>يقدم خبرات متنوعة ووجهات نظر جديدة</td>
-                        <td>7</td>
-                        <td>8</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="side-heading">خريطة مفاهيمية لأنواع الحوافز</div>
-            
-            <div class="concept-map">
-                <div class="map-node map-center">أنواع الحوافز</div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">الحوافز المادية</div>
-                    <div class="map-node">الحوافز المعنوية</div>
-                    <div class="map-node">الحوافز الاجتماعية</div>
+            <div style="margin-top: 30px;">
+                <h2 style="color: #991B1B; border-right: 4px solid #DC2626; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
+                
+                <div style="background: #FEF2F2; padding: 15px; margin: 12px 0; border-right: 3px solid #EF4444; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
+                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
+                </div>
+                
+                <div style="background: #FEF3C7; padding: 15px; margin: 12px 0; border-right: 3px solid #F59E0B; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
+                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
+                </div>
+                
+                <div style="background: #F0F9FF; padding: 15px; margin: 12px 0; border-right: 3px solid #3B82F6; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
+                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
+                </div>
+                
+                <div style="background: #ECFDF5; padding: 15px; margin: 12px 0; border-right: 3px solid #10B981; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
+                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
+                </div>
+                
+                <div style="background: #F3E8FF; padding: 15px; margin: 12px 0; border-right: 3px solid #8B5CF6; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
+                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
                 </div>
             </div>
         </div>
 
         <!-- التصميم الثاني -->
-        
-        <!-- الصفحة الأولى - التصميم الثاني -->
         <div class="page-break design-2">
-            <h1 class="main-title">حل أسئلة الإدارة: التوجيه والقيادة</h1>
-
-            <div class="side-heading">الإجابة عن أسئلة التوجيه (IMG_6473)</div>
+            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
             
-            <div class="sub-heading">مفهوم التوجيه</div>
+            <div class="student-name">عمل الطالب: عبدالله عمر</div>
             
-            <div class="answer-box">
-                <p>التوجيه هو العملية الإدارية التي تهدف إلى توجيه جهود المرؤوسين وتوجيههم نحو تحقيق أهداف المنظمة بكفاءة وفعالية. يتكون التوجيه من عدة عناصر رئيسية:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>التوجيه والإرشاد:</strong> توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل</li>
-                    <li><strong>التواصل الفعال:</strong> نقل المعلومات والتعليمات بشكل واضح ومباشر</li>
-                    <li><strong>التحفيز:</strong> تشجيع العاملين على بذل أقصى جهودهم</li>
-                    <li><strong>الرقابة والمتابعة:</strong> متابعة سير العمل وتصحيح الانحرافات</li>
-                    <li><strong>التقييم:</strong> تقييم أداء المرؤوسين وتقديم التغذية الراجعة</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">أهمية التوجيه في تحقيق أهداف المنظمة</div>
-            
-            <div class="answer-box">
-                <p>تكمن أهمية التوجيه في تحقيق أهداف المنظمة من خلال:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li>تحسين أداء العاملين وزيادة إنتاجيتهم</li>
-                    <li>تحقيق التكامل بين جهود الأفراد والجماعات</li>
-                    <li>توجيه الطاقات والمواهب نحو تحقيق الأهداف المشتركة</li>
-                    <li>تحسين الروح المعنوية للعاملين وزيادة ولائهم للمنظمة</li>
-                    <li>تسهيل عملية التغيير والتطوير داخل المنظمة</li>
-                    <li>تحقيق الاستقرار الوظيفي وتقليل معدل دوران العمل</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">تقييم الجمل (ضع علامة ✓ أو ✗)</div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th width="80%">الجملة</th>
-                        <th width="20%">التقييم</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>الخطط الجيّدة والتنظيم تكفيلان تضمان قيام الأفراد بإنجاز ما يكلفون به من أعمال تلقائياً، أو بأوامر من إرادتهم.</td>
-                        <td class="incorrect">✗ (غير صحيحة)</td>
-                    </tr>
-                    <tr>
-                        <td>تكمن أهمية التوجيه في مساعدة الرؤوساء على مواجهة الصعوبات التي قد تواجههم أثناء أداء عملهم.</td>
-                        <td class="correct">✓ (صحيحة)</td>
-                    </tr>
-                    <tr>
-                        <td>من طرق التوجيه التشجيع والتحفيز والاتصالات المتبادلة.</td>
-                        <td class="correct">✓ (صحيحة)</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="side-heading">خريطة مفاهيمية لعناصر التوجيه</div>
-            
-            <div class="concept-map">
+            <div class="concept-map-container">
                 <div class="map-node map-center">عناصر التوجيه</div>
                 <div class="map-connector"></div>
+                
                 <div class="map-row">
-                    <div class="map-node">التوجيه والإرشاد</div>
-                    <div class="map-node">التواصل الفعال</div>
-                    <div class="map-node">التحفيز</div>
+                    <div class="map-node node-1">التوجيه والإرشاد</div>
+                    <div class="map-node node-2">التواصل الفعال</div>
+                    <div class="map-node node-3">التحفيز</div>
                 </div>
+                
                 <div class="map-connector"></div>
+                
                 <div class="map-row">
-                    <div class="map-node">الرقابة والمتابعة</div>
-                    <div class="map-node">التقييم</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة الثانية - التصميم الثاني -->
-        <div class="page-break design-2">
-            <div class="side-heading">الإجابة عن أسئلة القيادة (IMG_6475)</div>
-            
-            <div class="sub-heading">مفهوم القيادة</div>
-            
-            <div class="answer-box">
-                <p>القيادة هي عملية التأثير في الآخرين وتوجيههم نحو تحقيق أهداف محددة. وهي تشمل القدرة على إلهام وتحفيز الأفراد والجماعات لتحقيق النتائج المرجوة بكفاءة وفعالية. تعتمد القيادة على مجموعة من المهارات والصفات الشخصية التي تمكن القائد من التأثير الإيجابي في مرؤوسيه.</p>
-            </div>
-            
-            <div class="sub-heading">أنماط القيادة</div>
-            
-            <div class="answer-box">
-                <p>توجد عدة أنماط للقيادة، ومن أهمها:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>القيادة الديمقراطية:</strong> تشجع على مشاركة المرؤوسين في اتخاذ القرارات</li>
-                    <li><strong>القيادة الأوتوقراطية:</strong> يتركز اتخاذ القرارات بيد القائد وحده</li>
-                    <li><strong>القيادة التحويلية:</strong> تركز على إحداث تغيير إيجابي في المنظمة</li>
-                    <li><strong>القيادة التبادلية:</strong> تقوم على تبادل المنافع بين القائد والمرؤوسين</li>
-                    <li><strong>القيادة الموقفية:</strong> تتكيف مع الظروف والمتغيرات المختلفة</li>
-                    <li><strong>القيادة الخادمة:</strong> تركز على خدمة احتياجات المرؤوسين وتطويرهم</li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">المهارات التي يحتاجها القائد</div>
-            
-            <div class="answer-box">
-                <p>يحتاج القائد إلى مجموعة متنوعة من المهارات، أهمها:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>المهارات الفنية:</strong> المعرفة المتخصصة في مجال العمل</li>
-                    <li><strong>المهارات الإنسانية:</strong> القدرة على التعامل مع الآخرين بفعالية</li>
-                    <li><strong>المهارات المفاهيمية:</strong> القدرة على الرؤية الشاملة وتحليل المشكلات</li>
-                    <li><strong>مهارات التواصل:</strong> القدرة على نقل الأفكار والمعلومات بوضوح</li>
-                    <li><strong>مهارات التحفيز:</strong> القدرة على تحفيز المرؤوسين وتشجيعهم</li>
-                    <li><strong>مهارات حل المشكلات:</strong> القدرة على تحليل المشكلات واتخاذ القرارات المناسبة</li>
-                    <li><strong>مهارات التفاوض:</strong> القدرة على إدارة المفاوضات والوصول إلى حلول مقبولة</li>
-                </ul>
-            </div>
-
-            <div class="side-heading">خريطة مفاهيمية لأنماط القيادة</div>
-            
-            <div class="concept-map">
-                <div class="map-node map-center">أنماط القيادة</div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">ديمقراطية</div>
-                    <div class="map-node">أوتوقراطية</div>
-                    <div class="map-node">تحويلية</div>
-                </div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">تبادلية</div>
-                    <div class="map-node">موقفية</div>
-                    <div class="map-node">خادمة</div>
+                    <div class="map-node node-4">الرقابة والمتابعة</div>
+                    <div class="map-node node-5">التقييم</div>
                 </div>
             </div>
-        </div>
-
-        <!-- الصفحة الثالثة - التصميم الثاني -->
-        <div class="page-break design-2">
-            <div class="side-heading">الإجابة عن أسئلة التمويل والتدريب (IMG_6474)</div>
             
-            <div class="sub-heading">تقسيمات أنواع الحوافز</div>
-            
-            <div class="answer-box">
-                <p>تنقسم الحوافز إلى ثلاثة أنواع رئيسية:</p>
-                <ol style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>الحوافز المادية:</strong> تشمل الأجور والمرتبات والمكافآت والعلاوات والمشاركة في الأرباح.</li>
-                    <li><strong>الحوافز المعنوية:</strong> تشمل التقدير والثناء والشكر والترقية والتكريم.</li>
-                    <li><strong>الحوافز الاجتماعية:</strong> تشمل توفير بيئة عمل مناسبة وعلاقات إنسانية جيدة والمشاركة في اتخاذ القرارات.</li>
-                </ol>
-            </div>
-            
-            <div class="sub-heading">أنواع التدريب مع توضيح القصور بكل نوع</div>
-            
-            <div class="answer-box">
-                <p>أهم أنواع التدريب وقصور كل نوع:</p>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>التدريب الداخلي:</strong> يتم داخل المنظمة
-                        <br><span style="color: #1E40AF;">القصور: قد لا يتوفر الخبراء المتخصصين، محدودية التنوع في الخبرات</span>
-                    </li>
-                    <li><strong>التدريب الخارجي:</strong> يتم خارج المنظمة في مراكز متخصصة
-                        <br><span style="color: #1E40AF;">القصور: تكلفة عالية، قد لا يراعي خصوصية المنظمة</span>
-                    </li>
-                    <li><strong>التدريب أثناء العمل:</strong> يتم أثناء أداء المهام الفعلية
-                        <br><span style="color: #1E40AF;">القصور: قد يؤثر على الإنتاجية، صعوبة التركيز في بيئة العمل</span>
-                    </li>
-                    <li><strong>التدريب عن بعد:</strong> باستخدام التقنيات الحديثة
-                        <br><span style="color: #1E40AF;">القصور: نقص التفاعل المباشر، صعوبة المتابعة والتقييم</span>
-                    </li>
-                </ul>
-            </div>
-            
-            <div class="sub-heading">ربط العناصر مع القائمة</div>
-            
-            <table>
-                <thead>
-                    <tr>
-                        <th width="30%">العمود الأول</th>
-                        <th width="40%">الإجابة</th>
-                        <th width="15%">i</th>
-                        <th width="15%">↑</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>الحوافز السلبية</td>
-                        <td>تخفيض النفقات</td>
-                        <td>1</td>
-                        <td>2</td>
-                    </tr>
-                    <tr>
-                        <td>فوائد التدريب</td>
-                        <td>يهيئ المنظمة لمواجهة التحديات المستقبلية</td>
-                        <td>3</td>
-                        <td>4</td>
-                    </tr>
-                    <tr>
-                        <td>الحوافز الإيجابية</td>
-                        <td>تستخدم لتحسين الأداء وتعزيز السلوك الإيجابي</td>
-                        <td>5</td>
-                        <td>6</td>
-                    </tr>
-                    <tr>
-                        <td>التدريب الخارجي</td>
-                        <td>يقدم خبرات متنوعة ووجهات نظر جديدة</td>
-                        <td>7</td>
-                        <td>8</td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <div class="side-heading">خريطة مفاهيمية لأنواع الحوافز</div>
-            
-            <div class="concept-map">
-                <div class="map-node map-center">أنواع الحوافز</div>
-                <div class="map-connector"></div>
-                <div class="map-row">
-                    <div class="map-node">الحوافز المادية</div>
-                    <div class="map-node">الحوافز المعنوية</div>
-                    <div class="map-node">الحوافز الاجتماعية</div>
+            <div style="margin-top: 30px;">
+                <h2 style="color: #1E40AF; border-right: 4px solid #3B82F6; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
+                
+                <div style="background: #FECACA; padding: 15px; margin: 12px 0; border-right: 3px solid #DC2626; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
+                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
+                </div>
+                
+                <div style="background: #FEF7CD; padding: 15px; margin: 12px 0; border-right: 3px solid #EAB308; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
+                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
+                </div>
+                
+                <div style="background: #BFDBFE; padding: 15px; margin: 12px 0; border-right: 3px solid #2563EB; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
+                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
+                </div>
+                
+                <div style="background: #A7F3D0; padding: 15px; margin: 12px 0; border-right: 3px solid #059669; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
+                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
+                </div>
+                
+                <div style="background: #DDD6FE; padding: 15px; margin: 12px 0; border-right: 3px solid #7C3AED; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
+                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
                 </div>
             </div>
         </div>
