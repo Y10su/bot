@@ -3,586 +3,713 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بحث عن إصابات النشاط البدني</title>
+    <title>حل أسئلة الإدارة: التوجيه والقيادة</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* تنسيق عام */
-        @page {
-            size: A4;
-            margin: 2cm;
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.2cm;
+            }
+            
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+                font-family: 'Amiri', serif;
+            }
+            
+            .page-break {
+                page-break-before: always;
+                padding-top: 0.5cm;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 0.8cm;
+                text-align: center;
+            }
+            
+            .side-heading {
+                font-size: 14pt;
+                margin: 0.4cm 0 0.3cm 0;
+                border-right: 4px solid #DC2626;
+                padding-right: 0.4cm;
+                font-weight: bold;
+                color: #991B1B;
+            }
+            
+            .sub-heading {
+                font-size: 12pt;
+                margin: 0.3cm 0 0.2cm 0;
+                font-weight: 600;
+                color: #374151;
+            }
+            
+            p {
+                margin-bottom: 0.3cm;
+                text-align: justify;
+            }
+            
+            table {
+                font-size: 9pt;
+                margin: 0.3cm 0;
+                border-collapse: collapse;
+                width: 100%;
+            }
+            
+            th, td {
+                border: 1px solid #ddd;
+                padding: 8px;
+                text-align: right;
+            }
+            
+            th {
+                background-color: #f2f2f2;
+            }
+            
+            .info-box {
+                margin: 0.2cm 0;
+                padding: 0.4cm;
+                page-break-inside: avoid;
+            }
+            
+            ul, ol {
+                margin: 0.15cm 0;
+            }
+            
+            li {
+                margin-bottom: 0.1cm;
+            }
+            
+            .answer-box {
+                background: #F0F9FF;
+                padding: 10px;
+                margin: 8px 0;
+                border-right: 3px solid #3B82F6;
+                border-radius: 5px;
+            }
+            
+            .concept-map {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                margin: 20px 0;
+            }
+            
+            .map-node {
+                background: white;
+                border: 2px solid #3B82F6;
+                border-radius: 8px;
+                padding: 10px 15px;
+                margin: 8px;
+                text-align: center;
+                font-weight: 600;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                width: 180px;
+            }
+            
+            .map-connector {
+                width: 2px;
+                background: #3B82F6;
+                height: 20px;
+            }
+            
+            .map-row {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            .map-center {
+                background: #1E40AF;
+                color: white;
+            }
+            
+            .correct {
+                color: green;
+                font-weight: bold;
+            }
+            
+            .incorrect {
+                color: red;
+                font-weight: bold;
+            }
         }
         
         body {
-            font-family: 'Arial', sans-serif;
+            font-family: 'Amiri', 'Noto Sans Arabic', serif;
             line-height: 1.6;
-            color: #333;
-            margin: 0;
-            padding: 0;
-            background-color: #f9f9f9;
         }
         
-        .container {
-            max-width: 21cm;
-            margin: 0 auto;
-            padding: 2cm;
-            background-color: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        /* تنسيق الطباعة */
-        @media print {
-            body {
-                background-color: white;
-            }
-            .container {
-                box-shadow: none;
-                padding: 0;
-                margin: 0;
-                max-width: 100%;
-            }
-            .no-print {
-                display: none;
-            }
-        }
-        
-        /* منع انقسام المحتوى بين الصفحات */
-        h1, h2, h3, h4, h5, h6, table, .section {
-            page-break-inside: avoid;
-        }
-        
-        /* تنسيق العناوين */
-        h1 {
-            color: #2c3e50;
+        .main-title {
             text-align: center;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
+            color: #991B1B;
+            font-weight: 700;
             margin-bottom: 30px;
-        }
-        
-        h2 {
-            color: #2980b9;
-            border-right: 4px solid #3498db;
-            padding-right: 10px;
-            margin-top: 30px;
-        }
-        
-        h3 {
-            color: #3498db;
-        }
-        
-        /* تنسيق النصوص */
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        
-        /* تنسيق الجداول */
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            page-break-inside: avoid;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: right;
-        }
-        
-        th {
-            background-color: #3498db;
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
-        
-        /* تنسيق الفهرس */
-        .toc {
-            background-color: #f8f9fa;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 20px 0;
-        }
-        
-        .toc ul {
-            list-style-type: none;
-            padding-right: 0;
-        }
-        
-        .toc li {
-            margin-bottom: 8px;
-        }
-        
-        .toc a {
-            text-decoration: none;
-            color: #2980b9;
-        }
-        
-        .toc a:hover {
-            text-decoration: underline;
-        }
-        
-        /* تنسيق المراجع */
-        .references {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 5px;
-            margin-top: 30px;
-        }
-        
-        .references ol {
-            padding-right: 20px;
-        }
-        
-        /* زر الطباعة */
-        .print-btn {
+            border-bottom: 3px solid #DC2626;
+            padding-bottom: 15px;
             display: inline-block;
-            background-color: #2c3e50;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin: 20px 0;
-            transition: background-color 0.3s;
+            width: 100%;
         }
         
-        .print-btn:hover {
-            background-color: #3498db;
+        .side-heading {
+            border-right: 4px solid #DC2626;
+            padding-right: 15px;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+            color: #991B1B;
+            font-size: 18px;
         }
         
-        /* تنسيق الاقتباسات */
-        blockquote {
-            border-right: 4px solid #3498db;
-            background-color: #f8f9fa;
+        .sub-heading {
+            font-weight: 600;
+            color: #374151;
+            margin: 15px 0 8px 0;
+        }
+        
+        .info-box {
+            background: #FEF2F2;
             padding: 15px;
-            margin: 20px 0;
-            font-style: italic;
+            margin: 12px 0;
+            border-right: 3px solid #EF4444;
+            border-radius: 8px 0 0 8px;
         }
         
-        /* تنسيق رأس الصفحة */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        .header p {
-            color: #7f8c8d;
-            margin: 5px 0;
-        }
-        
-        /* تنسيق القوائم */
-        ul, ol {
-            margin-right: 20px;
-            margin-bottom: 15px;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        /* تنسيق المخططات التوضيحية */
-        .illustration {
-            background-color: #f0f0f0;
+        .highlight-box {
+            background: #F0F9FF;
             padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-            border-right: 3px solid #3498db;
+            margin: 12px 0;
+            border-right: 3px solid #3B82F6;
+            border-radius: 8px 0 0 8px;
         }
         
-        .illustration-title {
-            font-weight: bold;
-            color: #2980b9;
-            margin-bottom: 10px;
+        .warning-box {
+            background: #FFFBEB;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #F59E0B;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .answer-box {
+            background: #F0F9FF;
+            padding: 12px;
+            margin: 10px 0;
+            border-right: 3px solid #3B82F6;
+            border-radius: 5px;
+        }
+        
+        .design-2 .main-title {
+            color: #1E40AF;
+            border-bottom: 3px solid #3B82F6;
+        }
+        
+        .design-2 .side-heading {
+            border-right: 4px solid #3B82F6;
+            color: #1E40AF;
+        }
+        
+        .design-2 .info-box {
+            background: #F0F9FF;
+            border-right: 3px solid #3B82F6;
+        }
+        
+        .design-2 .highlight-box {
+            background: #ECFDF5;
+            border-right: 3px solid #10B981;
+        }
+        
+        .design-2 .warning-box {
+            background: #FEF3C7;
+            border-right: 3px solid #F59E0B;
+        }
+        
+        .design-2 .answer-box {
+            background: #ECFDF5;
+            border-right: 3px solid #10B981;
+        }
+        
+        .design-2 .map-node {
+            border: 2px solid #10B981;
+        }
+        
+        .design-2 .map-connector {
+            background: #10B981;
+        }
+        
+        .design-2 .map-center {
+            background: #047857;
         }
     </style>
-    <!-- مكتبة html2pdf -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1>إصابات النشاط البدني: الأسباب والوقاية والعلاج</h1>
-            <p>بحث أكاديمي في علوم الرياضة والصحة</p>
-            <p>إعداد: [اسم الباحث]</p>
-            <p>التاريخ: [تاريخ البحث]</p>
-        </div>
+<body class="bg-white text-black" dir="rtl">
+
+    <!-- زر الطباعة -->
+    <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="window.print()" style="background: #DC2626; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+            🖨️ طباعة التقرير
+        </button>
+    </div>
+
+    <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
+
+        <!-- التصميم الأول -->
         
-        <!-- زر الطباعة -->
-        <div class="no-print" style="text-align: center;">
-            <button class="print-btn" onclick="generatePDF()">حفظ البحث كملف PDF</button>
-        </div>
-        
-        <!-- الفهرس -->
-        <div class="section">
-            <h2>فهرس المحتويات</h2>
-            <div class="toc">
-                <ul>
-                    <li><a href="#introduction">1. المقدمة</a></li>
-                    <li><a href="#causes">2. أسباب إصابات النشاط البدني</a></li>
-                    <li><a href="#types">3. أنواع إصابات النشاط البدني</a></li>
-                    <li><a href="#common-injuries">4. الإصابات الشائعة في مختلف الرياضات</a></li>
-                    <li><a href="#prevention">5. الوقاية من إصابات النشاط البدني</a></li>
-                    <li><a href="#treatment">6. علاج إصابات النشاط البدني</a></li>
-                    <li><a href="#rehabilitation">7. إعادة التأهيل بعد الإصابات</a></li>
-                    <li><a href="#conclusion">8. الخاتمة</a></li>
-                    <li><a href="#references">9. المراجع</a></li>
+        <!-- الصفحة الأولى - التصميم الأول -->
+        <div>
+            <h1 class="main-title">حل أسئلة الإدارة: التوجيه والقيادة</h1>
+
+            <div class="side-heading">الإجابة عن أسئلة التوجيه (IMG_6473)</div>
+            
+            <div class="sub-heading">مفهوم التوجيه</div>
+            
+            <div class="answer-box">
+                <p>التوجيه هو العملية الإدارية التي تهدف إلى توجيه جهود المرؤوسين وتوجيههم نحو تحقيق أهداف المنظمة بكفاءة وفعالية. يتكون التوجيه من عدة عناصر رئيسية:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>التوجيه والإرشاد:</strong> توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل</li>
+                    <li><strong>التواصل الفعال:</strong> نقل المعلومات والتعليمات بشكل واضح ومباشر</li>
+                    <li><strong>التحفيز:</strong> تشجيع العاملين على بذل أقصى جهودهم</li>
+                    <li><strong>الرقابة والمتابعة:</strong> متابعة سير العمل وتصحيح الانحرافات</li>
+                    <li><strong>التقييم:</strong> تقييم أداء المرؤوسين وتقديم التغذية الراجعة</li>
                 </ul>
             </div>
-        </div>
-        
-        <!-- المقدمة -->
-        <div class="section" id="introduction">
-            <h2>1. المقدمة</h2>
-            <p>يمثل النشاط البدني والرياضي جزءاً أساسياً من حياة الإنسان، حيث يسهم في تحسين الصحة العامة وتعزيز اللياقة البدنية والوقاية من العديد من الأمراض. ومع ذلك، يرتبط ممارسة النشاط البدني باحتمالية التعرض للإصابات، خاصة مع زيادة الشدة أو عدم اتباع الأساليب الصحيحة.</p>
             
-            <p>تشكل إصابات النشاط البدني تحدياً كبيراً للرياضيين والممارسين للأنشطة البدنية على مختلف مستوياتهم، حيث تؤثر سلباً على أدائهم الرياضي، وتحد من قدرتهم على مواصلة النشاط، وقد تؤدي إلى مضاعفات صحية طويلة الأمد إذا لم يتم التعامل معها بشكل صحيح.</p>
+            <div class="sub-heading">أهمية التوجيه في تحقيق أهداف المنظمة</div>
             
-            <p>يهدف هذا البحث إلى استعراض أنواع إصابات النشاط البدني، وأسبابها، وطرق الوقاية منها، وأساليب العلاج وإعادة التأهيل، بهدف تقديم دليل شامل للممارسين والمدربين للحد من هذه الإصابات والتعامل معها بشكل فعال.</p>
-            
-            <div class="illustration">
-                <div class="illustration-title">معلومة هامة:</div>
-                <p>تشير الدراسات إلى أن ما يقرب من 30-40% من جميع الإصابات الرياضية يمكن الوقاية منها من خلال برامج التدريب المناسبة واستخدام التقنيات الصحيحة.</p>
-            </div>
-        </div>
-        
-        <!-- أسباب إصابات النشاط البدني -->
-        <div class="section" id="causes">
-            <h2>2. أسباب إصابات النشاط البدني</h2>
-            <p>تتنوع أسباب إصابات النشاط البدني ويمكن تصنيفها إلى عدة فئات رئيسية:</p>
-            
-            <h3>2.1 الأسباب المتعلقة بالممارس</h3>
-            <ul>
-                <li>ضعف اللياقة البدنية العامة</li>
-                <li>عدم التوازن العضلي</li>
-                <li>نقص المرونة</li>
-                <li>الإجهاد والتعب</li>
-                <li>سوء التغذية والجفاف</li>
-                <li>التقدم في العمر</li>
-                <li>الإصابات السابقة غير المعالجة بشكل كامل</li>
-            </ul>
-            
-            <h3>2.2 الأسباب المتعلقة بالتدريب</h3>
-            <ul>
-                <li>الزيادة المفاجئة في شدة أو مدة التدريب</li>
-                <li>التدريب غير المتوازن</li>
-                <li>عدم كفاية الإحماء والتبريد</li>
-                <li>استخدام تقنيات خاطئة في الأداء</li>
-                <li>عدم كفاية فترات الراحة والتعافي</li>
-            </ul>
-            
-            <h3>2.3 الأسباب البيئية والتجهيزات</h3>
-            <ul>
-                <li>سوء حالة الملعب أو مكان التدريب</li>
-                <li>استخدام معدات غير مناسبة أو معيبة</li>
-                <li>ظروف الطقس القاسية (حرارة، برودة، رطوبة)</li>
-                <li>ارتداء أحذية غير مناسبة</li>
-            </ul>
-            
-            <div class="illustration">
-                <div class="illustration-title">إحصائية هامة:</div>
-                <p>تشير الأبحاث إلى أن حوالي 60% من إصابات النشاط البدني ترجع إلى أخطاء في التدريب، بينما 30% ترجع إلى عوامل بيئية، و10% فقط ترجع إلى حوادث لا يمكن تجنبها.</p>
-            </div>
-        </div>
-        
-        <!-- أنواع إصابات النشاط البدني -->
-        <div class="section" id="types">
-            <h2>3. أنواع إصابات النشاط البدني</h2>
-            <p>يمكن تصنيف إصابات النشاط البدني إلى نوعين رئيسيين:</p>
-            
-            <h3>3.1 الإصابات الحادة</h3>
-            <p>هي الإصابات التي تحدث فجأة أثناء ممارسة النشاط البدني، وتشمل:</p>
-            <table>
-                <tr>
-                    <th>نوع الإصابة</th>
-                    <th>الوصف</th>
-                    <th>الأمثلة</th>
-                </tr>
-                <tr>
-                    <td>الكسور</td>
-                    <td>كسر في العظم نتيجة صدمة مباشرة أو غير مباشرة</td>
-                    <td>كسر في عظمة الساق، كسر في الترقوة</td>
-                </tr>
-                <tr>
-                    <td>الخلع</td>
-                    <td>انزياح العظام عن موضعها الطبيعي في المفصل</td>
-                    <td>خلع الكتف، خلع الأصابع</td>
-                </tr>
-                <tr>
-                    <td>الالتواء</td>
-                    <td>تمزق في الأربطة التي تربط العظام ببعضها</td>
-                    <td>التواء الكاحل، التواء الركبة</td>
-                </tr>
-                <tr>
-                    <td>الشد العضلي</td>
-                    <td>تمزق في الألياف العضلية أو الأوتار</td>
-                    <td>شد في عضلة الفخذ، تمزق في وتر العرقوب</td>
-                </tr>
-            </table>
-            
-            <h3>3.2 الإصابات المزمنة (الإفراط في الاستخدام)</h3>
-            <p>هي الإصابات التي تتطور تدريجياً نتيجة الضغط المتكرر على جزء معين من الجسم، وتشمل:</p>
-            <table>
-                <tr>
-                    <th>نوع الإصابة</th>
-                    <th>الوصف</th>
-                    <th>الأمثلة</th>
-                </tr>
-                <tr>
-                    <td>التهاب الأوتار</td>
-                    <td>التهاب في الأوتار نتيجة الاستخدام المتكرر</td>
-                    <td>التهاب وتر أكيلس، مرفق التنس</td>
-                </tr>
-                <tr>
-                    <td>الكسور الإجهادية</td>
-                    <td>شروخ صغيرة في العظام نتيجة الإجهاد المتكرر</td>
-                    <td>كسر إجهادي في عظمة الساق، القدم</td>
-                </tr>
-                <tr>
-                    <td>التهاب العضلات</td>
-                    <td>التهاب في العضلات نتيجة الإجهاد المتكرر</td>
-                    <td>التهاب عضلات الساق، الذراع</td>
-                </tr>
-                <tr>
-                    <td>التهاب المفاصل</td>
-                    <td>التهاب في المفاصل نتيجة الضغط المستمر</td>
-                    <td>التهاب مفصل الركبة، الكتف</td>
-                </tr>
-            </table>
-            
-            <div class="illustration">
-                <div class="illustration-title">ملاحظة هامة:</div>
-                <p>تشكل إصابات الإفراط في الاستخدام حوالي 50% من جميع الإصابات الرياضية، وغالباً ما يتم تجاهل أعراضها المبكرة مما يؤدي إلى تفاقمها.</p>
-            </div>
-        </div>
-        
-        <!-- الإصابات الشائعة في مختلف الرياضات -->
-        <div class="section" id="common-injuries">
-            <h2>4. الإصابات الشائعة في مختلف الرياضات</h2>
-            <p>تختلف الإصابات الشائعة حسب نوع الرياضة الممارسة، وفيما يلي عرض لأهم الإصابات في بعض الرياضات:</p>
-            
-            <table>
-                <tr>
-                    <th>الرياضة</th>
-                    <th>الإصابات الشائعة</th>
-                    <th>المناطق الأكثر عرضة للإصابة</th>
-                </tr>
-                <tr>
-                    <td>كرة القدم</td>
-                    <td>التواء الكاحل، إصابات الركبة (الرباط الصليبي)، إصابات الفخذ، ارتجاج الدماغ</td>
-                    <td>الأطراف السفلية، الرأس</td>
-                </tr>
-                <tr>
-                    <td>كرة السلة</td>
-                    <td>التواء الكاحل، إصابات الأصابع، إصابات الركبة، إصابات الكتف</td>
-                    <td>الأطراف السفلية، الأصابع، الركبة</td>
-                </tr>
-                <tr>
-                    <td>السباحة</td>
-                    <td>التهاب الكتف، آلام الرقبة، التهاب الركبة</td>
-                    <td>الكتف، الرقبة، الركبة</td>
-                </tr>
-                <tr>
-                    <td>الجري</td>
-                    <td>آلام الظهر، التهاب وتر أكيلس، كسور الإجهاد، التهاب الركبة</td>
-                    <td>الأطراف السفلية، الظهر</td>
-                </tr>
-                <tr>
-                    <td>رفع الأثقال</td>
-                    <td>إصابات الظهر، إصابات الكتف، تمزق العضلات</td>
-                    <td>الظهر، الكتف، العضلات</td>
-                </tr>
-            </table>
-            
-            <div class="illustration">
-                <div class="illustration-title">معلومة إحصائية:</div>
-                <p>تشير الدراسات إلى أن كرة القدم تحتل المرتبة الأولى في معدلات الإصابة بين الرياضات الجماعية، تليها كرة السلة والرياضات القتالية.</p>
-            </div>
-        </div>
-        
-        <!-- الوقاية من إصابات النشاط البدني -->
-        <div class="section" id="prevention">
-            <h2>5. الوقاية من إصابات النشاط البدني</h2>
-            <p>تعد الوقاية من إصابات النشاط البدني أمراً بالغ الأهمية، ويمكن تحقيقها من خلال اتباع الإجراءات التالية:</p>
-            
-            <h3>5.1 الإحماء والتبريد</h3>
-            <p>يجب دائماً البدء بتمارين الإحماء لتحضير الجسم للنشاط البدني، وإنهاء التمرين بتمارين التبريد لمساعدة العضلات على التعافي.</p>
-            
-            <h3>5.2 استخدام التقنيات الصحيحة</h3>
-            <p>تعلم وتطبيق التقنيات الصحيحة لأداء التمارين والحركات الرياضية يقلل بشكل كبير من خطر الإصابات.</p>
-            
-            <h3>5.3 التدرج في زيادة الحمل التدريبي</h3>
-            <p>يجب زيادة شدة ومدة التدريب بشكل تدريجي لتجنب إصابات الإفراط في الاستخدام.</p>
-            
-            <h3>5.4 استخدام المعدات المناسبة</h3>
-            <p>ارتداء الملابس والأحذية المناسبة، واستخدام المعدات السليمة يلعب دوراً هاماً في الوقاية من الإصابات.</p>
-            
-            <h3>5.5 التغذية والترطيب</h3>
-            <p>توفير التغذية المناسبة والترطيب الكافي للجسم يساعد في الحفاظ على صحة العضلات والعظام ويقلل من خطر الإصابات.</p>
-            
-            <div class="illustration">
-                <div class="illustration-title">قاعدة 10% للوقاية:</div>
-                <p>تنص قاعدة 10% على أنه لا ينبغي زيادة شدة أو مدة التدريب بأكثر من 10% أسبوعياً لتجنب إصابات الإفراط في الاستخدام.</p>
-            </div>
-        </div>
-        
-        <!-- علاج إصابات النشاط البدني -->
-        <div class="section" id="treatment">
-            <h2>6. علاج إصابات النشاط البدني</h2>
-            <p>يعتمد علاج إصابات النشاط البدني على نوع الإصابة وشدتها، وتشمل طرق العلاج ما يلي:</p>
-            
-            <h3>6.1 العلاج الأولي للإصابات الحادة (بروتوكول RICE)</h3>
-            <ul>
-                <li><strong>الراحة (Rest):</strong> إراحة المنطقة المصابة وتجنب الأنشطة التي تسبب الألم</li>
-                <li><strong>الثلج (Ice):</strong> وضع كمادات الثلج على المنطقة المصابة لمدة 15-20 دقيقة كل 2-3 ساعات</li>
-                <li><strong>الضغط (Compression):</strong> استخدام ضمادة مرنة للضغط على المنطقة المصابة لتقليل التورم</li>
-                <li><strong>الرفع (Elevation):</strong> رفع المنطقة المصابة فوق مستوى القلب لتقليل التورم</li>
-            </ul>
-            
-            <h3>6.2 العلاج الدوائي</h3>
-            <p>يشمل استخدام مسكنات الألم ومضادات الالتهاب غير الستيرويدية تحت إشراف طبي.</p>
-            
-            <h3>6.3 العلاج الطبيعي</h3>
-            <p>يستخدم لاستعادة قوة ومرونة المنطقة المصابة وتحسين نطاق الحركة.</p>
-            
-            <h3>6.4 العلاج الجراحي</h3>
-            <p>يلجأ إليه في الحالات الشديدة مثل تمزق الأربطة الكامل أو الكسور المعقدة.</p>
-            
-            <div class="illustration">
-                <div class="illustration-title">بروتوكول RICE المحدث:</div>
-                <p>في السنوات الأخيرة، تم تطوير بروتوكول POLICE الذي يستبدل الراحة المطلقة بالحركة المحكومة في المراحل المبكرة من العلاج.</p>
-            </div>
-        </div>
-        
-        <!-- إعادة التأهيل بعد الإصابات -->
-        <div class="section" id="rehabilitation">
-            <h2>7. إعادة التأهيل بعد الإصابات</h2>
-            <p>تمثل إعادة التأهيل مرحلة حاسمة في العودة الآمنة إلى ممارسة النشاط البدني بعد الإصابة، وتشمل:</p>
-            
-            <h3>7.1 مراحل إعادة التأهيل</h3>
-            <table>
-                <tr>
-                    <th>المرحلة</th>
-                    <th>الهدف</th>
-                    <th>التمارين</th>
-                </tr>
-                <tr>
-                    <td>المرحلة الحادة</td>
-                    <td>السيطرة على الألم والتورم</td>
-                    <td>تمارين خفيفة لنطاق الحركة</td>
-                </tr>
-                <tr>
-                    <td>مرحلة التعافي</td>
-                    <td>استعادة القوة والمرونة</td>
-                    <td>تمارين تقوية وتمطيط</td>
-                </tr>
-                <tr>
-                    <td>مرحلة إعادة التدريب</td>
-                    <td>العودة التدريجية للنشاط</td>
-                    <td>تمارين محاكاة للنشاط الأصلي</td>
-                </tr>
-                <tr>
-                    <td>مرحلة العودة الكاملة</td>
-                    <td>العودة الآمنة للنشاط الكامل</td>
-                    <td>أنشطة كاملة مع مراقبة الأداء</td>
-                </tr>
-            </table>
-            
-            <h3>7.2 مبادئ إعادة التأهيل الفعال</h3>
-            <ul>
-                <li>التدرج في زيادة شدة التمارين</li>
-                <li>التركيز على استعادة التوازن العضلي</li>
-                <li>تحسين المرونة ونطاق الحركة</li>
-                <li>تعزيز القوة والتحمل</li>
-                <li>تحسين التوازن والتنسيق العضلي العصبي</li>
-            </ul>
-            
-            <div class="illustration">
-                <div class="illustration-title">مدة إعادة التأهيل:</div>
-                <p>تختلف مدة إعادة التأهيل حسب نوع الإصابة وشدتها، وقد تتراوح من بضعة أسابيع في الإصابات البسيطة إلى عدة أشهر في الإصابات الشديدة مثل تمزق الرباط الصليبي.</p>
-            </div>
-        </div>
-        
-        <!-- الخاتمة -->
-        <div class="section" id="conclusion">
-            <h2>8. الخاتمة</h2>
-            <p>تشكل إصابات النشاط البدني تحدياً كبيراً للممارسين والرياضيين على مختلف مستوياتهم. ومع تزايد الاهتمام باللياقة البدنية وممارسة الرياضة، تزداد أهمية فهم أسباب هذه الإصابات وطرق الوقاية منها وعلاجها.</p>
-            
-            <p>أظهر البحث أن معظم إصابات النشاط البدني يمكن الوقاية منها من خلال اتباع برامج تدريبية متوازنة، واستخدام التقنيات الصحيحة، وارتداء المعدات المناسبة، والالتزام ببرامج الإحماء والتبريد. كما أن التشخيص المبكر والعلاج المناسب يلعبان دوراً حاسماً في تقليل فترة التعافي ومنع المضاعفات طويلة الأمد.</p>
-            
-            <p>يوصى الباحثون بضرورة زيادة الوعي حول إصابات النشاط البدني بين الممارسين والمدربين، وتطوير برامج وقائية شاملة، وتعزيز التعاون بين المتخصصين في مجال الطب الرياضي والتدريب الرياضي لضمان بيئة آمنة لممارسة النشاط البدني.</p>
-            
-            <div class="illustration">
-                <div class="illustration-title">توصيات البحث:</div>
-                <ul>
-                    <li>تطوير برامج توعوية حول الوقاية من الإصابات الرياضية</li>
-                    <li>تدريب المدربين على اكتشاف العلامات المبكرة للإصابات</li>
-                    <li>تعزيز التعاون بين أخصائيي الطب الرياضي والمدربين</li>
-                    <li>إجراء المزيد من الأبحاث حول فعالية برامج الوقاية من الإصابات</li>
+            <div class="answer-box">
+                <p>تكمن أهمية التوجيه في تحقيق أهداف المنظمة من خلال:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>تحسين أداء العاملين وزيادة إنتاجيتهم</li>
+                    <li>تحقيق التكامل بين جهود الأفراد والجماعات</li>
+                    <li>توجيه الطاقات والمواهب نحو تحقيق الأهداف المشتركة</li>
+                    <li>تحسين الروح المعنوية للعاملين وزيادة ولائهم للمنظمة</li>
+                    <li>تسهيل عملية التغيير والتطوير داخل المنظمة</li>
+                    <li>تحقيق الاستقرار الوظيفي وتقليل معدل دوران العمل</li>
                 </ul>
             </div>
+            
+            <div class="sub-heading">تقييم الجمل (ضع علامة ✓ أو ✗)</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="80%">الجملة</th>
+                        <th width="20%">التقييم</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الخطط الجيّدة والتنظيم تكفيلان تضمان قيام الأفراد بإنجاز ما يكلفون به من أعمال تلقائياً، أو بأوامر من إرادتهم.</td>
+                        <td class="incorrect">✗ (غير صحيحة)</td>
+                    </tr>
+                    <tr>
+                        <td>تكمن أهمية التوجيه في مساعدة الرؤوساء على مواجهة الصعوبات التي قد تواجههم أثناء أداء عملهم.</td>
+                        <td class="correct">✓ (صحيحة)</td>
+                    </tr>
+                    <tr>
+                        <td>من طرق التوجيه التشجيع والتحفيز والاتصالات المتبادلة.</td>
+                        <td class="correct">✓ (صحيحة)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="side-heading">خريطة مفاهيمية لعناصر التوجيه</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">عناصر التوجيه</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">التوجيه والإرشاد</div>
+                    <div class="map-node">التواصل الفعال</div>
+                    <div class="map-node">التحفيز</div>
+                </div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">الرقابة والمتابعة</div>
+                    <div class="map-node">التقييم</div>
+                </div>
+            </div>
         </div>
-        
-        <!-- المراجع -->
-        <div class="section" id="references">
-            <h2>9. المراجع</h2>
-            <div class="references">
-                <ol>
-                    <li>Bahr, R., & Holme, I. (2003). Risk factors for sports injuries—a methodological approach. British Journal of Sports Medicine, 37(5), 384-392.</li>
-                    <li>Meeuwisse, W. H., Tyreman, H., Hagel, B., & Emery, C. (2007). A dynamic model of etiology in sport injury: the recursive nature of risk and causation. Clinical Journal of Sport Medicine, 17(3), 215-219.</li>
-                    <li>Van Mechelen, W., Hlobil, H., & Kemper, H. C. (1992). Incidence, severity, aetiology and prevention of sports injuries. Sports Medicine, 14(2), 82-99.</li>
-                    <li>Junge, A., & Dvorak, J. (2013). Injury surveillance in the World Football Championships 2002–2012. British Journal of Sports Medicine, 47(12), 782-788.</li>
-                    <li>Brukner, P., & Khan, K. (2017). Clinical sports medicine. McGraw-Hill Education.</li>
-                    <li>Hootman, J. M., Dick, R., & Agel, J. (2007). Epidemiology of collegiate injuries for 15 sports: summary and recommendations for injury prevention initiatives. Journal of Athletic Training, 42(2), 311-319.</li>
-                    <li>Finch, C. (2006). A new framework for research leading to sports injury prevention. Journal of Science and Medicine in Sport, 9(1-2), 3-9.</li>
-                    <li>Emery, C. A. (2003). Risk factors for injury in child and adolescent sport: a systematic review of the literature. Clinical Journal of Sport Medicine, 13(4), 256-268.</li>
+
+        <!-- الصفحة الثانية - التصميم الأول -->
+        <div class="page-break">
+            <div class="side-heading">الإجابة عن أسئلة القيادة (IMG_6475)</div>
+            
+            <div class="sub-heading">مفهوم القيادة</div>
+            
+            <div class="answer-box">
+                <p>القيادة هي عملية التأثير في الآخرين وتوجيههم نحو تحقيق أهداف محددة. وهي تشمل القدرة على إلهام وتحفيز الأفراد والجماعات لتحقيق النتائج المرجوة بكفاءة وفعالية. تعتمد القيادة على مجموعة من المهارات والصفات الشخصية التي تمكن القائد من التأثير الإيجابي في مرؤوسيه.</p>
+            </div>
+            
+            <div class="sub-heading">أنماط القيادة</div>
+            
+            <div class="answer-box">
+                <p>توجد عدة أنماط للقيادة، ومن أهمها:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>القيادة الديمقراطية:</strong> تشجع على مشاركة المرؤوسين في اتخاذ القرارات</li>
+                    <li><strong>القيادة الأوتوقراطية:</strong> يتركز اتخاذ القرارات بيد القائد وحده</li>
+                    <li><strong>القيادة التحويلية:</strong> تركز على إحداث تغيير إيجابي في المنظمة</li>
+                    <li><strong>القيادة التبادلية:</strong> تقوم على تبادل المنافع بين القائد والمرؤوسين</li>
+                    <li><strong>القيادة الموقفية:</strong> تتكيف مع الظروف والمتغيرات المختلفة</li>
+                    <li><strong>القيادة الخادمة:</strong> تركز على خدمة احتياجات المرؤوسين وتطويرهم</li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">المهارات التي يحتاجها القائد</div>
+            
+            <div class="answer-box">
+                <p>يحتاج القائد إلى مجموعة متنوعة من المهارات، أهمها:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>المهارات الفنية:</strong> المعرفة المتخصصة في مجال العمل</li>
+                    <li><strong>المهارات الإنسانية:</strong> القدرة على التعامل مع الآخرين بفعالية</li>
+                    <li><strong>المهارات المفاهيمية:</strong> القدرة على الرؤية الشاملة وتحليل المشكلات</li>
+                    <li><strong>مهارات التواصل:</strong> القدرة على نقل الأفكار والمعلومات بوضوح</li>
+                    <li><strong>مهارات التحفيز:</strong> القدرة على تحفيز المرؤوسين وتشجيعهم</li>
+                    <li><strong>مهارات حل المشكلات:</strong> القدرة على تحليل المشكلات واتخاذ القرارات المناسبة</li>
+                    <li><strong>مهارات التفاوض:</strong> القدرة على إدارة المفاوضات والوصول إلى حلول مقبولة</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">خريطة مفاهيمية لأنماط القيادة</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">أنماط القيادة</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">ديمقراطية</div>
+                    <div class="map-node">أوتوقراطية</div>
+                    <div class="map-node">تحويلية</div>
+                </div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">تبادلية</div>
+                    <div class="map-node">موقفية</div>
+                    <div class="map-node">خادمة</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة - التصميم الأول -->
+        <div class="page-break">
+            <div class="side-heading">الإجابة عن أسئلة التمويل والتدريب (IMG_6474)</div>
+            
+            <div class="sub-heading">تقسيمات أنواع الحوافز</div>
+            
+            <div class="answer-box">
+                <p>تنقسم الحوافز إلى ثلاثة أنواع رئيسية:</p>
+                <ol style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الحوافز المادية:</strong> تشمل الأجور والمرتبات والمكافآت والعلاوات والمشاركة في الأرباح.</li>
+                    <li><strong>الحوافز المعنوية:</strong> تشمل التقدير والثناء والشكر والترقية والتكريم.</li>
+                    <li><strong>الحوافز الاجتماعية:</strong> تشمل توفير بيئة عمل مناسبة وعلاقات إنسانية جيدة والمشاركة في اتخاذ القرارات.</li>
                 </ol>
             </div>
+            
+            <div class="sub-heading">أنواع التدريب مع توضيح القصور بكل نوع</div>
+            
+            <div class="answer-box">
+                <p>أهم أنواع التدريب وقصور كل نوع:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>التدريب الداخلي:</strong> يتم داخل المنظمة
+                        <br><span style="color: #991B1B;">القصور: قد لا يتوفر الخبراء المتخصصين، محدودية التنوع في الخبرات</span>
+                    </li>
+                    <li><strong>التدريب الخارجي:</strong> يتم خارج المنظمة في مراكز متخصصة
+                        <br><span style="color: #991B1B;">القصور: تكلفة عالية، قد لا يراعي خصوصية المنظمة</span>
+                    </li>
+                    <li><strong>التدريب أثناء العمل:</strong> يتم أثناء أداء المهام الفعلية
+                        <br><span style="color: #991B1B;">القصور: قد يؤثر على الإنتاجية، صعوبة التركيز في بيئة العمل</span>
+                    </li>
+                    <li><strong>التدريب عن بعد:</strong> باستخدام التقنيات الحديثة
+                        <br><span style="color: #991B1B;">القصور: نقص التفاعل المباشر، صعوبة المتابعة والتقييم</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">ربط العناصر مع القائمة</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="30%">العمود الأول</th>
+                        <th width="40%">الإجابة</th>
+                        <th width="15%">i</th>
+                        <th width="15%">↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الحوافز السلبية</td>
+                        <td>تخفيض النفقات</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>فوائد التدريب</td>
+                        <td>يهيئ المنظمة لمواجهة التحديات المستقبلية</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>الحوافز الإيجابية</td>
+                        <td>تستخدم لتحسين الأداء وتعزيز السلوك الإيجابي</td>
+                        <td>5</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>التدريب الخارجي</td>
+                        <td>يقدم خبرات متنوعة ووجهات نظر جديدة</td>
+                        <td>7</td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="side-heading">خريطة مفاهيمية لأنواع الحوافز</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">أنواع الحوافز</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">الحوافز المادية</div>
+                    <div class="map-node">الحوافز المعنوية</div>
+                    <div class="map-node">الحوافز الاجتماعية</div>
+                </div>
+            </div>
         </div>
+
+        <!-- التصميم الثاني -->
         
-        <!-- زر الطباعة في نهاية البحث -->
-        <div class="no-print" style="text-align: center; margin-top: 30px;">
-            <button class="print-btn" onclick="generatePDF()">حفظ البحث كملف PDF</button>
+        <!-- الصفحة الأولى - التصميم الثاني -->
+        <div class="page-break design-2">
+            <h1 class="main-title">حل أسئلة الإدارة: التوجيه والقيادة</h1>
+
+            <div class="side-heading">الإجابة عن أسئلة التوجيه (IMG_6473)</div>
+            
+            <div class="sub-heading">مفهوم التوجيه</div>
+            
+            <div class="answer-box">
+                <p>التوجيه هو العملية الإدارية التي تهدف إلى توجيه جهود المرؤوسين وتوجيههم نحو تحقيق أهداف المنظمة بكفاءة وفعالية. يتكون التوجيه من عدة عناصر رئيسية:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>التوجيه والإرشاد:</strong> توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل</li>
+                    <li><strong>التواصل الفعال:</strong> نقل المعلومات والتعليمات بشكل واضح ومباشر</li>
+                    <li><strong>التحفيز:</strong> تشجيع العاملين على بذل أقصى جهودهم</li>
+                    <li><strong>الرقابة والمتابعة:</strong> متابعة سير العمل وتصحيح الانحرافات</li>
+                    <li><strong>التقييم:</strong> تقييم أداء المرؤوسين وتقديم التغذية الراجعة</li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">أهمية التوجيه في تحقيق أهداف المنظمة</div>
+            
+            <div class="answer-box">
+                <p>تكمن أهمية التوجيه في تحقيق أهداف المنظمة من خلال:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>تحسين أداء العاملين وزيادة إنتاجيتهم</li>
+                    <li>تحقيق التكامل بين جهود الأفراد والجماعات</li>
+                    <li>توجيه الطاقات والمواهب نحو تحقيق الأهداف المشتركة</li>
+                    <li>تحسين الروح المعنوية للعاملين وزيادة ولائهم للمنظمة</li>
+                    <li>تسهيل عملية التغيير والتطوير داخل المنظمة</li>
+                    <li>تحقيق الاستقرار الوظيفي وتقليل معدل دوران العمل</li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">تقييم الجمل (ضع علامة ✓ أو ✗)</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="80%">الجملة</th>
+                        <th width="20%">التقييم</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الخطط الجيّدة والتنظيم تكفيلان تضمان قيام الأفراد بإنجاز ما يكلفون به من أعمال تلقائياً، أو بأوامر من إرادتهم.</td>
+                        <td class="incorrect">✗ (غير صحيحة)</td>
+                    </tr>
+                    <tr>
+                        <td>تكمن أهمية التوجيه في مساعدة الرؤوساء على مواجهة الصعوبات التي قد تواجههم أثناء أداء عملهم.</td>
+                        <td class="correct">✓ (صحيحة)</td>
+                    </tr>
+                    <tr>
+                        <td>من طرق التوجيه التشجيع والتحفيز والاتصالات المتبادلة.</td>
+                        <td class="correct">✓ (صحيحة)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="side-heading">خريطة مفاهيمية لعناصر التوجيه</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">عناصر التوجيه</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">التوجيه والإرشاد</div>
+                    <div class="map-node">التواصل الفعال</div>
+                    <div class="map-node">التحفيز</div>
+                </div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">الرقابة والمتابعة</div>
+                    <div class="map-node">التقييم</div>
+                </div>
+            </div>
         </div>
+
+        <!-- الصفحة الثانية - التصميم الثاني -->
+        <div class="page-break design-2">
+            <div class="side-heading">الإجابة عن أسئلة القيادة (IMG_6475)</div>
+            
+            <div class="sub-heading">مفهوم القيادة</div>
+            
+            <div class="answer-box">
+                <p>القيادة هي عملية التأثير في الآخرين وتوجيههم نحو تحقيق أهداف محددة. وهي تشمل القدرة على إلهام وتحفيز الأفراد والجماعات لتحقيق النتائج المرجوة بكفاءة وفعالية. تعتمد القيادة على مجموعة من المهارات والصفات الشخصية التي تمكن القائد من التأثير الإيجابي في مرؤوسيه.</p>
+            </div>
+            
+            <div class="sub-heading">أنماط القيادة</div>
+            
+            <div class="answer-box">
+                <p>توجد عدة أنماط للقيادة، ومن أهمها:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>القيادة الديمقراطية:</strong> تشجع على مشاركة المرؤوسين في اتخاذ القرارات</li>
+                    <li><strong>القيادة الأوتوقراطية:</strong> يتركز اتخاذ القرارات بيد القائد وحده</li>
+                    <li><strong>القيادة التحويلية:</strong> تركز على إحداث تغيير إيجابي في المنظمة</li>
+                    <li><strong>القيادة التبادلية:</strong> تقوم على تبادل المنافع بين القائد والمرؤوسين</li>
+                    <li><strong>القيادة الموقفية:</strong> تتكيف مع الظروف والمتغيرات المختلفة</li>
+                    <li><strong>القيادة الخادمة:</strong> تركز على خدمة احتياجات المرؤوسين وتطويرهم</li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">المهارات التي يحتاجها القائد</div>
+            
+            <div class="answer-box">
+                <p>يحتاج القائد إلى مجموعة متنوعة من المهارات، أهمها:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>المهارات الفنية:</strong> المعرفة المتخصصة في مجال العمل</li>
+                    <li><strong>المهارات الإنسانية:</strong> القدرة على التعامل مع الآخرين بفعالية</li>
+                    <li><strong>المهارات المفاهيمية:</strong> القدرة على الرؤية الشاملة وتحليل المشكلات</li>
+                    <li><strong>مهارات التواصل:</strong> القدرة على نقل الأفكار والمعلومات بوضوح</li>
+                    <li><strong>مهارات التحفيز:</strong> القدرة على تحفيز المرؤوسين وتشجيعهم</li>
+                    <li><strong>مهارات حل المشكلات:</strong> القدرة على تحليل المشكلات واتخاذ القرارات المناسبة</li>
+                    <li><strong>مهارات التفاوض:</strong> القدرة على إدارة المفاوضات والوصول إلى حلول مقبولة</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">خريطة مفاهيمية لأنماط القيادة</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">أنماط القيادة</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">ديمقراطية</div>
+                    <div class="map-node">أوتوقراطية</div>
+                    <div class="map-node">تحويلية</div>
+                </div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">تبادلية</div>
+                    <div class="map-node">موقفية</div>
+                    <div class="map-node">خادمة</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة - التصميم الثاني -->
+        <div class="page-break design-2">
+            <div class="side-heading">الإجابة عن أسئلة التمويل والتدريب (IMG_6474)</div>
+            
+            <div class="sub-heading">تقسيمات أنواع الحوافز</div>
+            
+            <div class="answer-box">
+                <p>تنقسم الحوافز إلى ثلاثة أنواع رئيسية:</p>
+                <ol style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الحوافز المادية:</strong> تشمل الأجور والمرتبات والمكافآت والعلاوات والمشاركة في الأرباح.</li>
+                    <li><strong>الحوافز المعنوية:</strong> تشمل التقدير والثناء والشكر والترقية والتكريم.</li>
+                    <li><strong>الحوافز الاجتماعية:</strong> تشمل توفير بيئة عمل مناسبة وعلاقات إنسانية جيدة والمشاركة في اتخاذ القرارات.</li>
+                </ol>
+            </div>
+            
+            <div class="sub-heading">أنواع التدريب مع توضيح القصور بكل نوع</div>
+            
+            <div class="answer-box">
+                <p>أهم أنواع التدريب وقصور كل نوع:</p>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>التدريب الداخلي:</strong> يتم داخل المنظمة
+                        <br><span style="color: #1E40AF;">القصور: قد لا يتوفر الخبراء المتخصصين، محدودية التنوع في الخبرات</span>
+                    </li>
+                    <li><strong>التدريب الخارجي:</strong> يتم خارج المنظمة في مراكز متخصصة
+                        <br><span style="color: #1E40AF;">القصور: تكلفة عالية، قد لا يراعي خصوصية المنظمة</span>
+                    </li>
+                    <li><strong>التدريب أثناء العمل:</strong> يتم أثناء أداء المهام الفعلية
+                        <br><span style="color: #1E40AF;">القصور: قد يؤثر على الإنتاجية، صعوبة التركيز في بيئة العمل</span>
+                    </li>
+                    <li><strong>التدريب عن بعد:</strong> باستخدام التقنيات الحديثة
+                        <br><span style="color: #1E40AF;">القصور: نقص التفاعل المباشر، صعوبة المتابعة والتقييم</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="sub-heading">ربط العناصر مع القائمة</div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th width="30%">العمود الأول</th>
+                        <th width="40%">الإجابة</th>
+                        <th width="15%">i</th>
+                        <th width="15%">↑</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الحوافز السلبية</td>
+                        <td>تخفيض النفقات</td>
+                        <td>1</td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <td>فوائد التدريب</td>
+                        <td>يهيئ المنظمة لمواجهة التحديات المستقبلية</td>
+                        <td>3</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td>الحوافز الإيجابية</td>
+                        <td>تستخدم لتحسين الأداء وتعزيز السلوك الإيجابي</td>
+                        <td>5</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td>التدريب الخارجي</td>
+                        <td>يقدم خبرات متنوعة ووجهات نظر جديدة</td>
+                        <td>7</td>
+                        <td>8</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="side-heading">خريطة مفاهيمية لأنواع الحوافز</div>
+            
+            <div class="concept-map">
+                <div class="map-node map-center">أنواع الحوافز</div>
+                <div class="map-connector"></div>
+                <div class="map-row">
+                    <div class="map-node">الحوافز المادية</div>
+                    <div class="map-node">الحوافز المعنوية</div>
+                    <div class="map-node">الحوافز الاجتماعية</div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script>
-        // دالة لتحويل الصفحة إلى PDF
-        function generatePDF() {
-            const element = document.body;
-            
-            // خيارات التصدير إلى PDF
-            const options = {
-                margin: [0.5, 0.5, 0.5, 0.5],
-                filename: 'بحث_إصابات_النشاط_البدني.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { unit: 'cm', format: 'a4', orientation: 'portrait' }
-            };
-            
-            // تحويل المحتوى إلى PDF
-            html2pdf().set(options).from(element).save();
-        }
-        
-        // إضافة تأثيرات تفاعلية للروابط في الفهرس
-        document.addEventListener('DOMContentLoaded', function() {
-            const links = document.querySelectorAll('.toc a');
-            
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href').substring(1);
-                    const targetElement = document.getElementById(targetId);
-                    
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 20,
-                        behavior: 'smooth'
-                    });
-                });
-            });
+        // تحسين الطباعة
+        window.addEventListener('beforeprint', function() {
+            document.body.style.fontSize = '11pt';
         });
     </script>
 </body>
