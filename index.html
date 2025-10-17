@@ -2,7 +2,263 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خرائط مفاهيمية للتوجيه</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.2cm;
+            }
+            
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+                font-family: 'Amiri', serif;
+            }
+            
+            .page-break {
+                page-break-before: always;
+                padding-top: 0.5cm;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+        }
+        
+        body {
+            font-family: 'Amiri', 'Noto Sans Arabic', serif;
+            line-height: 1.6;
+        }
+        
+        .main-title {
+            text-align: center;
+            color: #991B1B;
+            font-weight: 700;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #DC2626;
+            padding-bottom: 15px;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        .student-name {
+            text-align: left;
+            color: #374151;
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .concept-map-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .map-node {
+            background: white;
+            border: 2px solid #3B82F6;
+            border-radius: 8px;
+            padding: 12px 18px;
+            margin: 8px;
+            text-align: center;
+            font-weight: 600;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 200px;
+        }
+        
+        .map-connector {
+            width: 2px;
+            background: #3B82F6;
+            height: 25px;
+        }
+        
+        .map-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .map-center {
+            background: #1E40AF;
+            color: white;
+            font-size: 18px;
+            padding: 15px 25px;
+        }
+        
+        .design-2 .main-title {
+            color: #1E40AF;
+            border-bottom: 3px solid #3B82F6;
+        }
+        
+        .design-2 .map-node {
+            border: 2px solid #10B981;
+            background: #ECFDF5;
+        }
+        
+        .design-2 .map-connector {
+            background: #10B981;
+        }
+        
+        .design-2 .map-center {
+            background: #047857;
+        }
+        
+        .design-2 .student-name {
+            color: #1E40AF;
+        }
+        
+        .node-1 { background: #FEF3C7; border-color: #F59E0B; }
+        .node-2 { background: #FEF2F2; border-color: #EF4444; }
+        .node-3 { background: #F0F9FF; border-color: #3B82F6; }
+        .node-4 { background: #ECFDF5; border-color: #10B981; }
+        .node-5 { background: #F3E8FF; border-color: #8B5CF6; }
+        
+        .design-2 .node-1 { background: #FEF7CD; border-color: #EAB308; }
+        .design-2 .node-2 { background: #FECACA; border-color: #DC2626; }
+        .design-2 .node-3 { background: #BFDBFE; border-color: #2563EB; }
+        .design-2 .node-4 { background: #A7F3D0; border-color: #059669; }
+        .design-2 .node-5 { background: #DDD6FE; border-color: #7C3AED; }
+    </style>
+</head>
+<body class="bg-white text-black" dir="rtl">
+
+    <!-- زر الطباعة -->
+    <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="window.print()" style="background: #DC2626; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+            🖨️ طباعة التقرير
+        </button>
+    </div>
+
+    <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
+
+        <!-- التصميم الأول -->
+        <div>
+            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
+            
+            <div class="student-name">عمل الطالب: سلطان مروان اليافعي</div>
+            
+            <div class="concept-map-container">
+                <div class="map-node map-center">عناصر التوجيه</div>
+                <div class="map-connector"></div>
+                
+                <div class="map-row">
+                    <div class="map-node node-1">التوجيه والإرشاد</div>
+                    <div class="map-node node-2">التواصل الفعال</div>
+                    <div class="map-node node-3">التحفيز</div>
+                </div>
+                
+                <div class="map-connector"></div>
+                
+                <div class="map-row">
+                    <div class="map-node node-4">الرقابة والمتابعة</div>
+                    <div class="map-node node-5">التقييم</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h2 style="color: #991B1B; border-right: 4px solid #DC2626; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
+                
+                <div style="background: #FEF2F2; padding: 15px; margin: 12px 0; border-right: 3px solid #EF4444; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
+                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
+                </div>
+                
+                <div style="background: #FEF3C7; padding: 15px; margin: 12px 0; border-right: 3px solid #F59E0B; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
+                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
+                </div>
+                
+                <div style="background: #F0F9FF; padding: 15px; margin: 12px 0; border-right: 3px solid #3B82F6; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
+                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
+                </div>
+                
+                <div style="background: #ECFDF5; padding: 15px; margin: 12px 0; border-right: 3px solid #10B981; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
+                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
+                </div>
+                
+                <div style="background: #F3E8FF; padding: 15px; margin: 12px 0; border-right: 3px solid #8B5CF6; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
+                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- التصميم الثاني -->
+        <div class="page-break design-2">
+            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
+            
+            <div class="student-name">عمل الطالب: عبدالله عمر</div>
+            
+            <div class="concept-map-container">
+                <div class="map-node map-center">عناصر التوجيه</div>
+                <div class="map-connector"></div>
+                
+                <div class="map-row">
+                    <div class="map-node node-1">التوجيه والإرشاد</div>
+                    <div class="map-node node-2">التواصل الفعال</div>
+                    <div class="map-node node-3">التحفيز</div>
+                </div>
+                
+                <div class="map-connector"></div>
+                
+                <div class="map-row">
+                    <div class="map-node node-4">الرقابة والمتابعة</div>
+                    <div class="map-node node-5">التقييم</div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 30px;">
+                <h2 style="color: #1E40AF; border-right: 4px solid #3B82F6; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
+                
+                <div style="background: #FECACA; padding: 15px; margin: 12px 0; border-right: 3px solid #DC2626; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
+                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
+                </div>
+                
+                <div style="background: #FEF7CD; padding: 15px; margin: 12px 0; border-right: 3px solid #EAB308; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
+                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
+                </div>
+                
+                <div style="background: #BFDBFE; padding: 15px; margin: 12px 0; border-right: 3px solid #2563EB; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
+                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
+                </div>
+                
+                <div style="background: #A7F3D0; padding: 15px; margin: 12px 0; border-right: 3px solid #059669; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
+                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
+                </div>
+                
+                <div style="background: #DDD6FE; padding: 15px; margin: 12px 0; border-right: 3px solid #7C3AED; border-radius: 8px 0 0 8px;">
+                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
+                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // تحسين الطباعة
+        window.addEventListener('beforeprint', function() {
+            document.body.style.fontSize = '11pt';
+        });
+    </script>
+</body>
+</html>
     <title>الكتب السبعة ومؤلفوها</title>
     <style>
         * {
