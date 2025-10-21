@@ -2,12 +2,8 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خرائط مفاهيمية للتوجيه</title>
+    <title>الرنين في الأعمدة الهوائية والأوتار</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
@@ -31,6 +27,56 @@
             .no-print {
                 display: none !important;
             }
+            
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 0.8cm;
+                text-align: center;
+            }
+            
+            .side-heading {
+                font-size: 14pt;
+                margin: 0.4cm 0 0.3cm 0;
+                border-right: 4px solid #059669;
+                padding-right: 0.4cm;
+                font-weight: bold;
+                color: #047857;
+            }
+            
+            .sub-heading {
+                font-size: 12pt;
+                margin: 0.3cm 0 0.2cm 0;
+                font-weight: 600;
+                color: #374151;
+            }
+            
+            p {
+                margin-bottom: 0.3cm;
+                text-align: justify;
+            }
+            
+            .verse {
+                font-size: 11pt;
+                margin: 0.3cm 0;
+                padding: 0.3cm;
+                background: #F0FDF4;
+                border-right: 3px solid #059669;
+                font-style: italic;
+            }
+            
+            .info-box {
+                margin: 0.2cm 0;
+                padding: 0.4cm;
+                page-break-inside: avoid;
+            }
+            
+            ul, ol {
+                margin: 0.15cm 0;
+            }
+            
+            li {
+                margin-bottom: 0.1cm;
+            }
         }
         
         body {
@@ -40,212 +86,277 @@
         
         .main-title {
             text-align: center;
-            color: #991B1B;
+            color: #047857;
             font-weight: 700;
             margin-bottom: 30px;
-            border-bottom: 3px solid #DC2626;
+            border-bottom: 3px solid #059669;
             padding-bottom: 15px;
             display: inline-block;
             width: 100%;
         }
         
-        .student-name {
-            text-align: left;
+        .side-heading {
+            border-right: 4px solid #059669;
+            padding-right: 15px;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+            color: #047857;
+            font-size: 18px;
+        }
+        
+        .sub-heading {
+            font-weight: 600;
             color: #374151;
-            font-weight: 600;
-            margin-bottom: 20px;
-            font-size: 18px;
+            margin: 15px 0 8px 0;
         }
         
-        .concept-map-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px 0;
+        .verse {
+            background: #F0FDF4;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #059669;
+            border-radius: 8px 0 0 8px;
+            font-style: italic;
+            font-size: 16px;
         }
         
-        .map-node {
-            background: white;
-            border: 2px solid #3B82F6;
-            border-radius: 8px;
-            padding: 12px 18px;
-            margin: 8px;
+        .info-box {
+            background: #FEF7FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #8B5CF6;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .highlight-box {
+            background: #F0F9FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #3B82F6;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .comparison-box {
+            background: #FFFBEB;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #F59E0B;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .formula {
+            background: #FEF7FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #8B5CF6;
+            border-radius: 8px 0 0 8px;
             text-align: center;
-            font-weight: 600;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            width: 200px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
         }
-        
-        .map-connector {
-            width: 2px;
-            background: #3B82F6;
-            height: 25px;
-        }
-        
-        .map-row {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .map-center {
-            background: #1E40AF;
-            color: white;
-            font-size: 18px;
-            padding: 15px 25px;
-        }
-        
-        .design-2 .main-title {
-            color: #1E40AF;
-            border-bottom: 3px solid #3B82F6;
-        }
-        
-        .design-2 .map-node {
-            border: 2px solid #10B981;
-            background: #ECFDF5;
-        }
-        
-        .design-2 .map-connector {
-            background: #10B981;
-        }
-        
-        .design-2 .map-center {
-            background: #047857;
-        }
-        
-        .design-2 .student-name {
-            color: #1E40AF;
-        }
-        
-        .node-1 { background: #FEF3C7; border-color: #F59E0B; }
-        .node-2 { background: #FEF2F2; border-color: #EF4444; }
-        .node-3 { background: #F0F9FF; border-color: #3B82F6; }
-        .node-4 { background: #ECFDF5; border-color: #10B981; }
-        .node-5 { background: #F3E8FF; border-color: #8B5CF6; }
-        
-        .design-2 .node-1 { background: #FEF7CD; border-color: #EAB308; }
-        .design-2 .node-2 { background: #FECACA; border-color: #DC2626; }
-        .design-2 .node-3 { background: #BFDBFE; border-color: #2563EB; }
-        .design-2 .node-4 { background: #A7F3D0; border-color: #059669; }
-        .design-2 .node-5 { background: #DDD6FE; border-color: #7C3AED; }
     </style>
 </head>
 <body class="bg-white text-black" dir="rtl">
 
     <!-- زر الطباعة -->
     <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <button onclick="window.print()" style="background: #DC2626; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-            🖨️ طباعة التقرير
+        <button onclick="window.print()" style="background: #059669; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+            🖨️ طباعة المشروع
         </button>
     </div>
 
     <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
 
-        <!-- التصميم الأول -->
+        <!-- الصفحة الأولى -->
         <div>
-            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
+            <h1 class="main-title" style="font-size: 28px;">
+                الرنين في الأعمدة الهوائية والأوتار
+                <br>
+                <span style="font-size: 20px; color: #6B7280;">دراسة تحليلية في الفيزياء والصوتيات</span>
+            </h1>
+
+            <div class="side-heading">مقدمة: ظاهرة الرنين في الفيزياء</div>
             
-            <div class="student-name">عمل الطالب: سلطان مروان اليافعي</div>
+            <p>الرنين ظاهرة فيزيائية مهمة تحدث عندما يتطابق تردد قوة خارجية مع التردد الطبيعي لنظام ما، مما يؤدي إلى زيادة كبيرة في سعة الاهتزاز. في الصوتيات، يلعب الرنين دوراً أساسياً في إنتاج وتضخيم الأصوات في الآلات الموسيقية والأجهزة الصوتية.</p>
             
-            <div class="concept-map-container">
-                <div class="map-node map-center">عناصر التوجيه</div>
-                <div class="map-connector"></div>
-                
-                <div class="map-row">
-                    <div class="map-node node-1">التوجيه والإرشاد</div>
-                    <div class="map-node node-2">التواصل الفعال</div>
-                    <div class="map-node node-3">التحفيز</div>
-                </div>
-                
-                <div class="map-connector"></div>
-                
-                <div class="map-row">
-                    <div class="map-node node-4">الرقابة والمتابعة</div>
-                    <div class="map-node node-5">التقييم</div>
-                </div>
+            <p>تحدث ظاهرة الرنين في الأعمدة الهوائية عندما يهتز عمود الهواء داخل أنبوب بتردد يتوافق مع تردد مصدر صوتي خارجي، بينما في الأوتار تحدث عندما تهتز الأوتار المشدودة بين طرفين ثابتين بترددات محددة.</p>
+
+            <div class="side-heading">الرنين في الأعمدة الهوائية</div>
+            
+            <div class="sub-heading">الأنبوب المغلق</div>
+            <p>الأنبوب المغلق من أحد طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لربع الطول الموجي أو مضاعفاته الفردية. عند الطرف المغلق تتكون عقدة ضغط، وعند الطرف المفتوح يتكون بطن ضغط.</p>
+            
+            <div class="formula">
+                \( L = \frac{\lambda}{4}, \frac{3\lambda}{4}, \frac{5\lambda}{4}, ... \)
             </div>
             
-            <div style="margin-top: 30px;">
-                <h2 style="color: #991B1B; border-right: 4px solid #DC2626; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
-                
-                <div style="background: #FEF2F2; padding: 15px; margin: 12px 0; border-right: 3px solid #EF4444; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
-                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
-                </div>
-                
-                <div style="background: #FEF3C7; padding: 15px; margin: 12px 0; border-right: 3px solid #F59E0B; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
-                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
-                </div>
-                
-                <div style="background: #F0F9FF; padding: 15px; margin: 12px 0; border-right: 3px solid #3B82F6; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
-                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
-                </div>
-                
-                <div style="background: #ECFDF5; padding: 15px; margin: 12px 0; border-right: 3px solid #10B981; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
-                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
-                </div>
-                
-                <div style="background: #F3E8FF; padding: 15px; margin: 12px 0; border-right: 3px solid #8B5CF6; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
-                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
-                </div>
+            <div class="sub-heading">الأنبوب المفتوح</div>
+            <p>الأنبوب المفتوح من طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لنصف الطول الموجي أو مضاعفاته. يتكون بطنا ضغط عند كلا الطرفين.</p>
+            
+            <div class="formula">
+                \( L = \frac{\lambda}{2}, \lambda, \frac{3\lambda}{2}, ... \)
+            </div>
+
+            <div class="side-heading">تجربة عملية: الرنين في العمود الهوائي</div>
+            
+            <p>يمكن إثبات ظاهرة الرنين عملياً باستخدام أنبوب زجاجي مفتوح من أحد طرفيه ومغلق من الطرف الآخر بماء متحرك. عند تقريب شوكة رنانة مهتزة من فوهة الأنبوب، نلاحظ زيادة شدة الصوت عند أطوال معينة للعمود الهوائي.</p>
+            
+            <div class="highlight-box">
+                <strong>خطوات التجربة:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>استخدم أنبوباً زجاجياً وماءً متحركاً لتغيير طول العمود الهوائي</li>
+                    <li>اضرب الشوكة الرنانة وقرّبها من فوهة الأنبوب</li>
+                    <li>غيّر مستوى الماء حتى تسمع زيادة ملحوظة في شدة الصوت</li>
+                    <li>سجّل طول العمود الهوائي عند كل رنين</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>الاستنتاج من التجربة:</strong>
+                <p>يتضح من التجربة أن الرنين يحدث عند أطوال محددة للعمود الهوائي، وأن التردد الأساسي للأنبوب المفتوح ضعف التردد الأساسي للأنبوب المغلق لنفس الطول.</p>
             </div>
         </div>
 
-        <!-- التصميم الثاني -->
-        <div class="page-break design-2">
-            <h1 class="main-title">خريطة مفاهيمية لعناصر التوجيه</h1>
+        <!-- الصفحة الثانية -->
+        <div class="page-break">
+            <div class="side-heading">الرنين في الأوتار</div>
             
-            <div class="student-name">عمل الطالب: عبدالله عمر</div>
+            <p>تحدث ظاهرة الرنين في الأوتار المشدودة بين طرفين ثابتين، حيث يتكون نمط موجات مستقرة بعقد عند الطرفين وبطون في المنتصف. يعتمد التردد الأساسي للوتر على طوله وقوة الشد وكتلة وحدة الطول.</p>
             
-            <div class="concept-map-container">
-                <div class="map-node map-center">عناصر التوجيه</div>
-                <div class="map-connector"></div>
-                
-                <div class="map-row">
-                    <div class="map-node node-1">التوجيه والإرشاد</div>
-                    <div class="map-node node-2">التواصل الفعال</div>
-                    <div class="map-node node-3">التحفيز</div>
-                </div>
-                
-                <div class="map-connector"></div>
-                
-                <div class="map-row">
-                    <div class="map-node node-4">الرقابة والمتابعة</div>
-                    <div class="map-node node-5">التقييم</div>
-                </div>
+            <div class="sub-heading">الأنماط الاهتزازية في الأوتار</div>
+            
+            <div class="info-box">
+                <strong>الأنماط الأساسية للرنين في الأوتار:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>النمط الأساسي:</strong> طول موجة = 2L، تردد = f₁</li>
+                    <li><strong>النمط الأول:</strong> طول موجة = L، تردد = 2f₁</li>
+                    <li><strong>النمط الثاني:</strong> طول موجة = 2L/3، تردد = 3f₁</li>
+                    <li><strong>النمط الثالث:</strong> طول موجة = L/2، تردد = 4f₁</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">المعادلات الأساسية</div>
+            
+            <div class="sub-heading">سرعة الموجة في الأوتار</div>
+            <p>تعتمد سرعة انتشار الموجة في الوتر على قوة الشد والكتلة لكل وحدة طول:</p>
+            
+            <div class="formula">
+                \( v = \sqrt{\frac{T}{\mu}} \)
             </div>
             
-            <div style="margin-top: 30px;">
-                <h2 style="color: #1E40AF; border-right: 4px solid #3B82F6; padding-right: 15px; margin: 20px 0 10px 0; font-weight: 600;">شرح العناصر:</h2>
-                
-                <div style="background: #FECACA; padding: 15px; margin: 12px 0; border-right: 3px solid #DC2626; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #991B1B; margin-bottom: 8px;">التوجيه والإرشاد:</h3>
-                    <p>توجيه المرؤوسين نحو الطرق الصحيحة لأداء العمل وتقديم النصح والإرشاد اللازم لتحسين الأداء.</p>
-                </div>
-                
-                <div style="background: #FEF7CD; padding: 15px; margin: 12px 0; border-right: 3px solid #EAB308; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #92400E; margin-bottom: 8px;">التواصل الفعال:</h3>
-                    <p>نقل المعلومات والتعليمات بشكل واضح ومباشر بين الرؤساء والمرؤوسين وبين الإدارات المختلفة.</p>
-                </div>
-                
-                <div style="background: #BFDBFE; padding: 15px; margin: 12px 0; border-right: 3px solid #2563EB; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #1E40AF; margin-bottom: 8px;">التحفيز:</h3>
-                    <p>تشجيع العاملين على بذل أقصى جهودهم من خلال استخدام الحوافز المادية والمعنوية المناسبة.</p>
-                </div>
-                
-                <div style="background: #A7F3D0; padding: 15px; margin: 12px 0; border-right: 3px solid #059669; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #047857; margin-bottom: 8px;">الرقابة والمتابعة:</h3>
-                    <p>متابعة سير العمل وتصحيح الانحرافات والتأكد من تنفيذ الخطط وفقاً لما هو مخطط له.</p>
-                </div>
-                
-                <div style="background: #DDD6FE; padding: 15px; margin: 12px 0; border-right: 3px solid #7C3AED; border-radius: 8px 0 0 8px;">
-                    <h3 style="color: #6B21A8; margin-bottom: 8px;">التقييم:</h3>
-                    <p>تقييم أداء المرؤوسين وتقديم التغذية الراجعة البناءة لتحسين الأداء في المستقبل.</p>
-                </div>
+            <div class="sub-heading">التردد الأساسي للوتر</div>
+            <p>التردد الأساسي للوتر المشدود بين طرفين ثابتين:</p>
+            
+            <div class="formula">
+                \( f_1 = \frac{v}{2L} = \frac{1}{2L} \sqrt{\frac{T}{\mu}} \)
+            </div>
+
+            <div class="side-heading">مقارنة بين الرنين في الأعمدة الهوائية والأوتار</div>
+
+            <div class="comparison-box">
+                <strong>مقارنة بين أنظمة الرنين المختلفة:</strong>
+                <table border="1" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; margin: 10px 0; font-size: 10pt;">
+                    <thead>
+                        <tr style="background: #FEF3C7;">
+                            <th width="25%">الخاصية</th>
+                            <th width="25%">الأوتار</th>
+                            <th width="25%">الأنبوب المفتوح</th>
+                            <th width="25%">الأنبوب المغلق</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>الطول الموجي الأساسي</td>
+                            <td>\( \lambda_1 = 2L \)</td>
+                            <td>\( \lambda_1 = 2L \)</td>
+                            <td>\( \lambda_1 = 4L \)</td>
+                        </tr>
+                        <tr style="background: #FFFBEB;">
+                            <td>التردد الأساسي</td>
+                            <td>\( f_1 = \frac{v}{2L} \)</td>
+                            <td>\( f_1 = \frac{v}{2L} \)</td>
+                            <td>\( f_1 = \frac{v}{4L} \)</td>
+                        </tr>
+                        <tr>
+                            <td>الترددات الأعلى</td>
+                            <td>مضاعفات كاملة</td>
+                            <td>مضاعفات كاملة</td>
+                            <td>مضاعفات فردية</td>
+                        </tr>
+                        <tr style="background: #FFFBEB;">
+                            <td>العقد والبطون</td>
+                            <td>عقدة عند الطرفين</td>
+                            <td>بطن عند الطرفين</td>
+                            <td>عقدة عند المغلق، بطن عند المفتوح</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="side-heading">التطبيقات العملية</div>
+            
+            <div class="sub-heading">في الآلات الموسيقية</div>
+            <p>يستخدم الرنين في الأعمدة الهوائية في الآلات النفخية مثل الناي والبوق، بينما يستخدم الرنين في الأوتار في الآلات الوترية مثل العود والكمان والبيانو.</p>
+            
+            <div class="sub-heading">في الهندسة الصوتية</div>
+            <p>يتم تصميم القاعات والمستودعات الصوتية باستخدام مبادئ الرنين لتحسين جودة الصوت ومنع التشويه.</p>
+
+            <div class="highlight-box">
+                <strong>العوامل المؤثرة على التردد:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>في الأعمدة الهوائية:</strong> الطول، سرعة الصوت، نوع الطرف (مفتوح/مغلق)</li>
+                    <li><strong>في الأوتار:</strong> الطول، قوة الشد، الكتلة لكل وحدة طول</li>
+                    <li><strong>العوامل البيئية:</strong> درجة الحرارة، الرطوبة، الضغط الجوي</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة -->
+        <div class="page-break">
+            <div class="side-heading">جودة الصوت وطيف الترددات</div>
+            
+            <p>لا يعتمد تمييزنا للأصوات على التردد الأساسي فقط، بل على مجموعة من الترددات المرافقة التي تعطي كل صوت طابعه المميز.</p>
+            
+            <div class="sub-heading">مكونات الصوت</div>
+            
+            <div class="info-box">
+                <strong>المكونات الأساسية للصوت:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>التردد الأساسي:</strong> أدنى تردد في الصوت، يحدد النغمة الأساسية</li>
+                    <li><strong>الإيقاعات (النباهات):</strong> الترددات الأعلى التي ترافق التردد الأساسي</li>
+                    <li><strong>طيف الصوت:</strong> التمثيل البياني لسعة الموجه مقابل ترددها</li>
+                </ul>
+            </div>
+
+            <div class="sub-heading">الصوت النقي مقابل الصوت المعقد</div>
+            <p>الصوت النقي (كصوت الشوكة الرنانة) له منحنى جيبي بسيط وطيف ترددي محدود، بينما الصوت المعقد (كالصوت البشري) ينتج من تراكب عدة موجات بترددات مختلفة مما يعطيه طابعه الفريد.</p>
+
+            <div class="side-heading">التسجيل وإعادة إنتاج الصوت</div>
+            
+            <p>تعتمد أنظمة التسجيل والتشغيل الحديثة على قدرتها على إعادة إنتاج مدى واسع من الترددات بدقة. النظام الصوتي الجيد يجب أن يلائم جميع الترددات بين 20 Hz إلى 20,000 Hz ضمن مدى 3 dB.</p>
+            
+            <div class="sub-heading">الضوضاء والصوت النقي</div>
+            <p>تتكون الضوضاء من ترددات متعددة تقريباً بنفس السعة دون نمط واضح للإيقاعات، بينما يتميز الصوت النقي بوجود تردد أساسي وإيقاعات منتظمة.</p>
+
+            <div class="side-heading">الخاتمة والتطبيقات المستقبلية</div>
+            
+            <p>إن فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار يمثل أساساً مهماً في تطوير التقنيات الصوتية والموسيقية. تمكننا هذه المعرفة من تصميم آلات موسيقية أفضل، وقاعات صوتية أكثر كفاءة، وأنظمة تسجيل وتشغيل أعلى جودة.</p>
+            
+            <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات، وتقنيات التحكم في الضوضاء.</p>
+            
+            <div class="info-box">
+                <strong>الاستنتاج النهائي:</strong>
+                <p>تمثل ظاهرة الرنين مثالاً رائعاً على انسجام القوانين الفيزيائية مع التطبيقات العملية في حياتنا. من الآلات الموسيقية القديمة إلى أنظمة الصوت الحديثة، يظل الرنين ظاهرة أساسية تساهم في إثراء تجربتنا الصوتية والفنية.</p>
+            </div>
+
+            <div class="highlight-box">
+                <strong>التوصيات للبحث المستقبلي:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>دراسة تأثير العوامل البيئية على ظاهرة الرنين</li>
+                    <li>تطوير مواد جديدة لتحسين جودة الرنين في الآلات الموسيقية</li>
+                    <li>استخدام تقنيات الرنين في تطبيقات طبية جديدة</li>
+                    <li>تحسين كفاءة أنظمة التحكم في الضوضاء باستخدام مبادئ الرنين</li>
+                </ul>
             </div>
         </div>
 
@@ -256,281 +367,23 @@
         window.addEventListener('beforeprint', function() {
             document.body.style.fontSize = '11pt';
         });
+        
+        // تفعيل MathJax للرموز الرياضية
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+        
+        (function() {
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+            script.async = true;
+            document.head.appendChild(script);
+        })();
     </script>
-</body>
-</html>
-    <title>الكتب السبعة ومؤلفوها</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4efe9 100%);
-            color: #333;
-            line-height: 1.6;
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            min-height: 100vh;
-        }
-        
-        body::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect fill="none" width="100" height="100"/><path fill="%23e4efe9" d="M30,30 Q50,10 70,30 T90,50 T70,70 T50,90 T30,70 T10,50 T30,30 Z"/></svg>');
-            background-size: 300px;
-            opacity: 0.2;
-            z-index: -1;
-        }
-        
-        .container {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 20px;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-        }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid #eaeaea;
-            position: relative;
-        }
-        
-        header::after {
-            content: "";
-            position: absolute;
-            bottom: -2px;
-            right: 0;
-            width: 100px;
-            height: 3px;
-            background: linear-gradient(to left, #2c5f2d, #4CAF50);
-            border-radius: 3px;
-        }
-        
-        h1 {
-            color: #2c5f2d;
-            margin-bottom: 10px;
-            font-size: 32px;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        .intro {
-            margin-bottom: 25px;
-            font-size: 18px;
-            text-align: center;
-            color: #555;
-            line-height: 1.8;
-            background-color: #f8fdf9;
-            padding: 15px;
-            border-radius: 8px;
-            border-right: 4px solid #4CAF50;
-        }
-        
-        .book {
-            background: linear-gradient(to left, #f9f9f9, #ffffff);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-right: 4px solid #2c5f2d;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .book::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 5px;
-            height: 100%;
-            background: linear-gradient(to bottom, #2c5f2d, #4CAF50);
-        }
-        
-        .book:hover {
-            transform: translateX(-5px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-        }
-        
-        .book-title {
-            color: #2c5f2d;
-            margin-bottom: 10px;
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .book-title::before {
-            content: "📖";
-            margin-left: 10px;
-            font-size: 20px;
-        }
-        
-        .book-author {
-            color: #555;
-            margin-bottom: 8px;
-            font-weight: bold;
-            font-size: 17px;
-        }
-        
-        .book-details {
-            color: #666;
-            font-size: 16px;
-            line-height: 1.7;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #777;
-            font-style: italic;
-            padding: 15px;
-            background-color: #f8fdf9;
-            border-radius: 8px;
-            border: 1px dashed #4CAF50;
-        }
-        
-        .print-btn {
-            display: block;
-            margin: 30px auto;
-            background: linear-gradient(to bottom, #2c5f2d, #1e421f);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-        
-        .print-btn:hover {
-            background: linear-gradient(to bottom, #3a7a3c, #2c5f2d);
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
-        }
-        
-        .student-name {
-            text-align: center;
-            margin-top: 20px;
-            color: #666;
-            font-size: 16px;
-            font-weight: bold;
-        }
-        
-        @media print {
-            .print-btn {
-                display: none;
-            }
-            
-            body {
-                background-color: white;
-                padding: 0;
-            }
-            
-            .container {
-                box-shadow: none;
-                padding: 15px;
-            }
-            
-            .book {
-                break-inside: avoid;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 20px 15px;
-            }
-            
-            h1 {
-                font-size: 26px;
-            }
-            
-            .book-title {
-                font-size: 20px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <header>
-            <h1>تعريف بالكتب السبعة ومؤلفيها</h1>
-        </header>
-        
-        <p class="intro">
-            الكتب السبعة هي مجموعة من أهم كتب الحديث النبوي التي جمعها علماء الحديث، وتعتبر مصادر أساسية للسنة النبوية.
-        </p>
-        
-        <div class="book">
-            <h2 class="book-title">صحيح البخاري</h2>
-            <p class="book-author">جمعه الإمام أبو عبد الله محمد بن إسماعيل البخاري (194هـ - 256هـ)</p>
-            <p class="book-details">يُعتبر أصح كتب الحديث، وبلغ عدد أحاديثه دون المكرر 2602 حديثاً.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">صحيح مسلم</h2>
-            <p class="book-author">جمعه الإمام أبو الحسين مسلم بن الحجاج القشيري (206هـ - 261هـ)</p>
-            <p class="book-details">يأتي في المرتبة الثانية بعد صحيح البخاري من حيث الصحة، وبلغ عدد أحاديثه دون المكرر 3033 حديثاً.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">سنن أبي داود</h2>
-            <p class="book-author">جمعه الإمام أبو داود سليمان بن الأشعث السجستاني (202هـ - 275هـ)</p>
-            <p class="book-details">انتقى أحاديثه من بين 500,000 حديث.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">سنن الترمذي</h2>
-            <p class="book-author">جمعه الإمام أبو عيسى محمد بن عيسى الترمذي (209هـ - 279هـ)</p>
-            <p class="book-details">امتاز بذكره للأحاديث مع بيان درجاتها، وذكر أقوال العلماء في المسائل الفقهية المتعلقة بها.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">سنن النسائي</h2>
-            <p class="book-author">جمعه الإمام أبو عبد الرحمن أحمد بن شعيب النسائي (215هـ - 303هـ)</p>
-            <p class="book-details">امتاز بشدة تحريه في الرجال، وغالب أحاديثه صحيحة.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">سنن ابن ماجه</h2>
-            <p class="book-author">جمعه الإمام أبو عبد الله محمد بن يزيد بن ماجه القزويني (209هـ - 273هـ)</p>
-            <p class="book-details">يحتوي على 4341 حديثاً، ويفرد عن بقية الكتب ببعض الأحاديث التي لم تذكر فيها.</p>
-        </div>
-        
-        <div class="book">
-            <h2 class="book-title">موطأ مالك</h2>
-            <p class="book-author">جمعه الإمام مالك بن أنس (93هـ - 179هـ)</p>
-            <p class="book-details">يُعتبر من أوائل كتب الحديث والفقه، واحتوى على أحاديث مرفوعة وموقوفة ومقطوعة.</p>
-        </div>
-        
-        <p class="footer">
-            هذه الكتب حظيت باهتمام العلماء، وكتبت حولها العديد من الشروح والمختصرات، مما ساهم في حفظ السنة النبوية ونقلها عبر الأجيال.
-        </p>
-        
-        <button class="print-btn" onclick="window.print()">طباعة الصفحة</button>
-        
-        <div class="student-name">دنيا حسن محابلي / أولى ثانوي</div>
-    </div>
 </body>
 </html>
