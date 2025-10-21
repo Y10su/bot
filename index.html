@@ -10,159 +10,99 @@
         @media print {
             @page {
                 size: A4;
-                margin: 1.2cm;
+                margin: 2cm;
             }
             
             body {
-                font-size: 11pt;
-                line-height: 1.4;
+                font-size: 14pt;
+                line-height: 1.6;
                 font-family: 'Amiri', serif;
             }
             
-            .page-break {
-                page-break-before: always;
-                padding-top: 0.5cm;
+            .cover-page {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
             }
             
             .no-print {
                 display: none !important;
             }
-            
-            h1 {
-                font-size: 20pt;
-                margin-bottom: 0.8cm;
-                text-align: center;
-            }
-            
-            .side-heading {
-                font-size: 14pt;
-                margin: 0.4cm 0 0.3cm 0;
-                border-right: 4px solid #059669;
-                padding-right: 0.4cm;
-                font-weight: bold;
-                color: #047857;
-            }
-            
-            .sub-heading {
-                font-size: 12pt;
-                margin: 0.3cm 0 0.2cm 0;
-                font-weight: 600;
-                color: #374151;
-            }
-            
-            p {
-                margin-bottom: 0.3cm;
-                text-align: justify;
-            }
-            
-            .verse {
-                font-size: 11pt;
-                margin: 0.3cm 0;
-                padding: 0.3cm;
-                background: #F0FDF4;
-                border-right: 3px solid #059669;
-                font-style: italic;
-            }
-            
-            .info-box {
-                margin: 0.2cm 0;
-                padding: 0.4cm;
-                page-break-inside: avoid;
-            }
-            
-            ul, ol {
-                margin: 0.15cm 0;
-            }
-            
-            li {
-                margin-bottom: 0.1cm;
-            }
         }
         
         body {
             font-family: 'Amiri', 'Noto Sans Arabic', serif;
-            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cover-container {
+            background: white;
+            padding: 3cm;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
         }
         
         .main-title {
-            text-align: center;
-            color: #047857;
+            color: #1e40af;
+            font-size: 2.5em;
             font-weight: 700;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #059669;
-            padding-bottom: 15px;
-            display: inline-block;
-            width: 100%;
+            margin-bottom: 1em;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 0.5em;
         }
         
-        .side-heading {
-            border-right: 4px solid #059669;
-            padding-right: 15px;
-            margin: 20px 0 10px 0;
-            font-weight: 600;
-            color: #047857;
-            font-size: 18px;
-        }
-        
-        .sub-heading {
-            font-weight: 600;
+        .subject {
             color: #374151;
-            margin: 15px 0 8px 0;
-        }
-        
-        .verse {
-            background: #F0FDF4;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #059669;
-            border-radius: 8px 0 0 8px;
-            font-style: italic;
-            font-size: 16px;
-        }
-        
-        .info-box {
-            background: #FEF7FF;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #8B5CF6;
-            border-radius: 8px 0 0 8px;
-        }
-        
-        .highlight-box {
-            background: #F0F9FF;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #3B82F6;
-            border-radius: 8px 0 0 8px;
-        }
-        
-        .comparison-box {
-            background: #FFFBEB;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #F59E0B;
-            border-radius: 8px 0 0 8px;
-        }
-        
-        .formula {
-            background: #FEF7FF;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #8B5CF6;
-            border-radius: 8px 0 0 8px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
+            font-size: 1.8em;
+            margin-bottom: 0.5em;
         }
         
         .student-info {
-            text-align: left;
-            direction: ltr;
-            background: #FEF3C7;
-            padding: 10px;
+            background: #f0f9ff;
+            padding: 1.5em;
+            margin: 1.5em 0;
+            border-right: 4px solid #3b82f6;
+            border-radius: 10px;
+        }
+        
+        .info-item {
+            font-size: 1.4em;
+            margin: 0.8em 0;
+            color: #1e40af;
+        }
+        
+        .class-info {
+            background: #fef7ff;
+            padding: 1em;
+            margin: 1em 0;
+            border-right: 4px solid #8b5cf6;
             border-radius: 8px;
-            margin-bottom: 20px;
-            border-right: 3px solid #F59E0B;
+            font-size: 1.3em;
+            color: #7c3aed;
+        }
+        
+        .year {
+            color: #059669;
+            font-size: 1.2em;
+            margin-top: 1.5em;
+            font-weight: 600;
+        }
+        
+        .decoration {
+            margin: 2em 0;
+            color: #6b7280;
+            font-size: 1.1em;
         }
     </style>
 </head>
@@ -171,244 +111,40 @@
     <!-- زر الطباعة -->
     <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
         <button onclick="window.print()" style="background: #059669; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-            🖨️ طباعة المشروع
+            🖨️ طباعة الغلاف
         </button>
     </div>
 
-    <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
-
-        <!-- الصفحة الأولى -->
-        <div>
+    <div class="cover-page">
+        <div class="cover-container">
+            <h1 class="main-title">الرنين في الأعمدة الهوائية والأوتار</h1>
+            
+            <div class="subject">مادة الفيزياء</div>
+            
+            <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
+            
             <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان اليافعي<br>
-                <strong>المادة:</strong> فيزياء<br>
-                <strong>الموضوع:</strong> الرنين في الأعمدة الهوائية والأوتار<br>
-                <strong>التاريخ:</strong> 2024
-            </div>
-
-            <h1 class="main-title" style="font-size: 28px;">
-                الرنين في الأعمدة الهوائية والأوتار
-                <br>
-                <span style="font-size: 20px; color: #6B7280;">دراسة تحليلية في الفيزياء والصوتيات</span>
-            </h1>
-
-            <div class="side-heading">مقدمة: ظاهرة الرنين في الفيزياء</div>
-            
-            <p>الرنين ظاهرة فيزيائية مهمة تحدث عندما يتطابق تردد قوة خارجية مع التردد الطبيعي لنظام ما، مما يؤدي إلى زيادة كبيرة في سعة الاهتزاز. في الصوتيات، يلعب الرنين دوراً أساسياً في إنتاج وتضخيم الأصوات في الآلات الموسيقية والأجهزة الصوتية.</p>
-            
-            <p>تحدث ظاهرة الرنين في الأعمدة الهوائية عندما يهتز عمود الهواء داخل أنبوب بتردد يتوافق مع تردد مصدر صوتي خارجي، بينما في الأوتار تحدث عندما تهتز الأوتار المشدودة بين طرفين ثابتين بترددات محددة.</p>
-
-            <div class="side-heading">الرنين في الأعمدة الهوائية</div>
-            
-            <div class="sub-heading">الأنبوب المغلق</div>
-            <p>الأنبوب المغلق من أحد طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لربع الطول الموجي أو مضاعفاته الفردية. عند الطرف المغلق تتكون عقدة ضغط، وعند الطرف المفتوح يتكون بطن ضغط.</p>
-            
-            <div class="formula">
-                \( L = \frac{\lambda}{4}, \frac{3\lambda}{4}, \frac{5\lambda}{4}, ... \)
+                <div class="info-item">
+                    <strong>عمل الطالب:</strong><br>
+                    سلطان مروان
+                </div>
             </div>
             
-            <div class="sub-heading">الأنبوب المفتوح</div>
-            <p>الأنبوب المفتوح من طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لنصف الطول الموجي أو مضاعفاته. يتكون بطنا ضغط عند كلا الطرفين.</p>
-            
-            <div class="formula">
-                \( L = \frac{\lambda}{2}, \lambda, \frac{3\lambda}{2}, ... \)
+            <div class="class-info">
+                <strong>الشعبة:</strong> 304
             </div>
-
-            <div class="side-heading">تجربة عملية: الرنين في العمود الهوائي</div>
             
-            <p>يمكن إثبات ظاهرة الرنين عملياً باستخدام أنبوب زجاجي مفتوح من أحد طرفيه ومغلق من الطرف الآخر بماء متحرك. عند تقريب شوكة رنانة مهتزة من فوهة الأنبوب، نلاحظ زيادة شدة الصوت عند أطوال معينة للعمود الهوائي.</p>
+            <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
             
-            <div class="highlight-box">
-                <strong>خطوات التجربة:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li>استخدم أنبوباً زجاجياً وماءً متحركاً لتغيير طول العمود الهوائي</li>
-                    <li>اضرب الشوكة الرنانة وقرّبها من فوهة الأنبوب</li>
-                    <li>غيّر مستوى الماء حتى تسمع زيادة ملحوظة في شدة الصوت</li>
-                    <li>سجّل طول العمود الهوائي عند كل رنين</li>
-                </ul>
-            </div>
-
-            <div class="info-box">
-                <strong>الاستنتاج من التجربة:</strong>
-                <p>يتضح من التجربة أن الرنين يحدث عند أطوال محددة للعمود الهوائي، وأن التردد الأساسي للأنبوب المفتوح ضعف التردد الأساسي للأنبوب المغلق لنفس الطول.</p>
-            </div>
+            <div class="year">العام الدراسي 2024 / 2025</div>
         </div>
-
-        <!-- الصفحة الثانية -->
-        <div class="page-break">
-            <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان اليافعي<br>
-                <strong>الصفحة:</strong> 2 من 3
-            </div>
-
-            <div class="side-heading">الرنين في الأوتار</div>
-            
-            <p>تحدث ظاهرة الرنين في الأوتار المشدودة بين طرفين ثابتين، حيث يتكون نمط موجات مستقرة بعقد عند الطرفين وبطون في المنتصف. يعتمد التردد الأساسي للوتر على طوله وقوة الشد وكتلة وحدة الطول.</p>
-            
-            <div class="sub-heading">الأنماط الاهتزازية في الأوتار</div>
-            
-            <div class="info-box">
-                <strong>الأنماط الأساسية للرنين في الأوتار:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>النمط الأساسي:</strong> طول موجة = 2L، تردد = f₁</li>
-                    <li><strong>النمط الأول:</strong> طول موجة = L، تردد = 2f₁</li>
-                    <li><strong>النمط الثاني:</strong> طول موجة = 2L/3، تردد = 3f₁</li>
-                    <li><strong>النمط الثالث:</strong> طول موجة = L/2، تردد = 4f₁</li>
-                </ul>
-            </div>
-
-            <div class="side-heading">المعادلات الأساسية</div>
-            
-            <div class="sub-heading">سرعة الموجة في الأوتار</div>
-            <p>تعتمد سرعة انتشار الموجة في الوتر على قوة الشد والكتلة لكل وحدة طول:</p>
-            
-            <div class="formula">
-                \( v = \sqrt{\frac{T}{\mu}} \)
-            </div>
-            
-            <div class="sub-heading">التردد الأساسي للوتر</div>
-            <p>التردد الأساسي للوتر المشدود بين طرفين ثابتين:</p>
-            
-            <div class="formula">
-                \( f_1 = \frac{v}{2L} = \frac{1}{2L} \sqrt{\frac{T}{\mu}} \)
-            </div>
-
-            <div class="side-heading">مقارنة بين الرنين في الأعمدة الهوائية والأوتار</div>
-
-            <div class="comparison-box">
-                <strong>مقارنة بين أنظمة الرنين المختلفة:</strong>
-                <table border="1" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; margin: 10px 0; font-size: 10pt;">
-                    <thead>
-                        <tr style="background: #FEF3C7;">
-                            <th width="25%">الخاصية</th>
-                            <th width="25%">الأوتار</th>
-                            <th width="25%">الأنبوب المفتوح</th>
-                            <th width="25%">الأنبوب المغلق</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>الطول الموجي الأساسي</td>
-                            <td>\( \lambda_1 = 2L \)</td>
-                            <td>\( \lambda_1 = 2L \)</td>
-                            <td>\( \lambda_1 = 4L \)</td>
-                        </tr>
-                        <tr style="background: #FFFBEB;">
-                            <td>التردد الأساسي</td>
-                            <td>\( f_1 = \frac{v}{2L} \)</td>
-                            <td>\( f_1 = \frac{v}{2L} \)</td>
-                            <td>\( f_1 = \frac{v}{4L} \)</td>
-                        </tr>
-                        <tr>
-                            <td>الترددات الأعلى</td>
-                            <td>مضاعفات كاملة</td>
-                            <td>مضاعفات كاملة</td>
-                            <td>مضاعفات فردية</td>
-                        </tr>
-                        <tr style="background: #FFFBEB;">
-                            <td>العقد والبطون</td>
-                            <td>عقدة عند الطرفين</td>
-                            <td>بطن عند الطرفين</td>
-                            <td>عقدة عند المغلق، بطن عند المفتوح</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="side-heading">التطبيقات العملية</div>
-            
-            <div class="sub-heading">في الآلات الموسيقية</div>
-            <p>يستخدم الرنين في الأعمدة الهوائية في الآلات النفخية مثل الناي والبوق، بينما يستخدم الرنين في الأوتار في الآلات الوترية مثل العود والكمان والبيانو.</p>
-            
-            <div class="sub-heading">في الهندسة الصوتية</div>
-            <p>يتم تصميم القاعات والمستودعات الصوتية باستخدام مبادئ الرنين لتحسين جودة الصوت ومنع التشويه.</p>
-
-            <div class="highlight-box">
-                <strong>العوامل المؤثرة على التردد:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>في الأعمدة الهوائية:</strong> الطول، سرعة الصوت، نوع الطرف (مفتوح/مغلق)</li>
-                    <li><strong>في الأوتار:</strong> الطول، قوة الشد، الكتلة لكل وحدة طول</li>
-                    <li><strong>العوامل البيئية:</strong> درجة الحرارة، الرطوبة، الضغط الجوي</li>
-                </ul>
-            </div>
-        </div>
-
-        <!-- الصفحة الثالثة -->
-        <div class="page-break">
-            <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان اليافعي<br>
-                <strong>الصفحة:</strong> 3 من 3
-            </div>
-
-            <div class="side-heading">جودة الصوت وطيف الترددات</div>
-            
-            <p>لا يعتمد تمييزنا للأصوات على التردد الأساسي فقط، بل على مجموعة من الترددات المرافقة التي تعطي كل صوت طابعه المميز.</p>
-            
-            <div class="sub-heading">مكونات الصوت</div>
-            
-            <div class="info-box">
-                <strong>المكونات الأساسية للصوت:</strong>
-                <ul style="margin-right: 20px; margin-top: 8px;">
-                    <li><strong>التردد الأساسي:</strong> أدنى تردد في الصوت، يحدد النغمة الأساسية</li>
-                    <li><strong>الإيقاعات (النباهات):</strong> الترددات الأعلى التي ترافق التردد الأساسي</li>
-                    <li><strong>طيف الصوت:</strong> التمثيل البياني لسعة الموجه مقابل ترددها</li>
-                </ul>
-            </div>
-
-            <div class="sub-heading">الصوت النقي مقابل الصوت المعقد</div>
-            <p>الصوت النقي (كصوت الشوكة الرنانة) له منحنى جيبي بسيط وطيف ترددي محدود، بينما الصوت المعقد (كالصوت البشري) ينتج من تراكب عدة موجات بترددات مختلفة مما يعطيه طابعه الفريد.</p>
-
-            <div class="side-heading">التسجيل وإعادة إنتاج الصوت</div>
-            
-            <p>تعتمد أنظمة التسجيل والتشغيل الحديثة على قدرتها على إعادة إنتاج مدى واسع من الترددات بدقة. النظام الصوتي الجيد يجب أن يلائم جميع الترددات بين 20 Hz إلى 20,000 Hz ضمن مدى 3 dB.</p>
-            
-            <div class="sub-heading">الضوضاء والصوت النقي</div>
-            <p>تتكون الضوضاء من ترددات متعددة تقريباً بنفس السعة دون نمط واضح للإيقاعات، بينما يتميز الصوت النقي بوجود تردد أساسي وإيقاعات منتظمة.</p>
-
-            <div class="side-heading">الخاتمة والتطبيقات المستقبلية</div>
-            
-            <p>إن فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار يمثل أساساً مهماً في تطوير التقنيات الصوتية والموسيقية. تمكننا هذه المعرفة من تصميم آلات موسيقية أفضل، وقاعات صوتية أكثر كفاءة، وأنظمة تسجيل وتشغيل أعلى جودة.</p>
-            
-            <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات، وتقنيات التحكم في الضوضاء.</p>
-            
-            <div class="info-box">
-                <strong>الاستنتاج النهائي:</strong>
-                <p>تمثل ظاهرة الرنين مثالاً رائعاً على انسجام القوانين الفيزيائية مع التطبيقات العملية في حياتنا. من الآلات الموسيقية القديمة إلى أنظمة الصوت الحديثة، يظل الرنين ظاهرة أساسية تساهم في إثراء تجربتنا الصوتية والفنية.</p>
-            </div>
-
-            <div class="highlight-box">
-                <strong>التوقيع:</strong>
-                <p style="text-align: left; direction: ltr; margin-top: 20px;">
-                    سلطان مروان اليافعي<br>
-                    الطالب: سلطان مروان اليافعي
-                </p>
-            </div>
-        </div>
-
     </div>
 
     <script>
         // تحسين الطباعة
         window.addEventListener('beforeprint', function() {
-            document.body.style.fontSize = '11pt';
+            document.body.style.fontSize = '14pt';
         });
-        
-        // تفعيل MathJax للرموز الرياضية
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
-        
-        (function() {
-            var script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
-            script.async = true;
-            document.head.appendChild(script);
-        })();
     </script>
 </body>
 </html>
