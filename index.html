@@ -88,15 +88,17 @@
                 page-break-after: always;
             }
 
-            .image-placeholder {
-                background: #f3f4f6;
-                border: 2px dashed #d1d5db;
-                border-radius: 8px;
-                padding: 2cm;
-                margin: 0.5cm 0;
+            .image-container {
                 text-align: center;
-                color: #6b7280;
+                margin: 0.5cm 0;
                 page-break-inside: avoid;
+            }
+
+            .image-container img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             }
 
             .image-caption {
@@ -257,15 +259,17 @@
             padding-top: 0.5cm;
         }
 
-        .image-placeholder {
-            background: #f8fafc;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            padding: 1.5cm;
-            margin: 15px 0;
+        .image-container {
             text-align: center;
-            color: #64748b;
-            font-style: italic;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
         }
 
         .image-caption {
@@ -326,9 +330,9 @@
             
             <p>الرنين ظاهرة فيزيائية مهمة تحدث عندما يتطابق تردد قوة خارجية مع التردد الطبيعي لنظام ما، مما يؤدي إلى زيادة كبيرة في سعة الاهتزاز. في الصوتيات، يلعب الرنين دوراً أساسياً في إنتاج وتضخيم الأصوات في الآلات الموسيقية والأجهزة الصوتية.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: رسم توضيحي لظاهرة الرنين]
-                <div class="image-caption">الشكل 1: توضيح ظاهرة الرنين في الأنظمة المختلفة</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Standing_wave.gif/400px-Standing_wave.gif" alt="الموجات المستقرة في الرنين">
+                <div class="image-caption">الشكل 1: الموجات المستقرة في أنظمة الرنين المختلفة</div>
             </div>
             
             <p>تحدث ظاهرة الرنين في الأعمدة الهوائية عندما يهتز عمود الهواء داخل أنبوب بتردد يتوافق مع تردد مصدر صوتي خارجي، بينما في الأوتار تحدث عندما تهتز الأوتار المشدودة بين طرفين ثابتين بترددات محددة.</p>
@@ -338,8 +342,8 @@
             <div class="sub-heading">الأنبوب المغلق</div>
             <p>الأنبوب المغلق من أحد طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لربع الطول الموجي أو مضاعفاته الفردية. عند الطرف المغلق تتكون عقدة ضغط، وعند الطرف المفتوح يتكون بطن ضغط.</p>
             
-            <div class="image-placeholder">
-                [صورة من الكتاب: الأنبوب المغلق وعقد الضغط والبطون]
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7e/Closed_pipe_resonance.svg/500px-Closed_pipe_resonance.svg.png" alt="الرنين في الأنبوب المغلق">
                 <div class="image-caption">الشكل 2: توزيع العقد والبطون في الأنبوب المغلق</div>
             </div>
             
@@ -350,8 +354,8 @@
             <div class="sub-heading">الأنبوب المفتوح</div>
             <p>الأنبوب المفتوح من طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لنصف الطول الموجي أو مضاعفاته. يتكون بطنا ضغط عند كلا الطرفين.</p>
             
-            <div class="image-placeholder">
-                [صورة من الكتاب: الأنبوب المفتوح وعقد الضغط والبطون]
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Open_pipe_resonance.svg/500px-Open_pipe_resonance.svg.png" alt="الرنين في الأنبوب المفتوح">
                 <div class="image-caption">الشكل 3: توزيع العقد والبطون في الأنبوب المفتوح</div>
             </div>
             
@@ -366,9 +370,9 @@
             
             <p>يمكن إثبات ظاهرة الرنين عملياً باستخدام أنبوب زجاجي مفتوح من أحد طرفيه ومغلق من الطرف الآخر بماء متحرك. عند تقريب شوكة رنانة مهتزة من فوهة الأنبوب، نلاحظ زيادة شدة الصوت عند أطوال معينة للعمود الهوائي.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: تجربة الرنين العملي بالأنبوب والماء]
-                <div class="image-caption">الشكل 4: تجربة الرنين في العمود الهوائي</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/dc/Resonance_column.svg/500px-Resonance_column.svg.png" alt="تجربة الرنين في العمود الهوائي">
+                <div class="image-caption">الشكل 4: تجربة الرنين في العمود الهوائي باستخدام الماء</div>
             </div>
             
             <div class="highlight-box">
@@ -390,9 +394,9 @@
             
             <p>تحدث ظاهرة الرنين في الأوتار المشدودة بين طرفين ثابتين، حيث يتكون نمط موجات مستقرة بعقد عند الطرفين وبطون في المنتصف. يعتمد التردد الأساسي للوتر على طوله وقوة الشد وكتلة وحدة الطول.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: الأوتار المهتزة والأنماط المختلفة]
-                <div class="image-caption">الشكل 5: الأنماط الاهتزازية في الأوتار</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Standing_waves_on_a_string.gif/500px-Standing_waves_on_a_string.gif" alt="الرنين في الأوتار">
+                <div class="image-caption">الشكل 5: الموجات المستقرة على وتر مهتز</div>
             </div>
             
             <div class="sub-heading">الأنماط الاهتزازية في الأوتار</div>
@@ -407,9 +411,9 @@
                 </ul>
             </div>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: الأشكال التوضيحية للأنماط الاهتزازية]
-                <div class="image-caption">الشكل 6: الأشكال المختلفة للأنماط الاهتزازية في الوتر</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Harmonic_series_on_strings.svg/600px-Harmonic_series_on_strings.svg.png" alt="الأنماط الاهتزازية في الأوتار">
+                <div class="image-caption">الشكل 6: الأنماط الاهتزازية المختلفة في الوتر</div>
             </div>
         </div>
 
@@ -433,9 +437,9 @@
 
             <div class="side-heading">مقارنة بين الرنين في الأعمدة الهوائية والأوتار</div>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: جدول مقارنة بين الأنظمة المختلفة]
-                <div class="image-caption">الشكل 7: مقارنة بصرية بين الرنين في الأعمدة الهوائية والأوتار</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Waveforms.svg/500px-Waveforms.svg.png" alt="مقارنة بين الموجات">
+                <div class="image-caption">الشكل 7: مقارنة بين أشكال الموجات في الأنظمة المختلفة</div>
             </div>
 
             <div class="comparison-box">
@@ -482,8 +486,8 @@
             
             <p>لا يعتمد تمييزنا للأصوات على التردد الأساسي فقط، بل على مجموعة من الترددات المرافقة التي تعطي كل صوت طابعه المميز.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: طيف الترددات للأصوات المختلفة]
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e7/Sound_Spectrum.jpg/500px-Sound_Spectrum.jpg" alt="طيف الترددات">
                 <div class="image-caption">الشكل 8: طيف الترددات يوضح التردد الأساسي والإيقاعات</div>
             </div>
             
@@ -504,8 +508,8 @@
             <div class="sub-heading">الصوت النقي مقابل الصوت المعقد</div>
             <p>الصوت النقي (كصوت الشوكة الرنانة) له منحنى جيبي بسيط وطيف ترددي محدود، بينما الصوت المعقد (كالصوت البشري) ينتج من تراكب عدة موجات بترددات مختلفة مما يعطيه طابعه الفريد.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: مقارنة بين الصوت النقي والمعقد]
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Timbre.svg/500px-Timbre.svg.png" alt="الصوت النقي والمعقد">
                 <div class="image-caption">الشكل 9: مقارنة بين الموجة الجيبية النقية والموجة المعقدة</div>
             </div>
 
@@ -516,18 +520,18 @@
             <div class="sub-heading">الضوضاء والصوت النقي</div>
             <p>تتكون الضوضاء من ترددات متعددة تقريباً بنفس السعة دون نمط واضح للإيقاعات، بينما يتميز الصوت النقي بوجود تردد أساسي وإيقاعات منتظمة.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: رسم بياني للضوضاء مقابل الصوت النقي]
-                <div class="image-caption">الشكل 10: الفرق بين طيف الضوضاء والصوت النقي</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Sine_and_noise_wave.svg/500px-Sine_and_noise_wave.svg.png" alt="الضوضاء والصوت النقي">
+                <div class="image-caption">الشكل 10: الفرق بين الموجة الجيبية (الصوت النقي) والضوضاء</div>
             </div>
 
             <div class="side-heading">الخاتمة والتطبيقات المستقبلية</div>
             
             <p>إن فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار يمثل أساساً مهماً في تطوير التقنيات الصوتية والموسيقية. تمكننا هذه المعرفة من تصميم آلات موسيقية أفضل، وقاعات صوتية أكثر كفاءة، وأنظمة تسجيل وتشغيل أعلى جودة.</p>
 
-            <div class="image-placeholder">
-                [صورة من الكتاب: تطبيقات عملية للرنين في الحياة اليومية]
-                <div class="image-caption">الشكل 11: تطبيقات الرنين في الآلات الموسيقية والهندسة الصوتية</div>
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Music_notes.jpg/500px-Music_notes.jpg" alt="تطبيقات الرنين">
+                <div class="image-caption">الشكل 11: تطبيقات الرنين في الآلات الموسيقية المختلفة</div>
             </div>
             
             <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات، وتقنيات التحكم في الضوضاء.</p>
