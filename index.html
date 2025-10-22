@@ -87,6 +87,25 @@
                 text-align: center;
                 page-break-after: always;
             }
+
+            .image-placeholder {
+                background: #f3f4f6;
+                border: 2px dashed #d1d5db;
+                border-radius: 8px;
+                padding: 2cm;
+                margin: 0.5cm 0;
+                text-align: center;
+                color: #6b7280;
+                page-break-inside: avoid;
+            }
+
+            .image-caption {
+                text-align: center;
+                font-style: italic;
+                color: #4b5563;
+                margin-top: 0.3cm;
+                font-size: 10pt;
+            }
         }
         
         body {
@@ -164,16 +183,6 @@
             font-family: 'Courier New', monospace;
             font-size: 14px;
         }
-        
-        .student-info {
-            text-align: left;
-            direction: ltr;
-            background: #FEF3C7;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            border-right: 3px solid #F59E0B;
-        }
 
         .cover-container {
             background: white;
@@ -239,6 +248,33 @@
             color: #6b7280;
             font-size: 1.1em;
         }
+
+        .signature-box {
+            margin-top: 2cm;
+            text-align: left;
+            direction: ltr;
+            border-top: 2px solid #374151;
+            padding-top: 0.5cm;
+        }
+
+        .image-placeholder {
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            padding: 1.5cm;
+            margin: 15px 0;
+            text-align: center;
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #475569;
+            margin-top: 8px;
+            font-size: 12px;
+        }
     </style>
 </head>
 <body class="bg-white text-black" dir="rtl">
@@ -280,13 +316,6 @@
 
         <!-- الصفحة الثانية -->
         <div class="page-break">
-            <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان<br>
-                <strong>المادة:</strong> فيزياء - الشعبة: 304<br>
-                <strong>الموضوع:</strong> الرنين في الأعمدة الهوائية والأوتار<br>
-                <strong>الصفحة:</strong> 1 من 3
-            </div>
-
             <h1 class="main-title" style="font-size: 28px;">
                 الرنين في الأعمدة الهوائية والأوتار
                 <br>
@@ -296,6 +325,11 @@
             <div class="side-heading">مقدمة: ظاهرة الرنين في الفيزياء</div>
             
             <p>الرنين ظاهرة فيزيائية مهمة تحدث عندما يتطابق تردد قوة خارجية مع التردد الطبيعي لنظام ما، مما يؤدي إلى زيادة كبيرة في سعة الاهتزاز. في الصوتيات، يلعب الرنين دوراً أساسياً في إنتاج وتضخيم الأصوات في الآلات الموسيقية والأجهزة الصوتية.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: رسم توضيحي لظاهرة الرنين]
+                <div class="image-caption">الشكل 1: توضيح ظاهرة الرنين في الأنظمة المختلفة</div>
+            </div>
             
             <p>تحدث ظاهرة الرنين في الأعمدة الهوائية عندما يهتز عمود الهواء داخل أنبوب بتردد يتوافق مع تردد مصدر صوتي خارجي، بينما في الأوتار تحدث عندما تهتز الأوتار المشدودة بين طرفين ثابتين بترددات محددة.</p>
 
@@ -304,6 +338,11 @@
             <div class="sub-heading">الأنبوب المغلق</div>
             <p>الأنبوب المغلق من أحد طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لربع الطول الموجي أو مضاعفاته الفردية. عند الطرف المغلق تتكون عقدة ضغط، وعند الطرف المفتوح يتكون بطن ضغط.</p>
             
+            <div class="image-placeholder">
+                [صورة من الكتاب: الأنبوب المغلق وعقد الضغط والبطون]
+                <div class="image-caption">الشكل 2: توزيع العقد والبطون في الأنبوب المغلق</div>
+            </div>
+            
             <div class="formula">
                 \( L = \frac{\lambda}{4}, \frac{3\lambda}{4}, \frac{5\lambda}{4}, ... \)
             </div>
@@ -311,13 +350,26 @@
             <div class="sub-heading">الأنبوب المفتوح</div>
             <p>الأنبوب المفتوح من طرفيه يكون في حالة رنين عندما يكون طول عمود الهواء مساوياً لنصف الطول الموجي أو مضاعفاته. يتكون بطنا ضغط عند كلا الطرفين.</p>
             
+            <div class="image-placeholder">
+                [صورة من الكتاب: الأنبوب المفتوح وعقد الضغط والبطون]
+                <div class="image-caption">الشكل 3: توزيع العقد والبطون في الأنبوب المفتوح</div>
+            </div>
+            
             <div class="formula">
                 \( L = \frac{\lambda}{2}, \lambda, \frac{3\lambda}{2}, ... \)
             </div>
+        </div>
 
+        <!-- الصفحة الثالثة -->
+        <div class="page-break">
             <div class="side-heading">تجربة عملية: الرنين في العمود الهوائي</div>
             
             <p>يمكن إثبات ظاهرة الرنين عملياً باستخدام أنبوب زجاجي مفتوح من أحد طرفيه ومغلق من الطرف الآخر بماء متحرك. عند تقريب شوكة رنانة مهتزة من فوهة الأنبوب، نلاحظ زيادة شدة الصوت عند أطوال معينة للعمود الهوائي.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: تجربة الرنين العملي بالأنبوب والماء]
+                <div class="image-caption">الشكل 4: تجربة الرنين في العمود الهوائي</div>
+            </div>
             
             <div class="highlight-box">
                 <strong>خطوات التجربة:</strong>
@@ -333,18 +385,15 @@
                 <strong>الاستنتاج من التجربة:</strong>
                 <p>يتضح من التجربة أن الرنين يحدث عند أطوال محددة للعمود الهوائي، وأن التردد الأساسي للأنبوب المفتوح ضعف التردد الأساسي للأنبوب المغلق لنفس الطول.</p>
             </div>
-        </div>
-
-        <!-- الصفحة الثالثة -->
-        <div class="page-break">
-            <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان - الشعبة: 304<br>
-                <strong>الصفحة:</strong> 2 من 3
-            </div>
 
             <div class="side-heading">الرنين في الأوتار</div>
             
             <p>تحدث ظاهرة الرنين في الأوتار المشدودة بين طرفين ثابتين، حيث يتكون نمط موجات مستقرة بعقد عند الطرفين وبطون في المنتصف. يعتمد التردد الأساسي للوتر على طوله وقوة الشد وكتلة وحدة الطول.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: الأوتار المهتزة والأنماط المختلفة]
+                <div class="image-caption">الشكل 5: الأنماط الاهتزازية في الأوتار</div>
+            </div>
             
             <div class="sub-heading">الأنماط الاهتزازية في الأوتار</div>
             
@@ -358,6 +407,14 @@
                 </ul>
             </div>
 
+            <div class="image-placeholder">
+                [صورة من الكتاب: الأشكال التوضيحية للأنماط الاهتزازية]
+                <div class="image-caption">الشكل 6: الأشكال المختلفة للأنماط الاهتزازية في الوتر</div>
+            </div>
+        </div>
+
+        <!-- الصفحة الرابعة -->
+        <div class="page-break">
             <div class="side-heading">المعادلات الأساسية</div>
             
             <div class="sub-heading">سرعة الموجة في الأوتار</div>
@@ -375,6 +432,11 @@
             </div>
 
             <div class="side-heading">مقارنة بين الرنين في الأعمدة الهوائية والأوتار</div>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: جدول مقارنة بين الأنظمة المختلفة]
+                <div class="image-caption">الشكل 7: مقارنة بصرية بين الرنين في الأعمدة الهوائية والأوتار</div>
+            </div>
 
             <div class="comparison-box">
                 <strong>مقارنة بين أنظمة الرنين المختلفة:</strong>
@@ -415,18 +477,15 @@
                     </tbody>
                 </table>
             </div>
-        </div>
-
-        <!-- الصفحة الرابعة -->
-        <div class="page-break">
-            <div class="student-info">
-                <strong>عمل الطالب:</strong> سلطان مروان - الشعبة: 304<br>
-                <strong>الصفحة:</strong> 3 من 3
-            </div>
 
             <div class="side-heading">جودة الصوت وطيف الترددات</div>
             
             <p>لا يعتمد تمييزنا للأصوات على التردد الأساسي فقط، بل على مجموعة من الترددات المرافقة التي تعطي كل صوت طابعه المميز.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: طيف الترددات للأصوات المختلفة]
+                <div class="image-caption">الشكل 8: طيف الترددات يوضح التردد الأساسي والإيقاعات</div>
+            </div>
             
             <div class="sub-heading">مكونات الصوت</div>
             
@@ -438,9 +497,17 @@
                     <li><strong>طيف الصوت:</strong> التمثيل البياني لسعة الموجه مقابل ترددها</li>
                 </ul>
             </div>
+        </div>
 
+        <!-- الصفحة الخامسة -->
+        <div class="page-break">
             <div class="sub-heading">الصوت النقي مقابل الصوت المعقد</div>
             <p>الصوت النقي (كصوت الشوكة الرنانة) له منحنى جيبي بسيط وطيف ترددي محدود، بينما الصوت المعقد (كالصوت البشري) ينتج من تراكب عدة موجات بترددات مختلفة مما يعطيه طابعه الفريد.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: مقارنة بين الصوت النقي والمعقد]
+                <div class="image-caption">الشكل 9: مقارنة بين الموجة الجيبية النقية والموجة المعقدة</div>
+            </div>
 
             <div class="side-heading">التسجيل وإعادة إنتاج الصوت</div>
             
@@ -449,9 +516,19 @@
             <div class="sub-heading">الضوضاء والصوت النقي</div>
             <p>تتكون الضوضاء من ترددات متعددة تقريباً بنفس السعة دون نمط واضح للإيقاعات، بينما يتميز الصوت النقي بوجود تردد أساسي وإيقاعات منتظمة.</p>
 
+            <div class="image-placeholder">
+                [صورة من الكتاب: رسم بياني للضوضاء مقابل الصوت النقي]
+                <div class="image-caption">الشكل 10: الفرق بين طيف الضوضاء والصوت النقي</div>
+            </div>
+
             <div class="side-heading">الخاتمة والتطبيقات المستقبلية</div>
             
             <p>إن فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار يمثل أساساً مهماً في تطوير التقنيات الصوتية والموسيقية. تمكننا هذه المعرفة من تصميم آلات موسيقية أفضل، وقاعات صوتية أكثر كفاءة، وأنظمة تسجيل وتشغيل أعلى جودة.</p>
+
+            <div class="image-placeholder">
+                [صورة من الكتاب: تطبيقات عملية للرنين في الحياة اليومية]
+                <div class="image-caption">الشكل 11: تطبيقات الرنين في الآلات الموسيقية والهندسة الصوتية</div>
+            </div>
             
             <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات، وتقنيات التحكم في الضوضاء.</p>
             
@@ -460,12 +537,17 @@
                 <p>تمثل ظاهرة الرنين مثالاً رائعاً على انسجام القوانين الفيزيائية مع التطبيقات العملية في حياتنا. من الآلات الموسيقية القديمة إلى أنظمة الصوت الحديثة، يظل الرنين ظاهرة أساسية تساهم في إثراء تجربتنا الصوتية والفنية.</p>
             </div>
 
-            <div class="highlight-box">
-                <strong>التوقيع:</strong>
-                <p style="text-align: left; direction: ltr; margin-top: 20px;">
-                    سلطان مروان<br>
-                    الشعبة: 304
-                </p>
+            <div class="signature-box">
+                <div style="text-align: center; margin-bottom: 1cm;">
+                    <strong>التوقيع:</strong><br>
+                    <div style="margin-top: 0.5cm; border-bottom: 1px solid #000; width: 200px; display: inline-block;"></div>
+                    <br>
+                    <span>سلطان مروان</span>
+                </div>
+                
+                <div style="text-align: center;">
+                    <strong>العام الدراسي:</strong> 2024 / 2025
+                </div>
             </div>
         </div>
 
