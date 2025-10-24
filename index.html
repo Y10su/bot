@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة مفاهيم - قواعد الأزمنة في اللغة الإنجليزية</title>
+    <title>خريطة مفاهيم قواعد الأزمنة الإنجليزية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -14,14 +14,14 @@
         }
         
         :root {
-            --primary: #4361ee;
-            --secondary: #3a0ca3;
-            --accent: #f72585;
+            --primary: #4e54c8;
+            --secondary: #8f94fb;
+            --accent: #ff6b6b;
             --light: #f8f9fa;
             --dark: #212529;
-            --success: #4cc9f0;
-            --warning: #ff9e00;
-            --info: #4895ef;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --info: #2196f3;
             --present: #4caf50;
             --past: #ff9800;
             --future: #2196f3;
@@ -405,6 +405,39 @@
             margin-bottom: 10px;
         }
         
+        .exercise-section {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 15px;
+            padding: 30px;
+            margin: 40px 0;
+        }
+        
+        .exercise-title {
+            text-align: center;
+            color: var(--info);
+            margin-bottom: 25px;
+            font-size: 1.6rem;
+        }
+        
+        .exercise-item {
+            background: white;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+        
+        .exercise-question {
+            margin-bottom: 10px;
+            font-weight: 500;
+        }
+        
+        .exercise-answer {
+            color: var(--success);
+            font-weight: bold;
+            padding-right: 15px;
+        }
+        
         footer {
             text-align: center;
             padding: 25px;
@@ -441,6 +474,10 @@
             .visual-map {
                 break-inside: avoid;
             }
+            
+            .exercise-section {
+                break-inside: avoid;
+            }
         }
         
         @media (max-width: 768px) {
@@ -459,6 +496,11 @@
             
             .timeline::before {
                 display: none;
+            }
+            
+            .connector {
+                flex-direction: column;
+                gap: 15px;
             }
             
             h1 {
@@ -716,6 +758,60 @@
                     <div style="margin: 15px 0; padding: 10px; background: #f3e5f5; border-radius: 8px;">
                         <i class="fas fa-sync-alt" style="color: #9c27b0;"></i> مستمر للحاضر
                     </div>
+                </div>
+            </div>
+            
+            <div class="exercise-section">
+                <h2 class="exercise-title">تمارين تطبيقية</h2>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">1. He __________ with his uncle until he can find his own place. (live)</div>
+                    <div class="exercise-answer">الإجابة: is living</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">2. The water __________. Please turn it off. (boil)</div>
+                    <div class="exercise-answer">الإجابة: is boiling</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">3. The scientists __________ the cause of the problem. (not/understand)</div>
+                    <div class="exercise-answer">الإجابة: don't understand</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">4. __________ in your country in winter? (it/snow)</div>
+                    <div class="exercise-answer">الإجابة: Does it snow</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">5. The moon __________ around Earth. (go)</div>
+                    <div class="exercise-answer">الإجابة: goes</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">6. What __________ my idea? (you/think)</div>
+                    <div class="exercise-answer">الإجابة: do you think</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">7. Currently, the number of immigrants in our country __________. (increase)</div>
+                    <div class="exercise-answer">الإجابة: is increasing</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">8. We __________ when the first Grand Prix took place in Dubai. (not/remember)</div>
+                    <div class="exercise-answer">الإجابة: don't remember</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">9. Dubai is part of the UAE, but it __________ as many oil reserves as Abu Dhabi. (not/have)</div>
+                    <div class="exercise-answer">الإجابة: doesn't have</div>
+                </div>
+                
+                <div class="exercise-item">
+                    <div class="exercise-question">10. Ahmed has a part-time job on Saturdays, but he __________ today. (not/work)</div>
+                    <div class="exercise-answer">الإجابة: isn't working</div>
                 </div>
             </div>
         </div>
