@@ -182,20 +182,32 @@
             cursor: not-allowed;
         }
         
-        .btn-pdf {
-            background: #d32f2f;
+        /* تصميم أزرار التحميل الجديدة */
+        .download-btn {
+            background: white;
+            color: #2a5298;
+            border: 2px solid #2a5298;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            text-decoration: none;
         }
         
-        .btn-pdf:hover {
-            background: #b71c1c;
+        .download-btn:hover {
+            background: #2a5298;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
-        .btn-ppt {
-            background: #f57c00;
-        }
-        
-        .btn-ppt:hover {
-            background: #e65100;
+        .download-btn i {
+            font-size: 1.2rem;
         }
         
         .progress-bar {
@@ -279,7 +291,7 @@
         
         .export-buttons {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
         
         .nav-buttons {
@@ -344,6 +356,11 @@
             .progress-bar {
                 order: -1;
                 margin: 0;
+            }
+            
+            .export-buttons {
+                width: 100%;
+                justify-content: center;
             }
         }
     </style>
@@ -584,14 +601,14 @@
             </div>
             
             <div class="export-buttons">
-                <button class="btn btn-pdf" id="pdfBtn">
+                <a href="#" class="download-btn" id="pdfBtn">
                     <i class="fas fa-file-pdf"></i>
-                    <span>PDF</span>
-                </button>
-                <button class="btn btn-ppt" id="pptBtn">
+                    <span>تحميل PDF</span>
+                </a>
+                <a href="#" class="download-btn" id="pptBtn">
                     <i class="fas fa-file-powerpoint"></i>
-                    <span>بوربوينت</span>
-                </button>
+                    <span>تحميل PPT</span>
+                </a>
             </div>
         </div>
     </div>
@@ -637,7 +654,8 @@
             });
             
             // تحميل PDF
-            pdfBtn.addEventListener('click', function() {
+            pdfBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 alert('جاري تحضير ملف PDF للتحميل...');
                 // في التطبيق الحقيقي، هنا سيتم إضافة كود لتحويل المحتوى إلى PDF
                 setTimeout(() => {
@@ -651,7 +669,8 @@
             });
             
             // تحميل بوربوينت
-            pptBtn.addEventListener('click', function() {
+            pptBtn.addEventListener('click', function(e) {
+                e.preventDefault();
                 alert('جاري تحضير عرض بوربوينت للتحميل...');
                 // في التطبيق الحقيقي، هنا سيتم إضافة كود لتحويل المحتوى إلى بوربوينت
                 setTimeout(() => {
