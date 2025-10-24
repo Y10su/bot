@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خريطة مفاهيم قواعد الأزمنة الإنجليزية</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>محاكي بوربوينت - قواعد الأزمنة الإنجليزية</title>
     <style>
+        /* التنسيقات العامة */
         * {
             margin: 0;
             padding: 0;
@@ -13,824 +13,563 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
-        :root {
-            --primary: #4e54c8;
-            --secondary: #8f94fb;
-            --accent: #ff6b6b;
-            --light: #f8f9fa;
-            --dark: #212529;
-            --success: #4caf50;
-            --warning: #ff9800;
-            --info: #2196f3;
-            --present: #4caf50;
-            --past: #ff9800;
-            --future: #2196f3;
-        }
-        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: var(--dark);
-            line-height: 1.6;
-            padding: 20px;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            color: #333;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
+            padding: 20px;
         }
         
-        .print-container {
+        .container {
             width: 100%;
             max-width: 1200px;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             overflow: hidden;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
         
-        header {
-            background: linear-gradient(to right, var(--primary), var(--secondary));
+        /* تنسيقات رأس العرض */
+        .presentation-header {
+            background: linear-gradient(135deg, #0f4c75, #3282b8);
             color: white;
-            padding: 30px;
+            padding: 20px;
             text-align: center;
+            border-bottom: 5px solid #1b262c;
+        }
+        
+        .presentation-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .presentation-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        /* تنسيقات شرائح العرض */
+        .slides-container {
             position: relative;
+            height: 600px;
             overflow: hidden;
         }
         
-        header::before {
-            content: "";
+        .slide {
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.1);
-            transform: rotate(30deg);
-        }
-        
-        h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            position: relative;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-        }
-        
-        .subtitle {
-            font-size: 1.3rem;
-            opacity: 0.9;
-            position: relative;
-        }
-        
-        .controls {
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            opacity: 0;
+            transition: opacity 0.5s ease;
             display: flex;
+            flex-direction: column;
             justify-content: center;
-            gap: 15px;
-            margin: 25px 0;
-            position: relative;
         }
         
-        .btn {
-            background: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 50px;
-            font-weight: bold;
-            cursor: pointer;
+        .slide.active {
+            opacity: 1;
+        }
+        
+        .slide-number {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #3282b8;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
             display: flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
         
-        .btn-primary {
-            background: var(--accent);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .content {
-            padding: 30px;
-        }
-        
-        .section-title {
-            text-align: center;
-            color: var(--secondary);
-            margin: 30px 0 20px;
+        .slide-title {
+            color: #0f4c75;
+            font-size: 2.2rem;
+            margin-bottom: 25px;
             padding-bottom: 15px;
-            border-bottom: 2px dashed var(--info);
-            font-size: 1.8rem;
+            border-bottom: 3px solid #3282b8;
+            text-align: center;
+        }
+        
+        .slide-content {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
         
         .concept-map {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 25px;
-            margin: 30px 0;
-        }
-        
-        .tense-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s ease;
-            border-top: 5px solid var(--primary);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .tense-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .tense-card::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--primary);
-        }
-        
-        .tense-card.present {
-            border-top-color: var(--present);
-        }
-        
-        .tense-card.present::before {
-            background: var(--present);
-        }
-        
-        .tense-card.past {
-            border-top-color: var(--past);
-        }
-        
-        .tense-card.past::before {
-            background: var(--past);
-        }
-        
-        .tense-card.future {
-            border-top-color: var(--future);
-        }
-        
-        .tense-card.future::before {
-            background: var(--future);
-        }
-        
-        .card-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .card-icon {
-            width: 50px;
-            height: 50px;
-            background: var(--primary);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 15px;
-            color: white;
-            font-size: 1.5rem;
-        }
-        
-        .tense-card.present .card-icon {
-            background: var(--present);
-        }
-        
-        .tense-card.past .card-icon {
-            background: var(--past);
-        }
-        
-        .tense-card.future .card-icon {
-            background: var(--future);
-        }
-        
-        .card-title {
-            font-size: 1.5rem;
-            color: var(--secondary);
-        }
-        
-        .usage {
-            background: var(--light);
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--info);
-        }
-        
-        .usage-title {
-            color: var(--info);
-            margin-bottom: 10px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .examples {
-            background: #f0f7ff;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-            border-right: 4px solid var(--success);
-        }
-        
-        .examples-title {
-            color: var(--success);
-            margin-bottom: 10px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .example {
-            margin: 10px 0;
-            padding: 8px 12px;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .example-ar {
-            color: var(--dark);
-            font-weight: 500;
-        }
-        
-        .example-en {
-            color: var(--secondary);
-            font-style: italic;
-        }
-        
-        .comparison {
-            display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            margin: 30px 0;
+            margin-top: 20px;
         }
         
-        .compare-card {
+        .concept-box {
             background: white;
-            border-radius: 15px;
+            border-radius: 10px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            text-align: center;
-            transition: transform 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #3282b8;
         }
         
-        .compare-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .compare-title {
-            font-size: 1.3rem;
-            color: var(--primary);
+        .concept-title {
+            color: #0f4c75;
+            font-size: 1.5rem;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #eee;
+            text-align: center;
         }
         
-        .visual-map {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-            position: relative;
+        .example-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px dashed #3282b8;
+        }
+        
+        .example-title {
+            color: #0f4c75;
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+        
+        .example-text {
+            font-size: 1.2rem;
+            font-style: italic;
+            color: #495057;
+        }
+        
+        /* تنسيقات أزرار التحكم */
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #3282b8, #0f4c75);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-export {
+            background: linear-gradient(135deg, #28a745, #20c997);
+        }
+        
+        .progress-bar {
+            flex-grow: 1;
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            margin: 0 20px;
+            align-self: center;
             overflow: hidden;
         }
         
-        .map-title {
+        .progress {
+            height: 100%;
+            background: linear-gradient(135deg, #3282b8, #0f4c75);
+            width: 20%;
+            transition: width 0.3s ease;
+        }
+        
+        /* تنسيقات الصفحة الأولى */
+        .intro-slide {
             text-align: center;
-            color: var(--secondary);
+        }
+        
+        .intro-title {
+            color: #0f4c75;
+            font-size: 2.8rem;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .intro-subtitle {
+            color: #3282b8;
             font-size: 1.8rem;
+            margin-bottom: 40px;
+        }
+        
+        .topic-list {
+            list-style-type: none;
+            text-align: right;
+            margin: 30px 0;
+        }
+        
+        .topic-list li {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            padding-right: 20px;
+            position: relative;
+        }
+        
+        .topic-list li:before {
+            content: "•";
+            color: #3282b8;
+            font-size: 2rem;
+            position: absolute;
+            right: 0;
+            top: -5px;
+        }
+        
+        /* تنسيقات الصفحة الأخيرة */
+        .final-slide {
+            text-align: center;
+            justify-content: center;
+        }
+        
+        .final-title {
+            color: #0f4c75;
+            font-size: 2.5rem;
             margin-bottom: 30px;
         }
         
-        .timeline {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 40px 0;
-            position: relative;
+        .final-message {
+            font-size: 1.5rem;
+            color: #495057;
+            margin-bottom: 40px;
         }
         
-        .timeline::before {
-            content: "";
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--primary);
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-        
-        .time-point {
-            background: white;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            z-index: 2;
-            position: relative;
-            text-align: center;
-            padding: 15px;
-        }
-        
-        .time-point.past {
-            border: 4px solid var(--past);
-        }
-        
-        .time-point.present {
-            border: 4px solid var(--present);
-            transform: scale(1.1);
-        }
-        
-        .time-point.future {
-            border: 4px solid var(--future);
-        }
-        
-        .time-title {
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-bottom: 5px;
-        }
-        
-        .time-desc {
-            font-size: 0.85rem;
-            color: #666;
-        }
-        
-        .connector {
-            display: flex;
-            justify-content: space-around;
-            margin: 30px 0;
-        }
-        
-        .connector-item {
-            text-align: center;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            flex: 1;
-            margin: 0 10px;
-            transition: transform 0.3s ease;
-        }
-        
-        .connector-item:hover {
-            transform: translateY(-5px);
-        }
-        
-        .connector-title {
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 10px;
-        }
-        
-        .exercise-section {
-            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-            border-radius: 15px;
-            padding: 30px;
-            margin: 40px 0;
-        }
-        
-        .exercise-title {
-            text-align: center;
-            color: var(--info);
-            margin-bottom: 25px;
-            font-size: 1.6rem;
-        }
-        
-        .exercise-item {
-            background: white;
-            padding: 15px;
-            margin: 15px 0;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
-        }
-        
-        .exercise-question {
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-        
-        .exercise-answer {
-            color: var(--success);
-            font-weight: bold;
-            padding-right: 15px;
-        }
-        
-        footer {
-            text-align: center;
-            padding: 25px;
-            background: var(--light);
-            color: var(--dark);
+        .contact-info {
+            font-size: 1.2rem;
+            color: #3282b8;
             margin-top: 30px;
-            border-radius: 0 0 20px 20px;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            
-            .print-container {
-                box-shadow: none;
-                border-radius: 0;
-                max-width: 100%;
-            }
-            
-            .controls {
-                display: none;
-            }
-            
-            .tense-card {
-                break-inside: avoid;
-            }
-            
-            .comparison {
-                break-inside: avoid;
-            }
-            
-            .visual-map {
-                break-inside: avoid;
-            }
-            
-            .exercise-section {
-                break-inside: avoid;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .concept-map {
-                grid-template-columns: 1fr;
-            }
-            
-            .comparison {
-                grid-template-columns: 1fr;
-            }
-            
-            .timeline {
-                flex-direction: column;
-                gap: 30px;
-            }
-            
-            .timeline::before {
-                display: none;
-            }
-            
-            .connector {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            h1 {
-                font-size: 2rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="print-container">
-        <header>
-            <h1>خريطة مفاهيم قواعد الأزمنة</h1>
-            <p class="subtitle">دليل مرئي شامل لأزمنة اللغة الإنجليزية مع الشرح العربي</p>
-            
-            <div class="controls">
-                <button class="btn btn-primary" onclick="window.print()">
-                    <i class="fas fa-print"></i> طباعة الخريطة
-                </button>
-                <button class="btn" onclick="location.reload()">
-                    <i class="fas fa-redo"></i> تحديث الصفحة
-                </button>
-            </div>
-        </header>
+    <div class="container">
+        <div class="presentation-header">
+            <h1>قواعد الأزمنة الإنجليزية - مراجعة شاملة</h1>
+            <p>عرض تفاعلي محاكي للبوربوينت</p>
+        </div>
         
-        <div class="content">
-            <h2 class="section-title">الخط الزمني للأزمنة في اللغة الإنجليزية</h2>
-            
-            <div class="visual-map">
-                <h3 class="map-title">العلاقة بين الأزمنة الرئيسية</h3>
-                
-                <div class="timeline">
-                    <div class="time-point past">
-                        <div class="time-title">الماضي</div>
-                        <div class="time-desc">Simple Past</div>
-                        <div class="time-desc">Past Continuous</div>
-                    </div>
+        <div class="slides-container">
+            <!-- الشريحة الأولى -->
+            <div class="slide active" id="slide1">
+                <div class="slide-number">1</div>
+                <div class="slide-content intro-slide">
+                    <h1 class="intro-title">مراجعة قواعد الأزمنة الإنجليزية</h1>
+                    <h2 class="intro-subtitle">عرض تقديمي شامل ومبسط</h2>
                     
-                    <div class="time-point present">
-                        <div class="time-title">الحاضر</div>
-                        <div class="time-desc">Simple Present</div>
-                        <div class="time-desc">Present Continuous</div>
-                    </div>
+                    <ul class="topic-list">
+                        <li>Simple Present Tense - استخدامات الزمن الحاضر البسيط</li>
+                        <li>Present Progressive - استخدامات الزمن الحاضر المستمر</li>
+                        <li>مقارنة بين الزمن الحاضر البسيط والمستمر</li>
+                        <li>Simple Past and Present Perfect - الفروق الأساسية</li>
+                        <li>تلخيص ومراجعة نهائية</li>
+                    </ul>
                     
-                    <div class="time-point future">
-                        <div class="time-title">المستقبل</div>
-                        <div class="time-desc">Simple Future</div>
-                        <div class="time-desc">Future Continuous</div>
-                    </div>
-                </div>
-                
-                <div class="connector">
-                    <div class="connector-item">
-                        <div class="connector-title">Present Perfect</div>
-                        <div>يربط الماضي بالحاضر</div>
-                    </div>
-                    <div class="connector-item">
-                        <div class="connector-title">Past Perfect</div>
-                        <div>يربط ماضيين</div>
-                    </div>
-                    <div class="connector-item">
-                        <div class="connector-title">Future Perfect</div>
-                        <div>يربط المستقبل بالماضي</div>
+                    <div class="example-box">
+                        <div class="example-title">هدف العرض</div>
+                        <div class="example-text">يهدف هذا العرض إلى تقديم شرح مبسط وشامل لقواعد الأزمنة الإنجليزية الأساسية مع أمثلة توضيحية ومقارنات لتسهيل الفهم.</div>
                     </div>
                 </div>
             </div>
             
-            <h2 class="section-title">أزمنة اللغة الإنجليزية بالتفصيل</h2>
-            
-            <div class="concept-map">
-                <div class="tense-card present">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-clock"></i>
+            <!-- الشريحة الثانية -->
+            <div class="slide" id="slide2">
+                <div class="slide-number">2</div>
+                <h2 class="slide-title">Simple Present Tense - استخدامات الزمن الحاضر البسيط</h2>
+                <div class="slide-content">
+                    <p>يستخدم الزمن الحاضر البسيط للتعبير عن:</p>
+                    
+                    <div class="concept-map">
+                        <div class="concept-box">
+                            <h3 class="concept-title">الحقائق الثابتة</h3>
+                            <p>يستخدم للتعبير عن الحقائق العلمية والثابتة</p>
+                            <p class="example-text">The sun rises in the east.</p>
+                            <p class="example-text">Water boils at 100°C.</p>
                         </div>
-                        <h3 class="card-title">الحاضر البسيط</h3>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">العادات والروتين</h3>
+                            <p>يستخدم للتعبير عن الأفعال المتكررة والروتينية</p>
+                            <p class="example-text">I drink coffee every morning.</p>
+                            <p class="example-text">She goes to the gym three times a week.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الحالات الدائمة</h3>
+                            <p>يستخدم للتعبير عن الحالات المستقرة والدائمة</p>
+                            <p class="example-text">He works as a teacher.</p>
+                            <p class="example-text">They live in London.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الجدول الزمني</h3>
+                            <p>يستخدم للتعبير عن الجداول والمواعيد الثابتة</p>
+                            <p class="example-text">The train leaves at 5 PM.</p>
+                            <p class="example-text">The store opens at 9 AM.</p>
+                        </div>
                     </div>
                     
-                    <div class="usage">
-                        <div class="usage-title">
-                            <i class="fas fa-info-circle"></i>
-                            الاستخدام
-                        </div>
-                        <p>يستخدم للتعبير عن الحقائق الثابتة، العادات، والروتين اليومي.</p>
-                        <p>Used for facts, permanent situations, habits and routines.</p>
-                    </div>
-                    
-                    <div class="examples">
-                        <div class="examples-title">
-                            <i class="fas fa-lightbulb"></i>
-                            أمثلة
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">الشمس تشرق من الشرق</span>
-                            <span class="example-en">The sun rises in the east</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">أذهب إلى العمل كل يوم</span>
-                            <span class="example-en">I go to work every day</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">يعيش في لندن</span>
-                            <span class="example-en">He lives in London</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tense-card present">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-spinner"></i>
-                        </div>
-                        <h3 class="card-title">الحاضر المستمر</h3>
-                    </div>
-                    
-                    <div class="usage">
-                        <div class="usage-title">
-                            <i class="fas fa-info-circle"></i>
-                            الاستخدام
-                        </div>
-                        <p>يستخدم للأفعال التي تحدث الآن، أو مواقف مؤقتة، أو أحداث في طور التغير.</p>
-                        <p>Used for actions happening now, temporary situations, or developing events.</p>
-                    </div>
-                    
-                    <div class="examples">
-                        <div class="examples-title">
-                            <i class="fas fa-lightbulb"></i>
-                            أمثلة
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">إنها تمطر الآن</span>
-                            <span class="example-en">It is raining now</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">أنا أدرس الإنجليزية هذه الأيام</span>
-                            <span class="example-en">I am studying English these days</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">هم يعملون على مشروع جديد</span>
-                            <span class="example-en">They are working on a new project</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tense-card past">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-history"></i>
-                        </div>
-                        <h3 class="card-title">الماضي البسيط</h3>
-                    </div>
-                    
-                    <div class="usage">
-                        <div class="usage-title">
-                            <i class="fas fa-info-circle"></i>
-                            الاستخدام
-                        </div>
-                        <p>يستخدم للتحدث عن الأحداث التي بدأت وانتهت في الماضي.</p>
-                        <p>Used to talk about events that began and ended in the past.</p>
-                    </div>
-                    
-                    <div class="examples">
-                        <div class="examples-title">
-                            <i class="fas fa-lightbulb"></i>
-                            أمثلة
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">زرت باريس العام الماضي</span>
-                            <span class="example-en">I visited Paris last year</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">أنهى دراسته في 2020</span>
-                            <span class="example-en">He finished his studies in 2020</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">شاهدنا الفيلم أمس</span>
-                            <span class="example-en">We watched the movie yesterday</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tense-card present">
-                    <div class="card-header">
-                        <div class="card-icon">
-                            <i class="fas fa-link"></i>
-                        </div>
-                        <h3 class="card-title">المضارع التام</h3>
-                    </div>
-                    
-                    <div class="usage">
-                        <div class="usage-title">
-                            <i class="fas fa-info-circle"></i>
-                            الاستخدام
-                        </div>
-                        <p>يستخدم للتحدث عن الأحداث التي بدأت في الماضي وتستمر حتى الوقت الحاضر.</p>
-                        <p>Used to talk about events that began in the past and continue into the present.</p>
-                    </div>
-                    
-                    <div class="examples">
-                        <div class="examples-title">
-                            <i class="fas fa-lightbulb"></i>
-                            أمثلة
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">لقد عشت هنا لمدة خمس سنوات</span>
-                            <span class="example-en">I have lived here for five years</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">لقد أنهى واجبه بالفعل</span>
-                            <span class="example-en">He has already finished his homework</span>
-                        </div>
-                        <div class="example">
-                            <span class="example-ar">لقد زرت إسبانيا من قبل</span>
-                            <span class="example-en">I have visited Spain before</span>
+                    <div class="example-box">
+                        <div class="example-title">صيغة الزمن الحاضر البسيط</div>
+                        <div class="example-text">
+                            <p>الفعل الأساسي (للمفرد يضاف s/es) - I work, He works, They study</p>
+                            <p>بالنفي: do/does + not + الفعل الأساسي - I don't work, He doesn't work</p>
+                            <p>بالسؤال: Do/Does + الفاعل + الفعل الأساسي - Do you work? Does he work?</p>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <h2 class="section-title">مقارنة بين الأزمنة المتشابهة</h2>
-            
-            <div class="comparison">
-                <div class="compare-card">
-                    <h3 class="compare-title">الحاضر البسيط (دائم)</h3>
-                    <p>جون يعيش في كيبيك</p>
-                    <p>John lives in Quebec</p>
-                    <div style="margin: 15px 0; padding: 10px; background: #e8f5e9; border-radius: 8px;">
-                        <i class="fas fa-check-circle" style="color: #4caf50;"></i> حالة دائمة
+            <!-- الشريحة الثالثة -->
+            <div class="slide" id="slide3">
+                <div class="slide-number">3</div>
+                <h2 class="slide-title">Present Progressive - استخدامات الزمن الحاضر المستمر</h2>
+                <div class="slide-content">
+                    <p>يستخدم الزمن الحاضر المستمر للتعبير عن:</p>
+                    
+                    <div class="concept-map">
+                        <div class="concept-box">
+                            <h3 class="concept-title">الأفعال الجارية الآن</h3>
+                            <p>يستخدم للتعبير عن الأفعال التي تحدث في لحظة الكلام</p>
+                            <p class="example-text">I am studying English now.</p>
+                            <p class="example-text">She is talking on the phone.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">المواقف المؤقتة</h3>
+                            <p>يستخدم للتعبير عن المواقف غير الدائمة والمؤقتة</p>
+                            <p class="example-text">He is staying with friends this week.</p>
+                            <p class="example-text">They are living in a hotel until their house is ready.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">التطور والتغيير</h3>
+                            <p>يستخدم للتعبير عن التطورات والتغيرات المستمرة</p>
+                            <p class="example-text">Technology is changing rapidly.</p>
+                            <p class="example-text">The climate is getting warmer.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الخطط المستقبلية</h3>
+                            <p>يستخدم للتعبير عن الخطط المحددة للمستقبل القريب</p>
+                            <p class="example-text">We are meeting them tomorrow.</p>
+                            <p class="example-text">She is flying to Paris next week.</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="compare-card">
-                    <h3 class="compare-title">الحاضر المستمر (مؤقت)</h3>
-                    <p>لكنه يدرس في فرنسا هذا العام</p>
-                    <p>but he is studying in France this year</p>
-                    <div style="margin: 15px 0; padding: 10px; background: #e3f2fd; border-radius: 8px;">
-                        <i class="fas fa-clock" style="color: #2196f3;"></i> حالة مؤقتة
+                    
+                    <div class="example-box">
+                        <div class="example-title">صيغة الزمن الحاضر المستمر</div>
+                        <div class="example-text">
+                            <p>am/is/are + الفعل + ing - I am working, He is working, They are studying</p>
+                            <p>بالنفي: am/is/are + not + الفعل + ing - I'm not working, He isn't working</p>
+                            <p>بالسؤال: Am/Is/Are + الفاعل + الفعل + ing - Are you working? Is he working?</p>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="comparison">
-                <div class="compare-card">
-                    <h3 class="compare-title">الماضي البسيط (انتهى)</h3>
-                    <p>أطلقت روسيا أول قمر صناعي في 1957</p>
-                    <p>The Russians launched the first artificial satellite in 1957</p>
-                    <div style="margin: 15px 0; padding: 10px; background: #fff3e0; border-radius: 8px;">
-                        <i class="fas fa-flag-checkered" style="color: #ff9800;"></i> انتهى في الماضي
+            <!-- الشريحة الرابعة -->
+            <div class="slide" id="slide4">
+                <div class="slide-number">4</div>
+                <h2 class="slide-title">Simple Past and Present Perfect - الفروق الأساسية</h2>
+                <div class="slide-content">
+                    <div class="concept-map">
+                        <div class="concept-box">
+                            <h3 class="concept-title">Simple Past</h3>
+                            <p>يستخدم للتحدث عن أحداث بدأت وانتهت في الماضي</p>
+                            <p class="example-text">The Russians launched the first artificial satellite in 1957.</p>
+                            <p class="example-text">I visited London last year.</p>
+                            <p class="example-text">She finished her work an hour ago.</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">Present Perfect</h3>
+                            <p>يستخدم للتحدث عن أحداث بدأت في الماضي واستمرت إلى الحاضر</p>
+                            <p class="example-text">The United States has launched many astronauts into space since 1969 and continues to do so.</p>
+                            <p class="example-text">I have lived here for five years.</p>
+                            <p class="example-text">She has worked at that company since 2010.</p>
+                        </div>
                     </div>
-                </div>
-                
-                <div class="compare-card">
-                    <h3 class="compare-title">المضارع التام (مستمر)</h3>
-                    <p>الولايات المتحدة أطلقت رواد فضاء منذ 1969 وتواصل القيام بذلك</p>
-                    <p>The United States has launched many astronauts since 1969 and continues to do so</p>
-                    <div style="margin: 15px 0; padding: 10px; background: #f3e5f5; border-radius: 8px;">
-                        <i class="fas fa-sync-alt" style="color: #9c27b0;"></i> مستمر للحاضر
+                    
+                    <div class="example-box">
+                        <div class="example-title">مقارنة بين Simple Present و Present Progressive</div>
+                        <div class="example-text">
+                            <p><strong>مؤقت vs دائم:</strong> John lives in Quebec (دائم), but he is studying in France this year (مؤقت).</p>
+                            <p><strong>عادة vs فعل جاري:</strong> I usually drink tea (عادة), but today I'm drinking coffee (فعل جاري).</p>
+                            <p><strong>حقيقة عامة vs حالة مؤقتة:</strong> She works as a nurse (حقيقة), but she is working as a teacher this month (مؤقت).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">كلمات دلالية لكل زمن</div>
+                        <div class="example-text">
+                            <p><strong>Simple Present:</strong> always, usually, often, sometimes, never, every day/week</p>
+                            <p><strong>Present Progressive:</strong> now, at the moment, currently, right now, these days</p>
+                            <p><strong>Simple Past:</strong> yesterday, last week/month, ago, in 1990, when I was young</p>
+                            <p><strong>Present Perfect:</strong> since, for, already, yet, just, ever, never, recently</p>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <div class="exercise-section">
-                <h2 class="exercise-title">تمارين تطبيقية</h2>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">1. He __________ with his uncle until he can find his own place. (live)</div>
-                    <div class="exercise-answer">الإجابة: is living</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">2. The water __________. Please turn it off. (boil)</div>
-                    <div class="exercise-answer">الإجابة: is boiling</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">3. The scientists __________ the cause of the problem. (not/understand)</div>
-                    <div class="exercise-answer">الإجابة: don't understand</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">4. __________ in your country in winter? (it/snow)</div>
-                    <div class="exercise-answer">الإجابة: Does it snow</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">5. The moon __________ around Earth. (go)</div>
-                    <div class="exercise-answer">الإجابة: goes</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">6. What __________ my idea? (you/think)</div>
-                    <div class="exercise-answer">الإجابة: do you think</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">7. Currently, the number of immigrants in our country __________. (increase)</div>
-                    <div class="exercise-answer">الإجابة: is increasing</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">8. We __________ when the first Grand Prix took place in Dubai. (not/remember)</div>
-                    <div class="exercise-answer">الإجابة: don't remember</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">9. Dubai is part of the UAE, but it __________ as many oil reserves as Abu Dhabi. (not/have)</div>
-                    <div class="exercise-answer">الإجابة: doesn't have</div>
-                </div>
-                
-                <div class="exercise-item">
-                    <div class="exercise-question">10. Ahmed has a part-time job on Saturdays, but he __________ today. (not/work)</div>
-                    <div class="exercise-answer">الإجابة: isn't working</div>
+            <!-- الشريحة الخامسة -->
+            <div class="slide" id="slide5">
+                <div class="slide-number">5</div>
+                <div class="slide-content final-slide">
+                    <h2 class="final-title">تلخيص ومراجعة نهائية</h2>
+                    
+                    <div class="concept-map">
+                        <div class="concept-box">
+                            <h3 class="concept-title">الزمن الحاضر البسيط</h3>
+                            <p>لحقائق ثابتة، عادات، وحالات دائمة</p>
+                            <p class="example-text">صيغته: الفعل الأساسي (مع إضافة s للمفرد)</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الزمن الحاضر المستمر</h3>
+                            <p>لأفعال جارية الآن، مواقف مؤقتة، وتطورات</p>
+                            <p class="example-text">صيغته: am/is/are + الفعل + ing</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الزمن الماضي البسيط</h3>
+                            <p>لأحداث بدأت وانتهت في الماضي</p>
+                            <p class="example-text">صيغته: الفعل الماضي (مع التصريف المناسب)</p>
+                        </div>
+                        
+                        <div class="concept-box">
+                            <h3 class="concept-title">الزمن الحاضر التام</h3>
+                            <p>لأحداث بدأت في الماضي واستمرت للحاضر</p>
+                            <p class="example-text">صيغته: have/has + التصريف الثالث للفعل</p>
+                        </div>
+                    </div>
+                    
+                    <div class="final-message">
+                        <p>نأمل أن يكون هذا العرض ساعدك في فهم قواعد الأزمنة الإنجليزية بشكل أفضل.</p>
+                        <p>استمر في الممارسة والتطبيق لتحسين مهاراتك اللغوية!</p>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <p>للمزيد من المعلومات والدروس، تفضل بزيارة موقعنا الإلكتروني</p>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <footer>
-            <p>خريطة مفاهيم قواعد الأزمنة في اللغة الإنجليزية - تم تصميم هذه الخريطة للطباعة والاستخدام التعليمي</p>
-            <p>© 2023 - جميع الحقوق محفوظة</p>
-        </footer>
+        <div class="controls">
+            <button class="btn" id="prevBtn">
+                <span>السابقة</span>
+            </button>
+            
+            <div class="progress-bar">
+                <div class="progress" id="progress"></div>
+            </div>
+            
+            <button class="btn" id="nextBtn">
+                <span>التالية</span>
+            </button>
+            
+            <button class="btn btn-export" id="exportBtn">
+                <span>تصدير إلى بوربوينت</span>
+            </button>
+        </div>
     </div>
-    
+
     <script>
-        // يمكن إضافة أي وظائف JavaScript إضافية هنا إذا لزم الأمر
-        window.onbeforeprint = function() {
-            // أي إجراء قبل الطباعة
-        };
-        
-        window.onafterprint = function() {
-            // أي إجراء بعد الطباعة
-        };
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const exportBtn = document.getElementById('exportBtn');
+            const progress = document.getElementById('progress');
+            let currentSlide = 0;
+            
+            // عرض الشريحة الحالية
+            function showSlide(index) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                slides[index].classList.add('active');
+                
+                // تحديد شريط التقدم
+                const progressPercent = ((index + 1) / slides.length) * 100;
+                progress.style.width = `${progressPercent}%`;
+                
+                // تحديث حالة الأزرار
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = index === slides.length - 1;
+            }
+            
+            // الشريحة التالية
+            nextBtn.addEventListener('click', function() {
+                if (currentSlide < slides.length - 1) {
+                    currentSlide++;
+                    showSlide(currentSlide);
+                }
+            });
+            
+            // الشريحة السابقة
+            prevBtn.addEventListener('click', function() {
+                if (currentSlide > 0) {
+                    currentSlide--;
+                    showSlide(currentSlide);
+                }
+            });
+            
+            // تصدير إلى بوربوينت (محاكاة)
+            exportBtn.addEventListener('click', function() {
+                alert('سيتم تصدير العرض التقديمي إلى ملف بوربوينت. هذه ميزة محاكاة في هذا النموذج.');
+                // في التطبيق الحقيقي، هنا سيتم إضافة كود لتحويل المحتوى إلى ملف بوربوينت
+            });
+            
+            // التنقل باستخدام مفاتيح الأسهم
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    if (currentSlide < slides.length - 1) {
+                        currentSlide++;
+                        showSlide(currentSlide);
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    if (currentSlide > 0) {
+                        currentSlide--;
+                        showSlide(currentSlide);
+                    }
+                }
+            });
+            
+            // تهيئة العرض
+            showSlide(currentSlide);
+        });
     </script>
 </body>
 </html>
