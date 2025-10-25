@@ -17,6 +17,8 @@
                 font-size: 11pt;
                 line-height: 1.4;
                 font-family: 'Amiri', serif;
+                color: #000000;
+                background: white !important;
             }
             
             .page-break {
@@ -32,33 +34,37 @@
                 font-size: 20pt;
                 margin-bottom: 0.8cm;
                 text-align: center;
+                color: #000000;
             }
             
             .side-heading {
                 font-size: 14pt;
                 margin: 0.4cm 0 0.3cm 0;
-                border-right: 4px solid #7C3AED;
+                border-right: 4px solid #404040;
                 padding-right: 0.4cm;
                 font-weight: bold;
-                color: #6D28D9;
+                color: #000000;
             }
             
             .sub-heading {
                 font-size: 12pt;
                 margin: 0.3cm 0 0.2cm 0;
                 font-weight: 600;
-                color: #4B5563;
+                color: #404040;
             }
             
             p {
                 margin-bottom: 0.3cm;
                 text-align: justify;
+                color: #000000;
             }
             
             .info-box {
                 margin: 0.2cm 0;
                 padding: 0.4cm;
                 page-break-inside: avoid;
+                background: #f8f8f8;
+                border: 1px solid #d0d0d0;
             }
             
             ul, ol {
@@ -67,6 +73,7 @@
             
             li {
                 margin-bottom: 0.1cm;
+                color: #000000;
             }
 
             .cover-page {
@@ -88,14 +95,15 @@
             .image-container img {
                 max-width: 100%;
                 height: auto;
-                border-radius: 8px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                border-radius: 4px;
+                border: 1px solid #d0d0d0;
+                filter: grayscale(100%);
             }
 
             .image-caption {
                 text-align: center;
                 font-style: italic;
-                color: #4b5563;
+                color: #666666;
                 margin-top: 0.3cm;
                 font-size: 10pt;
             }
@@ -104,74 +112,79 @@
         body {
             font-family: 'Amiri', 'Noto Sans Arabic', serif;
             line-height: 1.6;
-            background: linear-gradient(135deg, #8B5CF6 0%, #EC4899 100%);
+            background: white;
+            color: #000000;
         }
         
         .main-title {
             text-align: center;
-            color: #7C3AED;
+            color: #000000;
             font-weight: 700;
             margin-bottom: 30px;
-            border-bottom: 3px solid #8B5CF6;
+            border-bottom: 3px solid #404040;
             padding-bottom: 15px;
             display: inline-block;
             width: 100%;
         }
         
         .side-heading {
-            border-right: 4px solid #8B5CF6;
+            border-right: 4px solid #404040;
             padding-right: 15px;
             margin: 20px 0 10px 0;
             font-weight: 600;
-            color: #7C3AED;
+            color: #000000;
             font-size: 18px;
         }
         
         .sub-heading {
             font-weight: 600;
-            color: #4B5563;
+            color: #404040;
             margin: 15px 0 8px 0;
         }
         
         .info-box {
-            background: #FDF4FF;
+            background: #f8f8f8;
             padding: 15px;
             margin: 12px 0;
-            border-right: 3px solid #C084FC;
+            border-right: 3px solid #a0a0a0;
             border-radius: 8px 0 0 8px;
+            border: 1px solid #d0d0d0;
         }
         
         .highlight-box {
-            background: #F0F9FF;
+            background: #f0f0f0;
             padding: 15px;
             margin: 12px 0;
-            border-right: 3px solid #38BDF8;
+            border-right: 3px solid #808080;
             border-radius: 8px 0 0 8px;
+            border: 1px solid #d0d0d0;
         }
         
         .comparison-box {
-            background: #FFFBEB;
+            background: #f5f5f5;
             padding: 15px;
             margin: 12px 0;
-            border-right: 3px solid #F59E0B;
+            border-right: 3px solid #606060;
             border-radius: 8px 0 0 8px;
+            border: 1px solid #d0d0d0;
         }
         
         .formula {
-            background: #FDF4FF;
+            background: #f8f8f8;
             padding: 15px;
             margin: 12px 0;
-            border-right: 3px solid #C084FC;
+            border-right: 3px solid #a0a0a0;
             border-radius: 8px 0 0 8px;
             text-align: center;
             font-family: 'Courier New', monospace;
             font-size: 14px;
+            border: 1px solid #d0d0d0;
         }
 
         .cover-container {
             background: white;
             padding: 3cm;
-            border-radius: 20px;
+            border-radius: 8px;
             width: 80%;
             max-width: 600px;
             text-align: center;
@@ -179,50 +192,52 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            box-shadow: 0 20px 40px rgba(139, 92, 246, 0.3);
+            border: 2px solid #000000;
         }
         
         .cover-title {
-            color: #7C3AED;
+            color: #000000;
             font-size: 2.2em;
             font-weight: 700;
             margin-bottom: 1em;
-            border-bottom: 3px solid #8B5CF6;
+            border-bottom: 3px solid #000000;
             padding-bottom: 0.5em;
         }
         
         .subject {
-            color: #4B5563;
+            color: #404040;
             font-size: 1.6em;
             margin-bottom: 0.5em;
         }
         
         .cover-student-info {
-            background: #F0F9FF;
+            background: #f0f0f0;
             padding: 1.5em;
             margin: 1.5em 0;
-            border-right: 4px solid #38BDF8;
-            border-radius: 10px;
+            border-right: 4px solid #808080;
+            border-radius: 8px;
+            border: 1px solid #d0d0d0;
         }
         
         .cover-info-item {
             font-size: 1.3em;
             margin: 0.8em 0;
-            color: #0369A1;
+            color: #000000;
         }
         
         .class-info {
-            background: #FDF4FF;
+            background: #f5f5f5;
             padding: 1em;
             margin: 1em 0;
-            border-right: 4px solid #C084FC;
+            border-right: 4px solid #a0a0a0;
             border-radius: 8px;
             font-size: 1.2em;
-            color: #7C3AED;
+            color: #404040;
+            border: 1px solid #d0d0d0;
         }
         
         .year {
-            color: #059669;
+            color: #000000;
             font-size: 1.1em;
             margin-top: 1.5em;
             font-weight: 600;
@@ -230,7 +245,7 @@
         
         .decoration {
             margin: 2em 0;
-            color: #6b7280;
+            color: #666666;
             font-size: 1.1em;
         }
 
@@ -242,25 +257,51 @@
         .image-container img {
             max-width: 100%;
             height: auto;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            border: 1px solid #d0d0d0;
+            filter: grayscale(100%);
         }
 
         .image-caption {
             text-align: center;
             font-style: italic;
-            color: #475569;
+            color: #666666;
             margin-top: 8px;
             font-size: 12px;
         }
 
         .content-section {
             background: white;
-            border-radius: 15px;
+            border-radius: 8px;
             padding: 30px;
             margin-bottom: 30px;
-            box-shadow: 0 8px 25px rgba(139, 92, 246, 0.1);
+            border: 1px solid #e0e0e0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        
+        table, th, td {
+            border: 1px solid #000000;
+        }
+        
+        th {
+            background-color: #f0f0f0;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        td {
+            padding: 8px;
+            text-align: center;
+        }
+        
+        tr:nth-child(even) {
+            background-color: #f8f8f8;
         }
     </style>
 </head>
@@ -268,7 +309,7 @@
 
     <!-- زر الطباعة -->
     <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <button onclick="window.print()" style="background: #8B5CF6; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+        <button onclick="window.print()" style="background: #404040; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
             🖨️ طباعة المشروع
         </button>
     </div>
@@ -307,7 +348,7 @@
                 <h1 class="main-title" style="font-size: 28px;">
                     ظاهرة الرنين في الأنظمة الفيزيائية
                     <br>
-                    <span style="font-size: 20px; color: #6B7280;">دراسة تطبيقية في الصوتيات والاهتزازات</span>
+                    <span style="font-size: 20px; color: #666666;">دراسة تطبيقية في الصوتيات والاهتزازات</span>
                 </h1>
 
                 <div class="side-heading">المقدمة العلمية</div>
@@ -455,9 +496,9 @@
 
                 <div class="comparison-box">
                     <strong>مقارنة بين خصائص الأنظمة الرنانة:</strong>
-                    <table border="1" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; margin: 10px 0; font-size: 10pt;">
+                    <table>
                         <thead>
-                            <tr style="background: #FEF3C7;">
+                            <tr>
                                 <th width="25%">الخاصية</th>
                                 <th width="25%">الأوتار</th>
                                 <th width="25%">الأنبوب المفتوح</th>
@@ -471,7 +512,7 @@
                                 <td>\( \lambda_1 = 2L \)</td>
                                 <td>\( \lambda_1 = 4L \)</td>
                             </tr>
-                            <tr style="background: #FFFBEB;">
+                            <tr>
                                 <td>التردد الأساسي</td>
                                 <td>\( f_1 = \frac{v}{2L} \)</td>
                                 <td>\( f_1 = \frac{v}{2L} \)</td>
@@ -483,7 +524,7 @@
                                 <td>مضاعفات كاملة</td>
                                 <td>مضاعفات فردية</td>
                             </tr>
-                            <tr style="background: #FFFBEB;">
+                            <tr>
                                 <td>العقد والبطون</td>
                                 <td>عقدة عند الطرفين</td>
                                 <td>بطن عند الطرفين</td>
@@ -532,25 +573,13 @@
         <!-- الصفحة الثامنة -->
         <div class="page-break">
             <div class="content-section">
-                <div class="side-heading">التطبيقات التكنولوجية</div>
-                
-                <p>تعتمد أنظمة التسجيل والتشغيل الصوتي الحديثة على قدرتها في إعادة إنتاج مدى واسع من الترددات بدقة عالية.</p>
-            
-                <div class="sub-heading">أنظمة الصوت الاحترافية</div>
-                <p>يجب أن يلائم النظام الصوتي الجيد جميع الترددات بين 20 Hz إلى 20,000 Hz ضمن مدى 3 dB للحفاظ على دقة الصوت.</p>
-
-                <div class="image-container">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Sine_and_noise_wave.svg/500px-Sine_and_noise_wave.svg.png" alt="الضوضاء والصوت النقي">
-                    <div class="image-caption">الشكل 10: الفرق بين الموجة الجيبية (الصوت النقي) والضوضاء</div>
-                </div>
-
                 <div class="side-heading">الخاتمة والتطبيقات المستقبلية</div>
                 
                 <p>يمثل فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار أساساً مهماً في تطوير التقنيات الصوتية والموسيقية المتقدمة.</p>
 
                 <div class="image-container">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Music_notes.jpg/500px-Music_notes.jpg" alt="تطبيقات الرنين">
-                    <div class="image-caption">الشكل 11: تطبيقات الرنين في الآلات الموسيقية المختلفة</div>
+                    <div class="image-caption">الشكل 10: تطبيقات الرنين في الآلات الموسيقية المختلفة</div>
                 </div>
                 
                 <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات المتطورة، وتقنيات التحكم في الضوضاء الذكية.</p>
@@ -558,6 +587,17 @@
                 <div class="info-box">
                     <strong>الاستنتاج النهائي:</strong>
                     <p>تمثل ظاهرة الرنين نموذجاً رائعاً لانسجام القوانين الفيزيائية مع التطبيقات العملية. من الآلات الموسيقية التقليدية إلى أنظمة الصوت الحديثة، يظل الرنين ظاهرة أساسية تساهم في إثراء تجربتنا الصوتية والفنية، وتفتح آفاقاً جديدة للابتكار التكنولوجي.</p>
+                </div>
+
+                <div class="side-heading">المراجع والمصادر</div>
+                
+                <div class="highlight-box">
+                    <ul style="margin-right: 20px; margin-top: 8px;">
+                        <li>كتاب الفيزياء للصف الثالث الثانوي - وزارة التعليم</li>
+                        <li>موسوعة الصوتيات والاهتزازات - د. أحمد محمد</li>
+                        <li>موقع الفيزياء التعليمي - physics.org</li>
+                        <li>ويكيبيديا العربية - الموسوعة الحرة</li>
+                    </ul>
                 </div>
             </div>
         </div>
