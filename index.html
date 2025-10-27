@@ -3,334 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كيمياء المشاعر - عرض تقديمي</title>
+    <title>إدارة الملاحظات - جنى عبدالله</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700&display=swap');
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Tajawal', sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            background-color: #f5f5f5;
             color: #333;
             line-height: 1.6;
-            min-height: 100vh;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            overflow: hidden;
-        }
-        
-        header {
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            padding: 30px;
-            text-align: center;
-            border-bottom: 5px solid #fdbb2d;
+            width: 100%;
+            max-width: 794px; /* A4 width in pixels */
+            min-height: 1123px; /* A4 height in pixels */
+            background: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            margin-bottom: 20px;
+            position: relative;
         }
         
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            font-size: 32px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
         }
         
-        .subtitle {
-            font-size: 1.4rem;
-            opacity: 0.9;
+        .section {
+            margin-bottom: 30px;
+        }
+        
+        .section-title {
+            font-size: 22px;
+            color: #2980b9;
+            margin-bottom: 15px;
+            padding-right: 10px;
+            border-right: 4px solid #3498db;
         }
         
         .content {
-            display: flex;
-            flex-wrap: wrap;
-            padding: 20px;
-        }
-        
-        .slides-container {
-            flex: 1;
-            min-width: 300px;
-            padding: 20px;
-        }
-        
-        .slide {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            margin-bottom: 25px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            border-right: 5px solid #4b6cb7;
-            transition: transform 0.3s ease;
-        }
-        
-        .slide:hover {
-            transform: translateY(-5px);
-        }
-        
-        .slide h2 {
-            color: #2c3e50;
+            font-size: 18px;
             margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #fdbb2d;
+            line-height: 1.8;
         }
         
-        .slide ul {
+        ul {
             list-style-type: none;
             padding-right: 20px;
         }
         
-        .slide li {
+        li {
             margin-bottom: 10px;
-            padding-right: 10px;
             position: relative;
+            padding-right: 25px;
         }
         
-        .slide li:before {
+        li:before {
             content: "•";
-            color: #4b6cb7;
+            color: #3498db;
             font-weight: bold;
             position: absolute;
-            right: -15px;
+            right: 0;
         }
         
-        .download-section {
-            flex: 0 0 300px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 15px;
-            margin: 20px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        .divider {
+            height: 2px;
+            background: linear-gradient(to right, transparent, #3498db, transparent);
+            margin: 30px 0;
         }
         
-        .download-section h2 {
-            color: #2c3e50;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4b6cb7;
-        }
-        
-        .download-btn {
-            display: block;
-            width: 100%;
-            padding: 15px;
-            margin: 15px 0;
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            text-decoration: none;
-            border-radius: 10px;
+        .signature {
+            text-align: left;
+            font-size: 20px;
             font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        
-        .download-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
-            background: linear-gradient(to right, #3a5998, #0f1c3a);
-        }
-        
-        .btn-modified {
-            background: linear-gradient(to right, #fdbb2d, #b21f1f);
-        }
-        
-        .btn-modified:hover {
-            background: linear-gradient(to right, #e6a10f, #9a1a1a);
-        }
-        
-        .description {
-            margin-top: 30px;
-            padding: 15px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-        
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #2c3e50;
-            color: white;
+            color: #2c3e50;
             margin-top: 20px;
-            border-top: 5px solid #fdbb2d;
         }
         
-        @media (max-width: 768px) {
-            .content {
-                flex-direction: column;
+        .print-btn {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        
+        .print-btn:hover {
+            background-color: #2980b9;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
             }
             
-            .download-section {
-                flex: 1;
-                margin: 10px;
+            .container {
+                box-shadow: none;
+                margin: 0;
+                padding: 20px;
+                max-width: 100%;
             }
             
-            h1 {
-                font-size: 2.2rem;
+            .print-btn {
+                display: none;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>كيمياء المشاعر</h1>
-            <p class="subtitle">كيف تتحكم المواد الكيميائية في مشاعرنا؟</p>
-            <p>مادة الكيمياء - الصف الثاني الثانوي</p>
-        </header>
+        <h1>إدارة الملاحظات</h1>
         
-        <div class="content">
-            <div class="slides-container">
-                <div class="slide">
-                    <h2>الشريحة 1: العنوان</h2>
-                    <ul>
-                        <li>كيمياء المشاعر</li>
-                        <li>كيف تتحكم المواد الكيميائية في مشاعرنا؟</li>
-                        <li>مادة: كيمياء - الصف الثاني الثانوي</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 2: مقدمة</h2>
-                    <ul>
-                        <li>ما هي كيمياء المشاعر؟</li>
-                        <li>دراسة المواد الكيميائية في الدماغ التي تتحكم في مشاعرنا</li>
-                        <li>العلاقة بين التفاعلات الكيميائية والحالات النفسية</li>
-                        <li>كيف تؤثر الهرمونات والناقلات العصبية على سلوكنا</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 3: الناقلات العصبية الرئيسية</h2>
-                    <ul>
-                        <li>الدوبامين: مسؤول عن السعادة والمكافأة</li>
-                        <li>السيروتونين: ينظم المزاج والنوم</li>
-                        <li>الأوكسيتوسين: هرمون الحب والثقة</li>
-                        <li>الأدرينالين: هرمون المواجهة أو الهروب</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 4: الدوبامين</h2>
-                    <ul>
-                        <li>هرمون المكافأة والسعادة</li>
-                        <li>يفرز عند تحقيق الأهداف</li>
-                        <li>يرتبط بالشعور بالمتعة</li>
-                        <li>يدفعنا لتكرار السلوكيات الإيجابية</li>
-                        <li>يمكن تعزيزه بالتمارين الرياضية والأهداف الصغيرة</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 5: السيروتونين</h2>
-                    <ul>
-                        <li>منظم المزاج</li>
-                        <li>يؤثر على المزاج والاكتئاب</li>
-                        <li>ينظم النوم والشهية</li>
-                        <li>يساعد في الذاكرة والتعلم</li>
-                        <li>يمكن زيادته بالتعرض للشمس والتغذية السليمة</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 6: الأوكسيتوسين</h2>
-                    <ul>
-                        <li>هرمون الحب والعطف</li>
-                        <li>يزداد أثناء العناق واللمس</li>
-                        <li>يرتفع في العلاقات الاجتماعية</li>
-                        <li>يتعزز أثناء رعاية الأطفال</li>
-                        <li>يعزز الشعور بالثقة والتعلق</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 7: الأدرينالين</h2>
-                    <ul>
-                        <li>هرمون الطوارئ</li>
-                        <li>يستجيب للتوتر والخطر</li>
-                        <li>يزيد من معدل ضربات القلب</li>
-                        <li>يحسن تدفق الدم إلى العضلات</li>
-                        <li>يرفع مستوى السكر في الدم</li>
-                        <li>يهيئ الجسم للتعامل مع المواقف الصعبة</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 8: التوازن الكيميائي</h2>
-                    <ul>
-                        <li>لماذا التوازن مهم؟</li>
-                        <li>اختلال المواد الكيميائية يؤدي إلى الاكتئاب والقلق</li>
-                        <li>يسبب اضطرابات النوم وتغيرات في الشهية</li>
-                        <li>طرق الحفاظ على التوازن: النوم الكافي، التغذية المتوازنة، ممارسة الرياضة</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 9: نشاط تفاعلي</h2>
-                    <ul>
-                        <li>اربط المشاعر بالمواد الكيميائية</li>
-                        <li>الفرح الشديد → (الدوبامين)</li>
-                        <li>الشعور بالحب → (الأوكسيتوسين)</li>
-                        <li>الخوف المفاجئ → (الأدرينالين)</li>
-                        <li>الهدوء والاستقرار → (السيروتونين)</li>
-                    </ul>
-                </div>
-                
-                <div class="slide">
-                    <h2>الشريحة 10: الخلاصة</h2>
-                    <ul>
-                        <li>المشاعر نتاج تفاعلات كيميائية معقدة</li>
-                        <li>لكل ناقل عصبي دور محدد</li>
-                        <li>يمكننا التحكم في مشاعرنا من خلال فهم كيمياء الدماغ</li>
-                        <li>التوازن الكيميائي أساس الصحة النفسية</li>
-                        <li>شكراً لاستماعكم - أسئلة؟</li>
-                    </ul>
-                </div>
-            </div>
-            
-            <div class="download-section">
-                <h2>تحميل العرض التقديمي</h2>
-                <a href="#" class="download-btn">تحميل ملف البوربوينت الأساسي</a>
-                <a href="#" class="download-btn btn-modified">تحميل ملف البوربوينت المعدل</a>
-                
-                <div class="description">
-                    <h3>ملاحظات حول الملف المعدل:</h3>
-                    <p>تم تعديل الملف المعدل وتحسينه حسب المتطلبات المذكورة في الشرائح، مع:</p>
-                    <ul>
-                        <li>تحسين التصميم والتنسيق</li>
-                        <li>إضافة رسومات توضيحية</li>
-                        <li>تحسين التسلسل المنطقي للشرائح</li>
-                        <li>إضافة أنشطة تفاعلية</li>
-                    </ul>
-                </div>
+        <div class="section">
+            <h2 class="section-title">تسجيل الأفكار المهمة أثناء الدرس يساعد على:</h2>
+            <div class="content">
+                <ul>
+                    <li>الانتباه والتركيز</li>
+                    <li>تثبيت المعلومات</li>
+                    <li>طرق تدوين ملاحظات</li>
+                    <li>طريقة التسلسل</li>
+                    <li>الطريقة الشجرية</li>
+                </ul>
             </div>
         </div>
         
-        <footer>
-            <p>عرض تقديمي عن كيمياء المشاعر - إعداد: قسم الكيمياء</p>
-            <p>جميع الحقوق محفوظة &copy; 2023</p>
-        </footer>
+        <div class="divider"></div>
+        
+        <div class="section">
+            <h2 class="section-title">جنى عبد الله</h2>
+            <div class="content">
+                <p>تقسيم الملاحظات إلى أفكار رئيسية وأفكار فرعية يساعد على:</p>
+                <ul>
+                    <li>الاستيعاب والفهم</li>
+                    <li>تقسيم الملاحظات إلى أفكار رئيسية وأفكار فرعية يساعد</li>
+                    <li>مراجعة أسهل</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="signature">جنى عبدالله</div>
     </div>
+    
+    <button class="print-btn" onclick="window.print()">طباعة الصفحة</button>
 
     <script>
-        // يمكن إضافة تفاعلية إضافية هنا
-        document.addEventListener('DOMContentLoaded', function() {
-            const downloadButtons = document.querySelectorAll('.download-btn');
-            
-            downloadButtons.forEach(button => {
-                button.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    alert('في التطبيق الفعلي، سيتم تحميل ملف البوربوينت. هذه مجرد نسخة تجريبية.');
-                });
-            });
+        // يمكن إضافة أي وظائف JavaScript إضافية هنا إذا لزم الأمر
+        document.querySelector('.print-btn').addEventListener('click', function() {
+            window.print();
         });
     </script>
 </body>
