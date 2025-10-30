@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>خرائط مفاهيمية - الطلائعيات</title>
+    <title>ملخص الطلائعيات الشبيهة بالحيوانات</title>
     <style>
         * {
             margin: 0;
@@ -13,8 +13,9 @@
         }
         
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             padding: 20px;
+            line-height: 1.6;
         }
         
         .page {
@@ -23,8 +24,9 @@
             min-height: 29.7cm;
             margin: 0 auto;
             padding: 2cm;
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
             border-radius: 10px;
+            position: relative;
         }
         
         h1 {
@@ -33,98 +35,80 @@
             margin-bottom: 30px;
             padding-bottom: 15px;
             border-bottom: 3px solid #3498db;
+            font-size: 28px;
         }
         
-        .concept-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
+        h2 {
+            color: #2980b9;
+            margin: 25px 0 15px 0;
+            padding-right: 15px;
+            border-right: 4px solid;
+            font-size: 22px;
         }
         
-        .concept-card {
+        h3 {
+            color: #16a085;
+            margin: 20px 0 10px 0;
+            font-size: 18px;
+        }
+        
+        .concept-map {
             background: #f8f9fa;
+            border: 2px solid #e9ecef;
             border-radius: 10px;
             padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .group {
+            width: 48%;
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-top: 5px solid;
         }
         
-        .concept-card h3 {
-            text-align: center;
-            margin-bottom: 15px;
-            color: #2c3e50;
-        }
+        .sporozoa { background: #ffebee; border-right: 5px solid #e57373; }
+        .flagellate { background: #e3f2fd; border-right: 5px solid #64b5f6; }
+        .sarcodina { background: #e8f5e9; border-right: 5px solid #81c784; }
+        .ciliate { background: #f3e5f5; border-right: 5px solid #ba68c8; }
         
-        .sporozoa-card { border-top-color: #e74c3c; }
-        .flagellate-card { border-top-color: #3498db; }
-        .sarcodina-card { border-top-color: #2ecc71; }
-        .ciliate-card { border-top-color: #9b59b6; }
-        
-        .concept-item {
+        .info-box {
             background: white;
-            padding: 10px 15px;
-            margin: 8px 0;
-            border-radius: 6px;
-            border-right: 3px solid;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-right: 3px solid #3498db;
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
         }
         
-        .sporozoa-item { border-right-color: #e74c3c; }
-        .flagellate-item { border-right-color: #3498db; }
-        .sarcodina-item { border-right-color: #2ecc71; }
-        .ciliate-item { border-right-color: #9b59b6; }
-        
-        .disease-cycle {
-            background: #fff3cd;
-            border: 2px dashed #ffc107;
-            border-radius: 8px;
-            padding: 15px;
-            margin: 20px 0;
-        }
-        
-        .cycle-step {
-            display: flex;
-            align-items: center;
+        ul {
+            padding-right: 20px;
             margin: 10px 0;
-            padding: 8px;
-            background: white;
-            border-radius: 6px;
         }
         
-        .cycle-number {
-            background: #3498db;
-            color: white;
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-left: 10px;
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .highlight {
+            background: #fff9c4;
+            padding: 2px 6px;
+            border-radius: 4px;
             font-weight: bold;
         }
         
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        .disease {
+            color: #e74c3c;
+            font-weight: bold;
         }
         
-        .comparison-table th, .comparison-table td {
-            padding: 12px 15px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-        
-        .comparison-table th {
-            background: #3498db;
-            color: white;
-        }
-        
-        .comparison-table tr:nth-child(even) {
-            background: #f2f2f2;
+        .characteristic {
+            color: #27ae60;
+            font-weight: bold;
         }
         
         .footer {
@@ -133,6 +117,7 @@
             padding-top: 20px;
             border-top: 1px solid #bdc3c7;
             color: #7f8c8d;
+            font-size: 14px;
         }
         
         @media print {
@@ -150,204 +135,125 @@
 </head>
 <body>
     <div class="page">
-        <h1>خرائط مفاهيمية تفصيلية - الطلائعيات الشبيهة بالحيوانات</h1>
+        <h1>🦠 الطلائعيات الشبيهة بالحيوانات (الأوليات)</h1>
         
-        <div class="concept-container">
-            <div class="concept-card sporozoa-card">
+        <div class="info-box">
+            <h2>مقدمة</h2>
+            <p>الطلائعيات الشبيهة بالحيوانات (الأوليات) هي كائنات وحيدة الخلية، غير ذاتية التغذية، تعيش في البيئات المائية والتربة الرطبة، وبعضها متطفل يسبب أمراضاً خطيرة للإنسان.</p>
+        </div>
+        
+        <h2>الخريطة المفاهيمية للطلائعيات</h2>
+        <div class="concept-map">
+            <div class="group sporozoa">
                 <h3>🔴 البوغيات (Apicomplexa)</h3>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>الحركة:</strong> لا توجد أعضاء حركة في الطور البالغ
-                </div>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>التغذية:</strong> متطفلة - تعتمد على عائل
-                </div>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>التكاثر:</strong> دورة حياة معقدة (جنسي ولا جنسي)
-                </div>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>الممثل الرئيسي:</strong> البلازموديوم (Plasmodium)
-                </div>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>الأمراض:</strong> الملاريا
-                </div>
-                
-                <div class="concept-item sporozoa-item">
-                    <strong>الناقل:</strong> بعوض الأنوفيلة
-                </div>
+                <ul>
+                    <li><span class="characteristic">الحركة:</span> لا توجد أعضاء حركة</li>
+                    <li><span class="characteristic">التغذية:</span> متطفلة</li>
+                    <li><span class="disease">الأمراض:</span> الملاريا</li>
+                    <li><span class="characteristic">الممثل:</span> البلازموديوم</li>
+                    <li><span class="characteristic">الناقل:</span> بعوض الأنوفيلة</li>
+                </ul>
             </div>
             
-            <div class="concept-card flagellate-card">
+            <div class="group flagellate">
                 <h3>🔵 السوطيات (Zoomastigina)</h3>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>الحركة:</strong> بواسطة السوط الطويل
-                </div>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>التغذية:</strong> متطفلة أو حرة المعيشة
-                </div>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>التكاثر:</strong> انشطار ثنائي طولي
-                </div>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>الممثل الرئيسي:</strong> المثقبيات (Trypanosoma)
-                </div>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>الأمراض:</strong> مرض النوم الأمريكي والإفريقي
-                </div>
-                
-                <div class="concept-item flagellate-item">
-                    <strong>الناقل:</strong> ذبابة تسي تسي، حشرة البق
-                </div>
+                <ul>
+                    <li><span class="characteristic">الحركة:</span> بالسوط</li>
+                    <li><span class="characteristic">التغذية:</span> متطفلة</li>
+                    <li><span class="disease">الأمراض:</span> أمراض النوم</li>
+                    <li><span class="characteristic">الممثل:</span> المثقبيات</li>
+                    <li><span class="characteristic">الناقل:</span> ذبابة تسي تسي</li>
+                </ul>
             </div>
             
-            <div class="concept-card sarcodina-card">
+            <div class="group sarcodina">
                 <h3>🟢 الجذريات (Sarcodina)</h3>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>الحركة:</strong> بواسطة الأقدام الكاذبة
-                </div>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>التغذية:</strong> بالبلعمة - تكوين فجوة غذائية
-                </div>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>التكاثر:</strong> انشطار ثنائي لا جنسي
-                </div>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>الممثل الرئيسي:</strong> الأميبات (Amoeba)
-                </div>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>الأمراض:</strong> الزحار الأميبي (الدوسنتاريا)
-                </div>
-                
-                <div class="concept-item sarcodina-item">
-                    <strong>أمثلة أخرى:</strong> المنخربات، الشعاعيات
-                </div>
+                <ul>
+                    <li><span class="characteristic">الحركة:</span> بالأقدام الكاذبة</li>
+                    <li><span class="characteristic">التغذية:</span> بالبلعمة</li>
+                    <li><span class="disease">الأمراض:</span> الزحار الأميبي</li>
+                    <li><span class="characteristic">الممثل:</span> الأميبات</li>
+                    <li><span class="characteristic">أمثلة أخرى:</span> المنخربات، الشعاعيات</li>
+                </ul>
             </div>
             
-            <div class="concept-card ciliate-card">
+            <div class="group ciliate">
                 <h3>🟣 الهدبيات (Ciliates)</h3>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>الحركة:</strong> بواسطة الأهداب القصيرة
-                </div>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>التغذية:</strong> غير ذاتية - علاقات تبادلية
-                </div>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>التكاثر:</strong> انشطار ثنائي واقتران جنسي
-                </div>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>الممثل الرئيسي:</strong> البراميسيوم (Paramecium)
-                </div>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>العلاقات:</strong> تبادل منفعة مع الطحالب
-                </div>
-                
-                <div class="concept-item ciliate-item">
-                    <strong>التركيب:</strong> فجوة منقبضة، غلاف بلازمي
-                </div>
+                <ul>
+                    <li><span class="characteristic">الحركة:</span> بالأهداب</li>
+                    <li><span class="characteristic">التغذية:</span> غير ذاتية</li>
+                    <li><span class="characteristic">العلاقة:</span> تبادل منفعة</li>
+                    <li><span class="characteristic">الممثل:</span> البراميسيوم</li>
+                    <li><span class="characteristic">التركيب:</span> فجوة منقبضة، غلاف بلازمي</li>
+                </ul>
             </div>
         </div>
         
-        <h2>دورة حياة الأمراض الرئيسية</h2>
+        <h2>التفاصيل العلمية</h2>
         
-        <div class="disease-cycle">
-            <h3>🦟 دورة حياة الملاريا (البلازموديوم)</h3>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">1</div>
-                <div>يدخل الطور البوغي (Sporozoite) إلى دم الإنسان عبر لدغة البعوضة</div>
-            </div>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">2</div>
-                <div>يتكاثر في خلايا الكبد مكوناً الأطوار الانقسامية (Merozoites)</div>
-            </div>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">3</div>
-                <div>تهاجم كريات الدم الحمراء وتتغذى على الهيموجلوبين</div>
-            </div>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">4</div>
-                <div>تتكاثر داخل كريات الدم الحمراء وتسبب انفجارها</div>
-            </div>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">5</div>
-                <div>تتحول بعض الطفيليات إلى أطوار جنسية (Gametocytes)</div>
-            </div>
-            
-            <div class="cycle-step">
-                <div class="cycle-number">6</div>
-                <div>تمتصها البعوضة عند لدغ الإنسان المصاب، وتكمل الدورة في معدة البعوضة</div>
-            </div>
+        <div class="info-box">
+            <h3>🦠 البوغيات (Apicomplexa)</h3>
+            <ul>
+                <li>تتبع شعبة <span class="highlight">البوغيبات</span> فنيًا</li>
+                <li>تكون أبواغ في مرحلة من دورة حياتها</li>
+                <li>دورة حياتها تحتاج إلى عائلين: الإنسان والبعوض</li>
+                <li><span class="disease">الملاريا:</span> تسببها طفيليات البلازموديوم</li>
+                <li><span class="characteristic">الأعراض:</span> ارتفاع درجة الحرارة، الرعشة، التعرق، فقر الدم</li>
+                <li>تنتشر في المناطق الاستوائية ذات الحرارة العالية والرطوبة</li>
+            </ul>
         </div>
         
-        <h2>مقارنة بين المجموعات الأربع</h2>
+        <div class="info-box">
+            <h3>🦠 السوطيات (Zoomastigina)</h3>
+            <ul>
+                <li>سميت بالسوطيات لأنها تتحرك <span class="highlight">باستخدام السوط</span></li>
+                <li>معظمها يعيش متطفلاً داخل المخلوقات الأخرى</li>
+                <li><span class="disease">مرض النوم الأمريكي (داء شاغاس):</span> يسببه النوع الأول من المثقبيات</li>
+                <li><span class="disease">مرض النوم الإفريقي:</span> ينتقل عبر ذبابة تسي تسي</li>
+                <li>يتكاثر الطفيل في القناة الهضمية للحشرة ثم ينتقل إلى الإنسان</li>
+                <li><span class="characteristic">الأعراض:</span> ارتفاع الحرارة، التهاب العقد اللمفاوية، إضرار بالقلب والكبد</li>
+            </ul>
+        </div>
         
-        <table class="comparison-table">
-            <thead>
-                <tr>
-                    <th>المجموعة</th>
-                    <th>طريقة الحركة</th>
-                    <th>طريقة التغذية</th>
-                    <th>التكاثر</th>
-                    <th>الأمراض</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td><strong>البوغيات</strong></td>
-                    <td>لا توجد أعضاء حركة</td>
-                    <td>متطفلة</td>
-                    <td>دورة معقدة (جنسي ولا جنسي)</td>
-                    <td>الملاريا</td>
-                </tr>
-                <tr>
-                    <td><strong>السوطيات</strong></td>
-                    <td>بالسوط</td>
-                    <td>متطفلة أو حرة</td>
-                    <td>انشطار ثنائي</td>
-                    <td>أمراض النوم</td>
-                </tr>
-                <tr>
-                    <td><strong>الجذريات</strong></td>
-                    <td>بالأقدام الكاذبة</td>
-                    <td>بالبلعمة</td>
-                    <td>انشطار ثنائي</td>
-                    <td>الزحار الأميبي</td>
-                </tr>
-                <tr>
-                    <td><strong>الهدبيات</strong></td>
-                    <td>بالأهداب</td>
-                    <td>غير ذاتية - علاقات تبادلية</td>
-                    <td>انشطار ثنائي واقتران</td>
-                    <td>لا تسبب أمراضاً</td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="info-box">
+            <h3>🦠 الجذريات (Sarcodina)</h3>
+            <ul>
+                <li>تستخدم <span class="highlight">الأقدام الكاذبة</span> في الحركة والتغذية</li>
+                <li>تشكل الأقدام الكاذبة فجوة غذائية تحتوي على إنزيمات هاضمة</li>
+                <li>معظمها يعيش في المياه العذبة، وقليل منها طفيلي</li>
+                <li><span class="disease">الدوسنتاريا الأميبة (الزحار الأميبي):</span> تسببه الأميبة الانحلالية</li>
+                <li>تتكاثر <span class="highlight">لا جنسياً</span> بالانشطار الثنائي</li>
+                <li>تتحوص في الظروف البيئية غير المناسبة</li>
+                <li><span class="characteristic">أمثلة أخرى:</span> المنخربات (هياكل كربونات الكالسيوم)، الشعاعيات (هياكل سليكونية)</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h3>🦠 الهدبيات (Ciliates)</h3>
+            <ul>
+                <li>البراميسيوم من أكثر الأوليات التي تمت دراستها</li>
+                <li>يعيش في <span class="highlight">علاقة تبادل منفعة</span> مع الطحالب الخضراء</li>
+                <li>له <span class="highlight">فجوة منقبضة</span> تنظم الضغط الأسموزي في البيئات منخفضة التركيز</li>
+                <li>يحتوي على <span class="highlight">أكياس خيطية</span> تساعد في الدفاع عن النفس</li>
+                <li><span class="characteristic">التركيب:</span> غلاف بلازمي، سيتوبلازم خارجي وداخلي، فجوة غذائية، نواة كبيرة وصغيرة</li>
+                <li>يتكاثر لا جنسياً بالانشطار الثنائي وجنسياً بالاقتران</li>
+            </ul>
+        </div>
+        
+        <div class="info-box">
+            <h2>الخصائص العامة للأوليات</h2>
+            <ul>
+                <li>كائنات <span class="highlight">وحيدة الخلية</span></li>
+                <li><span class="highlight">غير ذاتية التغذية</span> - تحصل على غذائها بالابتلاع أو التطفل</li>
+                <li>تعيش في <span class="highlight">بيئات مائية</span> (مياه عذبة، مالحة، تربة رطبة)</li>
+                <li>تتكاثر <span class="highlight">لا جنسياً</span> بالانشطار الثنائي في معظم الأحيان</li>
+                <li>بعضها له <span class="highlight">أهمية طبية</span> كبيرة كمسببات أمراض</li>
+                <li>تختلف في <span class="highlight">طرق الحركة</span> (أقدام كاذبة، أسواط، أهداب)</li>
+            </ul>
+        </div>
         
         <div class="footer">
-            <p>الخرائط المفاهيمية مستمدة من الأوراق العلمية المرفقة</p>
+            <p>ملخص مستخلص من الأوراق العلمية المرفقة - الطلائعيات الشبيهة بالحيوانات</p>
         </div>
     </div>
 </body>
