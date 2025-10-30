@@ -3,529 +3,352 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>الرنين في الأعمدة الهوائية والأوتار</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <title>خرائط مفاهيمية - الطلائعيات</title>
     <style>
-        @media print {
-            @page {
-                size: A4;
-                margin: 1.2cm;
-            }
-            
-            body {
-                font-size: 11pt;
-                line-height: 1.4;
-                font-family: 'Amiri', serif;
-                color: #000000;
-                background: white !important;
-            }
-            
-            .page-break {
-                page-break-before: always;
-                padding-top: 0.5cm;
-            }
-            
-            .no-print {
-                display: none !important;
-            }
-            
-            h1 {
-                font-size: 20pt;
-                margin-bottom: 0.8cm;
-                text-align: center;
-                color: #000000;
-            }
-            
-            .side-heading {
-                font-size: 14pt;
-                margin: 0.4cm 0 0.3cm 0;
-                border-right: 4px solid #404040;
-                padding-right: 0.4cm;
-                font-weight: bold;
-                color: #000000;
-            }
-            
-            .sub-heading {
-                font-size: 12pt;
-                margin: 0.3cm 0 0.2cm 0;
-                font-weight: 600;
-                color: #404040;
-            }
-            
-            p {
-                margin-bottom: 0.3cm;
-                text-align: justify;
-                color: #000000;
-            }
-            
-            .info-box {
-                margin: 0.2cm 0;
-                padding: 0.4cm;
-                page-break-inside: avoid;
-                background: #f8f8f8;
-                border: 1px solid #d0d0d0;
-            }
-            
-            ul, ol {
-                margin: 0.15cm 0;
-            }
-            
-            li {
-                margin-bottom: 0.1cm;
-                color: #000000;
-            }
-
-            .cover-page {
-                height: 100vh;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                align-items: center;
-                text-align: center;
-                page-break-after: always;
-            }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Amiri', 'Noto Sans Arabic', serif;
-            line-height: 1.6;
-            background: white;
-            color: #000000;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
         }
         
-        .main-title {
+        .page {
+            background: white;
+            width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            padding: 2cm;
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            border-radius: 10px;
+        }
+        
+        h1 {
             text-align: center;
-            color: #000000;
-            font-weight: 700;
+            color: #2c3e50;
             margin-bottom: 30px;
-            border-bottom: 3px solid #404040;
             padding-bottom: 15px;
-            display: inline-block;
-            width: 100%;
+            border-bottom: 3px solid #3498db;
         }
         
-        .side-heading {
-            border-right: 4px solid #404040;
-            padding-right: 15px;
-            margin: 20px 0 10px 0;
-            font-weight: 600;
-            color: #000000;
-            font-size: 18px;
-        }
-        
-        .sub-heading {
-            font-weight: 600;
-            color: #404040;
-            margin: 15px 0 8px 0;
-        }
-        
-        .info-box {
-            background: #f8f8f8;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #a0a0a0;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #d0d0d0;
-        }
-        
-        .highlight-box {
-            background: #f0f0f0;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #808080;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #d0d0d0;
-        }
-        
-        .comparison-box {
-            background: #f5f5f5;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #606060;
-            border-radius: 8px 0 0 8px;
-            border: 1px solid #d0d0d0;
-        }
-        
-        .formula {
-            background: #f8f8f8;
-            padding: 15px;
-            margin: 12px 0;
-            border-right: 3px solid #a0a0a0;
-            border-radius: 8px 0 0 8px;
-            text-align: center;
-            font-family: 'Courier New', monospace;
-            font-size: 14px;
-            border: 1px solid #d0d0d0;
-        }
-
-        .cover-container {
-            background: white;
-            padding: 3cm;
-            border-radius: 8px;
-            width: 80%;
-            max-width: 600px;
-            text-align: center;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border: 2px solid #000000;
-        }
-        
-        .cover-title {
-            color: #000000;
-            font-size: 2.2em;
-            font-weight: 700;
-            margin-bottom: 1em;
-            border-bottom: 3px solid #000000;
-            padding-bottom: 0.5em;
-        }
-        
-        .subject {
-            color: #404040;
-            font-size: 1.6em;
-            margin-bottom: 0.5em;
-        }
-        
-        .cover-student-info {
-            background: #f0f0f0;
-            padding: 1.5em;
-            margin: 1.5em 0;
-            border-right: 4px solid #808080;
-            border-radius: 8px;
-            border: 1px solid #d0d0d0;
-        }
-        
-        .cover-info-item {
-            font-size: 1.3em;
-            margin: 0.8em 0;
-            color: #000000;
-        }
-        
-        .year {
-            color: #000000;
-            font-size: 1.1em;
-            margin-top: 1.5em;
-            font-weight: 600;
-        }
-        
-        .decoration {
-            margin: 2em 0;
-            color: #666666;
-            font-size: 1.1em;
-        }
-
-        .content-section {
-            background: white;
-            border-radius: 8px;
-            padding: 30px;
+        .concept-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
             margin-bottom: 30px;
-            border: 1px solid #e0e0e0;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
         }
         
-        table, th, td {
-            border: 1px solid #000000;
+        .concept-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 5px solid;
         }
         
-        th {
-            background-color: #f0f0f0;
-            padding: 10px;
+        .concept-card h3 {
             text-align: center;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        .sporozoa-card { border-top-color: #e74c3c; }
+        .flagellate-card { border-top-color: #3498db; }
+        .sarcodina-card { border-top-color: #2ecc71; }
+        .ciliate-card { border-top-color: #9b59b6; }
+        
+        .concept-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border-radius: 6px;
+            border-right: 3px solid;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .sporozoa-item { border-right-color: #e74c3c; }
+        .flagellate-item { border-right-color: #3498db; }
+        .sarcodina-item { border-right-color: #2ecc71; }
+        .ciliate-item { border-right-color: #9b59b6; }
+        
+        .disease-cycle {
+            background: #fff3cd;
+            border: 2px dashed #ffc107;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .cycle-step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 8px;
+            background: white;
+            border-radius: 6px;
+        }
+        
+        .cycle-number {
+            background: #3498db;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
             font-weight: bold;
         }
         
-        td {
-            padding: 8px;
-            text-align: center;
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
-        tr:nth-child(even) {
-            background-color: #f8f8f8;
+        .comparison-table th, .comparison-table td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+        
+        .comparison-table th {
+            background: #3498db;
+            color: white;
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #bdc3c7;
+            color: #7f8c8d;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .page {
+                box-shadow: none;
+                margin: 0;
+                padding: 1.5cm;
+            }
         }
     </style>
 </head>
-<body class="bg-white text-black" dir="rtl">
-
-    <!-- زر الطباعة -->
-    <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <button onclick="window.print()" style="background: #404040; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
-            🖨️ طباعة المشروع
-        </button>
-    </div>
-
-    <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
-
-        <!-- الصفحة الأولى - الغلاف -->
-        <div class="cover-page">
-            <div class="cover-container">
-                <h1 class="cover-title">الرنين في الأعمدة الهوائية والأوتار</h1>
-                
-                <div class="subject">بحث في الفيزياء</div>
-                
-                <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
-                
-                <div class="cover-student-info">
-                    <div class="cover-info-item">
-                        <strong>عمل الطالب:</strong><br>
-                        صالح عبدالرحمن
-                    </div>
-                </div>
-                
-                <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
-                
-                <div class="year">العام الدراسي 2024 / 2025</div>
-            </div>
-        </div>
-
-        <!-- الصفحة الثانية -->
-        <div class="page-break">
-            <div class="content-section">
-                <h1 class="main-title" style="font-size: 28px;">
-                    ظاهرة الرنين في الأنظمة الفيزيائية
-                    <br>
-                    <span style="font-size: 20px; color: #666666;">دراسة تطبيقية في الصوتيات والاهتزازات</span>
-                </h1>
-
-                <div class="side-heading">مقدمة في ظاهرة الرنين</div>
-                
-                <p>تعتبر ظاهرة الرنين من الظواهر الفيزيائية الأساسية التي تحدث في العديد من الأنظمة الطبيعية والصناعية. تحدث هذه الظاهرة عندما يتطابق تردد القوة الخارجية المؤثرة على نظام ما مع التردد الطبيعي لهذا النظام، مما يؤدي إلى تضخيم كبير في سعة الاهتزاز.</p>
-                
-                <p>في هذا البحث، سنستعرض تطبيقات الرنين في نظامين رئيسيين: الأعمدة الهوائية التي تمثل الأنظمة المغلفة بالهواء، والأوتار المشدودة التي تمثل الأنظمة الصلبة المهتزة. لكل نظام خصائصه الفريدة وتطبيقاته العملية.</p>
-
-                <div class="side-heading">المبدأ الفيزيائي للرنين</div>
-                
-                <div class="sub-heading">التردد الطبيعي للأنظمة</div>
-                <p>كل نظام فيزيائي يمتلك تردداً طبيعياً خاصاً به، وعندما تطابق القوة الخارجية هذا التردد، يحدث نقل فعال للطاقة يؤدي إلى تضخيم الاهتزاز.</p>
-                
-                <div class="formula">
-                    \( f_{natural} = \frac{1}{2\pi} \sqrt{\frac{k}{m}} \)
-                </div>
-                
-                <div class="sub-heading">تطبيقات الرنين في الحياة اليومية</div>
-                <p>من التطبيقات العملية للرنين: آلات النفخ الموسيقية، الأوتار الموسيقية، دوائر الراديو، وأجهزة التصوير بالرنين المغناطيسي.</p>
-            </div>
-        </div>
-
-        <!-- الصفحة الثالثة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">الرنين في الأعمدة الهوائية</div>
-                
-                <div class="sub-heading">الأنظمة المغلقة</div>
-                <p>في الأنابيب المغلقة من طرف واحد، تحدث ظاهرة الرنين عندما يكون طول العمود الهوائي مساوياً لربع الطول الموجي أو مضاعفاته الفردية. يتشكل نمط مميز من العقد والبطون يحدد خصائص الصوت الناتج.</p>
-                
-                <div class="formula">
-                    \( L = \frac{\lambda}{4}, \frac{3\lambda}{4}, \frac{5\lambda}{4}, ... \)
-                </div>
-                
-                <div class="sub-heading">الأنظمة المفتوحة</div>
-                <p>أما في الأنابيب المفتوحة من الطرفين، فيحدث الرنين عندما يكون طول العمود الهوائي مساوياً لنصف الطول الموجي أو مضاعفاته. يتشكل بطن ضغط عند كل من الطرفين المفتوحين.</p>
-                
-                <div class="formula">
-                    \( L = \frac{\lambda}{2}, \lambda, \frac{3\lambda}{2}, ... \)
-                </div>
-                
-                <div class="info-box">
-                    <strong>ملاحظة:</strong>
-                    <p>في الأنظمة المغلقة، يكون التردد الأساسي أقل من التردد الأساسي في الأنظمة المفتوحة بنفس الطول، مما يعطي الأنظمة المغلقة نغمة أعمق.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة الرابعة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">تجربة عملية للرنين في الأعمدة الهوائية</div>
-                
-                <p>يمكن إثبات ظاهرة الرنين عملياً باستخدام أنبوب زجاجي ومصدر صوتي. تظهر النتائج كيف تتغير شدة الصوت بتغير طول العمود الهوائي.</p>
-                
-                <div class="highlight-box">
-                    <strong>خطوات التجربة:</strong>
-                    <ul style="margin-right: 20px; margin-top: 8px;">
-                        <li>إعداد أنبوب زجاجي مع نظام تحكم في مستوى الماء</li>
-                        <li>استخدام شوكة رنانة كمصدر صوتي معروف التردد</li>
-                        <li>ضبط مستوى الماء وملاحظة تغير شدة الصوت</li>
-                        <li>تسجيل الأطوال التي يحدث عندها الرنين</li>
-                        <li>حساب سرعة الصوت من خلال النتائج</li>
-                    </ul>
-                </div>
-
-                <div class="info-box">
-                    <strong>النتائج المستخلصة:</strong>
-                    <p>من خلال التجربة، نلاحظ أن الرنين يحدث عند أطوال محددة للعمود الهوائي، وأن هناك علاقة طردية بين تردد المصدر وطول العمود الهوائي عند الرنين.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة الخامسة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">الرنين في الأوتار المشدودة</div>
-                
-                <p>تحدث ظاهرة الرنين في الأوتار عندما تهتز بين طرفين ثابتين، مكونة أنماطاً موجية مستقرة. تعتمد الترددات الرنانة على خصائص الوتر الفيزيائية.</p>
-                
-                <div class="sub-heading">الأنماط الاهتزازية الأساسية</div>
-                
-                <div class="info-box">
-                    <strong>أنماط الرنين في الأوتار:</strong>
-                    <ul style="margin-right: 20px; margin-top: 8px;">
-                        <li><strong>النمط الأساسي:</strong> موجة كاملة، تردد أساسي f₁</li>
-                        <li><strong>النمط التوافقي الأول:</strong> موجتان كاملتان، تردد 2f₁</li>
-                        <li><strong>النمط التوافقي الثاني:</strong> ثلاث موجات، تردد 3f₁</li>
-                        <li><strong>النمط التوافقي الثالث:</strong> أربع موجات، تردد 4f₁</li>
-                    </ul>
-                </div>
-                
-                <div class="sub-heading">العوامل المؤثرة على التردد</div>
-                <p>يتأثر التردد الأساسي للوتر بعدة عوامل أهمها: طول الوتر، قوة الشد، والكثافة الخطية للوتر.</p>
-            </div>
-        </div>
-
-        <!-- الصفحة السادسة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">المعادلات الأساسية والتحليل الرياضي</div>
-                
-                <div class="sub-heading">سرعة انتشار الموجة في الأوتار</div>
-                <p>تعتمد سرعة الموجة في الوتر على قوة الشد والكثافة الخطية للوتر، وفق العلاقة:</p>
-                
-                <div class="formula">
-                    \( v = \sqrt{\frac{T}{\mu}} \)
-                </div>
-                
-                <div class="sub-heading">الترددات الرنانة للأوتار</div>
-                <p>يمكن حساب التردد الأساسي للوتر المشدود بين طرفين ثابتين باستخدام العلاقة:</p>
-                
-                <div class="formula">
-                    \( f_1 = \frac{v}{2L} = \frac{1}{2L} \sqrt{\frac{T}{\mu}} \)
-                </div>
-
-                <div class="side-heading">مقارنة بين الأنظمة الرنانة</div>
-
-                <div class="comparison-box">
-                    <strong>مقارنة بين خصائص الأنظمة الرنانة:</strong>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th width="25%">الخاصية</th>
-                                <th width="25%">الأوتار</th>
-                                <th width="25%">الأنبوب المفتوح</th>
-                                <th width="25%">الأنبوب المغلق</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>الطول الموجي الأساسي</td>
-                                <td>\( \lambda_1 = 2L \)</td>
-                                <td>\( \lambda_1 = 2L \)</td>
-                                <td>\( \lambda_1 = 4L \)</td>
-                            </tr>
-                            <tr>
-                                <td>التردد الأساسي</td>
-                                <td>\( f_1 = \frac{v}{2L} \)</td>
-                                <td>\( f_1 = \frac{v}{2L} \)</td>
-                                <td>\( f_1 = \frac{v}{4L} \)</td>
-                            </tr>
-                            <tr>
-                                <td>الترددات الأعلى</td>
-                                <td>مضاعفات كاملة</td>
-                                <td>مضاعفات كاملة</td>
-                                <td>مضاعفات فردية</td>
-                            </tr>
-                            <tr>
-                                <td>العقد والبطون</td>
-                                <td>عقدة عند الطرفين</td>
-                                <td>بطن عند الطرفين</td>
-                                <td>عقدة عند المغلق، بطن عند المفتوح</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة السابعة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">جودة الصوت والطيف الترددي</div>
-                
-                <p>لا يعتمد تمييزنا للأصوات على التردد الأساسي فقط، بل على التركيب الكامل للطيف الترددي الذي يعطي كل صوت طابعه المميز.</p>
-                
-                <div class="sub-heading">مكونات الصوت المعقد</div>
-                
-                <div class="info-box">
-                    <strong>العناصر المكونة للصوت:</strong>
-                    <ul style="margin-right: 20px; margin-top: 8px;">
-                        <li><strong>التردد الأساسي:</strong> يحدد النغمة الأساسية للصوت</li>
-                        <li><strong>التوافقيات:</strong> ترددات أعلى تضفي الخصائص النوعية</li>
-                        <li><strong>الشدة النسبية:</strong> تحدد جرس الصوت وطابعه</li>
-                        <li><strong>التضمين:</strong> يضيف الخصائص الديناميكية للصوت</li>
-                    </ul>
-                </div>
-
-                <div class="sub-heading">الصوت النقي مقابل الصوت المعقد</div>
-                <p>يتميز الصوت النقي بموجة جيبية بسيطة وطيف ترددي محدود، بينما يتكون الصوت المعقد من تراكب عدة موجات بترددات مختلفة تعطيه طابعه الفريد.</p>
-                
-                <div class="info-box">
-                    <strong>ملاحظة:</strong>
-                    <p>جودة الصوت في الآلات الموسيقية تعتمد على التوافقيات الناتجة عن الرنين، حيث تختلف نسب هذه التوافقيات من آلة لأخرى.</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- الصفحة الثامنة -->
-        <div class="page-break">
-            <div class="content-section">
-                <div class="side-heading">الخاتمة والتطبيقات العملية</div>
-                
-                <p>يمثل فهم ظاهرة الرنين في الأعمدة الهوائية والأوتار أساساً مهماً في تطوير التقنيات الصوتية والموسيقية المتقدمة.</p>
-                
-                <p>تستمر الأبحاث في هذا المجال لتطوير تقنيات جديدة تعتمد على مبادئ الرنين، مثل أنظمة التصوير الطبي بالرنين المغناطيسي، وأنظمة الاتصالات المتطورة، وتقنيات التحكم في الضوضاء الذكية.</p>
-                
-                <div class="info-box">
-                    <strong>الاستنتاج النهائي:</strong>
-                    <p>تمثل ظاهرة الرنين نموذجاً رائعاً لانسجام القوانين الفيزيائية مع التطبيقات العملية. من الآلات الموسيقية التقليدية إلى أنظمة الصوت الحديثة، يظل الرنين ظاهرة أساسية تساهم في إثراء تجربتنا الصوتية والفنية، وتفتح آفاقاً جديدة للابتكار التكنولوجي.</p>
-                </div>
-
-                <div class="side-heading">ملخص البحث</div>
-                
-                <div class="highlight-box">
-                    <p>لقد تناول هذا البحث ظاهرة الرنين في نظامين رئيسيين: الأعمدة الهوائية والأوتار المشدودة. تم تحليل الخصائص الفيزيائية لكل نظام، واستعراض المعادلات الرياضية التي تحكم سلوكها، مع تقديم أمثلة تطبيقية من الحياة اليومية.</p>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <script>
-        // تحسين الطباعة
-        window.addEventListener('beforeprint', function() {
-            document.body.style.fontSize = '11pt';
-        });
+<body>
+    <div class="page">
+        <h1>خرائط مفاهيمية تفصيلية - الطلائعيات الشبيهة بالحيوانات</h1>
         
-        // تفعيل MathJax للرموز الرياضية
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
-        };
+        <div class="concept-container">
+            <div class="concept-card sporozoa-card">
+                <h3>🔴 البوغيات (Apicomplexa)</h3>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>الحركة:</strong> لا توجد أعضاء حركة في الطور البالغ
+                </div>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>التغذية:</strong> متطفلة - تعتمد على عائل
+                </div>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>التكاثر:</strong> دورة حياة معقدة (جنسي ولا جنسي)
+                </div>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>الممثل الرئيسي:</strong> البلازموديوم (Plasmodium)
+                </div>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>الأمراض:</strong> الملاريا
+                </div>
+                
+                <div class="concept-item sporozoa-item">
+                    <strong>الناقل:</strong> بعوض الأنوفيلة
+                </div>
+            </div>
+            
+            <div class="concept-card flagellate-card">
+                <h3>🔵 السوطيات (Zoomastigina)</h3>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>الحركة:</strong> بواسطة السوط الطويل
+                </div>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>التغذية:</strong> متطفلة أو حرة المعيشة
+                </div>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>التكاثر:</strong> انشطار ثنائي طولي
+                </div>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>الممثل الرئيسي:</strong> المثقبيات (Trypanosoma)
+                </div>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>الأمراض:</strong> مرض النوم الأمريكي والإفريقي
+                </div>
+                
+                <div class="concept-item flagellate-item">
+                    <strong>الناقل:</strong> ذبابة تسي تسي، حشرة البق
+                </div>
+            </div>
+            
+            <div class="concept-card sarcodina-card">
+                <h3>🟢 الجذريات (Sarcodina)</h3>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>الحركة:</strong> بواسطة الأقدام الكاذبة
+                </div>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>التغذية:</strong> بالبلعمة - تكوين فجوة غذائية
+                </div>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>التكاثر:</strong> انشطار ثنائي لا جنسي
+                </div>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>الممثل الرئيسي:</strong> الأميبات (Amoeba)
+                </div>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>الأمراض:</strong> الزحار الأميبي (الدوسنتاريا)
+                </div>
+                
+                <div class="concept-item sarcodina-item">
+                    <strong>أمثلة أخرى:</strong> المنخربات، الشعاعيات
+                </div>
+            </div>
+            
+            <div class="concept-card ciliate-card">
+                <h3>🟣 الهدبيات (Ciliates)</h3>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>الحركة:</strong> بواسطة الأهداب القصيرة
+                </div>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>التغذية:</strong> غير ذاتية - علاقات تبادلية
+                </div>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>التكاثر:</strong> انشطار ثنائي واقتران جنسي
+                </div>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>الممثل الرئيسي:</strong> البراميسيوم (Paramecium)
+                </div>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>العلاقات:</strong> تبادل منفعة مع الطحالب
+                </div>
+                
+                <div class="concept-item ciliate-item">
+                    <strong>التركيب:</strong> فجوة منقبضة، غلاف بلازمي
+                </div>
+            </div>
+        </div>
         
-        (function() {
-            var script = document.createElement('script');
-            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
-            script.async = true;
-            document.head.appendChild(script);
-        })();
-    </script>
+        <h2>دورة حياة الأمراض الرئيسية</h2>
+        
+        <div class="disease-cycle">
+            <h3>🦟 دورة حياة الملاريا (البلازموديوم)</h3>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">1</div>
+                <div>يدخل الطور البوغي (Sporozoite) إلى دم الإنسان عبر لدغة البعوضة</div>
+            </div>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">2</div>
+                <div>يتكاثر في خلايا الكبد مكوناً الأطوار الانقسامية (Merozoites)</div>
+            </div>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">3</div>
+                <div>تهاجم كريات الدم الحمراء وتتغذى على الهيموجلوبين</div>
+            </div>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">4</div>
+                <div>تتكاثر داخل كريات الدم الحمراء وتسبب انفجارها</div>
+            </div>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">5</div>
+                <div>تتحول بعض الطفيليات إلى أطوار جنسية (Gametocytes)</div>
+            </div>
+            
+            <div class="cycle-step">
+                <div class="cycle-number">6</div>
+                <div>تمتصها البعوضة عند لدغ الإنسان المصاب، وتكمل الدورة في معدة البعوضة</div>
+            </div>
+        </div>
+        
+        <h2>مقارنة بين المجموعات الأربع</h2>
+        
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>المجموعة</th>
+                    <th>طريقة الحركة</th>
+                    <th>طريقة التغذية</th>
+                    <th>التكاثر</th>
+                    <th>الأمراض</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>البوغيات</strong></td>
+                    <td>لا توجد أعضاء حركة</td>
+                    <td>متطفلة</td>
+                    <td>دورة معقدة (جنسي ولا جنسي)</td>
+                    <td>الملاريا</td>
+                </tr>
+                <tr>
+                    <td><strong>السوطيات</strong></td>
+                    <td>بالسوط</td>
+                    <td>متطفلة أو حرة</td>
+                    <td>انشطار ثنائي</td>
+                    <td>أمراض النوم</td>
+                </tr>
+                <tr>
+                    <td><strong>الجذريات</strong></td>
+                    <td>بالأقدام الكاذبة</td>
+                    <td>بالبلعمة</td>
+                    <td>انشطار ثنائي</td>
+                    <td>الزحار الأميبي</td>
+                </tr>
+                <tr>
+                    <td><strong>الهدبيات</strong></td>
+                    <td>بالأهداب</td>
+                    <td>غير ذاتية - علاقات تبادلية</td>
+                    <td>انشطار ثنائي واقتران</td>
+                    <td>لا تسبب أمراضاً</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>الخرائط المفاهيمية مستمدة من الأوراق العلمية المرفقة</p>
+        </div>
+    </div>
 </body>
 </html>
