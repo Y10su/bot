@@ -3,258 +3,715 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص الطلائعيات الشبيهة بالحيوانات</title>
+    <title>الطلائعيات الشبيهة بالحيوانات - الأوليات</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        @media print {
+            @page {
+                size: A4;
+                margin: 1.2cm;
+            }
+            
+            body {
+                font-size: 11pt;
+                line-height: 1.4;
+                font-family: 'Amiri', serif;
+            }
+            
+            .page-break {
+                page-break-before: always;
+                padding-top: 0.5cm;
+            }
+            
+            .no-print {
+                display: none !important;
+            }
+            
+            h1 {
+                font-size: 20pt;
+                margin-bottom: 0.8cm;
+                text-align: center;
+            }
+            
+            .side-heading {
+                font-size: 14pt;
+                margin: 0.4cm 0 0.3cm 0;
+                border-right: 4px solid #059669;
+                padding-right: 0.4cm;
+                font-weight: bold;
+                color: #047857;
+            }
+            
+            .sub-heading {
+                font-size: 12pt;
+                margin: 0.3cm 0 0.2cm 0;
+                font-weight: 600;
+                color: #374151;
+            }
+            
+            p {
+                margin-bottom: 0.3cm;
+                text-align: justify;
+            }
+            
+            .verse {
+                font-size: 11pt;
+                margin: 0.3cm 0;
+                padding: 0.3cm;
+                background: #F0FDF4;
+                border-right: 3px solid #059669;
+                font-style: italic;
+            }
+            
+            .info-box {
+                margin: 0.2cm 0;
+                padding: 0.4cm;
+                page-break-inside: avoid;
+            }
+            
+            ul, ol {
+                margin: 0.15cm 0;
+            }
+            
+            li {
+                margin-bottom: 0.1cm;
+            }
+
+            .cover-page {
+                height: 100vh;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                page-break-after: always;
+            }
+
+            .image-container {
+                text-align: center;
+                margin: 0.5cm 0;
+                page-break-inside: avoid;
+            }
+
+            .image-container img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+            .image-caption {
+                text-align: center;
+                font-style: italic;
+                color: #4b5563;
+                margin-top: 0.3cm;
+                font-size: 10pt;
+            }
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 20px;
+            font-family: 'Amiri', 'Noto Sans Arabic', serif;
             line-height: 1.6;
         }
         
-        .page {
-            background: white;
-            width: 21cm;
-            min-height: 29.7cm;
-            margin: 0 auto;
-            padding: 2cm;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-            position: relative;
-        }
-        
-        h1 {
+        .main-title {
             text-align: center;
-            color: #2c3e50;
+            color: #047857;
+            font-weight: 700;
             margin-bottom: 30px;
+            border-bottom: 3px solid #059669;
             padding-bottom: 15px;
-            border-bottom: 3px solid #3498db;
-            font-size: 28px;
+            display: inline-block;
+            width: 100%;
         }
         
-        h2 {
-            color: #2980b9;
-            margin: 25px 0 15px 0;
+        .side-heading {
+            border-right: 4px solid #059669;
             padding-right: 15px;
-            border-right: 4px solid;
-            font-size: 22px;
-        }
-        
-        h3 {
-            color: #16a085;
             margin: 20px 0 10px 0;
+            font-weight: 600;
+            color: #047857;
             font-size: 18px;
         }
         
-        .concept-map {
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+        .sub-heading {
+            font-weight: 600;
+            color: #374151;
+            margin: 15px 0 8px 0;
         }
         
-        .group {
-            width: 48%;
-            margin-bottom: 20px;
+        .verse {
+            background: #F0FDF4;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #059669;
+            border-radius: 8px 0 0 8px;
+            font-style: italic;
+            font-size: 16px;
+        }
+        
+        .info-box {
+            background: #FEF7FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #8B5CF6;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .highlight-box {
+            background: #F0F9FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #3B82F6;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .comparison-box {
+            background: #FFFBEB;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #F59E0B;
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .formula {
+            background: #FEF7FF;
+            padding: 15px;
+            margin: 12px 0;
+            border-right: 3px solid #8B5CF6;
+            border-radius: 8px 0 0 8px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+
+        .cover-container {
+            background: white;
+            padding: 3cm;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .cover-title {
+            color: #1e40af;
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 1em;
+            border-bottom: 3px solid #1e40af;
+            padding-bottom: 0.5em;
+        }
+        
+        .subject {
+            color: #374151;
+            font-size: 1.6em;
+            margin-bottom: 0.5em;
+        }
+        
+        .cover-student-info {
+            background: #f0f9ff;
+            padding: 1.5em;
+            margin: 1.5em 0;
+            border-right: 4px solid #3b82f6;
+            border-radius: 10px;
+        }
+        
+        .cover-info-item {
+            font-size: 1.3em;
+            margin: 0.8em 0;
+            color: #1e40af;
+        }
+        
+        .class-info {
+            background: #fef7ff;
+            padding: 1em;
+            margin: 1em 0;
+            border-right: 4px solid #8b5cf6;
+            border-radius: 8px;
+            font-size: 1.2em;
+            color: #7c3aed;
+        }
+        
+        .year {
+            color: #059669;
+            font-size: 1.1em;
+            margin-top: 1.5em;
+            font-weight: 600;
+        }
+        
+        .decoration {
+            margin: 2em 0;
+            color: #6b7280;
+            font-size: 1.1em;
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            border: 1px solid #e5e7eb;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-style: italic;
+            color: #475569;
+            margin-top: 8px;
+            font-size: 12px;
+        }
+
+        .concept-map {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .concept-group {
             padding: 15px;
             border-radius: 8px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
-        
+
         .sporozoa { background: #ffebee; border-right: 5px solid #e57373; }
         .flagellate { background: #e3f2fd; border-right: 5px solid #64b5f6; }
         .sarcodina { background: #e8f5e9; border-right: 5px solid #81c784; }
         .ciliate { background: #f3e5f5; border-right: 5px solid #ba68c8; }
-        
-        .info-box {
-            background: white;
-            padding: 15px;
-            margin: 10px 0;
-            border-radius: 8px;
-            border-right: 3px solid #3498db;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        
-        ul {
-            padding-right: 20px;
-            margin: 10px 0;
-        }
-        
-        li {
-            margin-bottom: 8px;
-        }
-        
-        .highlight {
-            background: #fff9c4;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: bold;
-        }
-        
-        .disease {
-            color: #e74c3c;
-            font-weight: bold;
-        }
-        
-        .characteristic {
-            color: #27ae60;
-            font-weight: bold;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #bdc3c7;
-            color: #7f8c8d;
-            font-size: 14px;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .page {
-                box-shadow: none;
-                margin: 0;
-                padding: 1.5cm;
-            }
-        }
     </style>
 </head>
-<body>
-    <div class="page">
-        <h1>🦠 الطلائعيات الشبيهة بالحيوانات (الأوليات)</h1>
-        
-        <div class="info-box">
-            <h2>مقدمة</h2>
-            <p>الطلائعيات الشبيهة بالحيوانات (الأوليات) هي كائنات وحيدة الخلية، غير ذاتية التغذية، تعيش في البيئات المائية والتربة الرطبة، وبعضها متطفل يسبب أمراضاً خطيرة للإنسان.</p>
-        </div>
-        
-        <h2>الخريطة المفاهيمية للطلائعيات</h2>
-        <div class="concept-map">
-            <div class="group sporozoa">
-                <h3>🔴 البوغيات (Apicomplexa)</h3>
-                <ul>
-                    <li><span class="characteristic">الحركة:</span> لا توجد أعضاء حركة</li>
-                    <li><span class="characteristic">التغذية:</span> متطفلة</li>
-                    <li><span class="disease">الأمراض:</span> الملاريا</li>
-                    <li><span class="characteristic">الممثل:</span> البلازموديوم</li>
-                    <li><span class="characteristic">الناقل:</span> بعوض الأنوفيلة</li>
-                </ul>
-            </div>
-            
-            <div class="group flagellate">
-                <h3>🔵 السوطيات (Zoomastigina)</h3>
-                <ul>
-                    <li><span class="characteristic">الحركة:</span> بالسوط</li>
-                    <li><span class="characteristic">التغذية:</span> متطفلة</li>
-                    <li><span class="disease">الأمراض:</span> أمراض النوم</li>
-                    <li><span class="characteristic">الممثل:</span> المثقبيات</li>
-                    <li><span class="characteristic">الناقل:</span> ذبابة تسي تسي</li>
-                </ul>
-            </div>
-            
-            <div class="group sarcodina">
-                <h3>🟢 الجذريات (Sarcodina)</h3>
-                <ul>
-                    <li><span class="characteristic">الحركة:</span> بالأقدام الكاذبة</li>
-                    <li><span class="characteristic">التغذية:</span> بالبلعمة</li>
-                    <li><span class="disease">الأمراض:</span> الزحار الأميبي</li>
-                    <li><span class="characteristic">الممثل:</span> الأميبات</li>
-                    <li><span class="characteristic">أمثلة أخرى:</span> المنخربات، الشعاعيات</li>
-                </ul>
-            </div>
-            
-            <div class="group ciliate">
-                <h3>🟣 الهدبيات (Ciliates)</h3>
-                <ul>
-                    <li><span class="characteristic">الحركة:</span> بالأهداب</li>
-                    <li><span class="characteristic">التغذية:</span> غير ذاتية</li>
-                    <li><span class="characteristic">العلاقة:</span> تبادل منفعة</li>
-                    <li><span class="characteristic">الممثل:</span> البراميسيوم</li>
-                    <li><span class="characteristic">التركيب:</span> فجوة منقبضة، غلاف بلازمي</li>
-                </ul>
-            </div>
-        </div>
-        
-        <h2>التفاصيل العلمية</h2>
-        
-        <div class="info-box">
-            <h3>🦠 البوغيات (Apicomplexa)</h3>
-            <ul>
-                <li>تتبع شعبة <span class="highlight">البوغيبات</span> فنيًا</li>
-                <li>تكون أبواغ في مرحلة من دورة حياتها</li>
-                <li>دورة حياتها تحتاج إلى عائلين: الإنسان والبعوض</li>
-                <li><span class="disease">الملاريا:</span> تسببها طفيليات البلازموديوم</li>
-                <li><span class="characteristic">الأعراض:</span> ارتفاع درجة الحرارة، الرعشة، التعرق، فقر الدم</li>
-                <li>تنتشر في المناطق الاستوائية ذات الحرارة العالية والرطوبة</li>
-            </ul>
-        </div>
-        
-        <div class="info-box">
-            <h3>🦠 السوطيات (Zoomastigina)</h3>
-            <ul>
-                <li>سميت بالسوطيات لأنها تتحرك <span class="highlight">باستخدام السوط</span></li>
-                <li>معظمها يعيش متطفلاً داخل المخلوقات الأخرى</li>
-                <li><span class="disease">مرض النوم الأمريكي (داء شاغاس):</span> يسببه النوع الأول من المثقبيات</li>
-                <li><span class="disease">مرض النوم الإفريقي:</span> ينتقل عبر ذبابة تسي تسي</li>
-                <li>يتكاثر الطفيل في القناة الهضمية للحشرة ثم ينتقل إلى الإنسان</li>
-                <li><span class="characteristic">الأعراض:</span> ارتفاع الحرارة، التهاب العقد اللمفاوية، إضرار بالقلب والكبد</li>
-            </ul>
-        </div>
-        
-        <div class="info-box">
-            <h3>🦠 الجذريات (Sarcodina)</h3>
-            <ul>
-                <li>تستخدم <span class="highlight">الأقدام الكاذبة</span> في الحركة والتغذية</li>
-                <li>تشكل الأقدام الكاذبة فجوة غذائية تحتوي على إنزيمات هاضمة</li>
-                <li>معظمها يعيش في المياه العذبة، وقليل منها طفيلي</li>
-                <li><span class="disease">الدوسنتاريا الأميبة (الزحار الأميبي):</span> تسببه الأميبة الانحلالية</li>
-                <li>تتكاثر <span class="highlight">لا جنسياً</span> بالانشطار الثنائي</li>
-                <li>تتحوص في الظروف البيئية غير المناسبة</li>
-                <li><span class="characteristic">أمثلة أخرى:</span> المنخربات (هياكل كربونات الكالسيوم)، الشعاعيات (هياكل سليكونية)</li>
-            </ul>
-        </div>
-        
-        <div class="info-box">
-            <h3>🦠 الهدبيات (Ciliates)</h3>
-            <ul>
-                <li>البراميسيوم من أكثر الأوليات التي تمت دراستها</li>
-                <li>يعيش في <span class="highlight">علاقة تبادل منفعة</span> مع الطحالب الخضراء</li>
-                <li>له <span class="highlight">فجوة منقبضة</span> تنظم الضغط الأسموزي في البيئات منخفضة التركيز</li>
-                <li>يحتوي على <span class="highlight">أكياس خيطية</span> تساعد في الدفاع عن النفس</li>
-                <li><span class="characteristic">التركيب:</span> غلاف بلازمي، سيتوبلازم خارجي وداخلي، فجوة غذائية، نواة كبيرة وصغيرة</li>
-                <li>يتكاثر لا جنسياً بالانشطار الثنائي وجنسياً بالاقتران</li>
-            </ul>
-        </div>
-        
-        <div class="info-box">
-            <h2>الخصائص العامة للأوليات</h2>
-            <ul>
-                <li>كائنات <span class="highlight">وحيدة الخلية</span></li>
-                <li><span class="highlight">غير ذاتية التغذية</span> - تحصل على غذائها بالابتلاع أو التطفل</li>
-                <li>تعيش في <span class="highlight">بيئات مائية</span> (مياه عذبة، مالحة، تربة رطبة)</li>
-                <li>تتكاثر <span class="highlight">لا جنسياً</span> بالانشطار الثنائي في معظم الأحيان</li>
-                <li>بعضها له <span class="highlight">أهمية طبية</span> كبيرة كمسببات أمراض</li>
-                <li>تختلف في <span class="highlight">طرق الحركة</span> (أقدام كاذبة، أسواط، أهداب)</li>
-            </ul>
-        </div>
-        
-        <div class="footer">
-            <p>ملخص مستخلص من الأوراق العلمية المرفقة - الطلائعيات الشبيهة بالحيوانات</p>
-        </div>
+<body class="bg-white text-black" dir="rtl">
+
+    <!-- زر الطباعة -->
+    <div class="no-print" style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <button onclick="window.print()" style="background: #059669; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer;">
+            🖨️ طباعة المشروع
+        </button>
     </div>
+
+    <div style="max-width: 21cm; margin: 0 auto; padding: 1cm;">
+
+        <!-- الصفحة الأولى - الغلاف -->
+        <div class="cover-page">
+            <div class="cover-container">
+                <h1 class="cover-title">الطلائعيات الشبيهة بالحيوانات<br>(الأوليات)</h1>
+                
+                <div class="subject">مادة الأحياء</div>
+                
+                <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
+                
+                <div class="cover-student-info">
+                    <div class="cover-info-item">
+                        <strong>عمل الطالب:</strong><br>
+                        [اسم الطالب]
+                    </div>
+                </div>
+                
+                <div class="class-info">
+                    <strong>الشعبة:</strong> [رقم الشعبة]
+                </div>
+                
+                <div class="decoration">⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯</div>
+                
+                <div class="year">العام الدراسي 2024 / 2025</div>
+            </div>
+        </div>
+
+        <!-- الصفحة الثانية -->
+        <div class="page-break">
+            <h1 class="main-title" style="font-size: 28px;">
+                الطلائعيات الشبيهة بالحيوانات (الأوليات)
+                <br>
+                <span style="font-size: 20px; color: #6B7280;">دراسة شاملة لأنواع الأوليات وأمراضها</span>
+            </h1>
+
+            <div class="side-heading">مقدمة: عالم الأوليات</div>
+            
+            <p>الطلائعيات الشبيهة بالحيوانات (الأوليات) هي كائنات وحيدة الخلية، غير ذاتية التغذية، تعيش في البيئات المائية والتربة الرطبة. تتميز بتنوع كبير في طرق الحركة والتغذية، وبعضها متطفل يسبب أمراضاً خطيرة للإنسان والحيوانات.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9f/Paramecium.jpg/500px-Paramecium.jpg" alt="البراميسيوم">
+                <div class="image-caption">الشكل 1: البراميسيوم - أحد أشهر الأوليات الهدبية</div>
+            </div>
+            
+            <p>تنقسم الأوليات إلى أربع مجموعات رئيسية حسب طريقة الحركة: البوغيات، السوطيات، الجذريات، والهدبيات. لكل مجموعة خصائصها المميزة وأمراضها الخاصة.</p>
+
+            <div class="side-heading">الخريطة المفاهيمية للأوليات</div>
+            
+            <div class="concept-map">
+                <div class="concept-group sporozoa">
+                    <h3>🔴 البوغيات (Apicomplexa)</h3>
+                    <ul>
+                        <li>الحركة: لا توجد أعضاء حركة</li>
+                        <li>التغذية: متطفلة</li>
+                        <li>الأمراض: الملاريا</li>
+                        <li>الممثل: البلازموديوم</li>
+                        <li>الناقل: بعوض الأنوفيلة</li>
+                    </ul>
+                </div>
+                
+                <div class="concept-group flagellate">
+                    <h3>🔵 السوطيات (Zoomastigina)</h3>
+                    <ul>
+                        <li>الحركة: بالسوط</li>
+                        <li>التغذية: متطفلة</li>
+                        <li>الأمراض: أمراض النوم</li>
+                        <li>الممثل: المثقبيات</li>
+                        <li>الناقل: ذبابة تسي تسي</li>
+                    </ul>
+                </div>
+                
+                <div class="concept-group sarcodina">
+                    <h3>🟢 الجذريات (Sarcodina)</h3>
+                    <ul>
+                        <li>الحركة: بالأقدام الكاذبة</li>
+                        <li>التغذية: بالبلعمة</li>
+                        <li>الأمراض: الزحار الأميبي</li>
+                        <li>الممثل: الأميبات</li>
+                        <li>أمثلة أخرى: المنخربات، الشعاعيات</li>
+                    </ul>
+                </div>
+                
+                <div class="concept-group ciliate">
+                    <h3>🟣 الهدبيات (Ciliates)</h3>
+                    <ul>
+                        <li>الحركة: بالأهداب</li>
+                        <li>التغذية: غير ذاتية</li>
+                        <li>العلاقة: تبادل منفعة</li>
+                        <li>الممثل: البراميسيوم</li>
+                        <li>التركيب: فجوة منقبضة، غلاف بلازمي</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- الصفحة الثالثة -->
+        <div class="page-break">
+            <div class="side-heading">البوغيات (Apicomplexa)</div>
+            
+            <p>البوغيات هي طفيليات داخلية تتكاثر بتكوين الأبواغ. تتبع شعبة البوغيبات فنيًا وتكون أبواغ في مرحلة من دورة حياتها. تحتاج إلى عائلين لإكمال دورة حياتها.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9c/Plasmodium_life_cycle.png/600px-Plasmodium_life_cycle.png" alt="دورة حياة البلازموديوم">
+                <div class="image-caption">الشكل 2: دورة حياة البلازموديوم المسبب للملاريا</div>
+            </div>
+            
+            <div class="highlight-box">
+                <strong>البلازموديوم والملايريا:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>يسبب مرض الملاريا الذي يصيب الملايين سنوياً</li>
+                    <li>ينتقل عبر بعوض الأنوفيلة</li>
+                    <li>يدخل الطور البوغي (Sporozoite) إلى دم الإنسان عبر لدغة البعوض</li>
+                    <li>يتكاثر في خلايا الكبد ثم يهاجم كريات الدم الحمراء</li>
+                    <li>الأعراض: ارتفاع درجة الحرارة، الرعشة، التعرق، فقر الدم</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>دورة حياة البلازموديوم:</strong>
+                <ol style="margin-right: 20px; margin-top: 8px;">
+                    <li>يدخل السيوروزيت إلى مجرى الدم عبر لدغة البعوض</li>
+                    <li>يدخل خلايا الكبد ويتكاثر لا جنسياً مكوناً الميروزويتات</li>
+                    <li>تهاجم كريات الدم الحمراء وتتغذى على الهيموجلوبين</li>
+                    <li>تتكاثر داخل كريات الدم الحمراء وتسبب انفجارها</li>
+                    <li>تتحول بعض الطفيليات إلى أطوار جنسية (Gametocytes)</li>
+                    <li>تمتصها البعوضة عند لدغ الإنسان المصاب، وتكمل الدورة</li>
+                </ol>
+            </div>
+
+            <div class="side-heading">السوطيات (Zoomastigina)</div>
+            
+            <p>سميت بالسوطيات لأنها تتحرك باستخدام السوط. معظمها يعيش متطفلاً داخل المخلوقات الأخرى. تسبب أمراضاً خطيرة مثل مرض النوم الأمريكي والإفريقي.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Trypanosoma_sp._PHIL_613_lores.jpg/500px-Trypanosoma_sp._PHIL_613_lores.jpg" alt="المثقبيات">
+                <div class="image-caption">الشكل 3: طفيلي التريبانوسوما المسبب لمرض النوم</div>
+            </div>
+            
+            <div class="sub-heading">أمراض النوم</div>
+            
+            <div class="info-box">
+                <strong>مرض النوم الأمريكي (داء شاغاس):</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>يسببه النوع الأول من المثقبيات</li>
+                    <li>ينتقل عبر حشرة البق</li>
+                    <li>يتكاثر الطفيل في القناة الهضمية للحشرة</li>
+                    <li>ينتقل عبر براز البق إلى جسم الإنسان عبر الأغشية المخاطية</li>
+                    <li>يسبب إضراراً بالقلب والكبد والطحال</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>مرض النوم الإفريقي:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>ينتقل عبر ذبابة تسي تسي</li>
+                    <li>يتكاثر في القناة الهضمية للذبابة ثم ينتقل إلى الغدد اللعابية</li>
+                    <li>ينتقل إلى الإنسان عبر لدغة الذبابة</li>
+                    <li>يسبب ارتفاعاً في درجة الحرارة والتهابات في العقد اللمفاوية</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الصفحة الرابعة -->
+        <div class="page-break">
+            <div class="side-heading">الجذريات (Sarcodina)</div>
+            
+            <p>تستخدم الجذريات الأقدام الكاذبة في الحركة والتغذية. تشكل الأقدام الكاذبة فجوة غذائية تحتوي على إنزيمات هاضمة. معظمها يعيش في المياه العذبة، وقليل منها طفيلي.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Amoeba_proteus_from_leidy.jpg/500px-Amoeba_proteus_from_leidy.jpg" alt="الأميبا">
+                <div class="image-caption">الشكل 4: الأميبا - تظهر الأقدام الكاذبة بوضوح</div>
+            </div>
+
+            <div class="sub-heading">الأميبات ومرض الزحار الأميبي</div>
+            
+            <div class="info-box">
+                <strong>الأميبة الانحلالية (Entamoeba histolytica):</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>تسبب مرض الدوسنتاريا الأميبة (الزحار الأميبي)</li>
+                    <li>تنتقل عبر الماء والطعام الملوث</li>
+                    <li>تفرز إنزيمات تحلل الأنسجة المعوية</li>
+                    <li>تسبب تقرحات في الأمعاء</li>
+                    <li>تتكاثر لا جنسياً بالانشطار الثنائي</li>
+                </ul>
+            </div>
+
+            <div class="sub-heading">أنواع أخرى من الجذريات</div>
+            
+            <div class="info-box">
+                <strong>المنخربات (Foraminiferans):</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>أجسامها تتكون من كربونات الكالسيوم</li>
+                    <li>تستخدم أحافيرها في تحديد أعمار الصخور الرسوبية</li>
+                    <li>تساعد في تحديد مواقع التنقيب عن النفط</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>الشعاعيات (Radiolarians):</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>لها غلاف خارجي من السيليكا</li>
+                    <li>تكون تربة السيليكا في قيعان المحيطات</li>
+                    <li>تستخدم في الدراسات الجيولوجية</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">التركيب الدقيق للأميبا</div>
+            
+            <div class="highlight-box">
+                <strong>مكونات الأميبا:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الغشاء الخلوي:</strong> يحيط بالخلية وينشئ الأقدام الكاذبة</li>
+                    <li><strong>السيتوبلازم الخارجي:</strong> شفاف وقليل الحبيبات</li>
+                    <li><strong>السيتوبلازم الداخلي:</strong> كثيف وغني بالحبيبات</li>
+                    <li><strong>الفجوة الغذائية:</strong> تحتوي على الإنزيمات الهاضمة</li>
+                    <li><strong>النواة:</strong> تتحكم في أنشطة الخلية</li>
+                    <li><strong>الأقدام الكاذبة:</strong> امتدادات للحركة والتغذية</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الصفحة الخامسة -->
+        <div class="page-break">
+            <div class="side-heading">الهدبيات (Ciliates)</div>
+            
+            <p>الهدبيات تتحرك باستخدام الأهداب القصيرة. البراميسيوم من أكثر الأوليات التي تمت دراستها، ويعيش في علاقة تبادل منفعة مع الطحالب الخضراء.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Paramecium_structure.png/600px-Paramecium_structure.png" alt="تركيب البراميسيوم">
+                <div class="image-caption">الشكل 5: التركيب الدقيق للبراميسيوم</div>
+            </div>
+
+            <div class="sub-heading">التركيب المميز للبراميسيوم</div>
+            
+            <div class="info-box">
+                <strong>مكونات البراميسيوم:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الغلاف البلازمي (Pellicle):</strong> طبقة مرنة تدعم الخلية</li>
+                    <li><strong>الأهداب:</strong> للحركة وتجميع الغذاء</li>
+                    <li><strong>الفجوة المنقبضة:</strong> تنظم الضغط الأسموزي</li>
+                    <li><strong>الفجوة الغذائية:</strong> تحتوي على إنزيمات هاضمة</li>
+                    <li><strong>الأكياس الخيطية (Trichocysts):</strong> للدفاع عن النفس</li>
+                    <li><strong>النواة الكبرى والصغرى:</strong> تتحكم في الوظائف الخلوية</li>
+                </ul>
+            </div>
+
+            <div class="sub-heading">الفجوة المنقبضة</div>
+            <p>يعيش البراميسيوم في بيئات مائية تركيز الأملاح فيها منخفض (Hypotonic)، لذا يدخل الماء باستمرار إلى داخل الخلية. تقوم الفجوة المنقبضة بطرد الماء الزائد وتحافظ على الاتزان الداخلي للخلية.</p>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Contractile_vacuole.svg/500px-Contractile_vacuole.svg.png" alt="الفجوة المنقبضة">
+                <div class="image-caption">الشكل 6: آلية عمل الفجوة المنقبضة في البراميسيوم</div>
+            </div>
+
+            <div class="sub-heading">علاقة تبادل المنفعة</div>
+            
+            <div class="info-box">
+                <strong>العلاقة التبادلية مع الطحالب:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الطحالب:</strong> تحصل على حماية وثاني أكسيد الكربون</li>
+                    <li><strong>البراميسيوم:</strong> يحصل على غذاء وأكسجين</li>
+                    <li>تمثل نموذجاً للتعايش المتبادل بين الكائنات</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">التكاثر في الأوليات</div>
+            
+            <div class="info-box">
+                <strong>طرق التكاثر:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الانشطار الثنائي:</strong> في الأميبات والبراميسيوم</li>
+                    <li><strong>الانشطار المتعدد:</strong> في البوغيات</li>
+                    <li><strong>التكاثر الجنسي:</strong> في البراميسيوم (الاقتران)</li>
+                    <li><strong>تكوين الأبواغ:</strong> في البوغيات</li>
+                    <li><strong>التحوصل:</strong> في الظروف البيئية غير المناسبة</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- الصفحة السادسة -->
+        <div class="page-break">
+            <div class="side-heading">مقارنة شاملة بين مجموعات الأوليات</div>
+
+            <div class="image-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Protist_collage_2.jpg/600px-Protist_collage_2.jpg" alt="مجموعات الأوليات">
+                <div class="image-caption">الشكل 7: تنوع الأوليات المختلفة</div>
+            </div>
+
+            <div class="comparison-box">
+                <strong>مقارنة بين مجموعات الأوليات:</strong>
+                <table border="1" cellpadding="8" cellspacing="0" width="100%" style="border-collapse: collapse; margin: 10px 0; font-size: 10pt;">
+                    <thead>
+                        <tr style="background: #FEF3C7;">
+                            <th width="20%">الخاصية</th>
+                            <th width="20%">البوغيات</th>
+                            <th width="20%">السوطيات</th>
+                            <th width="20%">الجذريات</th>
+                            <th width="20%">الهدبيات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>طريقة الحركة</td>
+                            <td>لا توجد</td>
+                            <td>بالسوط</td>
+                            <td>بالأقدام الكاذبة</td>
+                            <td>بالأهداب</td>
+                        </tr>
+                        <tr style="background: #FFFBEB;">
+                            <td>طريقة التغذية</td>
+                            <td>متطفلة</td>
+                            <td>متطفلة</td>
+                            <td>بالبلعمة</td>
+                            <td>غير ذاتية</td>
+                        </tr>
+                        <tr>
+                            <td>التكاثر</td>
+                            <td>دورة معقدة</td>
+                            <td>انشطار ثنائي</td>
+                            <td>انشطار ثنائي</td>
+                            <td>انشطار واقتران</td>
+                        </tr>
+                        <tr style="background: #FFFBEB;">
+                            <td>الأمراض</td>
+                            <td>الملاريا</td>
+                            <td>أمراض النوم</td>
+                            <td>الزحار الأميبي</td>
+                            <td>لا تسبب</td>
+                        </tr>
+                        <tr>
+                            <td>البيئة</td>
+                            <td>داخل العائل</td>
+                            <td>داخل العائل</td>
+                            <td>مياه عذبة، تربة</td>
+                            <td>مياه عذبة</td>
+                        </tr>
+                        <tr style="background: #FFFBEB;">
+                            <td>أمثلة</td>
+                            <td>البلازموديوم</td>
+                            <td>المثقبيات</td>
+                            <td>الأميبا، المنخربات</td>
+                            <td>البراميسيوم</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="side-heading">الأهمية الطبية والاقتصادية</div>
+            
+            <div class="info-box">
+                <strong>الأثر الصحي:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li><strong>الملاريا:</strong> 400 ألف وفاة سنوياً</li>
+                    <li><strong>الزحار الأميبي:</strong> 50 مليون إصابة سنوياً</li>
+                    <li><strong>أمراض النوم:</strong> تهديد لملايين البشر</li>
+                    <li>خسائر اقتصادية بسبب انخفاض الإنتاجية</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <strong>الأهمية الاقتصادية:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>المنخربات: مؤشرات جيولوجية للنفط</li>
+                    <li>الشعاعيات: تكوين تربة السيليكا</li>
+                    <li>دور في السلاسل الغذائية المائية</li>
+                    <li>مؤشرات حيوية لسلامة البيئة</li>
+                </ul>
+            </div>
+
+            <div class="side-heading">الخاتمة والتوصيات</div>
+            
+            <p>تمثل الأوليات عالماً غنياً بالتنوع البيولوجي، يجمع بين الكائنات الحرة والمعيشة والطفيليات الممرضة. فهم دقيق لبيولوجيتها ودورات حياتها يمثل أساساً مهماً في مكافحة الأمراض التي تسببها.</p>
+
+            <div class="info-box">
+                <strong>التوصيات:</strong>
+                <ul style="margin-right: 20px; margin-top: 8px;">
+                    <li>تحسين الصرف الصحي ومصادر المياه النظيفة</li>
+                    <li>استخدام الناموسيات والمبيدات الحشرية</li>
+                    <li>التوعية الصحية حول طرق انتقال الأمراض</li>
+                    <li>دعم الأبحاث العلمية لتطوير أدوية جديدة</li>
+                    <li>المراقبة المستمرة للبعوض والنواقل الأخرى</li>
+                </ul>
+            </div>
+            
+            <p>يبقى عالم الأوليات مجالاً خصباً للبحث العلمي، حيث لا تزال هناك العديد من الأسرار التي تنتظر الاكتشاف، خاصة فيما يتعلق بآليات التطفل والعلاقات البيئية المعقدة.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // تحسين الطباعة
+        window.addEventListener('beforeprint', function() {
+            document.body.style.fontSize = '11pt';
+        });
+        
+        // تفعيل MathJax للرموز الرياضية
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+        
+        (function() {
+            var script = document.createElement('script');
+            script.src = 'https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js';
+            script.async = true;
+            document.head.appendChild(script);
+        })();
+    </script>
 </body>
 </html>
