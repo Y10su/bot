@@ -1,443 +1,660 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ملخص الطلائعيات الشبيهة بالحيوانات</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background: #f8fafc;
-            padding: 20px;
-            line-height: 1.6;
-            color: #1e293b;
-        }
-        
-        .container {
-            max-width: 21cm;
-            margin: 0 auto;
-            background: white;
-            padding: 2cm;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            border-radius: 10px;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 3px solid #3b82f6;
-        }
-        
-        .header h1 {
-            color: #1e40af;
-            font-size: 28px;
-            margin-bottom: 10px;
-        }
-        
-        .header .subtitle {
-            color: #64748b;
-            font-size: 18px;
-        }
-        
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        
-        .group-card {
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            border-right: 5px solid;
-        }
-        
-        .group-title {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid;
-        }
-        
-        .feature-list {
-            list-style: none;
-            padding-right: 10px;
-        }
-        
-        .feature-list li {
-            margin-bottom: 8px;
-            padding-right: 15px;
-            position: relative;
-        }
-        
-        .feature-list li:before {
-            content: "•";
-            position: absolute;
-            right: 0;
-            color: inherit;
-            font-weight: bold;
-        }
-        
-        /* Colors for each group */
-        .sporozoa {
-            background: #fef2f2;
-            border-right-color: #dc2626;
-        }
-        
-        .sporozoa .group-title {
-            color: #dc2626;
-            border-bottom-color: #dc2626;
-        }
-        
-        .sporozoa .feature-list li {
-            color: #b91c1c;
-        }
-        
-        .flagellate {
-            background: #f0f9ff;
-            border-right-color: #0369a1;
-        }
-        
-        .flagellate .group-title {
-            color: #0369a1;
-            border-bottom-color: #0369a1;
-        }
-        
-        .flagellate .feature-list li {
-            color: #075985;
-        }
-        
-        .sarcodina {
-            background: #f0fdf4;
-            border-right-color: #16a34a;
-        }
-        
-        .sarcodina .group-title {
-            color: #16a34a;
-            border-bottom-color: #16a34a;
-        }
-        
-        .sarcodina .feature-list li {
-            color: #15803d;
-        }
-        
-        .ciliate {
-            background: #faf5ff;
-            border-right-color: #7c3aed;
-        }
-        
-        .ciliate .group-title {
-            color: #7c3aed;
-            border-bottom-color: #7c3aed;
-        }
-        
-        .ciliate .feature-list li {
-            color: #6d28d9;
-        }
-        
-        .comparison-section {
-            background: #fffbeb;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 25px 0;
-            border-right: 4px solid #f59e0b;
-        }
-        
-        .comparison-title {
-            color: #d97706;
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        
-        .comparison-table th {
-            background: #f59e0b;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            font-weight: 600;
-        }
-        
-        .comparison-table td {
-            padding: 12px;
-            text-align: center;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .comparison-table tr:nth-child(even) {
-            background: #f8fafc;
-        }
-        
-        .disease-section {
-            background: #fef7ff;
-            padding: 25px;
-            border-radius: 10px;
-            margin: 25px 0;
-            border-right: 4px solid #a855f7;
-        }
-        
-        .disease-title {
-            color: #9333ea;
-            font-size: 22px;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-        
-        .disease-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-        
-        .disease-card {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            border-right: 3px solid;
-        }
-        
-        .disease-card h4 {
-            color: #7e22ce;
-            margin-bottom: 10px;
-            padding-bottom: 8px;
-            border-bottom: 1px solid #e9d5ff;
-        }
-        
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid #cbd5e1;
-            color: #64748b;
-            font-size: 14px;
-        }
-        
-        @media print {
-            body {
-                background: white;
-                padding: 0;
-            }
-            .container {
-                box-shadow: none;
-                padding: 1.5cm;
-            }
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>مُنظِّم المهام — التطبيق</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#06b6d4;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.03);
+      --danger:#ef4444;
+      --success:#10b981;
+      --font-sans: "Segoe UI", Tahoma, Roboto, "Noto Sans Arabic", sans-serif;
+    }
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font-sans);
+      background:linear-gradient(180deg,#071024 0%, #07172a 60%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:18px;
+      box-sizing:border-box;
+    }
+
+    /* Container */
+    .app{
+      max-width:1100px;
+      margin: 0 auto;
+      display:grid;
+      grid-template-columns: 380px 1fr;
+      gap:20px;
+      align-items:start;
+    }
+
+    /* Sidebar: form + controls */
+    .panel{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border:1px solid rgba(255,255,255,0.03);
+      padding:18px;
+      border-radius:12px;
+      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    }
+    h1{margin:0 0 12px;font-size:20px}
+    label{display:block;font-size:13px;color:var(--muted);margin:10px 0 6px}
+    input[type="text"], textarea, select, input[type="date"]{
+      width:100%;
+      padding:10px 12px;
+      border-radius:8px;
+      background:var(--card);
+      border:1px solid rgba(255,255,255,0.03);
+      color:inherit;
+      outline:none;
+      box-sizing:border-box;
+      font-size:14px;
+    }
+    textarea{min-height:90px;resize:vertical}
+    .row{display:flex;gap:8px}
+    .row > *{flex:1}
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      border-radius:10px;
+      cursor:pointer;
+      border:0;
+      font-weight:600;
+      background:linear-gradient(90deg,var(--accent),#0ea5a7);
+      color:#042024;
+      box-shadow: 0 6px 18px rgba(6,182,212,0.12);
+    }
+    .btn.ghost{
+      background:transparent;
+      border:1px solid rgba(255,255,255,0.04);
+      color:var(--muted);
+      font-weight:600;
+    }
+    .meta{
+      display:flex;
+      gap:8px;
+      flex-wrap:wrap;
+      margin-top:12px;
+    }
+    .chip{
+      padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;
+    }
+
+    /* Tasks area */
+    .tasks-area{
+      display:flex;flex-direction:column;gap:12px;
+    }
+    .controls{
+      display:flex;gap:8px;align-items:center;flex-wrap:wrap;
+    }
+    .search{
+      flex:1;display:flex;gap:8px;
+    }
+    .search input{flex:1}
+
+    .board{
+      margin-top:8px;
+      display:grid;
+      gap:10px;
+    }
+
+    /* Task card */
+    .task{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
+      border-radius:10px;
+      padding:12px;
+      border:1px solid rgba(255,255,255,0.03);
+      display:flex;
+      gap:12px;
+      align-items:flex-start;
+      cursor:grab;
+      user-select:none;
+    }
+    .task.dragging{opacity:0.6;transform:scale(0.995);cursor:grabbing}
+    .task .left{flex:1}
+    .title-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
+    .task h3{margin:0;font-size:16px}
+    .small{font-size:13px;color:var(--muted)}
+    .badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+    .badge{padding:4px 8px;border-radius:8px;font-size:12px;background:rgba(255,255,255,0.02);color:var(--muted)}
+    .priority-low{background:#064e3b;color:#99f6e4}
+    .priority-med{background:#92400e;color:#ffd8b5}
+    .priority-high{background:#7c0b16;color:#ffd6d6}
+
+    .actions{display:flex;flex-direction:column;gap:8px;align-items:center}
+    .icon-btn{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px}
+    .icon-btn:hover{background:rgba(255,255,255,0.02);color:#fff}
+
+    /* Completed task */
+    .done h3{text-decoration:line-through;color:rgba(255,255,255,0.5)}
+    .done .badge{opacity:0.7}
+
+    /* Footer small */
+    .footer-note{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+
+    /* Responsive */
+    @media (max-width:900px){
+      .app{grid-template-columns:1fr; padding-bottom:60px}
+      .panel{order:2}
+    }
+
+    /* modal */
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+      background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.6));
+      z-index:80;padding:20px;
+    }
+    .modal.open{display:flex}
+    .modal-card{width:100%;max-width:720px;background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .flex{display:flex;gap:12px;align-items:center}
+    .muted{color:var(--muted)}
+
+    /* tiny helpers */
+    .flex-between{display:flex;justify-content:space-between;align-items:center}
+    input[type="file"]{display:none}
+    .tag-list{display:flex;gap:6px;flex-wrap:wrap}
+    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-size:13px;color:var(--muted)}
+    .empty{padding:20px;border-radius:10px;text-align:center;color:var(--muted);background:rgba(255,255,255,0.015)}
+  </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <h1>الطلائعيات الشبيهة بالحيوانات (الأوليات)</h1>
-            <div class="subtitle">ملخص شامل - خرائط مفاهيمية منظمة</div>
+  <div class="app" role="application" aria-label="تطبيق ترتيب المهام">
+    <!-- SIDEBAR / FORM -->
+    <aside class="panel" aria-labelledby="panel-title">
+      <h1 id="panel-title">أضف مهمة جديدة ✨</h1>
+
+      <label for="title">العنوان</label>
+      <input id="title" type="text" placeholder="اكتب عنوان المهمة..." autocomplete="off" />
+
+      <label for="desc">الوصف (اختياري)</label>
+      <textarea id="desc" placeholder="تفاصيل المهمة..."></textarea>
+
+      <div class="row" style="margin-top:8px">
+        <div>
+          <label for="due">تاريخ الاستحقاق</label>
+          <input id="due" type="date" />
+        </div>
+        <div>
+          <label for="priority">الأولوية</label>
+          <select id="priority">
+            <option value="low">منخفضة</option>
+            <option value="med" selected>متوسطة</option>
+            <option value="high">عالية</option>
+          </select>
+        </div>
+      </div>
+
+      <label for="tags-input">وسوم (افصل بفاصلة)</label>
+      <input id="tags-input" type="text" placeholder="مثال: عمل, شخصي, عاجل" />
+
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button id="addBtn" class="btn" title="إضافة مهمة">أضف المهمة</button>
+        <button id="clearAll" class="btn ghost" title="حذف كل المهام">حذف الكل</button>
+      </div>
+
+      <div class="meta" aria-hidden="false">
+        <div class="chip" id="countChip">المهام: 0</div>
+        <div class="chip" id="doneChip">مكتملة: 0</div>
+        <div class="chip" id="nextDue">أقرب تاريخ: —</div>
+      </div>
+
+      <hr style="margin:14px 0;border:0;height:1px;background:rgba(255,255,255,0.02)">
+
+      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
+        <div class="muted">تصدير / استيراد</div>
+        <div style="display:flex;gap:8px">
+          <button id="exportBtn" class="btn ghost" title="تصدير JSON">تصدير</button>
+          <label class="btn ghost" title="استيراد JSON">
+            استيراد
+            <input type="file" id="importFile" accept="application/json" />
+          </label>
+        </div>
+      </div>
+
+      <p class="footer-note">تم حفظ البيانات محليًا في جهازك (localStorage). 🔒</p>
+    </aside>
+
+    <!-- TASKS AREA -->
+    <main class="tasks-area">
+      <div class="panel">
+        <div class="flex-between" style="gap:12px">
+          <div>
+            <h1 style="font-size:18px;margin-bottom:6px">لوحة المهام</h1>
+            <div class="muted">نظّم مهامك — ابحث، صفّي، وأعد ترتيبها بالسحب.</div>
+          </div>
+
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="search">
+              <input id="search" type="text" placeholder="ابحث في المهام..." />
+              <select id="filter" title="تصفية">
+                <option value="all">الكل</option>
+                <option value="active">قيد التنفيذ</option>
+                <option value="done">مكتملة</option>
+              </select>
+              <select id="sort" title="ترتيب">
+                <option value="custom">حسب الترتيب</option>
+                <option value="due-asc">تاريخ (قريب → بعيد)</option>
+                <option value="due-desc">تاريخ (بعيد → قريب)</option>
+                <option value="prio-high">الأولوية (عالية أولاً)</option>
+              </select>
+            </div>
+          </div>
         </div>
 
-        <!-- الخريطة المفاهيمية الرئيسية -->
-        <div class="main-grid">
-            <!-- البوغيات -->
-            <div class="group-card sporozoa">
-                <div class="group-title">🔴 البوغيات (Apicomplexa)</div>
-                <ul class="feature-list">
-                    <li>الحركة: لا توجد أعضاء حركة</li>
-                    <li>التغذية: متطفلة داخلية</li>
-                    <li>التكاثر: دورة حياة معقدة (جنسي ولا جنسي)</li>
-                    <li>الممثل الرئيسي: البلازموديوم</li>
-                    <li>تحتاج إلى عائلين لإكمال دورة الحياة</li>
-                    <li>تكون أبواغ في مرحلة من دورة الحياة</li>
-                    <li>تتبع شعبة البوغيبات فنيًا</li>
-                </ul>
-            </div>
+        <div id="board" class="board" aria-live="polite" aria-relevant="additions removals"></div>
 
-            <!-- السوطيات -->
-            <div class="group-card flagellate">
-                <div class="group-title">🔵 السوطيات (Zoomastigina)</div>
-                <ul class="feature-list">
-                    <li>الحركة: بواسطة السوط الطويل</li>
-                    <li>التغذية: متطفلة أو حرة المعيشة</li>
-                    <li>التكاثر: انشطار ثنائي طولي</li>
-                    <li>الممثل الرئيسي: المثقبيات</li>
-                    <li>تعيش متطفلة داخل المخلوقات الأخرى</li>
-                    <li>تسبب أمراض النوم الأمريكية والإفريقية</li>
-                    <li>تنتقل عبر الحشرات الناقلة</li>
-                </ul>
-            </div>
+        <div id="empty" class="empty" style="display:none;margin-top:8px">لا توجد مهام — أضف أول مهمة الآن ✨</div>
+      </div>
+    </main>
+  </div>
 
-            <!-- الجذريات -->
-            <div class="group-card sarcodina">
-                <div class="group-title">🟢 الجذريات (Sarcodina)</div>
-                <ul class="feature-list">
-                    <li>الحركة: بواسطة الأقدام الكاذبة</li>
-                    <li>التغذية: بالبلعمة - تكوين فجوة غذائية</li>
-                    <li>التكاثر: انشطار ثنائي لا جنسي</li>
-                    <li>الممثل الرئيسي: الأميبات</li>
-                    <li>معظمها يعيش في المياه العذبة</li>
-                    <li>تتحوص في الظروف غير المناسبة</li>
-                    <li>أمثلة أخرى: المنخربات، الشعاعيات</li>
-                </ul>
-            </div>
+  <!-- EDIT MODAL -->
+  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal-card">
+      <div class="flex-between">
+        <h2 id="modal-title">تعديل المهمة</h2>
+        <button id="closeModal" class="icon-btn" title="إغلاق">✖</button>
+      </div>
+      <label for="m-title">العنوان</label>
+      <input id="m-title" type="text" />
 
-            <!-- الهدبيات -->
-            <div class="group-card ciliate">
-                <div class="group-title">🟣 الهدبيات (Ciliates)</div>
-                <ul class="feature-list">
-                    <li>الحركة: بواسطة الأهداب القصيرة</li>
-                    <li>التغذية: غير ذاتية - علاقات تبادلية</li>
-                    <li>التكاثر: انشطار ثنائي واقتران جنسي</li>
-                    <li>الممثل الرئيسي: البراميسيوم</li>
-                    <li>علاقة تبادل منفعة مع الطحالب</li>
-                    <li>فجوة منقبضة لتنظيم الضغط الأسموزي</li>
-                    <li>غلاف بلازمي يدعم الخلية</li>
-                </ul>
-            </div>
+      <label for="m-desc">الوصف</label>
+      <textarea id="m-desc"></textarea>
+
+      <div class="row">
+        <div>
+          <label for="m-due">تاريخ الاستحقاق</label>
+          <input id="m-due" type="date" />
         </div>
-
-        <!-- قسم المقارنة -->
-        <div class="comparison-section">
-            <div class="comparison-title">مقارنة بين مجموعات الأوليات</div>
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>الخاصية</th>
-                        <th>البوغيات</th>
-                        <th>السوطيات</th>
-                        <th>الجذريات</th>
-                        <th>الهدبيات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>طريقة الحركة</td>
-                        <td>لا توجد</td>
-                        <td>بالسوط</td>
-                        <td>بالأقدام الكاذبة</td>
-                        <td>بالأهداب</td>
-                    </tr>
-                    <tr>
-                        <td>نوع التغذية</td>
-                        <td>متطفلة</td>
-                        <td>متطفلة</td>
-                        <td>بالبلعمة</td>
-                        <td>غير ذاتية</td>
-                    </tr>
-                    <tr>
-                        <td>طريقة التكاثر</td>
-                        <td>دورة معقدة</td>
-                        <td>انشطار ثنائي</td>
-                        <td>انشطار ثنائي</td>
-                        <td>انشطار واقتران</td>
-                    </tr>
-                    <tr>
-                        <td>البيئة</td>
-                        <td>داخل العائل</td>
-                        <td>داخل العائل</td>
-                        <td>مياه عذبة، تربة</td>
-                        <td>مياه عذبة</td>
-                    </tr>
-                    <tr>
-                        <td>الأمراض</td>
-                        <td>الملاريا</td>
-                        <td>أمراض النوم</td>
-                        <td>الزحار الأميبي</td>
-                        <td>لا تسبب</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div>
+          <label for="m-priority">الأولوية</label>
+          <select id="m-priority">
+            <option value="low">منخفضة</option>
+            <option value="med">متوسطة</option>
+            <option value="high">عالية</option>
+          </select>
         </div>
+      </div>
 
-        <!-- قسم الأمراض -->
-        <div class="disease-section">
-            <div class="disease-title">الأمراض الرئيسية التي تسببها الأوليات</div>
-            <div class="disease-grid">
-                <div class="disease-card" style="border-right-color: #dc2626;">
-                    <h4>الملاريا (البوغيات)</h4>
-                    <ul class="feature-list">
-                        <li>المسبب: طفيلي البلازموديوم</li>
-                        <li>الناقل: بعوض الأنوفيلة</li>
-                        <li>الأعراض: ارتفاع الحرارة، رعشة، تعرق</li>
-                        <li>يهاجم كريات الدم الحمراء والكبد</li>
-                        <li>ينتشر في المناطق الاستوائية</li>
-                    </ul>
-                </div>
-                
-                <div class="disease-card" style="border-right-color: #0369a1;">
-                    <h4>مرض النوم الأمريكي (السوطيات)</h4>
-                    <ul class="feature-list">
-                        <li>المسبب: المثقبيات</li>
-                        <li>الناقل: حشرة البق</li>
-                        <li>الأعراض: إضرار بالقلب والكبد</li>
-                        <li>ينتقل عبر براز البق</li>
-                        <li>يوجد في أمريكا الوسطى والجنوبية</li>
-                    </ul>
-                </div>
-                
-                <div class="disease-card" style="border-right-color: #16a34a;">
-                    <h4>الزحار الأميبي (الجذريات)</h4>
-                    <ul class="feature-list">
-                        <li>المسبب: الأميبة الانحلالية</li>
-                        <li>طريقة الانتقال: ماء وطعام ملوث</li>
-                        <li>الأعراض: إسهال دموي، آلام بطن</li>
-                        <li>تسبب تقرحات في الأمعاء</li>
-                        <li>تفرز إنزيمات تحلل الأنسجة</li>
-                    </ul>
-                </div>
-                
-                <div class="disease-card" style="border-right-color: #7c3aed;">
-                    <h4>مرض النوم الإفريقي (السوطيات)</h4>
-                    <ul class="feature-list">
-                        <li>المسبب: المثقبيات</li>
-                        <li>الناقل: ذبابة تسي تسي</li>
-                        <li>الأعراض: ارتفاع الحرارة، التهاب العقد اللمفاوية</li>
-                        <li>يهاجم الجهاز العصبي</li>
-                        <li>ينتشر في إفريقيا جنوب الصحراء</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
+      <label for="m-tags">الوسوم (مفصولة بفاصلة)</label>
+      <input id="m-tags" type="text" />
 
-        <!-- الخصائص العامة -->
-        <div class="comparison-section" style="background: #ecfdf5; border-right-color: #10b981;">
-            <div class="comparison-title" style="color: #047857;">الخصائص العامة للأوليات</div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
-                <div>
-                    <ul class="feature-list" style="color: #065f46;">
-                        <li>كائنات وحيدة الخلية</li>
-                        <li>غير ذاتية التغذية</li>
-                        <li>تعيش في بيئات مائية</li>
-                        <li>تتكاثر لا جنسياً في الغالب</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="feature-list" style="color: #065f46;">
-                        <li>بعضها متطفل ممرض</li>
-                        <li>تختلف في طرق الحركة</li>
-                        <li>لها أهمية طبية كبيرة</li>
-                        <li>تدخل في السلاسل الغذائية</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="footer">
-            ملخص الطلائعيات الشبيهة بالحيوانات - تم إعداده بناءً على الأوراق العلمية المقدمة
-        </div>
+      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-start">
+        <button id="saveEdit" class="btn">حفظ التعديلات</button>
+        <button id="deleteTask" class="btn ghost" style="color:var(--danger)">حذف المهمة</button>
+      </div>
     </div>
+  </div>
+
+  <script>
+    /******************************
+     * Task Manager App (Vanilla)
+     * - يحفظ في localStorage
+     * - يدعم السحب والإفلات لإعادة الترتيب
+     * - بحث، تصفية، ترتيب، تصدير/استيراد
+     ******************************/
+
+    // Helpers
+    const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
+    const qs = (s,el=document) => el.querySelector(s);
+    const qsa = (s,el=document) => Array.from(el.querySelectorAll(s));
+    const LS_KEY = 'my_tasks_v1';
+
+    // State
+    let tasks = []; // array of task objects
+    let dragSrcId = null;
+
+    // Elements
+    const titleIn = qs('#title');
+    const descIn = qs('#desc');
+    const dueIn = qs('#due');
+    const prioIn = qs('#priority');
+    const tagsIn = qs('#tags-input');
+    const addBtn = qs('#addBtn');
+    const board = qs('#board');
+    const countChip = qs('#countChip');
+    const doneChip = qs('#doneChip');
+    const nextDue = qs('#nextDue');
+    const clearAllBtn = qs('#clearAll');
+    const searchIn = qs('#search');
+    const filterSel = qs('#filter');
+    const sortSel = qs('#sort');
+    const exportBtn = qs('#exportBtn');
+    const importFile = qs('#importFile');
+    const emptyBox = qs('#empty');
+
+    // Modal elements
+    const modal = qs('#modal');
+    const closeModal = qs('#closeModal');
+    const mTitle = qs('#m-title');
+    const mDesc = qs('#m-desc');
+    const mDue = qs('#m-due');
+    const mPriority = qs('#m-priority');
+    const mTags = qs('#m-tags');
+    const saveEdit = qs('#saveEdit');
+    const deleteTaskBtn = qs('#deleteTask');
+
+    // Load initial
+    function load(){
+      try{
+        const raw = localStorage.getItem(LS_KEY);
+        tasks = raw ? JSON.parse(raw) : [];
+      }catch(e){
+        console.error('فشل تحميل المهام', e);
+        tasks = [];
+      }
+    }
+
+    // Save
+    function save(){
+      localStorage.setItem(LS_KEY, JSON.stringify(tasks));
+      renderStats();
+    }
+
+    // Render
+    function render(){
+      board.innerHTML = '';
+      const q = searchIn.value.trim().toLowerCase();
+      const filter = filterSel.value;
+      const sort = sortSel.value;
+
+      let list = tasks.slice();
+
+      // Filter
+      if(filter === 'active') list = list.filter(t => !t.done);
+      if(filter === 'done') list = list.filter(t => t.done);
+
+      // Search
+      if(q){
+        list = list.filter(t => (t.title + ' ' + (t.desc||'') + ' ' + (t.tags||'')).toLowerCase().includes(q));
+      }
+
+      // Sort
+      if(sort === 'due-asc'){
+        list.sort((a,b)=>{
+          if(!a.due && !b.due) return 0;
+          if(!a.due) return 1;
+          if(!b.due) return -1;
+          return new Date(a.due) - new Date(b.due);
+        });
+      } else if(sort === 'due-desc'){
+        list.sort((a,b)=>{
+          if(!a.due && !b.due) return 0;
+          if(!a.due) return 1;
+          if(!b.due) return -1;
+          return new Date(b.due) - new Date(a.due);
+        });
+      } else if(sort === 'prio-high'){
+        const map = {high:0, med:1, low:2};
+        list.sort((a,b)=>map[a.priority]-map[b.priority]);
+      } // custom keeps order
+
+      if(list.length === 0){
+        emptyBox.style.display = 'block';
+      } else {
+        emptyBox.style.display = 'none';
+      }
+
+      list.forEach(task => {
+        const el = document.createElement('div');
+        el.className = 'task' + (task.done ? ' done' : '');
+        el.draggable = true;
+        el.dataset.id = task.id;
+        el.setAttribute('aria-label', task.title);
+        el.innerHTML = `
+          <div class="left">
+            <div class="title-row">
+              <h3>${escapeHtml(task.title)}</h3>
+              <div class="small">${task.due ? formatDate(task.due) : ''}</div>
+            </div>
+            <div class="small" style="margin-top:6px">${task.desc ? escapeHtml(task.desc) : ''}</div>
+            <div class="badges">
+              <div class="badge ${task.priority==='low'?'priority-low':task.priority==='med'?'priority-med':'priority-high'}">${prioLabel(task.priority)}</div>
+              ${task.tags ? task.tags.split(',').slice(0,5).map(t=>`<div class="badge">${escapeHtml(t.trim())}</div>`).join('') : ''}
+              <div class="badge small">إنشئت: ${formatDateTime(task.created)}</div>
+            </div>
+          </div>
+          <div class="actions" role="group" aria-label="أفعال">
+            <button class="icon-btn toggle-done" title="تبديل الحالة">${task.done? '↺':'✓'}</button>
+            <button class="icon-btn edit" title="تعديل">✏️</button>
+            <button class="icon-btn delete" title="حذف">🗑️</button>
+          </div>
+        `;
+
+        // Drag events
+        el.addEventListener('dragstart', (e)=>{
+          dragSrcId = task.id;
+          el.classList.add('dragging');
+          e.dataTransfer.effectAllowed = 'move';
+        });
+        el.addEventListener('dragend', ()=>{ el.classList.remove('dragging'); });
+
+        el.addEventListener('dragover', (e)=>{
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          // highlight where to drop?
+        });
+
+        el.addEventListener('drop', (e)=>{
+          e.preventDefault();
+          const targetId = task.id;
+          if(!dragSrcId || dragSrcId === targetId) return;
+          reorder(dragSrcId, targetId);
+          dragSrcId = null;
+        });
+
+        // actions
+        qs('.toggle-done', el).addEventListener('click', ()=>{ toggleDone(task.id); });
+        qs('.edit', el).addEventListener('click', ()=>{ openEdit(task.id); });
+        qs('.delete', el).addEventListener('click', ()=>{ removeTask(task.id); });
+
+        board.appendChild(el);
+      });
+      renderStats();
+    }
+
+    // Utility functions
+    function prioLabel(p){
+      return p === 'low' ? 'منخفضة' : p === 'med' ? 'متوسطة' : 'عالية';
+    }
+    function formatDate(d){
+      if(!d) return '';
+      const dt = new Date(d);
+      // format: YYYY-MM-DD -> display Arabic localized short
+      return dt.toLocaleDateString('ar-EG',{year:'numeric',month:'short',day:'numeric'});
+    }
+    function formatDateTime(ts){
+      const dt = new Date(ts);
+      return dt.toLocaleString('ar-EG',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
+    }
+    function escapeHtml(s){
+      if(!s) return '';
+      return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+    }
+
+    // Add
+    addBtn.addEventListener('click', ()=>{
+      const title = titleIn.value.trim();
+      if(!title){ alert('الرجاء إدخال عنوان للمهمة.'); titleIn.focus(); return; }
+      const t = {
+        id: uid(),
+        title,
+        desc: descIn.value.trim(),
+        due: dueIn.value || null,
+        priority: prioIn.value || 'med',
+        tags: tagsIn.value.split(',').map(x=>x.trim()).filter(Boolean).join(','),
+        done: false,
+        created: Date.now()
+      };
+      tasks.push(t);
+      // clear form
+      titleIn.value = '';
+      descIn.value = '';
+      dueIn.value = '';
+      tagsIn.value = '';
+      prioIn.value = 'med';
+      save();
+      render();
+    });
+
+    // Toggle done
+    function toggleDone(id){
+      const t = tasks.find(x=>x.id===id);
+      if(!t) return;
+      t.done = !t.done;
+      save(); render();
+    }
+
+    // Remove
+    function removeTask(id){
+      if(!confirm('هل أنت متأكد أنك تريد حذف المهمة؟')) return;
+      tasks = tasks.filter(x=>x.id !== id);
+      save(); render();
+    }
+
+    // Clear all
+    clearAllBtn.addEventListener('click', ()=>{
+      if(!confirm('حذف كل المهام من جهازك؟ العملية لا يمكن التراجع عنها.')) return;
+      tasks = [];
+      save(); render();
+    });
+
+    // Stats
+    function renderStats(){
+      countChip.textContent = `المهام: ${tasks.length}`;
+      doneChip.textContent = `مكتملة: ${tasks.filter(t=>t.done).length}`;
+      const upcoming = tasks.filter(t=>t.due && !t.done).sort((a,b)=>new Date(a.due)-new Date(b.due))[0];
+      nextDue.textContent = upcoming ? `أقرب تاريخ: ${formatDate(upcoming.due)}` : 'أقرب تاريخ: —';
+    }
+
+    // Reorder: move source before target
+    function reorder(srcId, tgtId){
+      const srcIndex = tasks.findIndex(t=>t.id===srcId);
+      const tgtIndex = tasks.findIndex(t=>t.id===tgtId);
+      if(srcIndex === -1 || tgtIndex === -1) return;
+      const [item] = tasks.splice(srcIndex,1);
+      tasks.splice(tgtIndex,0,item);
+      save(); render();
+    }
+
+    // Search/filter/sort listeners
+    [searchIn, filterSel, sortSel].forEach(el => el.addEventListener('input', render));
+
+    // Export
+    exportBtn.addEventListener('click', ()=>{
+      const data = JSON.stringify(tasks, null, 2);
+      const blob = new Blob([data], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'tasks-export.json';
+      a.click();
+      URL.revokeObjectURL(url);
+    });
+
+    // Import
+    importFile.addEventListener('change', (e)=>{
+      const f = e.target.files[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => {
+        try{
+          const imported = JSON.parse(reader.result);
+          if(!Array.isArray(imported)){ alert('الملف لا يحتوي على بيانات صالحة'); return; }
+          // merge: keep existing and append, but ensure unique ids
+          imported.forEach(it=>{
+            if(!it.id) it.id = uid();
+          });
+          tasks = tasks.concat(imported);
+          save(); render();
+          alert('تم الاستيراد بنجاح.');
+        }catch(err){
+          alert('فشل قراءة الملف: ' + err.message);
+        }
+      };
+      reader.readAsText(f);
+      e.target.value = '';
+    });
+
+    // Edit modal
+    let editingId = null;
+    function openEdit(id){
+      const t = tasks.find(x=>x.id===id);
+      if(!t) return;
+      editingId = id;
+      mTitle.value = t.title;
+      mDesc.value = t.desc || '';
+      mDue.value = t.due || '';
+      mPriority.value = t.priority || 'med';
+      mTags.value = t.tags || '';
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden','false');
+    }
+    closeModal.addEventListener('click', ()=>{ closeModalFn(); });
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModalFn(); });
+    function closeModalFn(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); editingId=null; }
+
+    saveEdit.addEventListener('click', ()=>{
+      if(!editingId) return;
+      const t = tasks.find(x=>x.id===editingId);
+      if(!t) return;
+      const title = mTitle.value.trim();
+      if(!title){ alert('الرجاء إدخال عنوان للمهمة.'); mTitle.focus(); return; }
+      t.title = title;
+      t.desc = mDesc.value.trim();
+      t.due = mDue.value || null;
+      t.priority = mPriority.value || 'med';
+      t.tags = mTags.value.split(',').map(x=>x.trim()).filter(Boolean).join(',');
+      save(); render(); closeModalFn();
+    });
+
+    deleteTaskBtn.addEventListener('click', ()=>{
+      if(!editingId) return;
+      if(!confirm('حذف هذه المهمة نهائيًا؟')) return;
+      tasks = tasks.filter(x=>x.id !== editingId);
+      save(); render(); closeModalFn();
+    });
+
+    // keyboard shortcuts (global)
+    document.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault();
+        searchIn.focus();
+      }
+      if(e.key === 'Escape') closeModalFn();
+    });
+
+    // initial boot
+    load();
+    render();
+
+    // For demo: add sample if empty
+    if(tasks.length === 0){
+      tasks.push(
+        {id: uid(), title: 'تسليم تقرير المشروع', desc:'إنهاء صفحة الملخص وإرسالها للعميل', due: addDays(2), priority:'high', tags:'عمل, عاجل', done:false, created: Date.now()},
+        {id: uid(), title: 'تمارين رياضية', desc:'30 دقيقة مشي/هرولة', due: null, priority:'low', tags:'صحة', done:false, created: Date.now()},
+        {id: uid(), title: 'شراء مستلزمات', desc:'حليب، خبز، منظف', due: addDays(5), priority:'med', tags:'منزل', done:false, created: Date.now()}
+      );
+      save(); render();
+    }
+
+    // small helpers used above
+    function addDays(n){
+      const d = new Date();
+      d.setDate(d.getDate()+n);
+      return d.toISOString().slice(0,10);
+    }
+  </script>
 </body>
 </html>
