@@ -1,660 +1,237 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>مُنظِّم المهام — التطبيق</title>
-  <style>
-    :root{
-      --bg:#0f1724;
-      --card:#0b1220;
-      --accent:#06b6d4;
-      --muted:#94a3b8;
-      --glass: rgba(255,255,255,0.03);
-      --danger:#ef4444;
-      --success:#10b981;
-      --font-sans: "Segoe UI", Tahoma, Roboto, "Noto Sans Arabic", sans-serif;
-    }
-    html,body{height:100%}
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>الثقوب السوداء</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+    /* طباعة A4 */
+    @page { size: A4; margin: 1.5cm; }
+    html,body{height:100%; margin:0; padding:0; box-sizing:border-box;}
     body{
-      margin:0;
-      font-family:var(--font-sans);
-      background:linear-gradient(180deg,#071024 0%, #07172a 60%);
-      color:#e6eef6;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      padding:18px;
-      box-sizing:border-box;
+        font-family: 'Noto Sans Arabic', 'Amiri', serif;
+        direction: rtl;
+        color:#111827;
+        background:white;
+        -webkit-print-color-adjust: exact;
+        line-height:1.65;
+        padding:0;
     }
 
-    /* Container */
-    .app{
-      max-width:1100px;
-      margin: 0 auto;
-      display:grid;
-      grid-template-columns: 380px 1fr;
-      gap:20px;
-      align-items:start;
+    .container{ width: 19cm; margin: 0 auto; padding: 0.8cm; }
+
+    .no-print{ display:none; }
+
+    h1.main{
+        text-align:center;
+        color:#0f766e;
+        font-size:28px;
+        margin:6px 0 8px 0;
+        font-weight:700;
+        border-bottom:3px solid #059669;
+        padding-bottom:8px;
+    }
+    .subtitle{
+        text-align:center;
+        color:#6b7280;
+        font-size:14px;
+        margin-top:6px;
     }
 
-    /* Sidebar: form + controls */
-    .panel{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border:1px solid rgba(255,255,255,0.03);
-      padding:18px;
-      border-radius:12px;
-      box-shadow: 0 6px 20px rgba(2,6,23,0.6);
+    .student-card{
+        margin-top:28px;
+        text-align:center;
+        font-size:16px;
     }
-    h1{margin:0 0 12px;font-size:20px}
-    label{display:block;font-size:13px;color:var(--muted);margin:10px 0 6px}
-    input[type="text"], textarea, select, input[type="date"]{
-      width:100%;
-      padding:10px 12px;
-      border-radius:8px;
-      background:var(--card);
-      border:1px solid rgba(255,255,255,0.03);
-      color:inherit;
-      outline:none;
-      box-sizing:border-box;
-      font-size:14px;
-    }
-    textarea{min-height:90px;resize:vertical}
-    .row{display:flex;gap:8px}
-    .row > *{flex:1}
+    .student-card p{ margin:6px 0; }
 
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      border-radius:10px;
-      cursor:pointer;
-      border:0;
-      font-weight:600;
-      background:linear-gradient(90deg,var(--accent),#0ea5a7);
-      color:#042024;
-      box-shadow: 0 6px 18px rgba(6,182,212,0.12);
+    /* عنصر الفقرة الرئيسي */
+    .section{ margin-top:8px; }
+
+    .side-heading{
+        display:block;
+        font-size:18px;
+        color:#047857;
+        font-weight:700;
+        border-right:5px solid #059669;
+        padding-right:12px;
+        margin:16px 0 8px 0;
     }
-    .btn.ghost{
-      background:transparent;
-      border:1px solid rgba(255,255,255,0.04);
-      color:var(--muted);
-      font-weight:600;
-    }
-    .meta{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:12px;
-    }
-    .chip{
-      padding:6px 10px;border-radius:999px;background:var(--glass);color:var(--muted);font-size:13px;
+    .sub-heading{
+        font-size:14px;
+        color:#374151;
+        font-weight:600;
+        margin:10px 0 6px 0;
     }
 
-    /* Tasks area */
-    .tasks-area{
-      display:flex;flex-direction:column;gap:12px;
-    }
-    .controls{
-      display:flex;gap:8px;align-items:center;flex-wrap:wrap;
-    }
-    .search{
-      flex:1;display:flex;gap:8px;
-    }
-    .search input{flex:1}
+    p{ font-size:13.2px; margin:8px 0; text-align:justify; }
 
-    .board{
-      margin-top:8px;
-      display:grid;
-      gap:10px;
-    }
+    .image-block{ text-align:center; margin:12px 0; }
+    .image-block img{ max-width:100%; height:auto; border-radius:6px; display:block; margin:0 auto; }
 
-    /* Task card */
-    .task{
-      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.015));
-      border-radius:10px;
-      padding:12px;
-      border:1px solid rgba(255,255,255,0.03);
-      display:flex;
-      gap:12px;
-      align-items:flex-start;
-      cursor:grab;
-      user-select:none;
-    }
-    .task.dragging{opacity:0.6;transform:scale(0.995);cursor:grabbing}
-    .task .left{flex:1}
-    .title-row{display:flex;justify-content:space-between;gap:8px;align-items:center}
-    .task h3{margin:0;font-size:16px}
-    .small{font-size:13px;color:var(--muted)}
-    .badges{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-    .badge{padding:4px 8px;border-radius:8px;font-size:12px;background:rgba(255,255,255,0.02);color:var(--muted)}
-    .priority-low{background:#064e3b;color:#99f6e4}
-    .priority-med{background:#92400e;color:#ffd8b5}
-    .priority-high{background:#7c0b16;color:#ffd6d6}
+    .dialogue{ background:#f8fafc; padding:12px; border-right:4px solid #3b82f6; border-radius:6px; margin:8px 0; }
+    .dialogue p{ margin:6px 0; font-size:13px; }
 
-    .actions{display:flex;flex-direction:column;gap:8px;align-items:center}
-    .icon-btn{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px;border-radius:8px}
-    .icon-btn:hover{background:rgba(255,255,255,0.02);color:#fff}
+    .list{ margin-right:20px; margin-top:6px; }
+    ol,ul{ margin:8px 0 8px 18px; }
+    li{ margin-bottom:6px; }
 
-    /* Completed task */
-    .done h3{text-decoration:line-through;color:rgba(255,255,255,0.5)}
-    .done .badge{opacity:0.7}
+    .page { page-break-after: always; padding-bottom:6px; min-height:26cm; /* help fill page */ }
 
-    /* Footer small */
-    .footer-note{font-size:13px;color:var(--muted);margin-top:8px;text-align:center}
+    /* ضبط لكي تظهر الصفحة الأخيرة بدون فاصل طباعة إضافي */
+    .page:last-child { page-break-after: auto; }
 
-    /* Responsive */
-    @media (max-width:900px){
-      .app{grid-template-columns:1fr; padding-bottom:60px}
-      .panel{order:2}
-    }
+    .small-note{ font-size:11px; color:#555; margin-top:10px; }
 
-    /* modal */
-    .modal{
-      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
-      background:linear-gradient(180deg, rgba(2,6,23,0.6), rgba(2,6,23,0.6));
-      z-index:80;padding:20px;
-    }
-    .modal.open{display:flex}
-    .modal-card{width:100%;max-width:720px;background:var(--card);padding:18px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    .flex{display:flex;gap:12px;align-items:center}
-    .muted{color:var(--muted)}
+    /* ضمان أن الصور لا تُقصّ بشكل سيء عند الطباعة */
+    img{ break-inside: avoid; page-break-inside: avoid; }
 
-    /* tiny helpers */
-    .flex-between{display:flex;justify-content:space-between;align-items:center}
-    input[type="file"]{display:none}
-    .tag-list{display:flex;gap:6px;flex-wrap:wrap}
-    .tag{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-size:13px;color:var(--muted)}
-    .empty{padding:20px;border-radius:10px;text-align:center;color:var(--muted);background:rgba(255,255,255,0.015)}
-  </style>
+</style>
 </head>
 <body>
-  <div class="app" role="application" aria-label="تطبيق ترتيب المهام">
-    <!-- SIDEBAR / FORM -->
-    <aside class="panel" aria-labelledby="panel-title">
-      <h1 id="panel-title">أضف مهمة جديدة ✨</h1>
+<div class="container">
 
-      <label for="title">العنوان</label>
-      <input id="title" type="text" placeholder="اكتب عنوان المهمة..." autocomplete="off" />
+    <!-- صفحة 1: غلاف ومعلومات الطالب -->
+    <div class="page" id="page1">
+        <h1 class="main">الثقوب السوداء</h1>
+        <div class="subtitle">مشروع مادة: علوم الأرض والفضاء</div>
 
-      <label for="desc">الوصف (اختياري)</label>
-      <textarea id="desc" placeholder="تفاصيل المهمة..."></textarea>
-
-      <div class="row" style="margin-top:8px">
-        <div>
-          <label for="due">تاريخ الاستحقاق</label>
-          <input id="due" type="date" />
-        </div>
-        <div>
-          <label for="priority">الأولوية</label>
-          <select id="priority">
-            <option value="low">منخفضة</option>
-            <option value="med" selected>متوسطة</option>
-            <option value="high">عالية</option>
-          </select>
-        </div>
-      </div>
-
-      <label for="tags-input">وسوم (افصل بفاصلة)</label>
-      <input id="tags-input" type="text" placeholder="مثال: عمل, شخصي, عاجل" />
-
-      <div style="margin-top:12px;display:flex;gap:8px">
-        <button id="addBtn" class="btn" title="إضافة مهمة">أضف المهمة</button>
-        <button id="clearAll" class="btn ghost" title="حذف كل المهام">حذف الكل</button>
-      </div>
-
-      <div class="meta" aria-hidden="false">
-        <div class="chip" id="countChip">المهام: 0</div>
-        <div class="chip" id="doneChip">مكتملة: 0</div>
-        <div class="chip" id="nextDue">أقرب تاريخ: —</div>
-      </div>
-
-      <hr style="margin:14px 0;border:0;height:1px;background:rgba(255,255,255,0.02)">
-
-      <div style="display:flex;gap:8px;align-items:center;justify-content:space-between">
-        <div class="muted">تصدير / استيراد</div>
-        <div style="display:flex;gap:8px">
-          <button id="exportBtn" class="btn ghost" title="تصدير JSON">تصدير</button>
-          <label class="btn ghost" title="استيراد JSON">
-            استيراد
-            <input type="file" id="importFile" accept="application/json" />
-          </label>
-        </div>
-      </div>
-
-      <p class="footer-note">تم حفظ البيانات محليًا في جهازك (localStorage). 🔒</p>
-    </aside>
-
-    <!-- TASKS AREA -->
-    <main class="tasks-area">
-      <div class="panel">
-        <div class="flex-between" style="gap:12px">
-          <div>
-            <h1 style="font-size:18px;margin-bottom:6px">لوحة المهام</h1>
-            <div class="muted">نظّم مهامك — ابحث، صفّي، وأعد ترتيبها بالسحب.</div>
-          </div>
-
-          <div style="display:flex;gap:8px;align-items:center">
-            <div class="search">
-              <input id="search" type="text" placeholder="ابحث في المهام..." />
-              <select id="filter" title="تصفية">
-                <option value="all">الكل</option>
-                <option value="active">قيد التنفيذ</option>
-                <option value="done">مكتملة</option>
-              </select>
-              <select id="sort" title="ترتيب">
-                <option value="custom">حسب الترتيب</option>
-                <option value="due-asc">تاريخ (قريب → بعيد)</option>
-                <option value="due-desc">تاريخ (بعيد → قريب)</option>
-                <option value="prio-high">الأولوية (عالية أولاً)</option>
-              </select>
-            </div>
-          </div>
+        <div class="student-card">
+            <p><strong>الاسم:</strong> سلطان مروان اليافعي</p>
+            <p><strong>الصف:</strong> 304</p>
+            <p><strong>المادة:</strong> علوم الأرض والفضاء</p>
+            <p style="margin-top:18px; font-style:italic;">بحث عن طبيعة الثقوب السوداء، نشأتها، مظاهرها، وطرق رصدها العلمية</p>
         </div>
 
-        <div id="board" class="board" aria-live="polite" aria-relevant="additions removals"></div>
-
-        <div id="empty" class="empty" style="display:none;margin-top:8px">لا توجد مهام — أضف أول مهمة الآن ✨</div>
-      </div>
-    </main>
-  </div>
-
-  <!-- EDIT MODAL -->
-  <div id="modal" class="modal" role="dialog" aria-modal="true" aria-hidden="true">
-    <div class="modal-card">
-      <div class="flex-between">
-        <h2 id="modal-title">تعديل المهمة</h2>
-        <button id="closeModal" class="icon-btn" title="إغلاق">✖</button>
-      </div>
-      <label for="m-title">العنوان</label>
-      <input id="m-title" type="text" />
-
-      <label for="m-desc">الوصف</label>
-      <textarea id="m-desc"></textarea>
-
-      <div class="row">
-        <div>
-          <label for="m-due">تاريخ الاستحقاق</label>
-          <input id="m-due" type="date" />
+        <div style="margin-top:28px;">
+            <span class="side-heading">محتويات البحث</span>
+            <ol class="list">
+                <li>مقدمة وتعريف</li>
+                <li>تكوّن الثقوب وأنواعها</li>
+                <li>الآثار النسبية والظواهر الفيزيائية</li>
+                <li>وسائل الرصد والاكتشاف</li>
+                <li>دور الثقوب السوداء في تطور الكون</li>
+                <li>حوار تخيّلي بين عالمين عن معنى الثقوب</li>
+                <li>المصادر</li>
+            </ol>
+            <p class="small-note">تأكد أن الطابعة مُعدّة على A4 وبلا حدود (borderless) إن أمكن لتحصل على نتيجة أفضل للهوامش.</p>
         </div>
-        <div>
-          <label for="m-priority">الأولوية</label>
-          <select id="m-priority">
-            <option value="low">منخفضة</option>
-            <option value="med">متوسطة</option>
-            <option value="high">عالية</option>
-          </select>
-        </div>
-      </div>
-
-      <label for="m-tags">الوسوم (مفصولة بفاصلة)</label>
-      <input id="m-tags" type="text" />
-
-      <div style="display:flex;gap:8px;margin-top:12px;justify-content:flex-start">
-        <button id="saveEdit" class="btn">حفظ التعديلات</button>
-        <button id="deleteTask" class="btn ghost" style="color:var(--danger)">حذف المهمة</button>
-      </div>
     </div>
-  </div>
 
-  <script>
-    /******************************
-     * Task Manager App (Vanilla)
-     * - يحفظ في localStorage
-     * - يدعم السحب والإفلات لإعادة الترتيب
-     * - بحث، تصفية، ترتيب، تصدير/استيراد
-     ******************************/
+    <!-- صفحة 2: مقدمة وتعريف -->
+    <div class="page" id="page2">
+        <span class="side-heading">مقدمة وتعريف</span>
+        <p>من أعظم الظواهر التي كشفها العلم الحديث في علم الفلك والفيزياء الفلكية هي الثقوب السوداء. تُعدّ هذه الأجرام من أكثر الأجسام تطرفاً وغموضاً، فهي تمثل نقاطاً في الفضاء تكون فيها الجاذبية قوية للغاية بحيث لا يستطيع أي إشعاع، بما في ذلك الضوء، الإفلات منها بعد الوصول إلى ما يُعرف بـ"أفق الحدّ". دراسة هذه الأجسام تجمع بين مفاهيم النسبية العامة، ميكانيكا الكم، وفيزياء البلازما، وتفتح أبواباً لفهم بنية الكون في أقصى ظروفه.</p>
 
-    // Helpers
-    const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2,8);
-    const qs = (s,el=document) => el.querySelector(s);
-    const qsa = (s,el=document) => Array.from(el.querySelectorAll(s));
-    const LS_KEY = 'my_tasks_v1';
+        <div class="sub-heading">ما هي الثقب الأسود؟</div>
+        <p>يمكن اعتبار الثقب الأسود حلّاً رياضياً لمعادلات النسبية العامة، ويتميز بوجود تفرد (singularity) في مركزه حيث تتجه كثافة المادة إلى قيمة كبيرة جداً. يحدّ هذا المركز أفق حدث (Event Horizon) — وهو سطح تخيلي يحدد النقطة التي يصبح بعدها الهروب مستحيلاً. خارج هذا الأفق يمكن للضوء والمادة أن تتصرف بشكل طبيعي، لكن داخل الأفق الاختيارات تتغير والجاذبية تسرق كل شيء إلى الداخل.</p>
 
-    // State
-    let tasks = []; // array of task objects
-    let dragSrcId = null;
+        <div class="sub-heading">لماذا سُميت "سوداء"؟</div>
+        <p>التسمية تأتي لأن الثقب لا يعكس أو يصدر ضوءاً يمكن رؤيته مباشرة؛ ولذا يبدو كالفراغ الأسود بالنسبة للمراقب الذي يعتمد على الضوء. لكن وجود المواد المحيطة والقرص الاعتمادي والإشعاع الصادر أحياناً يجعل الثقوب تظهر عبر آثارها وتأثيرها على البيئة المحيطة.</p>
+    </div>
 
-    // Elements
-    const titleIn = qs('#title');
-    const descIn = qs('#desc');
-    const dueIn = qs('#due');
-    const prioIn = qs('#priority');
-    const tagsIn = qs('#tags-input');
-    const addBtn = qs('#addBtn');
-    const board = qs('#board');
-    const countChip = qs('#countChip');
-    const doneChip = qs('#doneChip');
-    const nextDue = qs('#nextDue');
-    const clearAllBtn = qs('#clearAll');
-    const searchIn = qs('#search');
-    const filterSel = qs('#filter');
-    const sortSel = qs('#sort');
-    const exportBtn = qs('#exportBtn');
-    const importFile = qs('#importFile');
-    const emptyBox = qs('#empty');
+    <!-- صفحة 3: التكون والأنواع -->
+    <div class="page" id="page3">
+        <span class="side-heading">تكوّن الثقوب السوداء وأنواعها</span>
 
-    // Modal elements
-    const modal = qs('#modal');
-    const closeModal = qs('#closeModal');
-    const mTitle = qs('#m-title');
-    const mDesc = qs('#m-desc');
-    const mDue = qs('#m-due');
-    const mPriority = qs('#m-priority');
-    const mTags = qs('#m-tags');
-    const saveEdit = qs('#saveEdit');
-    const deleteTaskBtn = qs('#deleteTask');
+        <div class="sub-heading">تكوّنها من انهيار النجوم</div>
+        <p>أكثر الثقوب السوداء شهرةً وتكراراً هي الثقوب النجمية التي تتشكل عند موت النجوم الضخمة. عندما ينفد الوقود النووي في نجم ذي كتلة كافية، تفقد قوى الضغط الداخلي قدرتها على مواجهة الجاذبية فينهار النجم بسرعة مدهشة. إذا بقيت الكتلة المتبقية أعلى من حد تشاندراسيخار (H. Chandrasekhar) وبعدها حد أوبنهايمر-فولكوف (Oppenheimer–Volkoff) فستتسبب الجاذبية في انهيار لا يمكن إيقافه، مما يؤدي إلى تكوين ثقب أسود.</p>
 
-    // Load initial
-    function load(){
-      try{
-        const raw = localStorage.getItem(LS_KEY);
-        tasks = raw ? JSON.parse(raw) : [];
-      }catch(e){
-        console.error('فشل تحميل المهام', e);
-        tasks = [];
-      }
-    }
+        <div class="sub-heading">أنواع الثقوب السوداء وتفصيل عنها</div>
+        <ul class="list">
+            <li><strong>الثقوب السوداء النجمية:</strong> كتلتها تتراوح عادة بين 3 إلى ~100 ضعف كتلة الشمس، وتتشكل بعد انفجارات السوبرنوفا وانهيار النواة.</li>
+            <li><strong>الثقوب السوداء متوسطة الكتلة:</strong> تُقدّر كتلتها بمئات إلى عشرات الآلاف من كتل الشمس. وجودها ما يزال موضوع بحث وملاحظة؛ قد تكون جسرًا بين الثقوب النجمية والفائقة.</li>
+            <li><strong>الثقوب السوداء فائقة الكتلة:</strong> توجد في مراكز المجرات، وكتلتها ملايين إلى مليارات أضعاف كتلة الشمس؛ وتلعب دورًا مهمًا في تطور المجرات مثل درب التبانة وM87.</li>
+            <li><strong>ثقوب سوداء أولية (نظريًا):</strong> افترضت بعض النماذج الكونية أنها تشكلت في الكون البدائي بكثافات عالية، وقد تكون صغيرة جداً أو متوسطة، لكن الأدلة لا تزال غير مؤكدة.</li>
+        </ul>
 
-    // Save
-    function save(){
-      localStorage.setItem(LS_KEY, JSON.stringify(tasks));
-      renderStats();
-    }
+        <div class="sub-heading">خصائص فيزيائية مهمة</div>
+        <p>من الخصائص المهمة: نصف القطر الكروي المعروف بنصف قطر شوارزشيلد (Schwarzschild radius) للثقب غير الدوار؛ ووجود خاصية الدوران (spin) والشحنة الكهربائية (نادر جداً في الواقع) التي تؤثر على بنية الأفق وسلوك الجسيمات المحيطة.</p>
+    </div>
 
-    // Render
-    function render(){
-      board.innerHTML = '';
-      const q = searchIn.value.trim().toLowerCase();
-      const filter = filterSel.value;
-      const sort = sortSel.value;
+    <!-- صفحة 4: آثار النسبية والظواهر -->
+    <div class="page" id="page4">
+        <span class="side-heading">آثار النسبية والظواهر الفلكية</span>
 
-      let list = tasks.slice();
+        <div class="sub-heading">انحراف الزمن وقوة الجاذبية</div>
+        <p>تنبأت النظرية النسبية العامة بأن الزمن يمرُّ أبطأ قرب الأجسام الضخمة، ومع الثقوب السوداء يصبح الاختلاف متطرفًا. مراقب بعيد يرى الساعة على جسم يقترب من الثقب تبطئ تدريجيًا حتى تتوقف ظاهريًا عند أفق الحد. هذا التفاضل في مرور الزمن له تأثيرات عملية عند دراسة إشارات مرسلة من مواد قريبة من أفق الحد.</p>
 
-      // Filter
-      if(filter === 'active') list = list.filter(t => !t.done);
-      if(filter === 'done') list = list.filter(t => t.done);
+        <div class="sub-heading">أقراص الاعتماد والجيتيات (النفاثات)</div>
+        <p>المواد التي تُسحب نحو الثقب لا تسقط مباشرة في معظم الحالات، بل تشكل قرصًا دوّارًا حوله بفعل الزخم الزاوي. داخل هذا القرص ترتفع درجات الحرارة وتنتج إشعاعات قوية عبر طيف واسع (من الراديو إلى أشعة إكس). بعض الثقوب، وخصوصًا في مراكز المجرات النشطة، تطلق نفاثات مدهشة من الجسيمات عالية الطاقة بسرعة قريبة من سرعة الضوء، وتستمر لمسافات هائلة.</p>
 
-      // Search
-      if(q){
-        list = list.filter(t => (t.title + ' ' + (t.desc||'') + ' ' + (t.tags||'')).toLowerCase().includes(q));
-      }
+        <div class="image-block">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTvnhIVdh0KZMbP6ocDRGC1Y3D7othA8vshPg-dCFzyaQ&s=10" alt="صورة ثقب أسود" />
+            <div class="small-note">شكل توضيحي لظل الثقب الأسود والقرص الاعتمادي المحيط به.</div>
+        </div>
 
-      // Sort
-      if(sort === 'due-asc'){
-        list.sort((a,b)=>{
-          if(!a.due && !b.due) return 0;
-          if(!a.due) return 1;
-          if(!b.due) return -1;
-          return new Date(a.due) - new Date(b.due);
-        });
-      } else if(sort === 'due-desc'){
-        list.sort((a,b)=>{
-          if(!a.due && !b.due) return 0;
-          if(!a.due) return 1;
-          if(!b.due) return -1;
-          return new Date(b.due) - new Date(a.due);
-        });
-      } else if(sort === 'prio-high'){
-        const map = {high:0, med:1, low:2};
-        list.sort((a,b)=>map[a.priority]-map[b.priority]);
-      } // custom keeps order
+        <div class="sub-heading">تفرد ومشكلات الفيزياء</div>
+        <p>في مركز الثقب تشير النماذج إلى وجود تفرد حيث تنهار المسافة والزمن بمفهومنا. هذه النقطة تُظهر حدود النظريات الحالية، وتحتاج إلى نظرية كمية للجاذبية لشرحها بشكل كامل — وهي من أهم أسئلة الفيزياء النظرية اليوم.</p>
+    </div>
 
-      if(list.length === 0){
-        emptyBox.style.display = 'block';
-      } else {
-        emptyBox.style.display = 'none';
-      }
+    <!-- صفحة 5: الملاحظات والاكتشافات الحديثة -->
+    <div class="page" id="page5">
+        <span class="side-heading">الملاحظات والاكتشافات الحديثة</span>
+        <p>السجل الرصدي للثقوب السوداء تحسّن كثيرًا خلال العقود الأخيرة. من الأدلة غير المباشرة على وجود ثقوب سوداء إلى الصور المباشرة والقياسات المتقدمة استطاع العلماء إثبات وجود هذه الأجسام وقياس خواصها بدقة لم يسبق لها مثيل.</p>
 
-      list.forEach(task => {
-        const el = document.createElement('div');
-        el.className = 'task' + (task.done ? ' done' : '');
-        el.draggable = true;
-        el.dataset.id = task.id;
-        el.setAttribute('aria-label', task.title);
-        el.innerHTML = `
-          <div class="left">
-            <div class="title-row">
-              <h3>${escapeHtml(task.title)}</h3>
-              <div class="small">${task.due ? formatDate(task.due) : ''}</div>
-            </div>
-            <div class="small" style="margin-top:6px">${task.desc ? escapeHtml(task.desc) : ''}</div>
-            <div class="badges">
-              <div class="badge ${task.priority==='low'?'priority-low':task.priority==='med'?'priority-med':'priority-high'}">${prioLabel(task.priority)}</div>
-              ${task.tags ? task.tags.split(',').slice(0,5).map(t=>`<div class="badge">${escapeHtml(t.trim())}</div>`).join('') : ''}
-              <div class="badge small">إنشئت: ${formatDateTime(task.created)}</div>
-            </div>
-          </div>
-          <div class="actions" role="group" aria-label="أفعال">
-            <button class="icon-btn toggle-done" title="تبديل الحالة">${task.done? '↺':'✓'}</button>
-            <button class="icon-btn edit" title="تعديل">✏️</button>
-            <button class="icon-btn delete" title="حذف">🗑️</button>
-          </div>
-        `;
+        <div class="sub-heading">صورة ظل الثقب: مرصد أفق الحد (EHT)</div>
+        <p>في عامٍ شهد إنجازًا تاريخيًا عرض مرصد أفق الحدّ (Event Horizon Telescope) صورة الظل لأول مرة لثقبٍ أسودٍ فائق الكتلة في مجرة M87. الصورة لم تُرَ الثقب مباشرة بل ظلًا مظلمًا في وسط حلقة مضيئة للقرص الاعتمادي، وقد عزّزت الصورة فهمنا للبنية القريبة من الأفق وقدمت اختبارًا قويًا للنسبية العامة في ظروف متطرفة.</p>
 
-        // Drag events
-        el.addEventListener('dragstart', (e)=>{
-          dragSrcId = task.id;
-          el.classList.add('dragging');
-          e.dataTransfer.effectAllowed = 'move';
-        });
-        el.addEventListener('dragend', ()=>{ el.classList.remove('dragging'); });
+        <div class="sub-heading">موجات الجاذبية: LIGO وVirgo</div>
+        <p>الكاشفات الأرضية لموجات الجاذبية مثل LIGO وVirgo أظهرت لنا إشارات مباشرة لاندماج ثقوب سوداء. عند اندماج ثقبين أسودين تُنتَج موجات في نسيج الزمكان رُصدت للمرة الأولى في 2015، ومنذ ذلك الحين تم تسجيل عشرات الإشارات التي أمدتنا بمعلومات عن كتل وأسرار تكون الثقوب وتطورها.</p>
 
-        el.addEventListener('dragover', (e)=>{
-          e.preventDefault();
-          e.dataTransfer.dropEffect = 'move';
-          // highlight where to drop?
-        });
+        <div class="sub-heading">أدوات رصدية أخرى وتأثيرها</div>
+        <p>التلسكوبات الراديوية، المرصدات الأشعة السينية، والمراصد البصرية تُكمل الصورة. دراسة حركات النجوم حول مركزي مجرتنا تؤكد وجود ثقب أسود فائق الكتلة في قلب درب التبانة يُدعى "ساجيتاريوس A*" وتُستخدم هذه الحركات لقياس الكتلة والموقع بدقة.</p>
+    </div>
 
-        el.addEventListener('drop', (e)=>{
-          e.preventDefault();
-          const targetId = task.id;
-          if(!dragSrcId || dragSrcId === targetId) return;
-          reorder(dragSrcId, targetId);
-          dragSrcId = null;
-        });
+    <!-- صفحة 6: دور الثقوب في الكون وحوار تخيلي -->
+    <div class="page" id="page6">
+        <span class="side-heading">دور الثقوب السوداء في تطور الكون</span>
+        <p>تلعب الثقوب السوداء دورًا مركزيًا في تشكيل وبناء المجرات. النفاثات الصادرة من النوى المجرية النشطة تؤثر في خزن الغاز وتمنع تكوّن نجوم بكثافة مفرطة في بعض المراحل، أو بالعكس تشجع على تكوّن نجوم في مناطق أخرى. فهم العلاقة المشتركة بين نمو الثقوب السوداء وتطور مجراتها ما زال موضوعًا نشطًا للبحث.</p>
 
-        // actions
-        qs('.toggle-done', el).addEventListener('click', ()=>{ toggleDone(task.id); });
-        qs('.edit', el).addEventListener('click', ()=>{ openEdit(task.id); });
-        qs('.delete', el).addEventListener('click', ()=>{ removeTask(task.id); });
+        <div class="sub-heading">آفاق مستقبلية للبحث</div>
+        <p>المجالات البحثية تركز الآن على: دمج النسبية العامة مع ميكانيكا الكم، فهم طبيعة التفرد، البحث عن الثقوب متوسطة الكتلة، ودراسة تأثير الثقوب على بيئة المجرات عبر الزمن الكوني. التقنيات المستقبلية مثل مراصد موجات الجاذبية الفضائية والتلسكوبات الراديوية المتقدمة ستفتح نوافذ جديدة.</p>
 
-        board.appendChild(el);
-      });
-      renderStats();
-    }
+        <div class="side-heading">حوار تخيّلي بين عالمين</div>
 
-    // Utility functions
-    function prioLabel(p){
-      return p === 'low' ? 'منخفضة' : p === 'med' ? 'متوسطة' : 'عالية';
-    }
-    function formatDate(d){
-      if(!d) return '';
-      const dt = new Date(d);
-      // format: YYYY-MM-DD -> display Arabic localized short
-      return dt.toLocaleDateString('ar-EG',{year:'numeric',month:'short',day:'numeric'});
-    }
-    function formatDateTime(ts){
-      const dt = new Date(ts);
-      return dt.toLocaleString('ar-EG',{year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});
-    }
-    function escapeHtml(s){
-      if(!s) return '';
-      return s.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
-    }
+        <div class="image-block">
+            <img src="https://img.youm7.com/ArticleImgs/2019/4/10/169682-%D8%A8%D8%B9%D8%AF-%D8%A7%D9%84%D9%83%D8%B4%D9%81-%D8%B9%D9%86-%D8%A7%D9%84%D8%AB%D9%82%D8%A8-%D8%A7%D9%84%D8%A3%D8%B3%D9%88%D8%AF-%D8%AD%D9%88%D8%A7%D8%B1-%D9%85%D8%AA%D8%AE%D9%8A%D9%84-%D8%A8%D9%8A%D9%86-%D8%A2%D9%8A%D9%86%D8%B4%D8%AA%D8%A7%D9%8A%D9%86-%D9%88%D8%B3%D8%AA%D9%8A%D9%81%D9%86-%D9%87%D9%88%D9%83%D9%8A%D9%86%D8%AC.jpg" alt="صورة الحوار التخيلي" />
+            <div class="small-note">صورة توضيحية للحوار التخيلي بين عالمين.</div>
+        </div>
 
-    // Add
-    addBtn.addEventListener('click', ()=>{
-      const title = titleIn.value.trim();
-      if(!title){ alert('الرجاء إدخال عنوان للمهمة.'); titleIn.focus(); return; }
-      const t = {
-        id: uid(),
-        title,
-        desc: descIn.value.trim(),
-        due: dueIn.value || null,
-        priority: prioIn.value || 'med',
-        tags: tagsIn.value.split(',').map(x=>x.trim()).filter(Boolean).join(','),
-        done: false,
-        created: Date.now()
-      };
-      tasks.push(t);
-      // clear form
-      titleIn.value = '';
-      descIn.value = '';
-      dueIn.value = '';
-      tagsIn.value = '';
-      prioIn.value = 'med';
-      save();
-      render();
-    });
+        <div class="dialogue">
+            <p><strong>ستيفن:</strong> دعنا نتخيّل أننا نقف على حافة فهمنا — ماذا يعني أن يكون المكان والزمان قابلا للانحناء إلى هذه الدرجة؟</p>
+            <p><strong>آينشتاين:</strong> إنه اختبارٌ لطبيعتي المعادلات في مجالٍ لم أتوقعه عند كتابتها. إن النسبية تُظهر أن الهندسة ليست جامدة، بل مرنة، والفضاء نفسه يتفاعل مع المادة.</p>
+            <p><strong>ستيفن:</strong> وما معنى التفرد؟ هل هو نهاية الفيزياء؟</p>
+            <p><strong>آينشتاين:</strong> التفرد يشير إلى أن النماذج الحالية تنهار هناك؛ لكنه دعوة للبحث لا للاستسلام. على الفيزياء القادمة أن تشرح ما يحدث عند تلك الحدود.</p>
+            <p><strong>ستيفن:</strong> وما المثير في رصد ظل الثقب واندماجاته؟</p>
+            <p><strong>آينشتاين:</strong> أن يصبح لدينا أدوات نرصُد بها خواصٍ كنا نتصورها رياضياً فقط؛ هذا يجعل النظريات قابلة للاختبار ويقود إلى فهمٍ أعمق للكون.</p>
+        </div>
 
-    // Toggle done
-    function toggleDone(id){
-      const t = tasks.find(x=>x.id===id);
-      if(!t) return;
-      t.done = !t.done;
-      save(); render();
-    }
+        <p>هذا الحوار التخيلي يساعد على ترجمة المفاهيم العلمية إلى نقاش بسيط يوضح الفرق بين النظرية والملاحظة، وأهمية أدوات الرصد في تقدم العلم.</p>
+    </div>
 
-    // Remove
-    function removeTask(id){
-      if(!confirm('هل أنت متأكد أنك تريد حذف المهمة؟')) return;
-      tasks = tasks.filter(x=>x.id !== id);
-      save(); render();
-    }
+    <!-- صفحة 7: المصادر -->
+    <div class="page" id="page7">
+        <span class="side-heading">المصادر</span>
 
-    // Clear all
-    clearAllBtn.addEventListener('click', ()=>{
-      if(!confirm('حذف كل المهام من جهازك؟ العملية لا يمكن التراجع عنها.')) return;
-      tasks = [];
-      save(); render();
-    });
+        <ol style="font-size:13px;">
+            <li>مختصرات في النسبية العامة وخصائص حلول شوارزشيلد وكير (كتب ومراجع جامعية).</li>
+            <li>تقارير مرصد أفق الحدّ (Event Horizon Telescope) — نتائج وصور الظل لثقب M87.</li>
+            <li>بيانات واكتشافات LIGO وVirgo عن موجات الجاذبية واندماجات الثقوب السوداء.</li>
+            <li>مقالات مراجعة في فيزياء الأقراص الاعتمادية والنفاثات في المجلات الفلكية.</li>
+            <li>مقالات تعليمية ومقررات مادة علوم الأرض والفضاء المستخدمة في المدارس.</li>
+        </ol>
 
-    // Stats
-    function renderStats(){
-      countChip.textContent = `المهام: ${tasks.length}`;
-      doneChip.textContent = `مكتملة: ${tasks.filter(t=>t.done).length}`;
-      const upcoming = tasks.filter(t=>t.due && !t.done).sort((a,b)=>new Date(a.due)-new Date(b.due))[0];
-      nextDue.textContent = upcoming ? `أقرب تاريخ: ${formatDate(upcoming.due)}` : 'أقرب تاريخ: —';
-    }
+        <div class="info" style="margin-top:12px;">
+            <p class="small-note">ملاحظة: إن رغبت في قائمة مراجع مفصّلة مع روابط مباشرة لأوراق بحثية ومقالات مرجعية (مثل أوراق EHT، تقارير LIGO، ومراجعات في مجلة "Reviews of Modern Physics") أقدر أضيفها وأرتب المراجع بصيغة مناسبة للطباعة (APA أو MLA) — قلّي أي صيغة تحب.</p>
+        </div>
 
-    // Reorder: move source before target
-    function reorder(srcId, tgtId){
-      const srcIndex = tasks.findIndex(t=>t.id===srcId);
-      const tgtIndex = tasks.findIndex(t=>t.id===tgtId);
-      if(srcIndex === -1 || tgtIndex === -1) return;
-      const [item] = tasks.splice(srcIndex,1);
-      tasks.splice(tgtIndex,0,item);
-      save(); render();
-    }
+        <div style="margin-top:18px; font-size:12px; color:#444;">
+            <p><strong>حقوق الصور:</strong> الصور المدرجة مأخوذة من عناوين ومصادر إلكترونية مقدمة من المستخدم لأغراض التوضيح في المشروع المدرسي.</p>
+        </div>
+    </div>
 
-    // Search/filter/sort listeners
-    [searchIn, filterSel, sortSel].forEach(el => el.addEventListener('input', render));
-
-    // Export
-    exportBtn.addEventListener('click', ()=>{
-      const data = JSON.stringify(tasks, null, 2);
-      const blob = new Blob([data], {type:'application/json'});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'tasks-export.json';
-      a.click();
-      URL.revokeObjectURL(url);
-    });
-
-    // Import
-    importFile.addEventListener('change', (e)=>{
-      const f = e.target.files[0];
-      if(!f) return;
-      const reader = new FileReader();
-      reader.onload = () => {
-        try{
-          const imported = JSON.parse(reader.result);
-          if(!Array.isArray(imported)){ alert('الملف لا يحتوي على بيانات صالحة'); return; }
-          // merge: keep existing and append, but ensure unique ids
-          imported.forEach(it=>{
-            if(!it.id) it.id = uid();
-          });
-          tasks = tasks.concat(imported);
-          save(); render();
-          alert('تم الاستيراد بنجاح.');
-        }catch(err){
-          alert('فشل قراءة الملف: ' + err.message);
-        }
-      };
-      reader.readAsText(f);
-      e.target.value = '';
-    });
-
-    // Edit modal
-    let editingId = null;
-    function openEdit(id){
-      const t = tasks.find(x=>x.id===id);
-      if(!t) return;
-      editingId = id;
-      mTitle.value = t.title;
-      mDesc.value = t.desc || '';
-      mDue.value = t.due || '';
-      mPriority.value = t.priority || 'med';
-      mTags.value = t.tags || '';
-      modal.classList.add('open');
-      modal.setAttribute('aria-hidden','false');
-    }
-    closeModal.addEventListener('click', ()=>{ closeModalFn(); });
-    modal.addEventListener('click', (e)=>{ if(e.target===modal) closeModalFn(); });
-    function closeModalFn(){ modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); editingId=null; }
-
-    saveEdit.addEventListener('click', ()=>{
-      if(!editingId) return;
-      const t = tasks.find(x=>x.id===editingId);
-      if(!t) return;
-      const title = mTitle.value.trim();
-      if(!title){ alert('الرجاء إدخال عنوان للمهمة.'); mTitle.focus(); return; }
-      t.title = title;
-      t.desc = mDesc.value.trim();
-      t.due = mDue.value || null;
-      t.priority = mPriority.value || 'med';
-      t.tags = mTags.value.split(',').map(x=>x.trim()).filter(Boolean).join(',');
-      save(); render(); closeModalFn();
-    });
-
-    deleteTaskBtn.addEventListener('click', ()=>{
-      if(!editingId) return;
-      if(!confirm('حذف هذه المهمة نهائيًا؟')) return;
-      tasks = tasks.filter(x=>x.id !== editingId);
-      save(); render(); closeModalFn();
-    });
-
-    // keyboard shortcuts (global)
-    document.addEventListener('keydown', (e)=>{
-      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
-        e.preventDefault();
-        searchIn.focus();
-      }
-      if(e.key === 'Escape') closeModalFn();
-    });
-
-    // initial boot
-    load();
-    render();
-
-    // For demo: add sample if empty
-    if(tasks.length === 0){
-      tasks.push(
-        {id: uid(), title: 'تسليم تقرير المشروع', desc:'إنهاء صفحة الملخص وإرسالها للعميل', due: addDays(2), priority:'high', tags:'عمل, عاجل', done:false, created: Date.now()},
-        {id: uid(), title: 'تمارين رياضية', desc:'30 دقيقة مشي/هرولة', due: null, priority:'low', tags:'صحة', done:false, created: Date.now()},
-        {id: uid(), title: 'شراء مستلزمات', desc:'حليب، خبز، منظف', due: addDays(5), priority:'med', tags:'منزل', done:false, created: Date.now()}
-      );
-      save(); render();
-    }
-
-    // small helpers used above
-    function addDays(n){
-      const d = new Date();
-      d.setDate(d.getDate()+n);
-      return d.toISOString().slice(0,10);
-    }
-  </script>
+</div>
 </body>
 </html>
