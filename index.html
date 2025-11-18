@@ -1,4 +1,3 @@
-```html
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -14,7 +13,7 @@
             font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f9f9f9;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             line-height: 1.6;
         }
@@ -24,24 +23,70 @@
             margin: 10mm auto;
             padding: 20mm;
             background: white;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
             box-sizing: border-box;
             position: relative;
             page-break-after: always;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+        .cover-page {
+            background: linear-gradient(45deg, #1a2980, #26d0ce);
+            color: white;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border: 15px solid #ffd700;
+            box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
+        }
+        .cover-border {
+            border: 8px solid #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
         }
         h1, h2, h3 {
             color: #2c3e50;
+        }
+        .cover-page h1 {
+            color: white;
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .cover-page h2 {
+            color: #ffd700;
+            font-size: 28px;
+            margin: 25px 0;
+            border: none;
+        }
+        .cover-page .student-info {
+            font-size: 22px;
+            margin: 15px 0;
+            padding: 10px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 8px;
+            width: 80%;
+            border: 2px solid rgba(255,255,255,0.3);
         }
         h1 {
             text-align: center;
             margin-bottom: 20px;
             font-size: 24px;
+            color: #1a2980;
         }
         h2 {
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 5px;
+            border-bottom: 3px solid #26d0ce;
+            padding-bottom: 8px;
             margin-top: 25px;
             font-size: 20px;
+            background: linear-gradient(90deg, #1a2980, #26d0ce);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         h3 {
             margin-top: 20px;
@@ -58,11 +103,15 @@
         }
         li {
             margin-bottom: 8px;
+            padding: 5px;
+            border-right: 3px solid #26d0ce;
+            background: #f8f9fa;
+            margin-right: 10px;
         }
         .header {
             text-align: center;
             margin-bottom: 30px;
-            border-bottom: 2px solid #3498db;
+            border-bottom: 3px solid #26d0ce;
             padding-bottom: 15px;
         }
         .header div {
@@ -77,8 +126,12 @@
             margin-top: 30px;
             font-size: 14px;
             color: #7f8c8d;
-            border-top: 1px solid #bdc3c7;
+            border-top: 2px solid #bdc3c7;
             padding-top: 10px;
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
         }
         .content {
             margin-top: 20px;
@@ -86,39 +139,105 @@
         .figure {
             text-align: center;
             margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
         }
         .figure img {
             max-width: 100%;
             border: 1px solid #ddd;
             padding: 10px;
-            background: #f8f8f8;
+            background: white;
         }
         .caption {
             font-style: italic;
-            margin-top: 5px;
+            margin-top: 10px;
             color: #555;
+            font-weight: bold;
         }
         .review-questions {
-            background: #ecf0f1;
-            padding: 15px;
-            border-right: 5px solid #3498db;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            border-radius: 10px;
             margin: 20px 0;
+            color: white;
         }
-        .question {
+        .review-questions .question {
             margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 5px;
+            border-right: 4px solid #ffd700;
+        }
+        .decoration {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: rgba(38, 208, 206, 0.1);
+            border-radius: 50%;
+            z-index: 0;
+        }
+        .decoration1 {
+            top: 50px;
+            left: 50px;
+            width: 120px;
+            height: 120px;
+        }
+        .decoration2 {
+            bottom: 80px;
+            right: 60px;
+            width: 80px;
+            height: 80px;
+        }
+        .content-page {
+            border: 8px solid #1a2980;
+            background: linear-gradient(white, #f8f9fa);
+        }
+        .subject {
+            color: #ffd700;
+            font-size: 24px;
+            margin-top: 30px;
+        }
+        .date {
+            color: #26d0ce;
+            font-size: 18px;
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
 
-    <!-- الصفحة الأولى -->
-    <div class="page">
-        <div class="header">
+    <!-- الصفحة الأولى - الغلاف -->
+    <div class="page cover-page">
+        <div class="decoration decoration1"></div>
+        <div class="decoration decoration2"></div>
+        <div class="cover-border">
             <h1>تقرير فيزياء</h1>
-            <div class="student-info">الاسم: سلطان مروان</div>
-            <div class="student-info">الصف: 304</div>
-            <div class="student-info">المادة: فيزياء</div>
-            <div class="student-info">عنوان التقرير: الانعكاس الكلي الداخلي وتطبيقاته</div>
+            <h2>الانعكاس الكلي الداخلي وتطبيقاته</h2>
+            
+            <div class="student-info">
+                الاسم: سلطان مروان
+            </div>
+            <div class="student-info">
+                الصف: 304
+            </div>
+            <div class="student-info">
+                المادة: فيزياء
+            </div>
+            <div class="student-info subject">
+                الفصل الدراسي: الثاني
+            </div>
+            <div class="student-info date">
+                تاريخ التسليم: ١٤٤٥/٠٨/٢٠
+            </div>
+        </div>
+    </div>
+
+    <!-- الصفحة الثانية -->
+    <div class="page content-page">
+        <div class="header">
+            <h1>تقرير فيزياء - الانعكاس الكلي الداخلي</h1>
         </div>
 
         <div class="content">
@@ -139,9 +258,6 @@
             <p>
                 السراب هو ظاهرة بصرية طبيعية تحدث نتيجة الانعكاس الكلي الداخلي في ظروف جوية معينة. في الأيام الحارة، ترتفع درجة حرارة الهواء بالقرب من سطح الأرض، مما يجعله أقل كثافة وبالتالي معامل انكساره أقل. عندما يمر الضوء خلال هذه الطبقات الهوائية المختلفة الكثافة، ينحرف بشكل تدريجي إلى الأعلى، مما يخلق وهم وجود انعكاسات للمشاهد البعيدة، كأنها على سطح ماء.
             </p>
-            <p>
-                هناك نوعان رئيسيان من السراب: السراب الصحراوي (السراب السفلي) والسراب القطبي (السراب العلوي).
-            </p>
         </div>
 
         <div class="footer">
@@ -149,8 +265,8 @@
         </div>
     </div>
 
-    <!-- الصفحة الثانية -->
-    <div class="page">
+    <!-- الصفحة الثالثة -->
+    <div class="page content-page">
         <h2>تحليل الضوء (Dispersion)</h2>
         <p>
             يحدث تشتت الضوء عندما يمر الضوء الأبيض عبر وسط شفاف مثل المنشور، فيتحلل إلى ألوان الطيف السبعة. هذا ينتج بسبب اختلاف سرعة الضوء باختلاف طوله الموجي في الوسط نفسه.
@@ -177,6 +293,7 @@
             <li><strong>المناظير والأدوات البصرية:</strong> تستخدم الانعكاس الكلي الداخلي في تصميمها.</li>
             <li><strong>الاتصالات:</strong> تعتمد شبكات الإنترنت والهاتف على الألياف البصرية.</li>
             <li><strong>الطب:</strong> تستخدم الألياف البصرية في المناظير الطبية.</li>
+            <li><strong>الإضاءة:</strong> تستخدم في أنظمة الإضاءة الداخلية والديكورية.</li>
         </ul>
         
         <div class="footer">
@@ -184,8 +301,8 @@
         </div>
     </div>
 
-    <!-- الصفحة الثالثة -->
-    <div class="page">
+    <!-- الصفحة الرابعة -->
+    <div class="page content-page">
         <h2>أسئلة المراجعة</h2>
         <div class="review-questions">
             <div class="question">
@@ -206,21 +323,19 @@
             <div class="question">
                 <strong>9.</strong> زاوية الانكسار: تعبر حزمة ضوئية من الهواء إلى داخل البولي إيثيلين (معامل الانكسار 1.50). فإذا كانت زاوية السقوط 57.5°، فما زاوية الانكسار في البولي إيثيلين؟
             </div>
-            <div class="question">
-                <strong>10.</strong> الزاوية الحرجة: هل هناك زاوية حرجة للضوء المنتقل من الزجاج إلى الهواء، وللضوء المنتقل من الهواء إلى الزجاج؟
-            </div>
-            <div class="question">
-                <strong>11.</strong> التشريع: لماذا تستطيع رؤية صورة الشمس فوق الأفق تماماً عندما تكون الشمس نفسها قد غابت فعلاً؟
-            </div>
-            <div class="question">
-                <strong>12.</strong> التشريع الناقد: في أي اتجاه تستطيع رؤية قوس المطر في مساء يوم ماطر؟ وضح إجابتك.
-            </div>
         </div>
 
         <h2>الخاتمة</h2>
         <p>
-            يعد الانعكاس الكلي الداخلي وتشتت الضوء من الظواهر الأساسية في علم البصريات، ولها تطبيقات واسعة في التكنولوجيا والطبيعة. من خلال فهم هذه الظواهر، يمكننا تصميم أدوات وتقنيات متطورة تساهم في تطور الاتصالات والطب والعلوم الأخرى.
+            يعد الانعكاس الكلي الداخلي وتشتت الضوء من الظواهر الأساسية في علم البصريات، ولها تطبيقات واسعة في التكنولوجيا والطبيعة. من خلال فهم هذه الظواهر، يمكننا تصميم أدوات وتقنيات متطورة تساهم في تطور الاتصالات والطب والعلوم الأخرى. هذه الظواهر تثبت مدى جمال ودقة القوانين الفيزيائية التي تحكم عالمنا.
         </p>
+
+        <h2>المراجع</h2>
+        <ul>
+            <li>كتاب الفيزياء للصف الثالث الثانوي</li>
+            <li>موسوعة البصريات والضوء</li>
+            <li>بعض المواقع العلمية المتخصصة على الإنترنت</li>
+        </ul>
 
         <div class="footer">
             الصفحة 3 من 3
@@ -229,25 +344,3 @@
 
 </body>
 </html>
-```
-
-هذا التقرير يحتوي على:
-
-1. صفحة كاملة منسقة بتصميم احترافي.
-2. الصفحة الأولى تشمل:
-   · الاسم: سلطان مروان
-   · الصف: 304
-   · المادة: فيزياء
-   · عنوان التقرير: الانعكاس الكلي الداخلي وتطبيقاته
-3. محتويات التقرير:
-   · مقدمة عن الانعكاس الكلي الداخلي
-   · شرح الظاهرة وتطبيقاتها (الألياف البصرية)
-   · ظاهرة السراب
-   · تشتت الضوء
-   · قوس القزح
-   · تطبيقات أخرى
-   · أسئلة المراجعة
-   · خاتمة
-4. تنسيق متجاوب مع ترويسة وتذييل لكل صفحة.
-
-يمكنك حفظ هذا الكود كملف HTML وفتحه في أي متصفح للحصول على تقرير منسق وجاهز للطباعة.
