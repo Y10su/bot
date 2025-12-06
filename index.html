@@ -3,344 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تقرير فيزياء - الانعكاس الكلي الداخلي وتطبيقاته</title>
+    <title>تقرير تطبيقات العدسات</title>
     <style>
         @page {
             size: A4;
-            margin: 0;
+            margin: 2cm;
         }
         body {
             font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: black;
+            background-color: white;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-            line-height: 1.6;
         }
         .page {
-            width: 210mm;
-            height: 297mm;
-            margin: 10mm auto;
-            padding: 20mm;
-            background: white;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            width: 21cm;
+            min-height: 29.7cm;
+            margin: 0 auto;
+            padding: 2cm;
             box-sizing: border-box;
-            position: relative;
-            page-break-after: always;
-            border-radius: 15px;
-            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
         }
-        .cover-page {
-            background: linear-gradient(45deg, #1a2980, #26d0ce);
-            color: white;
+        h1, h2, h3 {
+            color: black;
+            text-align: center;
+        }
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid black;
+            padding-bottom: 10px;
+        }
+        h2 {
+            font-size: 22px;
+            margin-top: 30px;
+            border-right: 4px solid black;
+            padding-right: 10px;
+        }
+        h3 {
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        p, li {
+            font-size: 16px;
+            text-align: justify;
+            margin-bottom: 10px;
+        }
+        ul {
+            padding-right: 20px;
+        }
+        .header-page {
             text-align: center;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            border: 15px solid #ffd700;
-            box-shadow: inset 0 0 30px rgba(255,255,255,0.3);
-        }
-        .cover-border {
-            border: 8px solid #ffffff;
+            height: 100%;
+            border: 2px solid black;
             padding: 40px;
-            border-radius: 10px;
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            background-color: #f9f9f9;
         }
-        h1, h2, h3 {
-            color: #2c3e50;
-        }
-        .cover-page h1 {
-            color: white;
-            font-size: 36px;
-            margin-bottom: 40px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
-        .cover-page h2 {
-            color: #ffd700;
-            font-size: 28px;
-            margin: 25px 0;
-            border: none;
-        }
-        .cover-page .student-info {
-            font-size: 22px;
-            margin: 15px 0;
-            padding: 10px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 8px;
-            width: 80%;
-            border: 2px solid rgba(255,255,255,0.3);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 24px;
-            color: #1a2980;
-        }
-        h2 {
-            border-bottom: 3px solid #26d0ce;
-            padding-bottom: 8px;
-            margin-top: 25px;
-            font-size: 20px;
-            background: linear-gradient(90deg, #1a2980, #26d0ce);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        h3 {
-            margin-top: 20px;
-            font-size: 18px;
-            color: #2980b9;
-        }
-        p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-        ul {
-            margin: 10px 0;
-            padding-right: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-            padding: 5px;
-            border-right: 3px solid #26d0ce;
-            background: #f8f9fa;
-            margin-right: 10px;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #26d0ce;
-            padding-bottom: 15px;
-        }
-        .header div {
-            margin: 5px 0;
-        }
-        .student-info {
-            font-size: 18px;
-            font-weight: bold;
+        .title-box {
+            margin: 40px 0;
+            padding: 30px;
+            border: 3px solid black;
         }
         .footer {
             text-align: center;
             margin-top: 30px;
             font-size: 14px;
-            color: #7f8c8d;
-            border-top: 2px solid #bdc3c7;
+            border-top: 1px solid black;
             padding-top: 10px;
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            right: 20px;
         }
-        .content {
-            margin-top: 20px;
+        .section {
+            margin-bottom: 30px;
+        }
+        .page-break {
+            page-break-before: always;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
         }
         .figure {
             text-align: center;
             margin: 20px 0;
-            padding: 15px;
-            background: #f8f9fa;
-            border: 2px solid #e9ecef;
-            border-radius: 8px;
-        }
-        .figure img {
-            max-width: 100%;
-            border: 1px solid #ddd;
-            padding: 10px;
-            background: white;
-        }
-        .caption {
             font-style: italic;
-            margin-top: 10px;
-            color: #555;
-            font-weight: bold;
         }
-        .review-questions {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-            border-radius: 10px;
+        .review-box {
+            border: 1px solid black;
+            padding: 15px;
             margin: 20px 0;
-            color: white;
+            background-color: #f5f5f5;
         }
-        .review-questions .question {
-            margin-bottom: 15px;
-            padding: 10px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 5px;
-            border-right: 4px solid #ffd700;
-        }
-        .decoration {
-            position: absolute;
-            width: 100px;
-            height: 100px;
-            background: rgba(38, 208, 206, 0.1);
-            border-radius: 50%;
-            z-index: 0;
-        }
-        .decoration1 {
-            top: 50px;
-            left: 50px;
-            width: 120px;
-            height: 120px;
-        }
-        .decoration2 {
-            bottom: 80px;
-            right: 60px;
-            width: 80px;
-            height: 80px;
-        }
-        .content-page {
-            border: 8px solid #1a2980;
-            background: linear-gradient(white, #f8f9fa);
-        }
-        .subject {
-            color: #ffd700;
-            font-size: 24px;
-            margin-top: 30px;
-        }
-        .date {
-            color: #26d0ce;
-            font-size: 18px;
-            margin-top: 20px;
+        .info-box {
+            margin: 30px auto;
+            padding: 20px;
+            border: 2px solid black;
+            width: 80%;
+            background-color: #f0f0f0;
         }
     </style>
 </head>
 <body>
-
-    <!-- الصفحة الأولى - الغلاف -->
-    <div class="page cover-page">
-        <div class="decoration decoration1"></div>
-        <div class="decoration decoration2"></div>
-        <div class="cover-border">
-            <h1>تقرير فيزياء</h1>
-            <h2>الانعكاس الكلي الداخلي وتطبيقاته</h2>
+    <!-- صفحة المعلومات الشخصية -->
+    <div class="page">
+        <div class="header-page">
+            <div class="title-box">
+                <h1>تقرير فيزيائي</h1>
+                <h2>تطبيقات العدسات</h2>
+            </div>
             
-            <div class="student-info">
-                الاسم: سلطان مروان
+            <div class="info-box">
+                <h3>معلومات الطالب</h3>
+                <p><strong>الاسم:</strong> سلطان مروان اليافعي</p>
+                <p><strong>الصف:</strong> 3/4</p>
+                <p><strong>المادة:</strong> الفيزياء</p>
             </div>
-            <div class="student-info">
-                الصف: 304
-            </div>
-            <div class="student-info">
-                المادة: فيزياء
-            </div>
-            <div class="student-info subject">
-                الفصل الدراسي: الثاني
-            </div>
-            <div class="student-info date">
-                تاريخ التسليم: ١٤٤٥/٠٨/٢٠
+            
+            <div style="margin-top: 50px;">
+                <p>المدرسة الثانوية</p>
+                <p>الفصل الدراسي الثاني</p>
             </div>
         </div>
     </div>
 
-    <!-- الصفحة الثانية -->
-    <div class="page content-page">
-        <div class="header">
-            <h1>تقرير فيزياء - الانعكاس الكلي الداخلي</h1>
-        </div>
-
-        <div class="content">
+    <!-- صفحة المقدمة -->
+    <div class="page page-break">
+        <div class="section">
             <h2>المقدمة</h2>
             <p>
-                يعد الانعكاس الكلي الداخلي من الظواهر البصرية المهمة التي تحدث عندما يسقط الضوء من وسط كثيف إلى وسط أقل كثافة بزاوية أكبر من الزاوية الحرجة. يؤدي هذا إلى انعكاس كامل للشعاع الضوئي داخل الوسط الأكثر كثافة. لهذه الظاهرة تطبيقات عديدة في حياتنا اليومية والتقنيات الحديثة، مثل الألياف البصرية وظاهرة السراب.
+                تُعد العدسات من المكونات الأساسية في العديد من الأجهزة البصرية، حيث تُستخدم خصائص انكسار الضوء خلالها لتكوين صور واضحة ومكبرة للأجسام البعيدة أو القريبة. يتم تطبيق العدسات في مجموعة واسعة من الأدوات، بدءاً من العين البشرية وصولاً إلى التلسكوبات والمجاهر والكاميرات. يهدف هذا التقرير إلى استعراض أهم تطبيقات العدسات وآلية عملها في الأجهزة البصرية الشائعة.
             </p>
+            <p>
+                يعتمد عمل العدسات على ظاهرة انكسار الضوء عند انتقاله بين وسطين مختلفين في الكثافة الضوئية. تختلف أنواع العدسات باختلاف شكلها وطريقة تركيزها للضوء، فمنها العدسات المحدبة التي تجمع الأشعة الضوئية، والعدسات المقعرة التي تفرقها. تستخدم هذه الخصائص في تصميم أجهزة بصرية متخصصة تلبي احتياجات مختلفة في مجالات العلم والطب والاستكشاف والتصوير.
+            </p>
+        </div>
 
-            <h2>الانعكاس الكلي الداخلي</h2>
+        <div class="section">
+            <h2>1. العدسات في العين البشرية</h2>
             <p>
-                يحدث الانعكاس الكلي الداخلي عندما ينتقل الضوء من وسط ذي معامل انكسار مرتفع إلى وسط ذي معامل انكسار منخفض، بزاوية سقوط أكبر من الزاوية الحرجة. في هذه الحالة، لا ينكسر الضوء بل ينعكس كلياً داخل الوسط الأول.
+                تعتبر العين البشرية أداة بصرية معقدة تعتمد على انكسار الضوء عبر القرنية والعدسة. يدخل الضوء المنعكس من الجسم إلى العين عبر القرنية، ثم يمر عبر العدسة ليتركز على الشبكية في مؤخرة العين. تحتوي الشبكية على خلايا حساسة للضوء تقوم بتحويل الإشارات الضوئية إلى إشارات العصبية تُرسل إلى الدماغ عبر العصب البصري.
             </p>
+            <h3>آلية التكيف البصري</h3>
             <p>
-                من التطبيقات العملية لهذه الظاهرة هي <strong>الألياف البصرية</strong>، حيث ينقل الضوء عبر أسلاك رفيعة من الزجاج أو البلاستيك، معتمداً على الانعكاس الكلي الداخلي للحفاظ على شدة الضوء عبر مسافات طويلة.
+                تقوم العضلات المحيطة بعدسة العين بتغيير شكل العدسة، مما يغير بعدها البؤري. عند النظر إلى أجسام بعيدة، تسترخي العضلات فتصبح العدسة أقل تحدباً، بينما تنقبض العضلات عند النظر إلى أجسام قريبة لزيادة تحدب العدسة، مما يسمح بتركيز الصورة على الشبكية.
             </p>
+            <h3>مشاكل الرؤية وتصحيحها</h3>
+            <ul>
+                <li><strong>قصر النظر:</strong> تكون الصورة متكونة أمام الشبكية بسبب طول مقلة العين أو زيادة تحدب العدسة. يتم تصحيحه باستخدام عدسات مقعرة.</li>
+                <li><strong>طول النظر:</strong> تكون الصورة متكونة خلف الشبكية بسبب قصر مقلة العين أو ضعف تحدب العدسة. يتم تصحيحه باستخدام عدسات محدبة.</li>
+            </ul>
+            <div class="figure">
+                الشكل 6-19: آلية تصحيح قصر النظر وطول النظر باستخدام العدسات
+            </div>
+        </div>
+    </div>
 
-            <h2>السراب</h2>
+    <!-- صفحة التلسكوب والمناظير -->
+    <div class="page page-break">
+        <div class="section">
+            <h2>2. التلسكوب الكاسر (المقراب الفلكي)</h2>
             <p>
-                السراب هو ظاهرة بصرية طبيعية تحدث نتيجة الانعكاس الكلي الداخلي في ظروف جوية معينة. في الأيام الحارة، ترتفع درجة حرارة الهواء بالقرب من سطح الأرض، مما يجعله أقل كثافة وبالتالي معامل انكساره أقل. عندما يمر الضوء خلال هذه الطبقات الهوائية المختلفة الكثافة، ينحرف بشكل تدريجي إلى الأعلى، مما يخلق وهم وجود انعكاسات للمشاهد البعيدة، كأنها على سطح ماء.
+                يستخدم التلسكوب الكاسر عدسات لتقريب الأجسام البعيدة وتكبير صورها. يتكون من عدسة شيئية كبيرة تجمع الضوء القادم من الأجرام السماوية وتكون صورة حقيقية مقلوبة عند بؤرتها. ثم تعمل العدسة العينية على تكبير هذه الصورة لتظهر مكبرة للمشاهد.
+            </p>
+            <h3>مبدأ العمل</h3>
+            <ul>
+                <li>يدخل الضوء المتوازي القادم من النجوم عبر العدسة الشيئية.</li>
+                <li>تتكون صورة حقيقية مقلوبة عند بؤرة العدسة الشيئية.</li>
+                <li>تقع هذه الصورة بين العدسة العينية وبؤرتها، فتعمل العدسة العينية على تكبيرها وتقديمها كصورة خيالية معتدلة ومكبرة.</li>
+            </ul>
+            <div class="figure">
+                الشكل 6-20: النظام البصري للتلسكوب الكاسر
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>3. المناظير (النظارات الميدانية)</h2>
+            <p>
+                تعمل المناظير على مبدأ مشابه للتلسكوب الكاسر، ولكنها تستخدم منشورين لطي مسار الضوء وتصحيح اتجاه الصورة. يؤدي ذلك إلى إطالة المسار البصري في حيز صغير، مما يوفر صورة معتدلة ومكبرة للأجسام البعيدة.
+            </p>
+            <h3>دور المنشورات</h3>
+            <ul>
+                <li>تعكس المنشورات الضوء باستخدام الانعكاس الكلي الداخلي.</li>
+                <li>تعمل على تصحيح اتجاه الصورة لجعلها معتدلة.</li>
+                <li>تزيد من المسافة بين العدسات الشيئية، مما يحسن الرؤية ثلاثية الأبعاد.</li>
+            </ul>
+            <div class="figure">
+                الشكل 6-21: النظام البصري للمنظار
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة الكاميرات والمجاهر -->
+    <div class="page page-break">
+        <div class="section">
+            <h2>4. آلات التصوير (الكاميرات)</h2>
+            <p>
+                تعتمد الكاميرات على نظام بصري مشابه للعين البشرية. يدخل الضوء عبر عدسة الكاميرا، ويتكون على مستشعر الصورة (أو الفيلم). في الكاميرات العاكسة أحادية العدسة، يتم توجيه الضوء عبر مرآة ومنشور إلى العدسة العينية للمشاهدة، ثم ترفع المرآة لحظة التقاط الصورة لسقوط الضوء مباشرة على المستشعر.
+            </p>
+            <h3>مكونات الكاميرا الأساسية</h3>
+            <ul>
+                <li>العدسة: تجمع الضوء وتكون الصورة.</li>
+                <li>الفتحة: تتحكم في كمية الضوء الداخل.</li>
+                <li>المصراع: يتحكم في مدة التعرض للضوء.</li>
+                <li>المستشعر: يحول الضوء إلى إشارات كهربائية.</li>
+            </ul>
+            <div class="figure">
+                الشكل 6-22: آلة التصوير العاكسة ذات العدسة المفردة
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. المجاهر</h2>
+            <p>
+                يستخدم المجهر لرؤية الأجسام الصغيرة جداً. يتكون من عدستين: شيئية وعينية. توضع العينة قرب العدسة الشيئية فتكون صورة حقيقية مكبرة ومقلوبة، ثم تعمل العدسة العينية على تكبير هذه الصورة مرة أخرى، مما ينتج صورة خيالية معتدلة ومكبرة جداً.
+            </p>
+            <h3>آلية التكبير</h3>
+            <ul>
+                <li>العدسة الشيئية: تكون صورة حقيقية مكبرة للعينة.</li>
+                <li>العدسة العينية: تكبر الصورة الناتجة عن العدسة الشيئية.</li>
+                <li>الصورة النهائية: مقلوبة ومكبرة جداً بالنسبة للجسم الأصلي.</li>
+            </ul>
+            <div class="figure">
+                الشكل 6-23: النظام البصري للمجهر المركب
+            </div>
+        </div>
+    </div>
+
+    <!-- صفحة المراجعة والخاتمة -->
+    <div class="page page-break">
+        <div class="section">
+            <h2>6. مراجعة وأسئلة تقويمية</h2>
+            <div class="review-box">
+                <p><strong>سؤال 1:</strong> إذا ركزت كاميرتك على شخص يبعد 2 متر، ثم أردت التركيز على شجرة أبعد، هل يجب تحريك العدسة نحو المستشعر أم بعيداً عنه؟</p>
+                <p><strong>الإجابة:</strong> يجب تحريك العدسة نحو المستشعر لتقليل البعد البؤري وتركيز الصورة الأبعد.</p>
+            </div>
+            <div class="review-box">
+                <p><strong>سؤال 2:</strong> ما السبب في أن الصورة تكون أقل وضوحاً عند استخدام التكبير الأعلى في المجهر؟</p>
+                <p><strong>الإجابة:</strong> بسبب تقليل كمية الضوء الداخلة وزيادة التشوهات البصرية مثل الزيغان الكروي واللوني.</p>
+            </div>
+            <div class="review-box">
+                <p><strong>سؤال 3:</strong> أي العدسات تستخدم لتصحيح قصر النظر وطول النظر؟</p>
+                <p><strong>الإجابة:</strong> قصر النظر: عدسات مقعرة. طول النظر: عدسات محدبة.</p>
+            </div>
+            <div class="review-box">
+                <p><strong>سؤال 4:</strong> ما فائدة المنشورات في المناظير؟</p>
+                <p><strong>الإجابة:</strong> تطويل المسار البصري، تصحيح اتجاه الصورة، وتحسين الرؤية ثلاثية الأبعاد.</p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>الخاتمة</h2>
+            <p>
+                تُظهر التطبيقات المتنوعة للعدسات مدى أهمية الخصائص البصرية للانكسار في حياتنا اليومية والعلمية. من الرؤية البشرية إلى استكشاف الكون ورؤية الكائنات الدقيقة، تعد العدسات عنصراً أساسياً في تقدم البصريات وتطبيقاتها. فهم مبادئ عمل هذه الأجهزة يساعدنا على تطوير أدوات أكثر دقة وكفاءة في المستقبل.
+            </p>
+            <p>
+                لقد تطورت تقنيات العدسات بشكل كبير عبر القرون، من العدسات البسيطة المستخدمة في النظارات الطبية إلى العدسات المعقدة في التلسكوبات الفضائية والمجاهر الإلكترونية. تبقى العدسات أداة أساسية في الاكتشاف العلمي والتقدم التكنولوجي، وتستمر في فتح آفاق جديدة في فهمنا للعالم من حولنا، سواء كان عالماً مجهرياً دقيقاً أو كونياً شاسعاً.
             </p>
         </div>
 
         <div class="footer">
-            الصفحة 1 من 3
+            <p>تم إعداد هذا التقرير بناءً على مصادر علمية من كتاب الفيزياء للصف الثالث الثانوي.</p>
+            <p>جميع الحقوق محفوظة</p>
         </div>
     </div>
-
-    <!-- الصفحة الثالثة -->
-    <div class="page content-page">
-        <h2>تحليل الضوء (Dispersion)</h2>
-        <p>
-            يحدث تشتت الضوء عندما يمر الضوء الأبيض عبر وسط شفاف مثل المنشور، فيتحلل إلى ألوان الطيف السبعة. هذا ينتج بسبب اختلاف سرعة الضوء باختلاف طوله الموجي في الوسط نفسه.
-        </p>
-        <p>
-            اللون البنفسجي ينكسر بأكبر زاوية لأنه يمتلك أقصر طول موجي وأعلى تردد، بينما اللون الأحمر ينكسر بأصغر زاوية لأنه يمتلك أطول طول موجي وأقل تردد.
-        </p>
-
-        <h2>قوس القزح</h2>
-        <p>
-            قوس القزح هو أحد أبرز الأمثلة على تشتت الضوء في الطبيعة. يتشكل عندما تنكسر أشعة الشمس في قطرات الماء في الجو، ثم تنعكس داخلياً، وتنكسر مرة أخرى عند خروجها من القطرة.
-        </p>
-        <p>
-            يظهر قوس القزح الرئيسي عندما تنكسر الأشعة مرة واحدة داخل القطرة، بينما يظهر القوس الثانوي (الأقل وضوحاً) نتيجة انعكاسين داخليين، مما يؤدي إلى عكس ترتيب الألوان.
-        </p>
-
-        <div class="figure">
-            <!-- يمكن إضافة صورة لقوس قزح هنا -->
-            <div class="caption">الشكل: توضيح تشكل قوس القزح نتيجة انكسار الضوء وانعكاسه داخل قطرات الماء</div>
-        </div>
-
-        <h2>تطبيقات أخرى</h2>
-        <ul>
-            <li><strong>المناظير والأدوات البصرية:</strong> تستخدم الانعكاس الكلي الداخلي في تصميمها.</li>
-            <li><strong>الاتصالات:</strong> تعتمد شبكات الإنترنت والهاتف على الألياف البصرية.</li>
-            <li><strong>الطب:</strong> تستخدم الألياف البصرية في المناظير الطبية.</li>
-            <li><strong>الإضاءة:</strong> تستخدم في أنظمة الإضاءة الداخلية والديكورية.</li>
-        </ul>
-        
-        <div class="footer">
-            الصفحة 2 من 3
-        </div>
-    </div>
-
-    <!-- الصفحة الرابعة -->
-    <div class="page content-page">
-        <h2>أسئلة المراجعة</h2>
-        <div class="review-questions">
-            <div class="question">
-                <strong>4.</strong> معامل الانكسار: عند نفاذ الضوء من الهواء إلى سائل معين فإنه يتحرف مقترباً من العمود المقام، ولكن عند نفاذ الضوء من زجاج العدسات إلى السائل نفسه فإنه يتحرف مبتعداً عن العمود المقام. ما الذي تستنتجه عن معامل انكسار السائل؟
-            </div>
-            <div class="question">
-                <strong>5.</strong> معامل الانكسار: سقط شعاع ضوئي في الهواء بزاوية 30.0° على قالب من مادة غير معروفة، فانكسر فيها بزاوية 20.0°. ما معامل انكسار المادة؟
-            </div>
-            <div class="question">
-                <strong>6.</strong> سرعة الضوء: هل يمكن أن يكون معامل الانكسار أقل من 1؟ وما الذي يعني هذا بالنسبة لسرعة الضوء في ذلك الوسط؟
-            </div>
-            <div class="question">
-                <strong>7.</strong> سرعة الضوء: ما سرعة الضوء في الكلوروفورم (n=1.51)؟
-            </div>
-            <div class="question">
-                <strong>8.</strong> الانعكاس الكلي الداخلي: إذا توافر لديك الكوارتز وزجاج العدسات لتصنع ليفاً بصرياً، فأيهما تستخدم لطبقة الغلاف؟ ولماذا؟
-            </div>
-            <div class="question">
-                <strong>9.</strong> زاوية الانكسار: تعبر حزمة ضوئية من الهواء إلى داخل البولي إيثيلين (معامل الانكسار 1.50). فإذا كانت زاوية السقوط 57.5°، فما زاوية الانكسار في البولي إيثيلين؟
-            </div>
-        </div>
-
-        <h2>الخاتمة</h2>
-        <p>
-            يعد الانعكاس الكلي الداخلي وتشتت الضوء من الظواهر الأساسية في علم البصريات، ولها تطبيقات واسعة في التكنولوجيا والطبيعة. من خلال فهم هذه الظواهر، يمكننا تصميم أدوات وتقنيات متطورة تساهم في تطور الاتصالات والطب والعلوم الأخرى. هذه الظواهر تثبت مدى جمال ودقة القوانين الفيزيائية التي تحكم عالمنا.
-        </p>
-
-        <h2>المراجع</h2>
-        <ul>
-            <li>كتاب الفيزياء للصف الثالث الثانوي</li>
-            <li>موسوعة البصريات والضوء</li>
-            <li>بعض المواقع العلمية المتخصصة على الإنترنت</li>
-        </ul>
-
-        <div class="footer">
-            الصفحة 3 من 3
-        </div>
-    </div>
-
 </body>
 </html>
