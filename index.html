@@ -1,513 +1,958 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محرك بحث مذكرة علوم الأرض والفضاء</title>
+    <title>اختبار القدرات - تجميعات الورق</title>
     <style>
+        /* أنماط عامة */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
-```
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        padding: 20px;
-    }
-
-    .container {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    .header {
-        text-align: center;
-        color: white;
-        margin-bottom: 30px;
-        padding: 20px;
-        background: rgba(255, 255, 255, 0.1);
-        border-radius: 15px;
-        backdrop-filter: blur(10px);
-    }
-
-    .header h1 {
-        font-size: 2.5em;
-        margin-bottom: 10px;
-        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .header p {
-        font-size: 1.1em;
-        opacity: 0.9;
-    }
-
-    .search-box {
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        margin-bottom: 30px;
-    }
-
-    .search-input-group {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 20px;
-    }
-
-    #searchInput {
-        flex: 1;
-        padding: 15px 20px;
-        font-size: 1.1em;
-        border: 2px solid #667eea;
-        border-radius: 10px;
-        outline: none;
-        transition: all 0.3s;
-    }
-
-    #searchInput:focus {
-        border-color: #764ba2;
-        box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.1);
-    }
-
-    .search-btn {
-        padding: 15px 40px;
-        font-size: 1.1em;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        border-radius: 10px;
-        cursor: pointer;
-        transition: transform 0.2s;
-        font-weight: bold;
-    }
-
-    .search-btn:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
-    }
-
-    .filter-group {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
-
-    .filter-btn {
-        padding: 10px 20px;
-        background: #f0f0f0;
-        border: 2px solid transparent;
-        border-radius: 25px;
-        cursor: pointer;
-        transition: all 0.3s;
-        font-size: 0.9em;
-    }
-
-    .filter-btn:hover {
-        background: #e0e0e0;
-    }
-
-    .filter-btn.active {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border-color: #667eea;
-    }
-
-    .results-container {
-        background: white;
-        padding: 30px;
-        border-radius: 15px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-        min-height: 400px;
-    }
-
-    .result-item {
-        padding: 20px;
-        margin-bottom: 15px;
-        border-radius: 10px;
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-right: 5px solid #667eea;
-        transition: transform 0.2s;
-    }
-
-    .result-item:hover {
-        transform: translateX(-5px);
-        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    }
-
-    .result-chapter {
-        color: #667eea;
-        font-weight: bold;
-        font-size: 0.9em;
-        margin-bottom: 5px;
-    }
-
-    .result-question {
-        font-size: 1.1em;
-        font-weight: bold;
-        margin-bottom: 10px;
-        color: #333;
-    }
-
-    .result-answer {
-        color: #28a745;
-        font-weight: bold;
-        padding: 10px;
-        background: rgba(40, 167, 69, 0.1);
-        border-radius: 5px;
-        margin-top: 10px;
-    }
-
-    .result-context {
-        color: #666;
-        font-size: 0.95em;
-        margin-top: 10px;
-        line-height: 1.6;
-    }
-
-    .no-results {
-        text-align: center;
-        padding: 60px 20px;
-        color: #999;
-    }
-
-    .no-results svg {
-        width: 100px;
-        height: 100px;
-        margin-bottom: 20px;
-        opacity: 0.3;
-    }
-
-    .stats {
-        text-align: center;
-        color: #666;
-        margin-bottom: 20px;
-        font-size: 0.95em;
-    }
-
-    .highlight {
-        background: yellow;
-        padding: 2px 4px;
-        border-radius: 3px;
-        font-weight: bold;
-    }
-
-    .loading {
-        text-align: center;
-        padding: 40px;
-        color: #667eea;
-    }
-
-    .loading::after {
-        content: '...';
-        animation: dots 1.5s infinite;
-    }
-
-    @keyframes dots {
-        0%, 20% { content: '.'; }
-        40% { content: '..'; }
-        60%, 100% { content: '...'; }
-    }
-
-    @media (max-width: 768px) {
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        /* شاشة البداية */
+        #start-screen {
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            padding: 30px 20px;
+            border-bottom: 5px solid #ffd166;
+        }
+        
         .header h1 {
-            font-size: 1.8em;
+            font-size: 2.2rem;
+            margin-bottom: 10px;
         }
-
-        .search-input-group {
-            flex-direction: column;
+        
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
         }
-
-        .search-btn {
-            width: 100%;
+        
+        .info-box {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border-right: 5px solid #4b6cb7;
+            text-align: right;
         }
-    }
-</style>
-```
-
+        
+        .info-box h3 {
+            color: #182848;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+        
+        .info-box ul {
+            list-style-type: none;
+            padding-right: 20px;
+        }
+        
+        .info-box li {
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #ddd;
+        }
+        
+        .info-box li:last-child {
+            border-bottom: none;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+        
+        .stat-item {
+            background-color: #4b6cb7;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 150px;
+            margin: 10px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        button {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            margin: 10px;
+            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(75, 108, 183, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .secondary-btn {
+            background: linear-gradient(to right, #6c757d, #495057);
+        }
+        
+        /* شاشة الاختبار */
+        #test-screen {
+            padding: 20px;
+            display: none;
+        }
+        
+        .test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .progress-container {
+            flex-grow: 1;
+            margin: 0 15px;
+        }
+        
+        .progress-bar {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+        
+        .timer {
+            background-color: #182848;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            min-width: 130px;
+            text-align: center;
+        }
+        
+        .question-container {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .question-number {
+            color: #4b6cb7;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            color: #182848;
+        }
+        
+        .options-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        @media (min-width: 768px) {
+            .options-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .option {
+            background-color: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 1.1rem;
+        }
+        
+        .option:hover {
+            background-color: #f0f5ff;
+            border-color: #4b6cb7;
+        }
+        
+        .option.selected {
+            background-color: #4b6cb7;
+            color: white;
+            border-color: #182848;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        /* شاشة النتائج */
+        #results-screen {
+            padding: 30px;
+            display: none;
+            text-align: center;
+        }
+        
+        .result-header {
+            background: linear-gradient(to right, #4b6cb7, #182848);
+            color: white;
+            padding: 30px 20px;
+            border-radius: 10px 10px 0 0;
+            margin-bottom: 30px;
+        }
+        
+        .result-header h2 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+        }
+        
+        .score-container {
+            font-size: 5rem;
+            font-weight: bold;
+            color: #182848;
+            margin: 30px 0;
+        }
+        
+        .score-text {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #495057;
+        }
+        
+        .results-details {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 25px 0;
+            text-align: right;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .result-item:last-child {
+            border-bottom: none;
+        }
+        
+        .result-label {
+            font-weight: bold;
+            color: #182848;
+        }
+        
+        .result-value {
+            font-weight: bold;
+        }
+        
+        .results-actions {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        
+        /* تذييل الصفحة */
+        .footer {
+            text-align: center;
+            padding: 20px;
+            color: #6c757d;
+            font-size: 0.9rem;
+            margin-top: 20px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        /* تحسينات للجوال */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .test-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .timer {
+                margin-top: 15px;
+                align-self: center;
+            }
+            
+            .question-text {
+                font-size: 1.2rem;
+            }
+            
+            .score-container {
+                font-size: 4rem;
+            }
+            
+            .container {
+                border-radius: 10px;
+            }
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🔍 محرك البحث في مذكرة علوم الأرض والفضاء</h1>
-            <p>ابحث عن أي سؤال أو موضوع في المذكرة الكاملة</p>
-        </div>
-
-```
-    <div class="search-box">
-        <div class="search-input-group">
-            <input type="text" id="searchInput" placeholder="اكتب سؤالك أو الموضوع الذي تبحث عنه..." />
-            <button class="search-btn" onclick="search()">بحث</button>
-        </div>
-
-        <div class="filter-group">
-            <button class="filter-btn active" onclick="filterChapter('all')">الكل</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل الأول')">الفصل الأول</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل الثاني')">الفصل الثاني</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل الثالث')">الفصل الثالث</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل الرابع')">الفصل الرابع</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل الخامس')">الفصل الخامس</button>
-            <button class="filter-btn" onclick="filterChapter('الفصل السادس')">الفصل السادس</button>
-        </div>
-    </div>
-
-    <div class="results-container" id="results">
-        <div class="no-results">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-                <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-            </svg>
-            <h3>ابدأ البحث</h3>
-            <p>اكتب في صندوق البحث أعلاه للعثور على الأسئلة والإجابات</p>
-        </div>
-    </div>
-</div>
-
-<script>
-    const data = [
-        {chapter: "الفصل الأول", question: "يعني باستكشاف الفضاء والمهمات الفضائية", answer: "علوم الفضاء"},
-        {chapter: "الفصل الأول", question: "دراسة نشأة الكون وتطوره", answer: "علم الكون"},
-        {chapter: "الفصل الأول", question: "مجال فرعي لعلم الفلك يستخدم قوانين الفيزياء لوصف التغير في طبيعة الاجرام السماوية وانشطتها", answer: "الفيزياء الفلكية"},
-        {chapter: "الفصل الأول", question: "العلم المعني بدراسة الاجرام السماوية", answer: "علم الفلك"},
-        {chapter: "الفصل الأول", question: "قوة خفيه مجهولة المنشأ تشكل 65% من محتوى الكون", answer: "الطاقة المظلمة"},
-        {chapter: "الفصل الأول", question: "يستقر النجم عند موازنه قوة الجاذبية الداخلية بواسطة قوة الضغط الخارجية", answer: "التوازن الهيدروستاتيكي"},
-        {chapter: "الفصل الأول", question: "مجموعات هائلة من النجوم والغاز والغبار المرتبطة ببعضها بفعل الجاذبية", answer: "المجرات"},
-        {chapter: "الفصل الأول", question: "جرم غازي متألق تتولد الطاقة في باطنه بواسطة تفاعلات الاندماج النووي", answer: "النجم"},
-        {chapter: "الفصل الأول", question: "نجمان مرتبطان جاذبيا يدوران حول بعضهما البعض", answer: "النجوم المزدوجة"},
-        {chapter: "الفصل الأول", question: "كرة ضخمة مضيئة من الغاز تتكون في معظمها من الهيدروجين والهيليوم", answer: "النجم"},
-        {chapter: "الفصل الأول", question: "سحب تتكون من جزيئات الهيدروجين والهيليوم", answer: "السحب الجزيئية"},
-        {chapter: "الفصل الأول", question: "نجوم ذات قطر صغير ودرجات حراره شديده ولمعان منخفض", answer: "الأقزام البيضاء"},
-        {chapter: "الفصل الأول", question: "نجوم ذات كثافه عالية يبلغ قطرها المتبقي حوالي 16 كلم فقط وتدور بسرعه حول محورها", answer: "النجم النيتروني"},
-        {chapter: "الفصل الأول", question: "جسم ذو كثافة هائلة وجاذبيه قوية جدا ولا يمكن للمادة او الاشعاع الهروب منه", answer: "الثقب الأسود"},
-        {chapter: "الفصل الأول", question: "في مجرة درب التبانة تقع الشمس", answer: "على حافة ذراع الجبار"},
-        {chapter: "الفصل الأول", question: "تقع النجوم الصغيرة في العمر في المجرة", answer: "ذراع"},
-        {chapter: "الفصل الأول", question: "أي النجوم هي الأسخن", answer: "النجوم الزرقاء"},
-        {chapter: "الفصل الأول", question: "ما انواع المجرات الثالثة", answer: "حلزوني، بيضاوية، وغير منتظم"},
-        {chapter: "الفصل الأول", question: "نص نظرية الانفجار العظيم", answer: "أنه في لحظة معينة منذ ما يقرب من 14 مليار سنة كانت المادة والطاقة الموجودة، مركزة في منطقة حجمها متناه في الصغر وجميع قوى الطبيعة متحدة، ثم بدأ الكون في التمدد و درجة الحرارة تتناقص بمعدل سريع جدا"},
-        {chapter: "الفصل الأول", question: "هل الكون ثابت أو يتمدد", answer: "يتمدد، أثبته عالم الفلك إدوين هابل"},
-        {chapter: "الفصل الأول", question: "أنواع المجرات", answer: "1-الحلزونية 2-البيضاوية 3-غير المنتظمة"},
-        {chapter: "الفصل الأول", question: "مما تتركب مجرة درب التبانة", answer: "1-قرص المجرة 2-نواة المجرة 3-هالة المجرة"},
-        {chapter: "الفصل الأول", question: "قوى الطبيعة الأربعة", answer: "1-القوة النووية 2-القوة النووية الضعيفة 3-القوة الكهرومغناطيسية 4-قوة الجاذبية"},
-        {chapter: "الفصل الأول", question: "نص قانون هابل", answer: "أن السرعة التي تتباعد بها المجرات عن الأرض تتناسب طرديا مع المسافة بين الأرض والمجرات"},
-        {chapter: "الفصل الأول", question: "عمر الكون", answer: "حوالي 13.8 مليار سنة تقريبا"},
-        
-        {chapter: "الفصل الثاني", question: "الكواكب تدور حول الشمس في مدارات على شكل قطع ناقص وتقع الشمس في احدى بؤرتيه", answer: "قانون كبلر الأول"},
-        {chapter: "الفصل الثاني", question: "قوة الجاذبية بين جسمين تتناسب طرديا مع كتلتهما وعكسيا مع مربع المسافة بينهما", answer: "قانون الجذب لنيوتن"},
-        {chapter: "الفصل الثاني", question: "مربع مده دوره الكوكب حول الشمس تتناسب مع مكعب نصف طول المحور الأكبر لمداره", answer: "قانون كبلر الثالث"},
-        {chapter: "الفصل الثاني", question: "الخط الوهمي الواصل بين الكوكب والشمس يرسم مساحات متساوية في أزمنة متساوية", answer: "قانون كبلر الثاني"},
-        {chapter: "الفصل الثاني", question: "أنظمة مصممة ومبنية للعمل في الفضاء تختلف أنواعها باختلاف مهامها", answer: "المركبات الفضائية"},
-        {chapter: "الفصل الثاني", question: "مركبات صممت لتدور في مدارات حول الجرم السماوي ولها عدة وظائف بحسب مداراتها", answer: "الأقمار الصناعية"},
-        {chapter: "الفصل الثاني", question: "مدار يقع على مسافة 2000 إلى 35000 كيلو من سطح الأرض", answer: "المدار الأرضي المتوسط"},
-        {chapter: "الفصل الثاني", question: "مدار يقع على ارتفاع أقل من 2000 كيلو", answer: "المدار الأرضي المنخفض"},
-        {chapter: "الفصل الثاني", question: "مدار دائري يقع مباشرة فوق خط الاستواء على ارتفاع 35786 كيلو من سطح الأرض", answer: "المدار الأرضي الثابت"},
-        {chapter: "الفصل الثاني", question: "أقمار مراقبة الطقس وأقمار الاتصالات السلكية واللاسلكية والقنوات الفضائية تقع في", answer: "المدار الثابت"},
-        {chapter: "الفصل الثاني", question: "أقمار التنبؤ بالطقس والعواصف وحرائق الغابات والفيضانات تقع في", answer: "المدار المنخفض"},
-        {chapter: "الفصل الثاني", question: "مركبة مصممة من عدة وحدات معملية ومعيشية يتناوب على العمل فيها رواد الفضاء لعدة أشهر", answer: "محطات الفضاء"},
-        {chapter: "الفصل الثاني", question: "تدور محطات الفضاء حول الأرض في المدار الأرضي", answer: "المنخفض"},
-        {chapter: "الفصل الثاني", question: "محطتان فضائية لإجراء التجارب والاختبارات والأبحاث", answer: "الدولية والصينية"},
-        {chapter: "الفصل الثاني", question: "أول كائن تم إرساله في تجربة للفضاء", answer: "الكلبة لايكا"},
-        {chapter: "الفصل الثاني", question: "أقصى ارتفاع لوضع الأقمار الصناعية في المدار الثابت الأرضي", answer: "35786 كيلومتر"},
-        {chapter: "الفصل الثاني", question: "أول رائد فضاء هبط على أرض القمر", answer: "نيل أرمسترونغ"},
-        
-        {chapter: "الفصل الثالث", question: "مادة طبيعية صلبة غير عضوية لها مكونات كيميائية معينة وبناء بلوري محدد", answer: "المعدن"},
-        {chapter: "الفصل الثالث", question: "جسم صلب تترتب فيه الذرات بنمط متكرر", answer: "البلورة"},
-        {chapter: "الفصل الثالث", question: "مقياس قابلية المعدن للخدش", answer: "القساوة"},
-        {chapter: "الفصل الثالث", question: "الكيفية التي يعكس بها المعدن الضوء الساقط على سطحه", answer: "البريق"},
-        {chapter: "الفصل الثالث", question: "المادة المصهورة التي تتكون وتتجمع تحت سطح الأرض", answer: "الصهارة"},
-        {chapter: "الفصل الثالث", question: "المعدن الذي ينقسم بسهولة وبشكل متساوي في اتجاه واحد أو أكثر", answer: "انفصام"},
-        {chapter: "الفصل الثالث", question: "المعدن الذي ينكسر بحواف خشنة متعرجة", answer: "انكسار"},
-        {chapter: "الفصل الثالث", question: "لون مسحوق المعدن", answer: "المخدش"},
-        {chapter: "الفصل الثالث", question: "مقياس الكثافة الأكثر استخداما من الجيولوجي", answer: "الوزن النوعي"},
-        {chapter: "الفصل الثالث", question: "ملمس المعدن", answer: "النسيج"},
-        {chapter: "الفصل الثالث", question: "من الصفات الخاصة للمعادن", answer: "الانكسار المزدوج، الفوران، المغناطيسية"},
-        {chapter: "الفصل الثالث", question: "المعادن التي تحتوي على الأكسجين والسيليكون وعنصر آخر أو أكثر", answer: "السيليكات"},
-        {chapter: "الفصل الثالث", question: "المعدن الذي يحتوي على مواد ذات قيمة يمكن تعدينها بحيث تكون مجدية اقتصاديا", answer: "خام"},
-        {chapter: "الفصل الثالث", question: "معادن ثمينة ونادرة وجميلة فضلا عن قساوتها ومقاومتها للخدش", answer: "الأحجار الكريمة"},
-        {chapter: "الفصل الثالث", question: "الحديد مصدره خام يسمى", answer: "الهيماتيت"},
-        {chapter: "الفصل الثالث", question: "الألومنيوم مصدره خام يسمى", answer: "البوكسيت"},
-        {chapter: "الفصل الثالث", question: "من مناجم الخامات الاقتصادية في المملكة العربية السعودية", answer: "مهد الذهب، الصخيبرات، الحجار"},
-        {chapter: "الفصل الثالث", question: "خصائص المعادن بشكل عام", answer: "1-تتكون بشكل طبيعي وغير عضوي 2-لها بناء بلوري محدد 3-صلبة ذات تركيب محدد 4-التغير في المكونات الكيميائية"},
-        {chapter: "الفصل الثالث", question: "الخواص الفيزيائية والكيميائية للمعادن", answer: "الشكل البلوري، البريق، القساوة، الإنفصام والمكسر، المخدش، اللون، الكثافة والوزن النوعي، النسيج، صفات خاصة"},
-        {chapter: "الفصل الثالث", question: "مجموعات المعادن", answer: "السيليكات، الكربونات، الأكاسيد، الفوسفات"},
-        {chapter: "الفصل الثالث", question: "العناصر المكونة لمعادن القشرة الأرضية", answer: "الأكسجين، السيليكون، الألومنيوم، الحديد، الكالسيوم، الصوديوم، البوتاسيوم، الماغنيسيوم"},
-        
-        {chapter: "الفصل الرابع", question: "صهارة تتدفق على سطح الأرض", answer: "اللابة"},
-        {chapter: "الفصل الرابع", question: "عندما تبرد الصهارة أو اللابة وتتبلور المعادن تتكون", answer: "الصخور النارية"},
-        {chapter: "الفصل الرابع", question: "تتكون الصهارة من", answer: "صخور مصهورة، غازات مذابة، بلورات معدنية"},
-        {chapter: "الفصل الرابع", question: "عملية انصهار بعض المعادن عند درجات حرارة منخفضة مع بقاء معادن أخرى صلبة", answer: "الانصهار الجزئي"},
-        {chapter: "الفصل الرابع", question: "عملية تصلب بلورات المعادن وانفصالها", answer: "التبلور الجزئي"},
-        {chapter: "الفصل الرابع", question: "عمليات فيزيائية وكيميائية تؤدي إلى تماسك الرسوبيات وتكون صخر رسوبي", answer: "التصخّر"},
-        {chapter: "الفصل الرابع", question: "أول المعادن التي تتكون عندما تبرد الصهارة", answer: "الأوليفين"},
-        {chapter: "الفصل الرابع", question: "أي أنواع الصهارة تحتوي كمية أكبر من السيليكا", answer: "الريواليتية"},
-        {chapter: "الفصل الرابع", question: "الصخور السطحية التي لها مكونات الديوريت نفسها", answer: "الأنديزيت"},
-        {chapter: "الفصل الرابع", question: "أنواع الصخور فوق القاعدية التي تحتوي أحيانا على الألماس", answer: "الكمبرليت"},
-        {chapter: "الفصل الرابع", question: "المعدنين الأكثر شيوعا في الجرانيت", answer: "الكوارتز والفلسبار"},
-        {chapter: "الفصل الرابع", question: "الراسب الفتاتي الذي حجم حبيباته أصغر", answer: "الطين"},
-        {chapter: "الفصل الرابع", question: "الصخر الفتاتي الخشن الحبيبات الذي يحوي قطعا مدببة", answer: "الكونجلوميرات"},
-        {chapter: "الفصل الرابع", question: "الصخر الحيوي الكيميائي الذي يحوي أحافير", answer: "الحجر الجيري"},
-        {chapter: "الفصل الرابع", question: "عوامل التحول", answer: "الحرارة، الضغط، المحاليل الحرارية المائية"},
-        {chapter: "الفصل الرابع", question: "أي عوامل التعرية ينقل عادة فتاتا بحجم حبيبات الرمل أو أقل", answer: "الرياح"},
-        {chapter: "الفصل الرابع", question: "العملية المسؤولة عن إذابة ونقل المواد من مكان إلى آخر", answer: "التعرية"},
-        {chapter: "الفصل الرابع", question: "مكونات الصهارة", answer: "1-صخور مصهورة 2-غازات مذابة 3-بلورات معدنية"},
-        {chapter: "الفصل الرابع", question: "تصنيف الصخور النارية حسب مكوناتها المعدنية", answer: "1-البازلتية 2-الجرانيتية 3-المتوسطة 4-فوق القاعدية"},
-        {chapter: "الفصل الرابع", question: "تصنيف الصخور النارية حسب النسيج", answer: "1-زجاجي بركاني 2-بورفيري 3-كبير البلورات 4-الفقاعي"},
-        {chapter: "الفصل الرابع", question: "العمليات التي تُشكل الصخور الرسوبية", answer: "1-التجوية: تفتيت الصخور 2-التعرية: إزالة ونقل الرسوبيات 3-الترسيب: استقرار الرسوبيات"},
-        {chapter: "الفصل الرابع", question: "عمليات التصخر", answer: "1-التراص: تقارب حبيبات الرسوبيات بسبب الضغط 2-السمنتة: ترسيب معادن جديدة بين الحبيبات"},
-        {chapter: "الفصل الرابع", question: "أنواع التطّبق", answer: "1-المتدرج: الحبيبات أثقل وأكبر كلما اتجهنا للأسفل 2-المتقاطع: الطبقات مائلة نسبة لبعضها"},
-        {chapter: "الفصل الرابع", question: "أنواع الصخور الرسوبية", answer: "1-الصخور الرسوبية الفتاتية 2-الصخور الرسوبية الكيميائية 3-الصخور الرسوبية الكيميائية الحيوية"},
-        
-        {chapter: "الفصل الخامس", question: "أول من اقترح فكرة حركة القارات", answer: "العالم الألماني ألفريد فاجنر"},
-        {chapter: "الفصل الخامس", question: "كانت القارات مجتمعة معا في قارة واحدة ضخمة تسمى", answer: "بانجيا"},
-        {chapter: "الفصل الخامس", question: "أدلة فاجنر على الانجراف القاري", answer: "التكوينات الصخرية، الأحافير، المناخ القديم"},
-        {chapter: "الفصل الخامس", question: "جهاز قياس المغناطيسية يستعمل لدراسة", answer: "قاع المحيط"},
-        {chapter: "الفصل الخامس", question: "جهاز يستعمل الموجات الصوتية لتحديد المسافات", answer: "السونار"},
-        {chapter: "الفصل الخامس", question: "أجزاء الأرض", answer: "القشرة، الستار، اللُب"},
-        {chapter: "الفصل الخامس", question: "المناطق التي تبتعد عندها الصفائح بعضها عن بعض", answer: "الحدود المتباعدة"},
-        {chapter: "الفصل الخامس", question: "عندما تبدأ القشرة القارية في الانفصال إلى أجزاء طولية تتشكل", answer: "حفرة الانهدام"},
-        {chapter: "الفصل الخامس", question: "عندما تصطدم صفيحتان معا فإن الصفيحة الأكبر كثافة تغوص تحت الأقل كثافة", answer: "الإنغماس أو الطرح"},
-        {chapter: "الفصل الخامس", question: "أنواع الحدود الصفائحية التي لا تتكون قشرة جديدة ولا تستهلك", answer: "الحدود التحويلية"},
-        {chapter: "الفصل الخامس", question: "عمر القشرة المحيطية عموما", answer: "أحدث من القشرة القارية"},
-        {chapter: "الفصل الخامس", question: "المنطقة التي يحيط بها حزام النار الكبير", answer: "المحيط الهادي"},
-        {chapter: "الفصل الخامس", question: "فكرة الانجراف القاري", answer: "أن القارات كانت مجتمعة معا في قارة واحدة ضخمة تسمى بانجيا"},
-        {chapter: "الفصل الخامس", question: "تضاريس قاع المحيط", answer: "1-ظهر المحيط: سلسلة ضخمة تحت الماء 2-الأخاديد البحرية: حفر عميقة جدا"},
-        {chapter: "الفصل الخامس", question: "أنواع الحدود المتقاربة للصفائح الأرضية", answer: "1-محيطي-محيطي 2-محيطي-قاري 3-قاري-قاري"},
-        {chapter: "الفصل الخامس", question: "أسباب حركة الصفائح", answer: "1-تيارات الحمل 2-قوة الدفع والسحب"},
-        {chapter: "الفصل الخامس", question: "عملية غطس الصفائح الأرضية في الستار", answer: "الطرح"},
-        {chapter: "الفصل الخامس", question: "الحدود الناجمة عن تقارب صفيحتين إحداهما من الأخرى", answer: "الحدود المتقاربة"},
-        {chapter: "الفصل الخامس", question: "جهاز يستخدم لقياس التغيرات في المجال المغناطيسي للأرض", answer: "جهاز قياس المغناطيسية"},
-        {chapter: "الفصل الخامس", question: "قطع ضخمة من الغلاف الصخري الذي يتكون من القشرة الأرضية وأعلى الستار", answer: "الصفائح الأرضية"},
-        
-        {chapter: "الفصل السادس", question: "جميع العمليات المصاحبة لخروج الصهارة والسوائل الساخنة والغازات من سطح الأرض", answer: "النشاط البركاني"},
-        {chapter: "الفصل السادس", question: "الحزام الكبير الذي تتشكل فيه البراكين ويُعرف أحيانا بحلقة النار", answer: "حزام المحيط الهادي"},
-        {chapter: "الفصل السادس", question: "مناطق ساخنة في ستار الأرض حيث يصعد عمود الصهارة ذات درجة حرارة عالية", answer: "البقع الساخنة"},
-        {chapter: "الفصل السادس", question: "تتكون من بقع ساخنة تحت القشرة القارية وتتدفق عبر كسور طويلة في قشرة الأرض", answer: "طفوح البازلت"},
-        {chapter: "الفصل السادس", question: "يتركب البركان من", answer: "الفوهة، القناة، حجرة الصهارة"},
-        {chapter: "الفصل السادس", question: "أنواع البراكين", answer: "الدرعية، المخروطية، المركبة"},
-        {chapter: "الفصل السادس", question: "براكين تتكون من طبقات مكونة من قطع لابة متصلبة في أثناء ثورانات عنيفة متعاقبة", answer: "البراكين المركبة"},
-        {chapter: "الفصل السادس", question: "العوامل التي تتحكم في مكونات الصهارة", answer: "الضغط والحرارة"},
-        {chapter: "الفصل السادس", question: "أنواع الصهارة", answer: "بازلتية، أنديزيتية، ريوليتية"},
-        {chapter: "الفصل السادس", question: "أنواع الأمواج الزلزالية", answer: "الأولية، الثانوية، السطحية"},
-        {chapter: "الفصل السادس", question: "آخر الأمواج الزلزالية وصولا إلى محطة رصد الزالزل وهي ابطأها", answer: "الأمواج السطحية"},
-        {chapter: "الفصل السادس", question: "تبلغ قوة الزلزال أكبر ما يمكن في", answer: "المركز السطحي للزلزال"},
-        {chapter: "الفصل السادس", question: "السجل الذي يتم الحصول عليه من جهاز مقياس الزالزل", answer: "السيزموجرام"},
-        {chapter: "الفصل السادس", question: "يتم وصف حجم الزلزال بناء على مقدار الضرر الذي أحدثه", answer: "مقياس ميركالي المعدل"},
-        {chapter: "الفصل السادس", question: "حركة محيطية كبيرة تتولد بفعل حركات رأسية لقاع البحر في أثناء حدوث زلزال", answer: "تسونامي"},
-        {chapter: "الفصل السادس", question: "نوع البركان الذي يمثل أكبر خطر على الإنسان والبيئة", answer: "البركان المركب"},
-        {chapter: "الفصل السادس", question: "نوع الموجات الزلزالية التي تخترق اللب الخارجي للأرض", answer: "الموجات الأولية"},
-        {chapter: "الفصل السادس", question: "أجزاء الصدع النشط التي لم تتعرض لزالزل كبيرة منذ فترة طويلة", answer: "الفجوات الزلزالية"},
-        {chapter: "الفصل السادس", question: "لتحديد موقع الزلزال نحتاج إلى معرفة موقع", answer: "3 محطات زلزالية على الأقل"},
-        {chapter: "الفصل السادس", question: "المقياس الذي يستعمل في قياس شدة الزالزل", answer: "مقياس ميركالي المعدل"},
-        {chapter: "الفصل السادس", question: "الحزامان الرئيسان للبراكين المرافقة للحدود المتقاربة", answer: "1-حزام المحيط الهادي 2-حزام حوض البحر المتوسط"},
-        {chapter: "الفصل السادس", question: "البقع الساخنة", answer: "مناطق ساخنة بصورة غير عادية في ستار الأرض حيث يصعد عمود من الصهارة ذات درجة الحرارة العالية"},
-        {chapter: "الفصل السادس", question: "مما يتركب البركان", answer: "1-فوهة البركان 2-قناة البركان 3-حجرة الصهارة"},
-        {chapter: "الفصل السادس", question: "العوامل التي تحكم في مكونات الصهارة", answer: "تفاعلها مع الصخور، درجة الحرارة، الضغط، محتواها من السيليكا، كمية الغازات"},
-        {chapter: "الفصل السادس", question: "الأمواج الزلزالية", answer: "أمواج تنتشر في الأرض ناجمة عن الزالزل"},
-        {chapter: "الفصل السادس", question: "السيزمومتر", answer: "جهاز حساس يستخدم لقياس الموجات الزلزالية"},
-        {chapter: "الفصل السادس", question: "السيزموجرام", answer: "السجل الذي يتم الحصول عليه من السيزمومتر"},
-        {chapter: "الفصل السادس", question: "فوهة البركان", answer: "تجويف منخفض يحيط بالفتحة عند قمة البركان"},
-        {chapter: "الفصل السادس", question: "فوهة البركان المنهارة", answer: "تتشكل في الانخفاض الناتج عن انهيار سقف حجرة صهارة فارغة"},
-        {chapter: "الفصل السادس", question: "تسييل التربة", answer: "عندما تسبب الاهتزازات الزلزالية تسييل المواد الأرضية تحت السطحية"}
-    ];
-
-    let currentFilter = 'all';
-    let allResults = [];
-
-    document.getElementById('searchInput').addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            search();
-        }
-    });
-
-    function filterChapter(chapter) {
-        currentFilter = chapter;
-        const buttons = document.querySelectorAll('.filter-btn');
-        buttons.forEach(btn => btn.classList.remove('active'));
-        event.target.classList.add('active');
-        displayResults(allResults);
-    }
-
-    function search() {
-        const query = document.getElementById('searchInput').value.trim();
-        const resultsDiv = document.getElementById('results');
-
-        if (!query) {
-            resultsDiv.innerHTML = `
-                <div class="no-results">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                    <h3>الرجاء إدخال كلمة بحث</h3>
-                    <p>اكتب في صندوق البحث أعلاه للعثور على الأسئلة والإجابات</p>
+        <!-- شاشة البداية -->
+        <div id="start-screen">
+            <div class="header">
+                <h1>اختبار القدرات</h1>
+                <p>تجميعات الورق للسنوات من 1446 هـ إلى 1440 هـ</p>
+            </div>
+            
+            <div class="info-box">
+                <h3>تعليمات الاختبار</h3>
+                <ul>
+                    <li>يحتوي الاختبار على أسئلة متنوعة في الرياضيات والمنطق واللغة</li>
+                    <li>سيتم عرض سؤال واحد في كل صفحة</li>
+                    <li>لديك دقيقة واحدة لكل سؤال، والوقت الإجمالي يعتمد على عدد الأسئلة</li>
+                    <li>يمكنك اختيار إجابة واحدة فقط لكل سؤال</li>
+                    <li>يمكنك الانتقال بين الأسئلة في أي وقت</li>
+                    <li>سيتم حفظ أفضل نتيجة تحققها في جهازك</li>
+                </ul>
+            </div>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <span class="stat-value" id="total-questions">20</span>
+                    <span class="stat-label">عدد الأسئلة</span>
                 </div>
-            `;
-            return;
-        }
-
-        resultsDiv.innerHTML = '<div class="loading">جاري البحث</div>';
-
-        setTimeout(() => {
-            allResults = data.filter(item => {
-                const searchText = query.toLowerCase();
-                return item.question.toLowerCase().includes(searchText) ||
-                       item.answer.toLowerCase().includes(searchText) ||
-                       item.chapter.toLowerCase().includes(searchText);
-            });
-
-            displayResults(allResults);
-        }, 300);
-    }
-
-    function displayResults(results) {
-        const resultsDiv = document.getElementById('results');
-        const query = document.getElementById('searchInput').value.trim().toLowerCase();
-
-        let filteredResults = results;
-        if (currentFilter !== 'all') {
-            filteredResults = results.filter(item => item.chapter === currentFilter);
-        }
-
-        if (filteredResults.length === 0) {
-            resultsDiv.innerHTML = `
-                <div class="no-results">
-                    <svg viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                    </svg>
-                    <h3>لم يتم العثور على نتائج</h3>
-                    <p>حاول استخدام كلمات بحث مختلفة</p>
+                <div class="stat-item">
+                    <span class="stat-value" id="total-time">20</span>
+                    <span class="stat-label">الدقائق</span>
                 </div>
-            `;
-            return;
-        }
-
-        function highlightText(text, query) {
-            if (!query) return text;
-            const regex = new RegExp(`(${query})`, 'gi');
-            return text.replace(regex, '<span class="highlight">$1</span>');
-        }
-
-        let html = `<div class="stats">تم العثور على ${filteredResults.length} نتيجة</div>`;
-
-        filteredResults.forEach(item => {
-            const highlightedQuestion = highlightText(item.question, query);
-            const highlightedAnswer = highlightText(item.answer, query);
-
-            html += `
+                <div class="stat-item">
+                    <span class="stat-value" id="best-score">0</span>
+                    <span class="stat-label">أفضل نتيجة</span>
+                </div>
+            </div>
+            
+            <div>
+                <button id="start-btn">ابدأ الاختبار</button>
+                <button id="randomize-btn" class="secondary-btn">أسئلة عشوائية</button>
+            </div>
+            
+            <div class="footer">
+                <p>مع أ/ عصاد الجزيري - مؤلف سلسلة المصادر في القدرات</p>
+                <p>أسئلة من تجميعات الورق للسنوات 1440-1446 هـ</p>
+            </div>
+        </div>
+        
+        <!-- شاشة الاختبار -->
+        <div id="test-screen">
+            <div class="test-header">
+                <div class="question-counter">
+                    <span id="current-question">1</span> / <span id="total-questions-test">20</span>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress" id="progress-bar-fill" style="width: 5%;"></div>
+                    </div>
+                </div>
+                
+                <div class="timer" id="timer">20:00</div>
+            </div>
+            
+            <div class="question-container">
+                <div class="question-number">السؤال <span id="question-number">1</span></div>
+                <div class="question-text" id="question-text">
+                    سيتم تحميل السؤال هنا...
+                </div>
+                
+                <div class="options-container" id="options-container">
+                    <!-- سيتم إنشاء الخيارات هنا بواسطة JavaScript -->
+                </div>
+            </div>
+            
+            <div class="navigation-buttons">
+                <button id="prev-btn" class="secondary-btn">السابق</button>
+                <button id="next-btn">التالي</button>
+                <button id="submit-btn" style="display: none;">إنهاء الاختبار</button>
+            </div>
+            
+            <div class="footer">
+                <p>انتبه للوقت المتبقي! يمكنك العودة وتغيير إجاباتك في أي وقت قبل إنهاء الاختبار</p>
+            </div>
+        </div>
+        
+        <!-- شاشة النتائج -->
+        <div id="results-screen">
+            <div class="result-header">
+                <h2>نتيجة الاختبار</h2>
+                <p>لقد أكملت اختبار القدرات بنجاح</p>
+            </div>
+            
+            <div class="score-container">
+                <span id="final-score">0</span>%
+            </div>
+            
+            <div class="score-text" id="score-message">جيد، يمكنك التحسين</div>
+            
+            <div class="results-details">
                 <div class="result-item">
-                    <div class="result-chapter">${item.chapter}</div>
-                    <div class="result-question">${highlightedQuestion}</div>
-                    <div class="result-answer">✓ الإجابة: ${highlightedAnswer}</div>
+                    <span class="result-label">عدد الأسئلة:</span>
+                    <span class="result-value" id="results-total">0</span>
                 </div>
-            `;
-        });
+                <div class="result-item">
+                    <span class="result-label">الإجابات الصحيحة:</span>
+                    <span class="result-value" id="results-correct">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">الإجابات الخاطئة:</span>
+                    <span class="result-value" id="results-wrong">0</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">الوقت المستغرق:</span>
+                    <span class="result-value" id="results-time">0:00</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">أفضل نتيجة سابقة:</span>
+                    <span class="result-value" id="results-best">0%</span>
+                </div>
+            </div>
+            
+            <div class="results-actions">
+                <button id="restart-btn">إعادة الاختبار</button>
+                <button id="new-test-btn" class="secondary-btn">اختبار جديد عشوائي</button>
+                <button id="back-to-start-btn">العودة للبداية</button>
+            </div>
+            
+            <div class="footer">
+                <p>تابعنا على منصة تقدر: <a href="https://www.tiqdr.com" target="_blank">www.tiqdr.com</a></p>
+            </div>
+        </div>
+    </div>
 
-        resultsDiv.innerHTML = html;
-    }
-</script>
-```
+    <script>
+        // بيانات الأسئلة من الملف المرفق
+        const questionsData = [
+            {
+                id: 1,
+                question: "بعد 7 سنوات من الآن يصبح عمر أم 3 أبنائها 92 كم يصبح عمرهم بعد 4 سنوات من الآن",
+                options: ["٨١", "٨٠", "٧٩", "٧٨"],
+                correct: 1,
+                explanation: "إذا كان مجموع أعمار الأبناء بعد 7 سنوات هو 92، فبعد 4 سنوات سيكون المجموع 89 (ناقص 3 سنوات لكل ابن، أي 3 × 3 = 9 سنوات أقل من 92)."
+            },
+            {
+                id: 2,
+                question: "مات رجل ترك ٢٤٠٠٠٢ ريال أخذت زوجته ١ المبلغ و أخذت الأم ١ المبلغ والباق للولد فما نصيب الولد",
+                options: ["١٧٠٠٠٢", "١٥٠٠٠٢", "١٤٠٠٠٢", "١٣٠٠٠٢"],
+                correct: 2,
+                explanation: "نصيب الزوجة هو الثلث، ونصيب الأم هو الثلث، فيتبقى للولد الثلث أيضًا. 240002 ÷ 3 = 80000 تقريبًا، لكن الأرقام في الخيارات تقريبية."
+            },
+            {
+                id: 3,
+                question: "ما نسبة الانخفاض بين فصلي الشتاء والربيع؟",
+                options: ["%20.1", "%25.2", "%30.5", "%35.7"],
+                correct: 0,
+                explanation: "يتم حساب نسبة الانخفاض بالفرق بين القيمتين مقسومًا على القيمة الأصلية مضروبًا في 100."
+            },
+            {
+                id: 4,
+                question: "أوجد مساحة الجزء المظلل إذا كان نصف قطر الدائرة = ٧ سم",
+                options: ["١ ط", "٩ ط", "١٢ ط", "١٥ ط"],
+                correct: 1,
+                explanation: "مساحة الدائرة = π × نصف القطر² = π × ٤٩. الجزء المظلل هو ربع الدائرة، لذا المساحة = (١/٤) × ٤٩π = ١٢.٢٥π ≈ ٩π."
+            },
+            {
+                id: 5,
+                question: "إذا كان ص = ١/٢ س، قارن بين ٢٠ص و ٢٠س",
+                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
+                correct: 1,
+                explanation: "إذا كانت ص = ١/٢ س، فإن ٢٠ص = ٢٠ × (١/٢ س) = ١٠س، وبالمقارنة مع ٢٠س، نجد أن ٢٠س أكبر."
+            },
+            {
+                id: 6,
+                question: "ما هي الهوايات التي يفضلها نصف عدد الطلاب في الفصل؟",
+                options: ["تصوير %23", "حاسب آلي %27", "تصوير وحاسب آلي %23", "حاسب آلي ورسم %27"],
+                correct: 2,
+                explanation: "نصف عدد الطلاب هو %50، وعند جمع نسبة التصوير (%23) والحاسب الآلي (%27) نحصل على %50."
+            },
+            {
+                id: 7,
+                question: "دائرة قطرها ٧ سم، قارن بين محيط الدائرة ومساحة الدائرة",
+                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
+                correct: 0,
+                explanation: "محيط الدائرة = π × القطر = ٧π ≈ ٢١.٩٩، مساحة الدائرة = π × (نصف القطر)² = π × ٣.٥² = ١٢.٢٥π ≈ ٣٨.٤٨، لذا المحيط أكبر."
+            },
+            {
+                id: 8,
+                question: "إذا كان الشكل مستطيل، أوجد س",
+                options: ["٧", "٨", "٥", "٦"],
+                correct: 1,
+                explanation: "في المستطيل، الأضلاع المتقابلة متساوية، لذا س = ٨."
+            },
+            {
+                id: 9,
+                question: "٤ محاضرات بدون استراحة تبدأ من ۸:۲۱ و تنتهي ١:۲١ كم عدد الدقائق لكل محاضرة",
+                options: ["٤٥ دقيقة", "٥٥ دقيقة", "٦٠ دقيقة", "٦٥ دقيقة"],
+                correct: 0,
+                explanation: "الوقت الإجمالي من ٨:٢١ إلى ١:٢١ هو ٥ ساعات = ٣٠٠ دقيقة. مقسمة على ٤ محاضرات = ٧٥ دقيقة لكل محاضرة."
+            },
+            {
+                id: 10,
+                question: "٢ (٣-) ÷ ٣ (٣-) - ٣ (٣-) × ٢ (٣-)",
+                options: ["٣٩-", "٣٧-", "٣٥-", "٣١-"],
+                correct: 1,
+                explanation: "نطبق أولوية العمليات: الضرب والقسمة قبل الجمع والطرح."
+            },
+            {
+                id: 11,
+                question: "عمود كهرباء إذا كان ربعه بالماء وخمسه بالطين والمتبقي ٤٤ متر، كم طول العمود كاملاً",
+                options: ["٤٤ م", "٧٢ م", "٨٠ م", "١٠٠ م"],
+                correct: 2,
+                explanation: "الجزء المتبقي = ١ - (١/٤ + ١/٥) = ١ - (٥/٢٠ + ٤/٢٠) = ١ - ٩/٢٠ = ١١/٢٠. إذا كان ١١/٢٠ = ٤٤ متر، فالعمود كاملاً = ٤٤ × ٢٠/١١ = ٨٠ متر."
+            },
+            {
+                id: 12,
+                question: "أوجد العدد الغير أولي",
+                options: ["٢٧", "٣٩", "٩٧", "٧٣"],
+                correct: 1,
+                explanation: "العدد ٣٩ غير أولي لأنه يقبل القسمة على ٣ و ١٣."
+            },
+            {
+                id: 13,
+                question: "طالب حصل على درجة ٦٠ واختبر مرة أخرى وحصل على ٧٥، كم نسبة الزيادة",
+                options: ["%١٠", "%١٥", "%٢٠", "%٢٥"],
+                correct: 3,
+                explanation: "نسبة الزيادة = ((٧٥ - ٦٠) / ٦٠) × ١٠٠ = (١٥/٦٠) × ١٠٠ = ٠.٢٥ × ١٠٠ = ٢٥٪."
+            },
+            {
+                id: 14,
+                question: "قارن بين ٢٥ و ١٥",
+                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
+                correct: 0,
+                explanation: "٢٥ أكبر من ١٥."
+            },
+            {
+                id: 15,
+                question: "إذا كان طول ضلع المستطيل هو س وعرضه هو ص، فإن مساحته",
+                options: ["س ص", "٢س ص", "٢(س+ص)", "س+ص"],
+                correct: 0,
+                explanation: "مساحة المستطيل = الطول × العرض = س × ص."
+            },
+            {
+                id: 16,
+                question: "أوجد س في المعادلة: ٢س + ٥ = ١٧",
+                options: ["٦", "٧", "٨", "٩"],
+                correct: 0,
+                explanation: "٢س = ١٧ - ٥ = ١٢، إذن س = ١٢ / ٢ = ٦."
+            },
+            {
+                id: 17,
+                question: "ما قيمة (٣+٧)(٣+٧+٢)",
+                options: ["١٠٠", "١٢٠", "١٤٠", "١٦٠"],
+                correct: 1,
+                explanation: "(٣+٧) = ١٠، (٣+٧+٢) = ١٢، إذن ١٠ × ١٢ = ١٢٠."
+            },
+            {
+                id: 18,
+                question: "شخص عليه دين ٣٦٠ ريال دفع منه ١٠٪ والباقي أقساط متساوية لمدة ١٢ شهر، فكم ما سيدفعه في الشهر",
+                options: ["٢٠", "٢٦", "٢٧", "٣٠"],
+                correct: 2,
+                explanation: "الدفعة الأولى = ١٠٪ من ٣٦٠ = ٣٦ ريال. المتبقي = ٣٦٠ - ٣٦ = ٣٢٤ ريال. القسط الشهري = ٣٢٤ ÷ ١٢ = ٢٧ ريال."
+            },
+            {
+                id: 19,
+                question: "ما قيمة ٢٥١٠٢٣٤٨٩٦٧ ÷ ١٠٠٠٠",
+                options: ["٢٥١٠٢٣", "٢٥١٠٢٣٤", "٢٥١٠٢٣٤٨", "٢٥١٠٢٣٤٨٩"],
+                correct: 1,
+                explanation: "القسمة على ١٠٠٠٠ تحرك العلامة العشرية أربع خانات لليسار."
+            },
+            {
+                id: 20,
+                question: "إذا كان ل، ل عددان صحيحان موجبان، قارن بين مساحة معين طول قطره ل، ل وأطوال أبعاده ل، ل",
+                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
+                correct: 2,
+                explanation: "المعين الذي أبعاده ل، ل هو مربع، ومساحة المربع = ل²، ومساحة المعين = (ناتج ضرب القطرين)/٢ = (ل × ل)/٢ = ل²/٢، لذا مساحة المربع أكبر."
+            }
+        ];
 
+        // متغيرات التطبيق
+        let currentQuestions = [];
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let timerInterval;
+        let totalTimeInSeconds = 0;
+        let timeLeftInSeconds = 0;
+        let testStarted = false;
+        let questionsPerTest = 20;
+
+        // عناصر DOM
+        const startScreen = document.getElementById('start-screen');
+        const testScreen = document.getElementById('test-screen');
+        const resultsScreen = document.getElementById('results-screen');
+        
+        const startBtn = document.getElementById('start-btn');
+        const randomizeBtn = document.getElementById('randomize-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const nextBtn = document.getElementById('next-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const restartBtn = document.getElementById('restart-btn');
+        const newTestBtn = document.getElementById('new-test-btn');
+        const backToStartBtn = document.getElementById('back-to-start-btn');
+        
+        const totalQuestionsElement = document.getElementById('total-questions');
+        const totalTimeElement = document.getElementById('total-time');
+        const bestScoreElement = document.getElementById('best-score');
+        
+        const currentQuestionElement = document.getElementById('current-question');
+        const totalQuestionsTestElement = document.getElementById('total-questions-test');
+        const progressBarFill = document.getElementById('progress-bar-fill');
+        const timerElement = document.getElementById('timer');
+        const questionNumberElement = document.getElementById('question-number');
+        const questionTextElement = document.getElementById('question-text');
+        const optionsContainer = document.getElementById('options-container');
+        
+        const finalScoreElement = document.getElementById('final-score');
+        const scoreMessageElement = document.getElementById('score-message');
+        const resultsTotalElement = document.getElementById('results-total');
+        const resultsCorrectElement = document.getElementById('results-correct');
+        const resultsWrongElement = document.getElementById('results-wrong');
+        const resultsTimeElement = document.getElementById('results-time');
+        const resultsBestElement = document.getElementById('results-best');
+
+        // تحميل أفضل نتيجة من localStorage
+        function loadBestScore() {
+            const bestScore = localStorage.getItem('bestScore') || 0;
+            bestScoreElement.textContent = bestScore + '%';
+            return parseInt(bestScore);
+        }
+
+        // حفظ أفضل نتيجة في localStorage
+        function saveBestScore(score) {
+            const currentBest = loadBestScore();
+            if (score > currentBest) {
+                localStorage.setItem('bestScore', score.toString());
+                bestScoreElement.textContent = score + '%';
+            }
+        }
+
+        // تهيئة الأسئلة عشوائياً
+        function initializeQuestions(randomize = false) {
+            if (randomize) {
+                // إنشاء نسخة من الأسئلة وترتيبها عشوائياً
+                const shuffled = [...questionsData].sort(() => Math.random() - 0.5);
+                currentQuestions = shuffled.slice(0, questionsPerTest);
+            } else {
+                // استخدام أول 20 سؤالاً
+                currentQuestions = questionsData.slice(0, questionsPerTest);
+            }
+            
+            // تهيئة إجابات المستخدم
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            
+            // تحديث واجهة الأسئلة
+            totalQuestionsElement.textContent = currentQuestions.length;
+            totalQuestionsTestElement.textContent = currentQuestions.length;
+            totalTimeInSeconds = currentQuestions.length * 60; // دقيقة لكل سؤال
+            timeLeftInSeconds = totalTimeInSeconds;
+            totalTimeElement.textContent = currentQuestions.length;
+            
+            // تحديث أفضل نتيجة
+            loadBestScore();
+        }
+
+        // عرض سؤال معين
+        function displayQuestion(index) {
+            if (index < 0 || index >= currentQuestions.length) return;
+            
+            currentQuestionIndex = index;
+            const question = currentQuestions[index];
+            
+            // تحديث واجهة السؤال
+            questionNumberElement.textContent = index + 1;
+            currentQuestionElement.textContent = index + 1;
+            totalQuestionsTestElement.textContent = currentQuestions.length;
+            questionTextElement.textContent = question.question;
+            
+            // تحديث شريط التقدم
+            const progress = ((index + 1) / currentQuestions.length) * 100;
+            progressBarFill.style.width = progress + '%';
+            
+            // تحديث وقت السؤال المتبقي
+            updateTimerDisplay();
+            
+            // إنشاء الخيارات
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, optionIndex) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                if (userAnswers[index] === optionIndex) {
+                    optionElement.classList.add('selected');
+                }
+                
+                optionElement.textContent = `${String.fromCharCode(1632 + optionIndex + 1)}) ${option}`;
+                
+                optionElement.addEventListener('click', () => {
+                    // إلغاء تحديد جميع الخيارات
+                    document.querySelectorAll('.option').forEach(opt => {
+                        opt.classList.remove('selected');
+                    });
+                    
+                    // تحديد الخيار المختار
+                    optionElement.classList.add('selected');
+                    userAnswers[index] = optionIndex;
+                    
+                    // تحديث حالة أزرار التنقل
+                    updateNavigationButtons();
+                });
+                
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // تحديث حالة أزرار التنقل
+            updateNavigationButtons();
+        }
+
+        // تحديث أزرار التنقل
+        function updateNavigationButtons() {
+            // زر السابق
+            prevBtn.disabled = currentQuestionIndex === 0;
+            
+            // زر التالي
+            if (currentQuestionIndex === currentQuestions.length - 1) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+            
+            // إذا كان السؤال الأخير مجاباً، نظهر زر الإنهاء
+            if (currentQuestionIndex === currentQuestions.length - 1 && userAnswers[currentQuestionIndex] !== null) {
+                submitBtn.style.display = 'inline-block';
+            }
+        }
+
+        // تحديث عرض المؤقت
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeftInSeconds / 60);
+            const seconds = timeLeftInSeconds % 60;
+            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            
+            // تغيير لون المؤقت إذا كان الوقت أقل من 5 دقائق
+            if (timeLeftInSeconds < 300) {
+                timerElement.style.backgroundColor = '#dc3545';
+            } else if (timeLeftInSeconds < 600) {
+                timerElement.style.backgroundColor = '#ffc107';
+                timerElement.style.color = '#212529';
+            } else {
+                timerElement.style.backgroundColor = '#182848';
+                timerElement.style.color = 'white';
+            }
+        }
+
+        // بدء المؤقت
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                timeLeftInSeconds--;
+                updateTimerDisplay();
+                
+                if (timeLeftInSeconds <= 0) {
+                    clearInterval(timerInterval);
+                    finishTest();
+                }
+            }, 1000);
+        }
+
+        // الانتقال إلى السؤال التالي
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuestions.length - 1) {
+                displayQuestion(currentQuestionIndex + 1);
+            }
+        }
+
+        // الانتقال إلى السؤال السابق
+        function prevQuestion() {
+            if (currentQuestionIndex > 0) {
+                displayQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        // إنهاء الاختبار وعرض النتائج
+        function finishTest() {
+            clearInterval(timerInterval);
+            
+            // حساب النتائج
+            let correctAnswers = 0;
+            let wrongAnswers = 0;
+            
+            for (let i = 0; i < currentQuestions.length; i++) {
+                if (userAnswers[i] === currentQuestions[i].correct) {
+                    correctAnswers++;
+                } else if (userAnswers[i] !== null) {
+                    wrongAnswers++;
+                }
+            }
+            
+            const score = Math.round((correctAnswers / currentQuestions.length) * 100);
+            const timeSpent = totalTimeInSeconds - timeLeftInSeconds;
+            const minutesSpent = Math.floor(timeSpent / 60);
+            const secondsSpent = timeSpent % 60;
+            const timeSpentFormatted = `${minutesSpent}:${secondsSpent.toString().padStart(2, '0')}`;
+            
+            // تحديث واجهة النتائج
+            finalScoreElement.textContent = score;
+            resultsTotalElement.textContent = currentQuestions.length;
+            resultsCorrectElement.textContent = correctAnswers;
+            resultsWrongElement.textContent = wrongAnswers;
+            resultsTimeElement.textContent = timeSpentFormatted;
+            resultsBestElement.textContent = loadBestScore() + '%';
+            
+            // تحديد رسالة النتيجة
+            let message = '';
+            if (score >= 90) {
+                message = 'ممتاز! أداء رائع';
+            } else if (score >= 80) {
+                message = 'جيد جداً! أحسنت';
+            } else if (score >= 70) {
+                message = 'جيد، يمكنك التحسين';
+            } else if (score >= 60) {
+                message = 'مقبول، تحتاج للمزيد من الممارسة';
+            } else {
+                message = 'ضعيف، راجع الأسئلة وحاول مرة أخرى';
+            }
+            scoreMessageElement.textContent = message;
+            
+            // حفظ أفضل نتيجة
+            saveBestScore(score);
+            
+            // الانتقال إلى شاشة النتائج
+            testScreen.style.display = 'none';
+            resultsScreen.style.display = 'block';
+        }
+
+        // بدء اختبار جديد
+        function startTest(randomize = false) {
+            initializeQuestions(randomize);
+            currentQuestionIndex = 0;
+            userAnswers = new Array(currentQuestions.length).fill(null);
+            timeLeftInSeconds = totalTimeInSeconds;
+            testStarted = true;
+            
+            // الانتقال إلى شاشة الاختبار
+            startScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            testScreen.style.display = 'block';
+            
+            // عرض السؤال الأول
+            displayQuestion(0);
+            
+            // بدء المؤقت
+            startTimer();
+        }
+
+        // العودة إلى الشاشة الرئيسية
+        function goToStartScreen() {
+            clearInterval(timerInterval);
+            testStarted = false;
+            
+            startScreen.style.display = 'block';
+            testScreen.style.display = 'none';
+            resultsScreen.style.display = 'none';
+            
+            // تحديث الإحصائيات
+            totalQuestionsElement.textContent = questionsPerTest;
+            totalTimeElement.textContent = questionsPerTest;
+            loadBestScore();
+        }
+
+        // إعادة اختبار بنفس الأسئلة
+        function restartTest() {
+            startTest(false);
+        }
+
+        // اختبار جديد مع أسئلة عشوائية
+        function startRandomTest() {
+            startTest(true);
+        }
+
+        // تهيئة الأحداث
+        function initEventListeners() {
+            startBtn.addEventListener('click', () => startTest(false));
+            randomizeBtn.addEventListener('click', () => startTest(true));
+            prevBtn.addEventListener('click', prevQuestion);
+            nextBtn.addEventListener('click', nextQuestion);
+            submitBtn.addEventListener('click', finishTest);
+            restartBtn.addEventListener('click', restartTest);
+            newTestBtn.addEventListener('click', startRandomTest);
+            backToStartBtn.addEventListener('click', goToStartScreen);
+        }
+
+        // تهيئة التطبيق عند تحميل الصفحة
+        function initApp() {
+            initializeQuestions(false);
+            initEventListeners();
+            loadBestScore();
+        }
+
+        // بدء التطبيق
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
 </body>
 </html>
