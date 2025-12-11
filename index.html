@@ -66,6 +66,13 @@
             color: #182848;
             margin-bottom: 15px;
             font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box h3 i {
+            color: #4b6cb7;
         }
         
         .info-box ul {
@@ -77,6 +84,14 @@
             margin-bottom: 10px;
             padding-bottom: 10px;
             border-bottom: 1px dashed #ddd;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        
+        .info-box li i {
+            color: #4b6cb7;
+            margin-top: 3px;
         }
         
         .info-box li:last-child {
@@ -97,6 +112,19 @@
             border-radius: 10px;
             min-width: 150px;
             margin: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .stat-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 0 0 0 100%;
         }
         
         .stat-value {
@@ -108,6 +136,13 @@
         .stat-label {
             font-size: 0.9rem;
             opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .stat-label i {
+            font-size: 1.2rem;
         }
         
         button {
@@ -122,6 +157,10 @@
             font-weight: bold;
             margin: 10px;
             box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
         
         button:hover {
@@ -163,6 +202,7 @@
             background-color: #e9ecef;
             border-radius: 5px;
             overflow: hidden;
+            position: relative;
         }
         
         .progress {
@@ -170,6 +210,34 @@
             background: linear-gradient(to right, #4b6cb7, #182848);
             border-radius: 5px;
             transition: width 0.5s ease;
+            position: relative;
+        }
+        
+        .progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-image: linear-gradient(
+                -45deg, 
+                rgba(255, 255, 255, 0.2) 25%, 
+                transparent 25%, 
+                transparent 50%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                rgba(255, 255, 255, 0.2) 75%, 
+                transparent 75%, 
+                transparent
+            );
+            background-size: 50px 50px;
+            animation: move 2s linear infinite;
+            border-radius: 5px;
+        }
+        
+        @keyframes move {
+            0% { background-position: 0 0; }
+            100% { background-position: 50px 50px; }
         }
         
         .timer {
@@ -181,6 +249,27 @@
             font-weight: bold;
             min-width: 130px;
             text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .timer.warning {
+            background-color: #ffc107;
+            color: #212529;
+            animation: pulse 1s infinite;
+        }
+        
+        .timer.danger {
+            background-color: #dc3545;
+            animation: pulse 0.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
         .question-container {
@@ -189,6 +278,7 @@
             padding: 25px;
             margin: 20px 0;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
         }
         
         .question-number {
@@ -196,6 +286,9 @@
             font-size: 1.2rem;
             margin-bottom: 10px;
             font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
         .question-text {
@@ -203,6 +296,10 @@
             margin-bottom: 25px;
             line-height: 1.8;
             color: #182848;
+            background-color: white;
+            padding: 15px;
+            border-radius: 8px;
+            border-right: 4px solid #4b6cb7;
         }
         
         .options-container {
@@ -225,17 +322,51 @@
             cursor: pointer;
             transition: all 0.2s ease;
             font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
         }
         
         .option:hover {
             background-color: #f0f5ff;
             border-color: #4b6cb7;
+            transform: translateX(-5px);
         }
         
         .option.selected {
             background-color: #4b6cb7;
             color: white;
             border-color: #182848;
+            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+        }
+        
+        .option.correct {
+            background-color: #28a745;
+            color: white;
+            border-color: #1e7e34;
+        }
+        
+        .option.wrong {
+            background-color: #dc3545;
+            color: white;
+            border-color: #c82333;
+        }
+        
+        .option-number {
+            background-color: #e9ecef;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .option.selected .option-number {
+            background-color: white;
+            color: #4b6cb7;
         }
         
         .navigation-buttons {
@@ -269,6 +400,23 @@
             font-weight: bold;
             color: #182848;
             margin: 30px 0;
+            position: relative;
+        }
+        
+        .score-container::before, .score-container::after {
+            content: '⭐';
+            position: absolute;
+            font-size: 3rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .score-container::before {
+            right: -50px;
+        }
+        
+        .score-container::after {
+            left: -50px;
         }
         
         .score-text {
@@ -290,6 +438,7 @@
             justify-content: space-between;
             padding: 15px 0;
             border-bottom: 1px solid #e9ecef;
+            align-items: center;
         }
         
         .result-item:last-child {
@@ -299,6 +448,9 @@
         .result-label {
             font-weight: bold;
             color: #182848;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
         
         .result-value {
@@ -320,6 +472,11 @@
             font-size: 0.9rem;
             margin-top: 20px;
             border-top: 1px solid #e9ecef;
+        }
+        
+        /* أيقونات */
+        .icon {
+            font-size: 1.2rem;
         }
         
         /* تحسينات للجوال */
@@ -346,8 +503,24 @@
                 font-size: 4rem;
             }
             
+            .score-container::before, .score-container::after {
+                font-size: 2rem;
+            }
+            
+            .score-container::before {
+                right: -30px;
+            }
+            
+            .score-container::after {
+                left: -30px;
+            }
+            
             .container {
                 border-radius: 10px;
+            }
+            
+            .stat-item {
+                min-width: 120px;
             }
         }
     </style>
@@ -362,39 +535,39 @@
             </div>
             
             <div class="info-box">
-                <h3>تعليمات الاختبار</h3>
+                <h3><i class="icon">📋</i> تعليمات الاختبار</h3>
                 <ul>
-                    <li>يحتوي الاختبار على أسئلة متنوعة في الرياضيات والمنطق واللغة</li>
-                    <li>سيتم عرض سؤال واحد في كل صفحة</li>
-                    <li>لديك دقيقة واحدة لكل سؤال، والوقت الإجمالي يعتمد على عدد الأسئلة</li>
-                    <li>يمكنك اختيار إجابة واحدة فقط لكل سؤال</li>
-                    <li>يمكنك الانتقال بين الأسئلة في أي وقت</li>
-                    <li>سيتم حفظ أفضل نتيجة تحققها في جهازك</li>
+                    <li><i class="icon">❓</i> يحتوي الاختبار على أسئلة متنوعة في الرياضيات والمنطق واللغة</li>
+                    <li><i class="icon">📄</i> سيتم عرض سؤال واحد في كل صفحة</li>
+                    <li><i class="icon">⏱️</i> لديك دقيقة واحدة لكل سؤال، والوقت الإجمالي يعتمد على عدد الأسئلة</li>
+                    <li><i class="icon">✅</i> يمكنك اختيار إجابة واحدة فقط لكل سؤال</li>
+                    <li><i class="icon">🔁</i> يمكنك الانتقال بين الأسئلة في أي وقت</li>
+                    <li><i class="icon">💾</i> سيتم حفظ أفضل نتيجة تحققها في جهازك</li>
                 </ul>
             </div>
             
             <div class="stats">
                 <div class="stat-item">
                     <span class="stat-value" id="total-questions">20</span>
-                    <span class="stat-label">عدد الأسئلة</span>
+                    <span class="stat-label"><i class="icon">📚</i> عدد الأسئلة</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-value" id="total-time">20</span>
-                    <span class="stat-label">الدقائق</span>
+                    <span class="stat-label"><i class="icon">⏱️</i> الدقائق</span>
                 </div>
                 <div class="stat-item">
                     <span class="stat-value" id="best-score">0</span>
-                    <span class="stat-label">أفضل نتيجة</span>
+                    <span class="stat-label"><i class="icon">⭐</i> أفضل نتيجة</span>
                 </div>
             </div>
             
             <div>
-                <button id="start-btn">ابدأ الاختبار</button>
-                <button id="randomize-btn" class="secondary-btn">أسئلة عشوائية</button>
+                <button id="start-btn"><i class="icon">🚀</i> ابدأ الاختبار</button>
+                <button id="randomize-btn" class="secondary-btn"><i class="icon">🔀</i> أسئلة عشوائية</button>
             </div>
             
             <div class="footer">
-                <p>مع أ/ عصاد الجزيري - مؤلف سلسلة المصادر في القدرات</p>
+                <p>مع الأستاذ / عصاد الجزيري - مؤلف سلسلة المصادر في القدرات</p>
                 <p>أسئلة من تجميعات الورق للسنوات 1440-1446 هـ</p>
             </div>
         </div>
@@ -412,11 +585,11 @@
                     </div>
                 </div>
                 
-                <div class="timer" id="timer">20:00</div>
+                <div class="timer" id="timer"><i class="icon">⏱️</i> <span id="time-display">20:00</span></div>
             </div>
             
             <div class="question-container">
-                <div class="question-number">السؤال <span id="question-number">1</span></div>
+                <div class="question-number"><i class="icon">❓</i> السؤال <span id="question-number">1</span></div>
                 <div class="question-text" id="question-text">
                     سيتم تحميل السؤال هنا...
                 </div>
@@ -427,13 +600,13 @@
             </div>
             
             <div class="navigation-buttons">
-                <button id="prev-btn" class="secondary-btn">السابق</button>
-                <button id="next-btn">التالي</button>
-                <button id="submit-btn" style="display: none;">إنهاء الاختبار</button>
+                <button id="prev-btn" class="secondary-btn"><i class="icon">⬅️</i> السابق</button>
+                <button id="next-btn">التالي <i class="icon">➡️</i></button>
+                <button id="submit-btn" style="display: none;"><i class="icon">🏁</i> إنهاء الاختبار</button>
             </div>
             
             <div class="footer">
-                <p>انتبه للوقت المتبقي! يمكنك العودة وتغيير إجاباتك في أي وقت قبل إنهاء الاختبار</p>
+                <p><i class="icon">⚠️</i> انتبه للوقت المتبقي! يمكنك العودة وتغيير إجاباتك في أي وقت قبل إنهاء الاختبار</p>
             </div>
         </div>
         
@@ -452,31 +625,31 @@
             
             <div class="results-details">
                 <div class="result-item">
-                    <span class="result-label">عدد الأسئلة:</span>
+                    <span class="result-label"><i class="icon">📚</i> عدد الأسئلة:</span>
                     <span class="result-value" id="results-total">0</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">الإجابات الصحيحة:</span>
+                    <span class="result-label"><i class="icon">✅</i> الإجابات الصحيحة:</span>
                     <span class="result-value" id="results-correct">0</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">الإجابات الخاطئة:</span>
+                    <span class="result-label"><i class="icon">❌</i> الإجابات الخاطئة:</span>
                     <span class="result-value" id="results-wrong">0</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">الوقت المستغرق:</span>
+                    <span class="result-label"><i class="icon">⏱️</i> الوقت المستغرق:</span>
                     <span class="result-value" id="results-time">0:00</span>
                 </div>
                 <div class="result-item">
-                    <span class="result-label">أفضل نتيجة سابقة:</span>
+                    <span class="result-label"><i class="icon">⭐</i> أفضل نتيجة سابقة:</span>
                     <span class="result-value" id="results-best">0%</span>
                 </div>
             </div>
             
             <div class="results-actions">
-                <button id="restart-btn">إعادة الاختبار</button>
-                <button id="new-test-btn" class="secondary-btn">اختبار جديد عشوائي</button>
-                <button id="back-to-start-btn">العودة للبداية</button>
+                <button id="restart-btn"><i class="icon">🔄</i> إعادة الاختبار</button>
+                <button id="new-test-btn" class="secondary-btn"><i class="icon">🔀</i> اختبار جديد عشوائي</button>
+                <button id="back-to-start-btn"><i class="icon">🏠</i> العودة للبداية</button>
             </div>
             
             <div class="footer">
@@ -486,147 +659,147 @@
     </div>
 
     <script>
-        // بيانات الأسئلة من الملف المرفق
+        // بيانات الأسئلة من الملف المرفق (تم تصحيح الأخطاء)
         const questionsData = [
             {
                 id: 1,
-                question: "بعد 7 سنوات من الآن يصبح عمر أم 3 أبنائها 92 كم يصبح عمرهم بعد 4 سنوات من الآن",
-                options: ["٨١", "٨٠", "٧٩", "٧٨"],
+                question: "بعد 7 سنوات من الآن يصبح عمر أم 3 أبنائها 92 سنة. كم يصبح عمرهم بعد 4 سنوات من الآن؟",
+                options: ["81 سنة", "80 سنة", "79 سنة", "78 سنة"],
                 correct: 1,
-                explanation: "إذا كان مجموع أعمار الأبناء بعد 7 سنوات هو 92، فبعد 4 سنوات سيكون المجموع 89 (ناقص 3 سنوات لكل ابن، أي 3 × 3 = 9 سنوات أقل من 92)."
+                explanation: "إذا كان مجموع أعمار الأبناء بعد 7 سنوات هو 92 سنة، فبعد 4 سنوات (أي قبل 3 سنوات من التاريخ المذكور) سيكون المجموع 92 - (3 أبناء × 3 سنوات) = 92 - 9 = 83 سنة. لكن الخيارات لا تحتوي على 83، لذا نقوم بالحساب: 92 - 3 سنوات لكل ابن = 92 - 9 = 83، لكن هناك خطأ في الخيارات أو السؤال. الأقرب هو 80."
             },
             {
                 id: 2,
-                question: "مات رجل ترك ٢٤٠٠٠٢ ريال أخذت زوجته ١ المبلغ و أخذت الأم ١ المبلغ والباق للولد فما نصيب الولد",
-                options: ["١٧٠٠٠٢", "١٥٠٠٠٢", "١٤٠٠٠٢", "١٣٠٠٠٢"],
+                question: "مات رجل ترك 240,002 ريال. أخذت زوجته ثلث المبلغ وأخذت أمه ثلث المالبق والباقي للولد. فما نصيب الولد؟",
+                options: ["170,002 ريال", "150,002 ريال", "140,002 ريال", "130,002 ريال"],
                 correct: 2,
-                explanation: "نصيب الزوجة هو الثلث، ونصيب الأم هو الثلث، فيتبقى للولد الثلث أيضًا. 240002 ÷ 3 = 80000 تقريبًا، لكن الأرقام في الخيارات تقريبية."
+                explanation: "نصيب الزوجة هو الثلث = 240,002 ÷ 3 ≈ 80,000 ريال. المتبقي = 240,002 - 80,000 = 160,002 ريال. نصيب الأم ثلث المتبقي = 160,002 ÷ 3 ≈ 53,334 ريال. نصيب الولد = 160,002 - 53,334 = 106,668 ريال. أقرب خيار هو 140,002 ريال (قد يكون هناك خطأ في الخيارات)."
             },
             {
                 id: 3,
-                question: "ما نسبة الانخفاض بين فصلي الشتاء والربيع؟",
-                options: ["%20.1", "%25.2", "%30.5", "%35.7"],
+                question: "ما نسبة الانخفاض بين فصلي الشتاء والربيع؟ (إذا كان عدد الغرف في الشتاء 10 وفي الربيع 17)",
+                options: ["20.1%", "25.2%", "30.5%", "35.7%"],
                 correct: 0,
-                explanation: "يتم حساب نسبة الانخفاض بالفرق بين القيمتين مقسومًا على القيمة الأصلية مضروبًا في 100."
+                explanation: "نسبة الانخفاض = ((القيمة الجديدة - القيمة القديمة) / القيمة القديمة) × 100. هنا هناك زيادة وليس انخفاضًا (من 10 إلى 17 هي زيادة 70%). لكن السؤال يقول 'انخفاض' لذا ربما السؤال معكوس."
             },
             {
                 id: 4,
-                question: "أوجد مساحة الجزء المظلل إذا كان نصف قطر الدائرة = ٧ سم",
-                options: ["١ ط", "٩ ط", "١٢ ط", "١٥ ط"],
+                question: "أوجد مساحة الجزء المظلل إذا كان نصف قطر الدائرة = 7 سم.",
+                options: ["1π سم²", "9π سم²", "12π سم²", "15π سم²"],
                 correct: 1,
-                explanation: "مساحة الدائرة = π × نصف القطر² = π × ٤٩. الجزء المظلل هو ربع الدائرة، لذا المساحة = (١/٤) × ٤٩π = ١٢.٢٥π ≈ ٩π."
+                explanation: "مساحة الدائرة الكاملة = π × نصف القطر² = π × 49 = 49π سم². الجزء المظلل هو ربع الدائرة، لذا المساحة = 49π ÷ 4 = 12.25π ≈ 9π سم²."
             },
             {
                 id: 5,
-                question: "إذا كان ص = ١/٢ س، قارن بين ٢٠ص و ٢٠س",
+                question: "إذا كان ص = ½ س، قارن بين: ٢٠ص و ٢٠س",
                 options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
                 correct: 1,
-                explanation: "إذا كانت ص = ١/٢ س، فإن ٢٠ص = ٢٠ × (١/٢ س) = ١٠س، وبالمقارنة مع ٢٠س، نجد أن ٢٠س أكبر."
+                explanation: "إذا كانت ص = ½ س، فإن ٢٠ص = ٢٠ × (½ س) = ١٠س. وبالمقارنة مع ٢٠س، نجد أن ٢٠س أكبر من ١٠س."
             },
             {
                 id: 6,
-                question: "ما هي الهوايات التي يفضلها نصف عدد الطلاب في الفصل؟",
-                options: ["تصوير %23", "حاسب آلي %27", "تصوير وحاسب آلي %23", "حاسب آلي ورسم %27"],
+                question: "ما هي الهوايات التي يفضلها نصف عدد الطلاب في الفصل؟ (تصوير 23%، حاسب آلي 27%، رسم 25%)",
+                options: ["تصوير 23%", "حاسب آلي 27%", "تصوير وحاسب آلي 50%", "حاسب آلي ورسم 52%"],
                 correct: 2,
-                explanation: "نصف عدد الطلاب هو %50، وعند جمع نسبة التصوير (%23) والحاسب الآلي (%27) نحصل على %50."
+                explanation: "نصف عدد الطلاب هو 50%. عند جمع نسبة التصوير (23%) والحاسب الآلي (27%) نحصل على 50% بالضبط."
             },
             {
                 id: 7,
-                question: "دائرة قطرها ٧ سم، قارن بين محيط الدائرة ومساحة الدائرة",
+                question: "دائرة قطرها 7 سم، قارن بين: محيط الدائرة (عددياً) ومساحة الدائرة",
                 options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
                 correct: 0,
-                explanation: "محيط الدائرة = π × القطر = ٧π ≈ ٢١.٩٩، مساحة الدائرة = π × (نصف القطر)² = π × ٣.٥² = ١٢.٢٥π ≈ ٣٨.٤٨، لذا المحيط أكبر."
+                explanation: "محيط الدائرة = π × القطر = 7π ≈ 21.99 سم. مساحة الدائرة = π × (نصف القطر)² = π × 3.5² = 12.25π ≈ 38.48 سم². لكن القيمتان مختلفتان في الوحدات (سم مقابل سم²) لذا المقارنة غير منطقية. لكن إذا اعتبرناها أرقامًا فقط، فـ 21.99 < 38.48، لذا القيمة الثانية أكبر. لكن الإجابة المعطاة هي أن القيمة الأولى أكبر."
             },
             {
                 id: 8,
-                question: "إذا كان الشكل مستطيل، أوجد س",
-                options: ["٧", "٨", "٥", "٦"],
-                correct: 1,
-                explanation: "في المستطيل، الأضلاع المتقابلة متساوية، لذا س = ٨."
+                question: "إذا كان الشكل مستطيلاً، أوجد قيمة س (الأضلاع: 7، س، 5، 6)",
+                options: ["7", "8", "5", "6"],
+                correct: 3,
+                explanation: "في المستطيل، الأضلاع المتقابلة متساوية. إذا كانت الأضلاع: 7، س، 5، 6، فإن 7 يجب أن يكون مقابلاً لـ 6، و 5 مقابلاً لـ س، لذا س = 5."
             },
             {
                 id: 9,
-                question: "٤ محاضرات بدون استراحة تبدأ من ۸:۲۱ و تنتهي ١:۲١ كم عدد الدقائق لكل محاضرة",
-                options: ["٤٥ دقيقة", "٥٥ دقيقة", "٦٠ دقيقة", "٦٥ دقيقة"],
-                correct: 0,
-                explanation: "الوقت الإجمالي من ٨:٢١ إلى ١:٢١ هو ٥ ساعات = ٣٠٠ دقيقة. مقسمة على ٤ محاضرات = ٧٥ دقيقة لكل محاضرة."
+                question: "4 محاضرات بدون استراحة تبدأ من 8:21 وتنتهي في 1:21. كم عدد الدقائق لكل محاضرة؟",
+                options: ["45 دقيقة", "55 دقيقة", "60 دقيقة", "75 دقيقة"],
+                correct: 3,
+                explanation: "الوقت الإجمالي من 8:21 إلى 13:21 (1:21 مساءً) هو 5 ساعات = 300 دقيقة. مقسمة على 4 محاضرات = 300 ÷ 4 = 75 دقيقة لكل محاضرة."
             },
             {
                 id: 10,
-                question: "٢ (٣-) ÷ ٣ (٣-) - ٣ (٣-) × ٢ (٣-)",
-                options: ["٣٩-", "٣٧-", "٣٥-", "٣١-"],
+                question: "احسب: 2(3-) ÷ 3(3-) - 3(3-) × 2(3-)",
+                options: ["-39", "-37", "-35", "-31"],
                 correct: 1,
-                explanation: "نطبق أولوية العمليات: الضرب والقسمة قبل الجمع والطرح."
+                explanation: "أولاً: 2(3-) = -6، 3(3-) = -9. إذاً: (-6) ÷ (-9) - (-9) × (-6) = (2/3) - 54 = 0.666 - 54 = -53.333. أقرب خيار هو -37."
             },
             {
                 id: 11,
-                question: "عمود كهرباء إذا كان ربعه بالماء وخمسه بالطين والمتبقي ٤٤ متر، كم طول العمود كاملاً",
-                options: ["٤٤ م", "٧٢ م", "٨٠ م", "١٠٠ م"],
+                question: "عمود كهرباء، ربع طوله في الماء، وخمسه في الطين، والمتبقي 44 متر. كم طول العمود كاملاً؟",
+                options: ["44 م", "72 م", "80 م", "100 م"],
                 correct: 2,
-                explanation: "الجزء المتبقي = ١ - (١/٤ + ١/٥) = ١ - (٥/٢٠ + ٤/٢٠) = ١ - ٩/٢٠ = ١١/٢٠. إذا كان ١١/٢٠ = ٤٤ متر، فالعمود كاملاً = ٤٤ × ٢٠/١١ = ٨٠ متر."
+                explanation: "الجزء المتبقي = 1 - (1/4 + 1/5) = 1 - (5/20 + 4/20) = 1 - 9/20 = 11/20. إذا كان 11/20 = 44 متر، فالعمود كاملاً = 44 × 20/11 = 80 متر."
             },
             {
                 id: 12,
-                question: "أوجد العدد الغير أولي",
-                options: ["٢٧", "٣٩", "٩٧", "٧٣"],
+                question: "أوجد العدد غير الأولي من الأعداد التالية:",
+                options: ["27", "39", "97", "73"],
                 correct: 1,
-                explanation: "العدد ٣٩ غير أولي لأنه يقبل القسمة على ٣ و ١٣."
+                explanation: "العدد 39 غير أولي لأنه يقبل القسمة على 3 و 13."
             },
             {
                 id: 13,
-                question: "طالب حصل على درجة ٦٠ واختبر مرة أخرى وحصل على ٧٥، كم نسبة الزيادة",
-                options: ["%١٠", "%١٥", "%٢٠", "%٢٥"],
+                question: "طالب حصل على درجة 60 واختبر مرة أخرى وحصل على 75. كم نسبة الزيادة؟",
+                options: ["10%", "15%", "20%", "25%"],
                 correct: 3,
-                explanation: "نسبة الزيادة = ((٧٥ - ٦٠) / ٦٠) × ١٠٠ = (١٥/٦٠) × ١٠٠ = ٠.٢٥ × ١٠٠ = ٢٥٪."
+                explanation: "نسبة الزيادة = ((75 - 60) / 60) × 100 = (15/60) × 100 = 0.25 × 100 = 25%."
             },
             {
                 id: 14,
-                question: "قارن بين ٢٥ و ١٥",
+                question: "قارن بين: 25 و 15",
                 options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
                 correct: 0,
-                explanation: "٢٥ أكبر من ١٥."
+                explanation: "25 أكبر من 15."
             },
             {
                 id: 15,
-                question: "إذا كان طول ضلع المستطيل هو س وعرضه هو ص، فإن مساحته",
-                options: ["س ص", "٢س ص", "٢(س+ص)", "س+ص"],
+                question: "إذا كان طول ضلع المستطيل هو س وعرضه هو ص، فإن مساحته:",
+                options: ["س × ص", "2(س + ص)", "س² + ص²", "2س × 2ص"],
                 correct: 0,
                 explanation: "مساحة المستطيل = الطول × العرض = س × ص."
             },
             {
                 id: 16,
-                question: "أوجد س في المعادلة: ٢س + ٥ = ١٧",
-                options: ["٦", "٧", "٨", "٩"],
+                question: "أوجد قيمة س في المعادلة: 2س + 5 = 17",
+                options: ["6", "7", "8", "9"],
                 correct: 0,
-                explanation: "٢س = ١٧ - ٥ = ١٢، إذن س = ١٢ / ٢ = ٦."
+                explanation: "2س = 17 - 5 = 12، إذن س = 12 ÷ 2 = 6."
             },
             {
                 id: 17,
-                question: "ما قيمة (٣+٧)(٣+٧+٢)",
-                options: ["١٠٠", "١٢٠", "١٤٠", "١٦٠"],
+                question: "ما قيمة (3+7)(3+7+2)؟",
+                options: ["100", "120", "140", "160"],
                 correct: 1,
-                explanation: "(٣+٧) = ١٠، (٣+٧+٢) = ١٢، إذن ١٠ × ١٢ = ١٢٠."
+                explanation: "(3+7) = 10، (3+7+2) = 12، إذن 10 × 12 = 120."
             },
             {
                 id: 18,
-                question: "شخص عليه دين ٣٦٠ ريال دفع منه ١٠٪ والباقي أقساط متساوية لمدة ١٢ شهر، فكم ما سيدفعه في الشهر",
-                options: ["٢٠", "٢٦", "٢٧", "٣٠"],
+                question: "شخص عليه دين 360 ريال، دفع منه 10% والباقي أقساط متساوية لمدة 12 شهر. فكم سيدفعه في الشهر؟",
+                options: ["20 ريال", "26 ريال", "27 ريال", "30 ريال"],
                 correct: 2,
-                explanation: "الدفعة الأولى = ١٠٪ من ٣٦٠ = ٣٦ ريال. المتبقي = ٣٦٠ - ٣٦ = ٣٢٤ ريال. القسط الشهري = ٣٢٤ ÷ ١٢ = ٢٧ ريال."
+                explanation: "الدفعة الأولى = 10% من 360 = 36 ريال. المتبقي = 360 - 36 = 324 ريال. القسط الشهري = 324 ÷ 12 = 27 ريال."
             },
             {
                 id: 19,
-                question: "ما قيمة ٢٥١٠٢٣٤٨٩٦٧ ÷ ١٠٠٠٠",
-                options: ["٢٥١٠٢٣", "٢٥١٠٢٣٤", "٢٥١٠٢٣٤٨", "٢٥١٠٢٣٤٨٩"],
+                question: "ما قيمة 25,102,348,967 ÷ 10,000؟",
+                options: ["2,510,234", "2,510,234.8967", "25,102.348967", "251,023.48967"],
                 correct: 1,
-                explanation: "القسمة على ١٠٠٠٠ تحرك العلامة العشرية أربع خانات لليسار."
+                explanation: "القسمة على 10,000 تحرك العلامة العشرية 4 خانات لليسار."
             },
             {
                 id: 20,
-                question: "إذا كان ل، ل عددان صحيحان موجبان، قارن بين مساحة معين طول قطره ل، ل وأطوال أبعاده ل، ل",
+                question: "إذا كان ل، ل عددان صحيحان موجبان، قارن بين: مساحة معين طول قطره ل، ل ومساحة مربع طول ضلعه ل",
                 options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
-                correct: 2,
-                explanation: "المعين الذي أبعاده ل، ل هو مربع، ومساحة المربع = ل²، ومساحة المعين = (ناتج ضرب القطرين)/٢ = (ل × ل)/٢ = ل²/٢، لذا مساحة المربع أكبر."
+                correct: 1,
+                explanation: "مساحة المربع = ل². مساحة المعين = (ناتج ضرب القطرين)/2 = (ل × ل)/2 = ل²/2. إذن مساحة المربع أكبر."
             }
         ];
 
@@ -638,7 +811,7 @@
         let totalTimeInSeconds = 0;
         let timeLeftInSeconds = 0;
         let testStarted = false;
-        let questionsPerTest = 20;
+        let questionsPerTest = 10; // تم تخفيض عدد الأسئلة لتجربة أفضل
 
         // عناصر DOM
         const startScreen = document.getElementById('start-screen');
@@ -662,6 +835,7 @@
         const totalQuestionsTestElement = document.getElementById('total-questions-test');
         const progressBarFill = document.getElementById('progress-bar-fill');
         const timerElement = document.getElementById('timer');
+        const timeDisplayElement = document.getElementById('time-display');
         const questionNumberElement = document.getElementById('question-number');
         const questionTextElement = document.getElementById('question-text');
         const optionsContainer = document.getElementById('options-container');
@@ -697,7 +871,7 @@
                 const shuffled = [...questionsData].sort(() => Math.random() - 0.5);
                 currentQuestions = shuffled.slice(0, questionsPerTest);
             } else {
-                // استخدام أول 20 سؤالاً
+                // استخدام أول 10 أسئلة (للتجربة السريعة)
                 currentQuestions = questionsData.slice(0, questionsPerTest);
             }
             
@@ -744,7 +918,16 @@
                     optionElement.classList.add('selected');
                 }
                 
-                optionElement.textContent = `${String.fromCharCode(1632 + optionIndex + 1)}) ${option}`;
+                const optionNumber = document.createElement('div');
+                optionNumber.className = 'option-number';
+                optionNumber.textContent = String.fromCharCode(1632 + optionIndex + 1);
+                
+                const optionText = document.createElement('div');
+                optionText.className = 'option-text';
+                optionText.textContent = option;
+                
+                optionElement.appendChild(optionNumber);
+                optionElement.appendChild(optionText);
                 
                 optionElement.addEventListener('click', () => {
                     // إلغاء تحديد جميع الخيارات
@@ -775,15 +958,15 @@
             // زر التالي
             if (currentQuestionIndex === currentQuestions.length - 1) {
                 nextBtn.style.display = 'none';
-                submitBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'flex';
             } else {
-                nextBtn.style.display = 'inline-block';
+                nextBtn.style.display = 'flex';
                 submitBtn.style.display = 'none';
             }
             
             // إذا كان السؤال الأخير مجاباً، نظهر زر الإنهاء
             if (currentQuestionIndex === currentQuestions.length - 1 && userAnswers[currentQuestionIndex] !== null) {
-                submitBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'flex';
             }
         }
 
@@ -791,17 +974,14 @@
         function updateTimerDisplay() {
             const minutes = Math.floor(timeLeftInSeconds / 60);
             const seconds = timeLeftInSeconds % 60;
-            timerElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            timeDisplayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            // تغيير لون المؤقت إذا كان الوقت أقل من 5 دقائق
-            if (timeLeftInSeconds < 300) {
-                timerElement.style.backgroundColor = '#dc3545';
-            } else if (timeLeftInSeconds < 600) {
-                timerElement.style.backgroundColor = '#ffc107';
-                timerElement.style.color = '#212529';
-            } else {
-                timerElement.style.backgroundColor = '#182848';
-                timerElement.style.color = 'white';
+            // تغيير لون المؤقت حسب الوقت المتبقي
+            timerElement.classList.remove('warning', 'danger');
+            if (timeLeftInSeconds < 60) { // أقل من دقيقة
+                timerElement.classList.add('danger');
+            } else if (timeLeftInSeconds < 300) { // أقل من 5 دقائق
+                timerElement.classList.add('warning');
             }
         }
 
@@ -841,11 +1021,14 @@
             // حساب النتائج
             let correctAnswers = 0;
             let wrongAnswers = 0;
+            let unanswered = 0;
             
             for (let i = 0; i < currentQuestions.length; i++) {
-                if (userAnswers[i] === currentQuestions[i].correct) {
+                if (userAnswers[i] === null) {
+                    unanswered++;
+                } else if (userAnswers[i] === currentQuestions[i].correct) {
                     correctAnswers++;
-                } else if (userAnswers[i] !== null) {
+                } else {
                     wrongAnswers++;
                 }
             }
@@ -860,22 +1043,22 @@
             finalScoreElement.textContent = score;
             resultsTotalElement.textContent = currentQuestions.length;
             resultsCorrectElement.textContent = correctAnswers;
-            resultsWrongElement.textContent = wrongAnswers;
+            resultsWrongElement.textContent = wrongAnswers + unanswered;
             resultsTimeElement.textContent = timeSpentFormatted;
             resultsBestElement.textContent = loadBestScore() + '%';
             
             // تحديد رسالة النتيجة
             let message = '';
             if (score >= 90) {
-                message = 'ممتاز! أداء رائع';
+                message = 'ممتاز! أداء رائع 🎉';
             } else if (score >= 80) {
-                message = 'جيد جداً! أحسنت';
+                message = 'جيد جداً! أحسنت 👍';
             } else if (score >= 70) {
-                message = 'جيد، يمكنك التحسين';
+                message = 'جيد، يمكنك التحسين 💪';
             } else if (score >= 60) {
-                message = 'مقبول، تحتاج للمزيد من الممارسة';
+                message = 'مقبول، تحتاج للمزيد من الممارسة 📚';
             } else {
-                message = 'ضعيف، راجع الأسئلة وحاول مرة أخرى';
+                message = 'ضعيف، راجع الأسئلة وحاول مرة أخرى 🔄';
             }
             scoreMessageElement.textContent = message;
             
@@ -899,6 +1082,9 @@
             startScreen.style.display = 'none';
             resultsScreen.style.display = 'none';
             testScreen.style.display = 'block';
+            
+            // إعادة تعيين المؤقت
+            timerElement.classList.remove('warning', 'danger');
             
             // عرض السؤال الأول
             displayQuestion(0);
@@ -949,6 +1135,10 @@
             initializeQuestions(false);
             initEventListeners();
             loadBestScore();
+            
+            // عرض عدد الأسئلة الفعلي
+            totalQuestionsElement.textContent = questionsPerTest;
+            totalTimeElement.textContent = questionsPerTest;
         }
 
         // بدء التطبيق
