@@ -3,303 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار القدرات - تجميعات الورق</title>
+    <title>اختبار علوم الأرض والفضاء</title>
     <style>
-        /* أنماط عامة */
         * {
-            margin: 0;
-            padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            color: #333;
-            min-height: 100vh;
+            background-color: #f5f9ff;
+            margin: 0;
             padding: 20px;
+            color: #333;
             line-height: 1.6;
         }
         
         .container {
-            max-width: 900px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: white;
             border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
         }
         
-        /* شاشة البداية */
-        #start-screen {
-            padding: 40px;
+        header {
             text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #2c5aa0;
+            padding-bottom: 15px;
         }
         
-        .header {
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            padding: 30px 20px;
-            border-bottom: 5px solid #ffd166;
-        }
-        
-        .header h1 {
-            font-size: 2.2rem;
+        h1 {
+            color: #2c5aa0;
             margin-bottom: 10px;
         }
         
-        .header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
+        .subtitle {
+            color: #666;
+            font-size: 18px;
         }
         
-        .info-box {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 20px;
-            margin: 25px 0;
-            border-right: 5px solid #4b6cb7;
-            text-align: right;
-        }
-        
-        .info-box h3 {
-            color: #182848;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .info-box h3 i {
-            color: #4b6cb7;
-        }
-        
-        .info-box ul {
-            list-style-type: none;
-            padding-right: 20px;
-        }
-        
-        .info-box li {
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #ddd;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-        
-        .info-box li i {
-            color: #4b6cb7;
-            margin-top: 3px;
-        }
-        
-        .info-box li:last-child {
-            border-bottom: none;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin: 25px 0;
-        }
-        
-        .stat-item {
-            background-color: #4b6cb7;
-            color: white;
+        .instructions {
+            background-color: #e8f0fe;
             padding: 15px;
             border-radius: 10px;
-            min-width: 150px;
-            margin: 10px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .stat-item::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: 0;
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 0 0 0 100%;
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: bold;
-            display: block;
-        }
-        
-        .stat-label {
-            font-size: 0.9rem;
-            opacity: 0.9;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .stat-label i {
-            font-size: 1.2rem;
-        }
-        
-        button {
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: bold;
-            margin: 10px;
-            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        
-        button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(75, 108, 183, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        .secondary-btn {
-            background: linear-gradient(to right, #6c757d, #495057);
-        }
-        
-        /* شاشة الاختبار */
-        #test-screen {
-            padding: 20px;
-            display: none;
-        }
-        
-        .test-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .progress-container {
-            flex-grow: 1;
-            margin: 0 15px;
-        }
-        
-        .progress-bar {
-            height: 10px;
-            background-color: #e9ecef;
-            border-radius: 5px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .progress {
-            height: 100%;
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            border-radius: 5px;
-            transition: width 0.5s ease;
-            position: relative;
-        }
-        
-        .progress::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background-image: linear-gradient(
-                -45deg, 
-                rgba(255, 255, 255, 0.2) 25%, 
-                transparent 25%, 
-                transparent 50%, 
-                rgba(255, 255, 255, 0.2) 50%, 
-                rgba(255, 255, 255, 0.2) 75%, 
-                transparent 75%, 
-                transparent
-            );
-            background-size: 50px 50px;
-            animation: move 2s linear infinite;
-            border-radius: 5px;
-        }
-        
-        @keyframes move {
-            0% { background-position: 0 0; }
-            100% { background-position: 50px 50px; }
-        }
-        
-        .timer {
-            background-color: #182848;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            font-size: 1.2rem;
-            font-weight: bold;
-            min-width: 130px;
-            text-align: center;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .timer.warning {
-            background-color: #ffc107;
-            color: #212529;
-            animation: pulse 1s infinite;
-        }
-        
-        .timer.danger {
-            background-color: #dc3545;
-            animation: pulse 0.5s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+            margin-bottom: 25px;
+            border-right: 5px solid #2c5aa0;
         }
         
         .question-container {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 20px 0;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            position: relative;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #ddd;
         }
         
         .question-number {
-            color: #4b6cb7;
-            font-size: 1.2rem;
-            margin-bottom: 10px;
+            background-color: #2c5aa0;
+            color: white;
+            display: inline-block;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
             font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
         
         .question-text {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
-            line-height: 1.8;
-            color: #182848;
-            background-color: white;
-            padding: 15px;
-            border-radius: 8px;
-            border-right: 4px solid #4b6cb7;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #222;
         }
         
         .options-container {
@@ -308,841 +82,486 @@
             gap: 12px;
         }
         
-        @media (min-width: 768px) {
-            .options-container {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
-        
         .option {
-            background-color: white;
-            border: 2px solid #e9ecef;
-            border-radius: 10px;
-            padding: 15px;
+            padding: 12px 15px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 12px;
+            transition: all 0.2s;
         }
         
         .option:hover {
-            background-color: #f0f5ff;
-            border-color: #4b6cb7;
+            background-color: #e9ecef;
             transform: translateX(-5px);
         }
         
-        .option.selected {
-            background-color: #4b6cb7;
-            color: white;
-            border-color: #182848;
-            box-shadow: 0 5px 15px rgba(75, 108, 183, 0.3);
+        .option input {
+            margin-left: 10px;
         }
         
-        .option.correct {
+        .option.selected {
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+        }
+        
+        .controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+        
+        button {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        #startBtn, #restartBtn {
+            background-color: #2c5aa0;
+            color: white;
+        }
+        
+        #startBtn:hover, #restartBtn:hover {
+            background-color: #1e3d6d;
+        }
+        
+        #submitBtn {
             background-color: #28a745;
             color: white;
-            border-color: #1e7e34;
         }
         
-        .option.wrong {
-            background-color: #dc3545;
-            color: white;
-            border-color: #c82333;
+        #submitBtn:hover {
+            background-color: #218838;
         }
         
-        .option-number {
-            background-color: #e9ecef;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-        
-        .option.selected .option-number {
-            background-color: white;
-            color: #4b6cb7;
-        }
-        
-        .navigation-buttons {
-            display: flex;
-            justify-content: space-between;
+        #result {
             margin-top: 30px;
-        }
-        
-        /* شاشة النتائج */
-        #results-screen {
-            padding: 30px;
-            display: none;
-            text-align: center;
-        }
-        
-        .result-header {
-            background: linear-gradient(to right, #4b6cb7, #182848);
-            color: white;
-            padding: 30px 20px;
-            border-radius: 10px 10px 0 0;
-            margin-bottom: 30px;
-        }
-        
-        .result-header h2 {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-        
-        .score-container {
-            font-size: 5rem;
-            font-weight: bold;
-            color: #182848;
-            margin: 30px 0;
-            position: relative;
-        }
-        
-        .score-container::before, .score-container::after {
-            content: '⭐';
-            position: absolute;
-            font-size: 3rem;
-            top: 50%;
-            transform: translateY(-50%);
-        }
-        
-        .score-container::before {
-            right: -50px;
-        }
-        
-        .score-container::after {
-            left: -50px;
-        }
-        
-        .score-text {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #495057;
-        }
-        
-        .results-details {
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            padding: 25px;
-            margin: 25px 0;
-            text-align: right;
-        }
-        
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px 0;
-            border-bottom: 1px solid #e9ecef;
-            align-items: center;
-        }
-        
-        .result-item:last-child {
-            border-bottom: none;
-        }
-        
-        .result-label {
-            font-weight: bold;
-            color: #182848;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        
-        .result-value {
-            font-weight: bold;
-        }
-        
-        .results-actions {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-        
-        /* تذييل الصفحة */
-        .footer {
-            text-align: center;
             padding: 20px;
-            color: #6c757d;
-            font-size: 0.9rem;
-            margin-top: 20px;
-            border-top: 1px solid #e9ecef;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            display: none;
         }
         
-        /* أيقونات */
-        .icon {
-            font-size: 1.2rem;
+        .result-pass {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
         }
         
-        /* تحسينات للجوال */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 1.8rem;
-            }
-            
-            .test-header {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .timer {
-                margin-top: 15px;
-                align-self: center;
+        .result-fail {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .score {
+            font-size: 24px;
+            margin: 10px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
             }
             
             .question-text {
-                font-size: 1.2rem;
+                font-size: 16px;
             }
             
-            .score-container {
-                font-size: 4rem;
+            .controls {
+                flex-direction: column;
             }
             
-            .score-container::before, .score-container::after {
-                font-size: 2rem;
-            }
-            
-            .score-container::before {
-                right: -30px;
-            }
-            
-            .score-container::after {
-                left: -30px;
-            }
-            
-            .container {
-                border-radius: 10px;
-            }
-            
-            .stat-item {
-                min-width: 120px;
+            button {
+                width: 100%;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- شاشة البداية -->
-        <div id="start-screen">
-            <div class="header">
-                <h1>اختبار القدرات</h1>
-                <p>تجميعات الورق للسنوات من 1446 هـ إلى 1440 هـ</p>
-            </div>
-            
-            <div class="info-box">
-                <h3><i class="icon">📋</i> تعليمات الاختبار</h3>
-                <ul>
-                    <li><i class="icon">❓</i> يحتوي الاختبار على أسئلة متنوعة في الرياضيات والمنطق واللغة</li>
-                    <li><i class="icon">📄</i> سيتم عرض سؤال واحد في كل صفحة</li>
-                    <li><i class="icon">⏱️</i> لديك دقيقة واحدة لكل سؤال، والوقت الإجمالي يعتمد على عدد الأسئلة</li>
-                    <li><i class="icon">✅</i> يمكنك اختيار إجابة واحدة فقط لكل سؤال</li>
-                    <li><i class="icon">🔁</i> يمكنك الانتقال بين الأسئلة في أي وقت</li>
-                    <li><i class="icon">💾</i> سيتم حفظ أفضل نتيجة تحققها في جهازك</li>
-                </ul>
-            </div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-value" id="total-questions">20</span>
-                    <span class="stat-label"><i class="icon">📚</i> عدد الأسئلة</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="total-time">20</span>
-                    <span class="stat-label"><i class="icon">⏱️</i> الدقائق</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-value" id="best-score">0</span>
-                    <span class="stat-label"><i class="icon">⭐</i> أفضل نتيجة</span>
-                </div>
-            </div>
-            
-            <div>
-                <button id="start-btn"><i class="icon">🚀</i> ابدأ الاختبار</button>
-                <button id="randomize-btn" class="secondary-btn"><i class="icon">🔀</i> أسئلة عشوائية</button>
-            </div>
-            
-            <div class="footer">
-                <p>مع الأستاذ / عصاد الجزيري - مؤلف سلسلة المصادر في القدرات</p>
-                <p>أسئلة من تجميعات الورق للسنوات 1440-1446 هـ</p>
-            </div>
+        <header>
+            <h1>اختبار علوم الأرض والفضاء</h1>
+            <div class="subtitle">اختر 20 سؤالاً عشوائياً من بنك الأسئلة</div>
+        </header>
+        
+        <div class="instructions">
+            <p><strong>تعليمات الاختبار:</strong></p>
+            <ol>
+                <li>سيتم عرض 20 سؤالاً عشوائياً من بنك الأسئلة.</li>
+                <li>اختر الإجابة الصحيحة لكل سؤال بالنقر عليها.</li>
+                <li>بعد الانتهاء من جميع الأسئلة، اضغط على زر "تصحيح الإجابات".</li>
+                <li>لبدء اختبار جديد، اضغط على زر "إعادة الاختبار".</li>
+            </ol>
         </div>
         
-        <!-- شاشة الاختبار -->
-        <div id="test-screen">
-            <div class="test-header">
-                <div class="question-counter">
-                    <span id="current-question">1</span> / <span id="total-questions-test">20</span>
-                </div>
-                
-                <div class="progress-container">
-                    <div class="progress-bar">
-                        <div class="progress" id="progress-bar-fill" style="width: 5%;"></div>
-                    </div>
-                </div>
-                
-                <div class="timer" id="timer"><i class="icon">⏱️</i> <span id="time-display">20:00</span></div>
-            </div>
-            
-            <div class="question-container">
-                <div class="question-number"><i class="icon">❓</i> السؤال <span id="question-number">1</span></div>
-                <div class="question-text" id="question-text">
-                    سيتم تحميل السؤال هنا...
-                </div>
-                
-                <div class="options-container" id="options-container">
-                    <!-- سيتم إنشاء الخيارات هنا بواسطة JavaScript -->
-                </div>
-            </div>
-            
-            <div class="navigation-buttons">
-                <button id="prev-btn" class="secondary-btn"><i class="icon">⬅️</i> السابق</button>
-                <button id="next-btn">التالي <i class="icon">➡️</i></button>
-                <button id="submit-btn" style="display: none;"><i class="icon">🏁</i> إنهاء الاختبار</button>
-            </div>
-            
-            <div class="footer">
-                <p><i class="icon">⚠️</i> انتبه للوقت المتبقي! يمكنك العودة وتغيير إجاباتك في أي وقت قبل إنهاء الاختبار</p>
-            </div>
+        <div class="controls">
+            <button id="startBtn">بدء الاختبار</button>
+            <button id="restartBtn" style="display: none;">إعادة الاختبار</button>
         </div>
         
-        <!-- شاشة النتائج -->
-        <div id="results-screen">
-            <div class="result-header">
-                <h2>نتيجة الاختبار</h2>
-                <p>لقد أكملت اختبار القدرات بنجاح</p>
-            </div>
-            
-            <div class="score-container">
-                <span id="final-score">0</span>%
-            </div>
-            
-            <div class="score-text" id="score-message">جيد، يمكنك التحسين</div>
-            
-            <div class="results-details">
-                <div class="result-item">
-                    <span class="result-label"><i class="icon">📚</i> عدد الأسئلة:</span>
-                    <span class="result-value" id="results-total">0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label"><i class="icon">✅</i> الإجابات الصحيحة:</span>
-                    <span class="result-value" id="results-correct">0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label"><i class="icon">❌</i> الإجابات الخاطئة:</span>
-                    <span class="result-value" id="results-wrong">0</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label"><i class="icon">⏱️</i> الوقت المستغرق:</span>
-                    <span class="result-value" id="results-time">0:00</span>
-                </div>
-                <div class="result-item">
-                    <span class="result-label"><i class="icon">⭐</i> أفضل نتيجة سابقة:</span>
-                    <span class="result-value" id="results-best">0%</span>
-                </div>
-            </div>
-            
-            <div class="results-actions">
-                <button id="restart-btn"><i class="icon">🔄</i> إعادة الاختبار</button>
-                <button id="new-test-btn" class="secondary-btn"><i class="icon">🔀</i> اختبار جديد عشوائي</button>
-                <button id="back-to-start-btn"><i class="icon">🏠</i> العودة للبداية</button>
-            </div>
-            
-            <div class="footer">
-                <p>تابعنا على منصة تقدر: <a href="https://www.tiqdr.com" target="_blank">www.tiqdr.com</a></p>
-            </div>
+        <div id="quizContainer"></div>
+        
+        <div class="controls">
+            <button id="submitBtn" style="display: none;">تصحيح الإجابات</button>
         </div>
+        
+        <div id="result"></div>
     </div>
+    
+    <footer>
+        <p>سلسلة تدريبات في مقرر علوم الأرض والفضاء 1 - الاختبار العشوائي</p>
+    </footer>
 
     <script>
-        // بيانات الأسئلة من الملف المرفق (تم تصحيح الأخطاء)
-        const questionsData = [
+        // بنك الأسئلة من الملف
+        const allQuestions = [
+            // أسئلة الفصل الثالث (المعادن)
             {
-                id: 1,
-                question: "بعد 7 سنوات من الآن يصبح عمر أم 3 أبنائها 92 سنة. كم يصبح عمرهم بعد 4 سنوات من الآن؟",
-                options: ["81 سنة", "80 سنة", "79 سنة", "78 سنة"],
-                correct: 1,
-                explanation: "إذا كان مجموع أعمار الأبناء بعد 7 سنوات هو 92 سنة، فبعد 4 سنوات (أي قبل 3 سنوات من التاريخ المذكور) سيكون المجموع 92 - (3 أبناء × 3 سنوات) = 92 - 9 = 83 سنة. لكن الخيارات لا تحتوي على 83، لذا نقوم بالحساب: 92 - 3 سنوات لكل ابن = 92 - 9 = 83، لكن هناك خطأ في الخيارات أو السؤال. الأقرب هو 80."
+                question: "مادة طبيعية صلبة غير عضوية لها مكونات كيميائية معينة وبناء بلوري محدد:",
+                options: ["السكر", "البلورة", "المعدن", "الألماس الصناعي"],
+                answer: 2
             },
             {
-                id: 2,
-                question: "مات رجل ترك 240,002 ريال. أخذت زوجته ثلث المبلغ وأخذت أمه ثلث المالبق والباقي للولد. فما نصيب الولد؟",
-                options: ["170,002 ريال", "150,002 ريال", "140,002 ريال", "130,002 ريال"],
-                correct: 2,
-                explanation: "نصيب الزوجة هو الثلث = 240,002 ÷ 3 ≈ 80,000 ريال. المتبقي = 240,002 - 80,000 = 160,002 ريال. نصيب الأم ثلث المتبقي = 160,002 ÷ 3 ≈ 53,334 ريال. نصيب الولد = 160,002 - 53,334 = 106,668 ريال. أقرب خيار هو 140,002 ريال (قد يكون هناك خطأ في الخيارات)."
+                question: "جسم صلب تترتب فيه الذرات بنمط متكرر:",
+                options: ["السكر", "البلورة", "المعدن", "الألماس الصناعي"],
+                answer: 1
             },
             {
-                id: 3,
-                question: "ما نسبة الانخفاض بين فصلي الشتاء والربيع؟ (إذا كان عدد الغرف في الشتاء 10 وفي الربيع 17)",
-                options: ["20.1%", "25.2%", "30.5%", "35.7%"],
-                correct: 0,
-                explanation: "نسبة الانخفاض = ((القيمة الجديدة - القيمة القديمة) / القيمة القديمة) × 100. هنا هناك زيادة وليس انخفاضًا (من 10 إلى 17 هي زيادة 70%). لكن السؤال يقول 'انخفاض' لذا ربما السؤال معكوس."
+                question: "مقياس قابلية المعدن للخدش:",
+                options: ["القساوة", "المخدش", "اللون", "البريق"],
+                answer: 0
             },
             {
-                id: 4,
-                question: "أوجد مساحة الجزء المظلل إذا كان نصف قطر الدائرة = 7 سم.",
-                options: ["1π سم²", "9π سم²", "12π سم²", "15π سم²"],
-                correct: 1,
-                explanation: "مساحة الدائرة الكاملة = π × نصف القطر² = π × 49 = 49π سم². الجزء المظلل هو ربع الدائرة، لذا المساحة = 49π ÷ 4 = 12.25π ≈ 9π سم²."
+                question: "الكيفية التي يعكس بها المعدن الضوء الساقط على سطحه:",
+                options: ["القساوة", "المخدش", "اللون", "البريق"],
+                answer: 3
             },
             {
-                id: 5,
-                question: "إذا كان ص = ½ س، قارن بين: ٢٠ص و ٢٠س",
-                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
-                correct: 1,
-                explanation: "إذا كانت ص = ½ س، فإن ٢٠ص = ٢٠ × (½ س) = ١٠س. وبالمقارنة مع ٢٠س، نجد أن ٢٠س أكبر من ١٠س."
+                question: "المادة المصهورة التي تتكون وتتجمع تحت سطح الأرض:",
+                options: ["اللابلة", "الصهارة", "البركان", "الماء"],
+                answer: 1
             },
             {
-                id: 6,
-                question: "ما هي الهوايات التي يفضلها نصف عدد الطلاب في الفصل؟ (تصوير 23%، حاسب آلي 27%، رسم 25%)",
-                options: ["تصوير 23%", "حاسب آلي 27%", "تصوير وحاسب آلي 50%", "حاسب آلي ورسم 52%"],
-                correct: 2,
-                explanation: "نصف عدد الطلاب هو 50%. عند جمع نسبة التصوير (23%) والحاسب الآلي (27%) نحصل على 50% بالضبط."
+                question: "يسمى المعدن الذي ينقسم بسهولة وبشكل متساوي في اتجاه واحد أو أكثر له:",
+                options: ["انكسر", "الفصام", "حملام", "جميع ماسبق"],
+                answer: 1
             },
             {
-                id: 7,
-                question: "دائرة قطرها 7 سم، قارن بين: محيط الدائرة (عددياً) ومساحة الدائرة",
-                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
-                correct: 0,
-                explanation: "محيط الدائرة = π × القطر = 7π ≈ 21.99 سم. مساحة الدائرة = π × (نصف القطر)² = π × 3.5² = 12.25π ≈ 38.48 سم². لكن القيمتان مختلفتان في الوحدات (سم مقابل سم²) لذا المقارنة غير منطقية. لكن إذا اعتبرناها أرقامًا فقط، فـ 21.99 < 38.48، لذا القيمة الثانية أكبر. لكن الإجابة المعطاة هي أن القيمة الأولى أكبر."
+                question: "يسمى المعدن الذي ينكسر بحواف خشنة متعرجة له:",
+                options: ["انكسر", "الفصام", "حملام", "جميع ماسبق"],
+                answer: 0
             },
             {
-                id: 8,
-                question: "إذا كان الشكل مستطيلاً، أوجد قيمة س (الأضلاع: 7، س، 5، 6)",
-                options: ["7", "8", "5", "6"],
-                correct: 3,
-                explanation: "في المستطيل، الأضلاع المتقابلة متساوية. إذا كانت الأضلاع: 7، س، 5، 6، فإن 7 يجب أن يكون مقابلاً لـ 6، و 5 مقابلاً لـ س، لذا س = 5."
+                question: "لون مسحوق المعدن هو:",
+                options: ["القساوة", "المخدش", "اللون", "البريق"],
+                answer: 1
             },
             {
-                id: 9,
-                question: "4 محاضرات بدون استراحة تبدأ من 8:21 وتنتهي في 1:21. كم عدد الدقائق لكل محاضرة؟",
-                options: ["45 دقيقة", "55 دقيقة", "60 دقيقة", "75 دقيقة"],
-                correct: 3,
-                explanation: "الوقت الإجمالي من 8:21 إلى 13:21 (1:21 مساءً) هو 5 ساعات = 300 دقيقة. مقسمة على 4 محاضرات = 300 ÷ 4 = 75 دقيقة لكل محاضرة."
+                question: "مقياس الكثافة الأكثر استخداماً من الجيولوجي:",
+                options: ["المخدش", "القساوة", "اللون", "الوزن النوعي"],
+                answer: 3
             },
             {
-                id: 10,
-                question: "احسب: 2(3-) ÷ 3(3-) - 3(3-) × 2(3-)",
-                options: ["-39", "-37", "-35", "-31"],
-                correct: 1,
-                explanation: "أولاً: 2(3-) = -6، 3(3-) = -9. إذاً: (-6) ÷ (-9) - (-9) × (-6) = (2/3) - 54 = 0.666 - 54 = -53.333. أقرب خيار هو -37."
+                question: "هو مممس المعدن:",
+                options: ["التسيح", "القساوة", "اللون", "البريق"],
+                answer: 3
             },
             {
-                id: 11,
-                question: "عمود كهرباء، ربع طوله في الماء، وخمسه في الطين، والمتبقي 44 متر. كم طول العمود كاملاً؟",
-                options: ["44 م", "72 م", "80 م", "100 م"],
-                correct: 2,
-                explanation: "الجزء المتبقي = 1 - (1/4 + 1/5) = 1 - (5/20 + 4/20) = 1 - 9/20 = 11/20. إذا كان 11/20 = 44 متر، فالعمود كاملاً = 44 × 20/11 = 80 متر."
+                question: "من الصفات الخاصة للمعادن:",
+                options: ["الانكسر المزدوج", "الفوران", "المغناطيسية", "جميع ما سبق"],
+                answer: 3
             },
             {
-                id: 12,
-                question: "أوجد العدد غير الأولي من الأعداد التالية:",
-                options: ["27", "39", "97", "73"],
-                correct: 1,
-                explanation: "العدد 39 غير أولي لأنه يقبل القسمة على 3 و 13."
+                question: "المعادن التي تحتوي على الأكسجين والسيليكون وعنصر آخر أو أكثر في الغالب تسمى:",
+                options: ["الأكاسيد", "السيلكات", "الكربونات", "الفوسفات"],
+                answer: 1
             },
             {
-                id: 13,
-                question: "طالب حصل على درجة 60 واختبر مرة أخرى وحصل على 75. كم نسبة الزيادة؟",
-                options: ["10%", "15%", "20%", "25%"],
-                correct: 3,
-                explanation: "نسبة الزيادة = ((75 - 60) / 60) × 100 = (15/60) × 100 = 0.25 × 100 = 25%."
+                question: "يسمى اذا احتوى المعدن على مواد ذات قيمة يمكن تعدينها بحيث تكون مجدية اقتصادياً:",
+                options: ["خام", "نفط", "بترول", "جميع ما سبق"],
+                answer: 0
             },
             {
-                id: 14,
-                question: "قارن بين: 25 و 15",
-                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
-                correct: 0,
-                explanation: "25 أكبر من 15."
+                question: "معادن ثمينة ونادرة وجميلة فضلاً عن قساوتها ومقاومتها للخدش:",
+                options: ["الألماس الصناعي", "الأحجار الكريمة", "اللوائز", "الأسمنت"],
+                answer: 1
             },
             {
-                id: 15,
-                question: "إذا كان طول ضلع المستطيل هو س وعرضه هو ص، فإن مساحته:",
-                options: ["س × ص", "2(س + ص)", "س² + ص²", "2س × 2ص"],
-                correct: 0,
-                explanation: "مساحة المستطيل = الطول × العرض = س × ص."
+                question: "الحديد مصدره خام يسمى:",
+                options: ["الهيماتيت", "البوكسيت", "الألمنيت", "غير ذلك"],
+                answer: 0
             },
             {
-                id: 16,
-                question: "أوجد قيمة س في المعادلة: 2س + 5 = 17",
-                options: ["6", "7", "8", "9"],
-                correct: 0,
-                explanation: "2س = 17 - 5 = 12، إذن س = 12 ÷ 2 = 6."
+                question: "الألومنيوم مصدره خام يسمى:",
+                options: ["الهيماتيت", "البوكسيت", "الألمنيت", "غير ذلك"],
+                answer: 1
             },
             {
-                id: 17,
-                question: "ما قيمة (3+7)(3+7+2)؟",
-                options: ["100", "120", "140", "160"],
-                correct: 1,
-                explanation: "(3+7) = 10، (3+7+2) = 12، إذن 10 × 12 = 120."
+                question: "من مناجم الخامات الاقتصادية في المملكة العربية السعودية:",
+                options: ["مهد الذهب", "الصغييرات", "الحجار", "جميع ما سبق"],
+                answer: 3
             },
             {
-                id: 18,
-                question: "شخص عليه دين 360 ريال، دفع منه 10% والباقي أقساط متساوية لمدة 12 شهر. فكم سيدفعه في الشهر؟",
-                options: ["20 ريال", "26 ريال", "27 ريال", "30 ريال"],
-                correct: 2,
-                explanation: "الدفعة الأولى = 10% من 360 = 36 ريال. المتبقي = 360 - 36 = 324 ريال. القسط الشهري = 324 ÷ 12 = 27 ريال."
+                question: "من مجموعات المعادن مجموعة الفوسفات، ومن الأمثلة عليها معدن:",
+                options: ["الأبياتيت", "الهيماتيت", "الكالسيت", "الجيس"],
+                answer: 0
             },
             {
-                id: 19,
-                question: "ما قيمة 25,102,348,967 ÷ 10,000؟",
-                options: ["2,510,234", "2,510,234.8967", "25,102.348967", "251,023.48967"],
-                correct: 1,
-                explanation: "القسمة على 10,000 تحرك العلامة العشرية 4 خانات لليسار."
+                question: "ما الخاصية التي تؤدي الى تكرر معدن الجالينا الى مكعبات صغيرة:",
+                options: ["الكثافة", "القساوة", "البناء البلوري", "البريق"],
+                answer: 2
             },
             {
-                id: 20,
-                question: "إذا كان ل، ل عددان صحيحان موجبان، قارن بين: مساحة معين طول قطره ل، ل ومساحة مربع طول ضلعه ل",
-                options: ["القيمة الأولى أكبر", "القيمة الثانية أكبر", "القيمتان متساويتان", "المعطيات غير كافية"],
-                correct: 1,
-                explanation: "مساحة المربع = ل². مساحة المعين = (ناتج ضرب القطرين)/2 = (ل × ل)/2 = ل²/2. إذن مساحة المربع أكبر."
+                question: "ما الخاصية المستعملة في تصنيف المعادن الى مجموعات منفردة:",
+                options: ["البناء الداخلي", "أهرامات السيليكا", "المكونات الكيميائية", "الكثافة والقساوة"],
+                answer: 2
+            },
+            {
+                question: "أي المعادن الآتية لا يمكن تحديد مختلفه باستعمال صفحة البورسلان:",
+                options: ["الهيماتيت", "القاسار", "الذهب", "الماجنيت"],
+                answer: 2
+            },
+            {
+                question: "أي العناصر الآتية أكثر شيوعاً في القشرة الأرضية:",
+                options: ["الصوديوم", "الحديد", "السيليكون", "الكربون"],
+                answer: 2
+            },
+            {
+                question: "المعدن السائد في الحجر الجبري هو الكالسيت فإلى أي مجموعة معدنية ينتمي:",
+                options: ["الاكاسيد", "الكربونات", "الكبريتات", "السيليكات"],
+                answer: 1
+            },
+            {
+                question: "أي معدن تتصلح منه فقداعات غازية قوران عند ملاحظة حصص الهيدروكلوريك:",
+                options: ["الكوارتر", "الجيس", "الكالسيت", "القلوريت"],
+                answer: 2
+            },
+            {
+                question: "ما الخاصية التي تصف المصطلحات الآتية باهت حريري شمعي لولوي أرضي:",
+                options: ["البريق", "المخشش", "اللون", "الانفصام"],
+                answer: 0
+            },
+            // أسئلة الفصل الرابع (الصخور)
+            {
+                question: "صهارة تتدفق على سطح الأرض:",
+                options: ["اللابية", "الصهارة", "البركان", "الماء"],
+                answer: 0
+            },
+            {
+                question: "عندما تبرد الصهارة أو اللابية وتتبلور المعادن تتكون:",
+                options: ["الصخور النارية", "الصخور الرسوبية", "الصخور المتحولة", "جميع ما سبق"],
+                answer: 0
+            },
+            {
+                question: "تتكون الصهارة من:",
+                options: ["صخور مصهورة", "غازات مذابة", "بلورات معدنية", "جميع ما سبق"],
+                answer: 3
+            },
+            {
+                question: "عملية انصهار بعض المعادن عند درجات حرارة منخفضة مع بقاء معادن أخرى صلبة:",
+                options: ["الانصهار الكلي", "الانصهار الجزئي", "التبلور الكلي", "التبلور الجزئي"],
+                answer: 1
+            },
+            {
+                question: "عملية تصلب بلورات المعادن وانفصالها:",
+                options: ["الانصهار الكلي", "الانصهار الجزئي", "التبلور الكلي", "التبلور الجزئي"],
+                answer: 3
+            },
+            {
+                question: "عمليات فيزيائية وكيميائية تؤدي إلى تماسك الرسوبيات وتكون صخر رسوبي:",
+                options: ["التراص", "السمنتة", "التصخر", "التطبق"],
+                answer: 2
+            },
+            {
+                question: "ما أول المعادن التي تتكون عندما تبرد الصهارة؟",
+                options: ["الكوارتز", "المايكا", "الفلسيار البوتاسي", "الأوليفين"],
+                answer: 3
+            },
+            {
+                question: "أي أنواع الصهارة تحتوي كمية أكبر من السيليكا؟",
+                options: ["البارتنية", "الأنذريتية", "الريولابيتية", "البيردويتية"],
+                answer: 2
+            },
+            {
+                question: "أي العوامل الآتية لا يؤثر في تكون الصهارة؟",
+                options: ["الحجم", "درجة الحرارة", "الضغط", "المكونات المعدنية"],
+                answer: 0
+            },
+            {
+                question: "أي الصخور السطحية الآتية لها مكونات الديوريت نفسها؟",
+                options: ["الريولابيت", "البارلت", "الأوبسييديان", "الأنديزيت"],
+                answer: 3
+            },
+            {
+                question: "أي أنواع الصخور فوق القاعدية تحتوي أحياناً على الألماس؟",
+                options: ["الببجمانيت", "الكميرليت", "الجرائيت", "الريولابيت"],
+                answer: 1
+            },
+            {
+                question: "المعدلات التبريد السرية أثر في حجم البلورات في الصخور النارية، حيث تكون:",
+                options: ["بلورات صغيرة", "بلورات فاتحة", "بلورات كبيرة", "بلورات داكنة"],
+                answer: 0
+            },
+            {
+                question: "ما المصطلح الذي يصف الصخور النارية التي تتبلور داخل الأرض؟",
+                options: ["اللابية", "الصهارة", "الجوفية", "السطحية"],
+                answer: 2
+            },
+            {
+                question: "أي المعدنين أكثر شيوعا في الجرائيت؟",
+                options: ["الكوارتز والفسيار", "الأوليفين والبيروكسين", "الفلسيار وأمفيبول", "الكوارتز والأوليفين"],
+                answer: 0
+            },
+            {
+                question: "ما الراسب الفتاتي الذي حجم حبيباته أصغر فيما يأتي؟",
+                options: ["الرمل", "الطين", "الغرين", "الحصى"],
+                answer: 1
             }
         ];
 
-        // متغيرات التطبيق
-        let currentQuestions = [];
-        let currentQuestionIndex = 0;
+        // متغيرات عامة
+        let selectedQuestions = [];
         let userAnswers = [];
-        let timerInterval;
-        let totalTimeInSeconds = 0;
-        let timeLeftInSeconds = 0;
-        let testStarted = false;
-        let questionsPerTest = 10; // تم تخفيض عدد الأسئلة لتجربة أفضل
+        let quizStarted = false;
 
         // عناصر DOM
-        const startScreen = document.getElementById('start-screen');
-        const testScreen = document.getElementById('test-screen');
-        const resultsScreen = document.getElementById('results-screen');
-        
-        const startBtn = document.getElementById('start-btn');
-        const randomizeBtn = document.getElementById('randomize-btn');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const restartBtn = document.getElementById('restart-btn');
-        const newTestBtn = document.getElementById('new-test-btn');
-        const backToStartBtn = document.getElementById('back-to-start-btn');
-        
-        const totalQuestionsElement = document.getElementById('total-questions');
-        const totalTimeElement = document.getElementById('total-time');
-        const bestScoreElement = document.getElementById('best-score');
-        
-        const currentQuestionElement = document.getElementById('current-question');
-        const totalQuestionsTestElement = document.getElementById('total-questions-test');
-        const progressBarFill = document.getElementById('progress-bar-fill');
-        const timerElement = document.getElementById('timer');
-        const timeDisplayElement = document.getElementById('time-display');
-        const questionNumberElement = document.getElementById('question-number');
-        const questionTextElement = document.getElementById('question-text');
-        const optionsContainer = document.getElementById('options-container');
-        
-        const finalScoreElement = document.getElementById('final-score');
-        const scoreMessageElement = document.getElementById('score-message');
-        const resultsTotalElement = document.getElementById('results-total');
-        const resultsCorrectElement = document.getElementById('results-correct');
-        const resultsWrongElement = document.getElementById('results-wrong');
-        const resultsTimeElement = document.getElementById('results-time');
-        const resultsBestElement = document.getElementById('results-best');
+        const startBtn = document.getElementById('startBtn');
+        const restartBtn = document.getElementById('restartBtn');
+        const submitBtn = document.getElementById('submitBtn');
+        const quizContainer = document.getElementById('quizContainer');
+        const resultDiv = document.getElementById('result');
 
-        // تحميل أفضل نتيجة من localStorage
-        function loadBestScore() {
-            const bestScore = localStorage.getItem('bestScore') || 0;
-            bestScoreElement.textContent = bestScore + '%';
-            return parseInt(bestScore);
+        // بدء الاختبار
+        startBtn.addEventListener('click', startQuiz);
+        restartBtn.addEventListener('click', startQuiz);
+        submitBtn.addEventListener('click', submitQuiz);
+
+        // دالة بدء الاختبار
+        function startQuiz() {
+            quizStarted = true;
+            userAnswers = [];
+            
+            // اختيار 20 سؤال عشوائي
+            selectedQuestions = getRandomQuestions(20);
+            
+            // إخفاء الأزرار غير اللازمة
+            startBtn.style.display = 'none';
+            restartBtn.style.display = 'inline-block';
+            submitBtn.style.display = 'inline-block';
+            resultDiv.style.display = 'none';
+            
+            // عرض الأسئلة
+            displayQuestions();
         }
 
-        // حفظ أفضل نتيجة في localStorage
-        function saveBestScore(score) {
-            const currentBest = loadBestScore();
-            if (score > currentBest) {
-                localStorage.setItem('bestScore', score.toString());
-                bestScoreElement.textContent = score + '%';
-            }
+        // دالة لاختيار أسئلة عشوائية
+        function getRandomQuestions(num) {
+            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
+            return shuffled.slice(0, num);
         }
 
-        // تهيئة الأسئلة عشوائياً
-        function initializeQuestions(randomize = false) {
-            if (randomize) {
-                // إنشاء نسخة من الأسئلة وترتيبها عشوائياً
-                const shuffled = [...questionsData].sort(() => Math.random() - 0.5);
-                currentQuestions = shuffled.slice(0, questionsPerTest);
-            } else {
-                // استخدام أول 10 أسئلة (للتجربة السريعة)
-                currentQuestions = questionsData.slice(0, questionsPerTest);
-            }
+        // دالة لعرض الأسئلة
+        function displayQuestions() {
+            quizContainer.innerHTML = '';
             
-            // تهيئة إجابات المستخدم
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            
-            // تحديث واجهة الأسئلة
-            totalQuestionsElement.textContent = currentQuestions.length;
-            totalQuestionsTestElement.textContent = currentQuestions.length;
-            totalTimeInSeconds = currentQuestions.length * 60; // دقيقة لكل سؤال
-            timeLeftInSeconds = totalTimeInSeconds;
-            totalTimeElement.textContent = currentQuestions.length;
-            
-            // تحديث أفضل نتيجة
-            loadBestScore();
-        }
-
-        // عرض سؤال معين
-        function displayQuestion(index) {
-            if (index < 0 || index >= currentQuestions.length) return;
-            
-            currentQuestionIndex = index;
-            const question = currentQuestions[index];
-            
-            // تحديث واجهة السؤال
-            questionNumberElement.textContent = index + 1;
-            currentQuestionElement.textContent = index + 1;
-            totalQuestionsTestElement.textContent = currentQuestions.length;
-            questionTextElement.textContent = question.question;
-            
-            // تحديث شريط التقدم
-            const progress = ((index + 1) / currentQuestions.length) * 100;
-            progressBarFill.style.width = progress + '%';
-            
-            // تحديث وقت السؤال المتبقي
-            updateTimerDisplay();
-            
-            // إنشاء الخيارات
-            optionsContainer.innerHTML = '';
-            question.options.forEach((option, optionIndex) => {
-                const optionElement = document.createElement('div');
-                optionElement.className = 'option';
-                if (userAnswers[index] === optionIndex) {
-                    optionElement.classList.add('selected');
-                }
+            selectedQuestions.forEach((question, index) => {
+                const questionDiv = document.createElement('div');
+                questionDiv.className = 'question-container';
                 
-                const optionNumber = document.createElement('div');
-                optionNumber.className = 'option-number';
-                optionNumber.textContent = String.fromCharCode(1632 + optionIndex + 1);
+                const questionNumber = document.createElement('div');
+                questionNumber.className = 'question-number';
+                questionNumber.textContent = `سؤال ${index + 1}`;
                 
-                const optionText = document.createElement('div');
-                optionText.className = 'option-text';
-                optionText.textContent = option;
+                const questionText = document.createElement('div');
+                questionText.className = 'question-text';
+                questionText.textContent = question.question;
                 
-                optionElement.appendChild(optionNumber);
-                optionElement.appendChild(optionText);
+                const optionsContainer = document.createElement('div');
+                optionsContainer.className = 'options-container';
                 
-                optionElement.addEventListener('click', () => {
-                    // إلغاء تحديد جميع الخيارات
-                    document.querySelectorAll('.option').forEach(opt => {
-                        opt.classList.remove('selected');
+                // إضافة الخيارات
+                question.options.forEach((option, optionIndex) => {
+                    const optionDiv = document.createElement('label');
+                    optionDiv.className = 'option';
+                    
+                    const radioInput = document.createElement('input');
+                    radioInput.type = 'radio';
+                    radioInput.name = `question${index}`;
+                    radioInput.value = optionIndex;
+                    
+                    // عند اختيار إجابة
+                    radioInput.addEventListener('change', () => {
+                        userAnswers[index] = optionIndex;
+                        
+                        // إزالة التحديد من جميع الخيارات لهذا السؤال
+                        const allOptions = optionsContainer.querySelectorAll('.option');
+                        allOptions.forEach(opt => opt.classList.remove('selected'));
+                        
+                        // إضافة التحديد للخيار المختار
+                        optionDiv.classList.add('selected');
                     });
                     
-                    // تحديد الخيار المختار
-                    optionElement.classList.add('selected');
-                    userAnswers[index] = optionIndex;
+                    const optionText = document.createTextNode(` ${option}`);
                     
-                    // تحديث حالة أزرار التنقل
-                    updateNavigationButtons();
+                    optionDiv.appendChild(radioInput);
+                    optionDiv.appendChild(optionText);
+                    optionsContainer.appendChild(optionDiv);
                 });
                 
-                optionsContainer.appendChild(optionElement);
+                questionDiv.appendChild(questionNumber);
+                questionDiv.appendChild(questionText);
+                questionDiv.appendChild(optionsContainer);
+                quizContainer.appendChild(questionDiv);
+            });
+        }
+
+        // دالة تصحيح الإجابات
+        function submitQuiz() {
+            if (!quizStarted) return;
+            
+            let correctAnswers = 0;
+            const totalQuestions = selectedQuestions.length;
+            
+            // حساب الإجابات الصحيحة
+            selectedQuestions.forEach((question, index) => {
+                if (userAnswers[index] === question.answer) {
+                    correctAnswers++;
+                }
             });
             
-            // تحديث حالة أزرار التنقل
-            updateNavigationButtons();
+            // حساب النسبة المئوية
+            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
+            
+            // عرض النتيجة
+            resultDiv.style.display = 'block';
+            resultDiv.className = percentage >= 60 ? 'result result-pass' : 'result result-fail';
+            
+            resultDiv.innerHTML = `
+                <div class="score">${correctAnswers} / ${totalQuestions}</div>
+                <div>نسبة النجاح: ${percentage}%</div>
+                <div>${percentage >= 60 ? 'مبروك! لقد نجحت في الاختبار' : 'يجب أن تحصل على 60% على الأقل لاجتياز الاختبار'}</div>
+            `;
+            
+            // التمرير إلى النتيجة
+            resultDiv.scrollIntoView({ behavior: 'smooth' });
         }
-
-        // تحديث أزرار التنقل
-        function updateNavigationButtons() {
-            // زر السابق
-            prevBtn.disabled = currentQuestionIndex === 0;
-            
-            // زر التالي
-            if (currentQuestionIndex === currentQuestions.length - 1) {
-                nextBtn.style.display = 'none';
-                submitBtn.style.display = 'flex';
-            } else {
-                nextBtn.style.display = 'flex';
-                submitBtn.style.display = 'none';
-            }
-            
-            // إذا كان السؤال الأخير مجاباً، نظهر زر الإنهاء
-            if (currentQuestionIndex === currentQuestions.length - 1 && userAnswers[currentQuestionIndex] !== null) {
-                submitBtn.style.display = 'flex';
-            }
-        }
-
-        // تحديث عرض المؤقت
-        function updateTimerDisplay() {
-            const minutes = Math.floor(timeLeftInSeconds / 60);
-            const seconds = timeLeftInSeconds % 60;
-            timeDisplayElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-            
-            // تغيير لون المؤقت حسب الوقت المتبقي
-            timerElement.classList.remove('warning', 'danger');
-            if (timeLeftInSeconds < 60) { // أقل من دقيقة
-                timerElement.classList.add('danger');
-            } else if (timeLeftInSeconds < 300) { // أقل من 5 دقائق
-                timerElement.classList.add('warning');
-            }
-        }
-
-        // بدء المؤقت
-        function startTimer() {
-            if (timerInterval) clearInterval(timerInterval);
-            
-            timerInterval = setInterval(() => {
-                timeLeftInSeconds--;
-                updateTimerDisplay();
-                
-                if (timeLeftInSeconds <= 0) {
-                    clearInterval(timerInterval);
-                    finishTest();
-                }
-            }, 1000);
-        }
-
-        // الانتقال إلى السؤال التالي
-        function nextQuestion() {
-            if (currentQuestionIndex < currentQuestions.length - 1) {
-                displayQuestion(currentQuestionIndex + 1);
-            }
-        }
-
-        // الانتقال إلى السؤال السابق
-        function prevQuestion() {
-            if (currentQuestionIndex > 0) {
-                displayQuestion(currentQuestionIndex - 1);
-            }
-        }
-
-        // إنهاء الاختبار وعرض النتائج
-        function finishTest() {
-            clearInterval(timerInterval);
-            
-            // حساب النتائج
-            let correctAnswers = 0;
-            let wrongAnswers = 0;
-            let unanswered = 0;
-            
-            for (let i = 0; i < currentQuestions.length; i++) {
-                if (userAnswers[i] === null) {
-                    unanswered++;
-                } else if (userAnswers[i] === currentQuestions[i].correct) {
-                    correctAnswers++;
-                } else {
-                    wrongAnswers++;
-                }
-            }
-            
-            const score = Math.round((correctAnswers / currentQuestions.length) * 100);
-            const timeSpent = totalTimeInSeconds - timeLeftInSeconds;
-            const minutesSpent = Math.floor(timeSpent / 60);
-            const secondsSpent = timeSpent % 60;
-            const timeSpentFormatted = `${minutesSpent}:${secondsSpent.toString().padStart(2, '0')}`;
-            
-            // تحديث واجهة النتائج
-            finalScoreElement.textContent = score;
-            resultsTotalElement.textContent = currentQuestions.length;
-            resultsCorrectElement.textContent = correctAnswers;
-            resultsWrongElement.textContent = wrongAnswers + unanswered;
-            resultsTimeElement.textContent = timeSpentFormatted;
-            resultsBestElement.textContent = loadBestScore() + '%';
-            
-            // تحديد رسالة النتيجة
-            let message = '';
-            if (score >= 90) {
-                message = 'ممتاز! أداء رائع 🎉';
-            } else if (score >= 80) {
-                message = 'جيد جداً! أحسنت 👍';
-            } else if (score >= 70) {
-                message = 'جيد، يمكنك التحسين 💪';
-            } else if (score >= 60) {
-                message = 'مقبول، تحتاج للمزيد من الممارسة 📚';
-            } else {
-                message = 'ضعيف، راجع الأسئلة وحاول مرة أخرى 🔄';
-            }
-            scoreMessageElement.textContent = message;
-            
-            // حفظ أفضل نتيجة
-            saveBestScore(score);
-            
-            // الانتقال إلى شاشة النتائج
-            testScreen.style.display = 'none';
-            resultsScreen.style.display = 'block';
-        }
-
-        // بدء اختبار جديد
-        function startTest(randomize = false) {
-            initializeQuestions(randomize);
-            currentQuestionIndex = 0;
-            userAnswers = new Array(currentQuestions.length).fill(null);
-            timeLeftInSeconds = totalTimeInSeconds;
-            testStarted = true;
-            
-            // الانتقال إلى شاشة الاختبار
-            startScreen.style.display = 'none';
-            resultsScreen.style.display = 'none';
-            testScreen.style.display = 'block';
-            
-            // إعادة تعيين المؤقت
-            timerElement.classList.remove('warning', 'danger');
-            
-            // عرض السؤال الأول
-            displayQuestion(0);
-            
-            // بدء المؤقت
-            startTimer();
-        }
-
-        // العودة إلى الشاشة الرئيسية
-        function goToStartScreen() {
-            clearInterval(timerInterval);
-            testStarted = false;
-            
-            startScreen.style.display = 'block';
-            testScreen.style.display = 'none';
-            resultsScreen.style.display = 'none';
-            
-            // تحديث الإحصائيات
-            totalQuestionsElement.textContent = questionsPerTest;
-            totalTimeElement.textContent = questionsPerTest;
-            loadBestScore();
-        }
-
-        // إعادة اختبار بنفس الأسئلة
-        function restartTest() {
-            startTest(false);
-        }
-
-        // اختبار جديد مع أسئلة عشوائية
-        function startRandomTest() {
-            startTest(true);
-        }
-
-        // تهيئة الأحداث
-        function initEventListeners() {
-            startBtn.addEventListener('click', () => startTest(false));
-            randomizeBtn.addEventListener('click', () => startTest(true));
-            prevBtn.addEventListener('click', prevQuestion);
-            nextBtn.addEventListener('click', nextQuestion);
-            submitBtn.addEventListener('click', finishTest);
-            restartBtn.addEventListener('click', restartTest);
-            newTestBtn.addEventListener('click', startRandomTest);
-            backToStartBtn.addEventListener('click', goToStartScreen);
-        }
-
-        // تهيئة التطبيق عند تحميل الصفحة
-        function initApp() {
-            initializeQuestions(false);
-            initEventListeners();
-            loadBestScore();
-            
-            // عرض عدد الأسئلة الفعلي
-            totalQuestionsElement.textContent = questionsPerTest;
-            totalTimeElement.textContent = questionsPerTest;
-        }
-
-        // بدء التطبيق
-        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
