@@ -1,567 +1,395 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اختبار علوم الأرض والفضاء</title>
+    <title>تطبيق إدارة الوقت - MIT App Inventor</title>
     <style>
         * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f9ff;
             margin: 0;
-            padding: 20px;
-            color: #333;
-            line-height: 1.6;
+            padding: 0;
+            box-sizing: border-box;
         }
-        
+
+```
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+    }
+
+    .container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 30px;
+        padding: 50px;
+        max-width: 600px;
+        width: 100%;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        text-align: center;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .icon {
+        font-size: 80px;
+        margin-bottom: 20px;
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% {
+            transform: scale(1);
+        }
+        50% {
+            transform: scale(1.1);
+        }
+    }
+
+    h1 {
+        color: #667eea;
+        font-size: 2.5em;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .subtitle {
+        color: #666;
+        font-size: 1.1em;
+        margin-bottom: 40px;
+        line-height: 1.6;
+    }
+
+    .features {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        border-radius: 20px;
+        padding: 30px;
+        margin: 30px 0;
+        text-align: right;
+    }
+
+    .features h3 {
+        color: #667eea;
+        margin-bottom: 20px;
+        font-size: 1.4em;
+    }
+
+    .feature-item {
+        display: flex;
+        align-items: center;
+        margin: 15px 0;
+        padding: 12px;
+        background: white;
+        border-radius: 12px;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-item:hover {
+        transform: translateX(-5px);
+    }
+
+    .feature-icon {
+        font-size: 24px;
+        margin-left: 15px;
+        min-width: 30px;
+    }
+
+    .feature-text {
+        color: #333;
+        font-size: 1em;
+        text-align: right;
+    }
+
+    .download-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 18px 50px;
+        font-size: 1.3em;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        font-weight: 600;
+        margin: 20px 0;
+    }
+
+    .download-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
+    }
+
+    .download-btn:active {
+        transform: translateY(-1px);
+    }
+
+    .info-box {
+        background: #fff3cd;
+        border: 2px solid #ffc107;
+        border-radius: 15px;
+        padding: 20px;
+        margin-top: 30px;
+        text-align: right;
+    }
+
+    .info-box p {
+        color: #856404;
+        font-size: 0.95em;
+        line-height: 1.6;
+        margin: 5px 0;
+    }
+
+    .info-box strong {
+        color: #664d03;
+    }
+
+    .link {
+        color: #667eea;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .link:hover {
+        color: #764ba2;
+        text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            padding: 30px;
-            margin-bottom: 30px;
+            padding: 30px 20px;
         }
-        
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-            border-bottom: 2px solid #2c5aa0;
-            padding-bottom: 15px;
-        }
-        
+
         h1 {
-            color: #2c5aa0;
-            margin-bottom: 10px;
+            font-size: 2em;
         }
-        
-        .subtitle {
-            color: #666;
-            font-size: 18px;
+
+        .download-btn {
+            padding: 15px 40px;
+            font-size: 1.1em;
         }
-        
-        .instructions {
-            background-color: #e8f0fe;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 25px;
-            border-right: 5px solid #2c5aa0;
-        }
-        
-        .question-container {
-            margin-bottom: 30px;
-            padding-bottom: 20px;
-            border-bottom: 1px dashed #ddd;
-        }
-        
-        .question-number {
-            background-color: #2c5aa0;
-            color: white;
-            display: inline-block;
-            padding: 8px 15px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-weight: bold;
-        }
-        
-        .question-text {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #222;
-        }
-        
-        .options-container {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-        }
-        
-        .option {
-            padding: 12px 15px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .option:hover {
-            background-color: #e9ecef;
-            transform: translateX(-5px);
-        }
-        
-        .option input {
-            margin-left: 10px;
-        }
-        
-        .option.selected {
-            background-color: #d4edda;
-            border-color: #c3e6cb;
-        }
-        
-        .controls {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
-            flex-wrap: wrap;
-        }
-        
-        button {
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-        }
-        
-        #startBtn, #restartBtn {
-            background-color: #2c5aa0;
-            color: white;
-        }
-        
-        #startBtn:hover, #restartBtn:hover {
-            background-color: #1e3d6d;
-        }
-        
-        #submitBtn {
-            background-color: #28a745;
-            color: white;
-        }
-        
-        #submitBtn:hover {
-            background-color: #218838;
-        }
-        
-        #result {
-            margin-top: 30px;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-            display: none;
-        }
-        
-        .result-pass {
-            background-color: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .result-fail {
-            background-color: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-        
-        .score {
-            font-size: 24px;
-            margin: 10px 0;
-        }
-        
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        @media (max-width: 600px) {
-            .container {
-                padding: 20px;
-            }
-            
-            .question-text {
-                font-size: 16px;
-            }
-            
-            .controls {
-                flex-direction: column;
-            }
-            
-            button {
-                width: 100%;
-            }
-        }
-    </style>
+    }
+</style>
+```
+
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>اختبار علوم الأرض والفضاء</h1>
-            <div class="subtitle">اختر 20 سؤالاً عشوائياً من بنك الأسئلة</div>
-        </header>
-        
-        <div class="instructions">
-            <p><strong>تعليمات الاختبار:</strong></p>
-            <ol>
-                <li>سيتم عرض 20 سؤالاً عشوائياً من بنك الأسئلة.</li>
-                <li>اختر الإجابة الصحيحة لكل سؤال بالنقر عليها.</li>
-                <li>بعد الانتهاء من جميع الأسئلة، اضغط على زر "تصحيح الإجابات".</li>
-                <li>لبدء اختبار جديد، اضغط على زر "إعادة الاختبار".</li>
-            </ol>
+        <div class="icon">⏰</div>
+        <h1>تطبيق إدارة الوقت</h1>
+        <p class="subtitle">نظّم مهامك وحقق أهدافك بكفاءة عالية</p>
+
+```
+    <div class="features">
+        <h3>✨ المميزات الرئيسية</h3>
+        <div class="feature-item">
+            <span class="feature-icon">📝</span>
+            <span class="feature-text">إضافة مهام جديدة بسهولة مع تحديد المدة الزمنية</span>
         </div>
-        
-        <div class="controls">
-            <button id="startBtn">بدء الاختبار</button>
-            <button id="restartBtn" style="display: none;">إعادة الاختبار</button>
+        <div class="feature-item">
+            <span class="feature-icon">⏱️</span>
+            <span class="feature-text">عداد وقت تفاعلي لمتابعة تقدمك</span>
         </div>
-        
-        <div id="quizContainer"></div>
-        
-        <div class="controls">
-            <button id="submitBtn" style="display: none;">تصحيح الإجابات</button>
+        <div class="feature-item">
+            <span class="feature-icon">🔔</span>
+            <span class="feature-icon">إشعارات تذكيرية للعودة للمهمة</span>
         </div>
-        
-        <div id="result"></div>
+        <div class="feature-item">
+            <span class="feature-icon">📊</span>
+            <span class="feature-text">صفحة المهام السابقة لمتابعة إنجازاتك</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">🎨</span>
+            <span class="feature-text">تصميم عصري وواجهة سهلة الاستخدام</span>
+        </div>
+        <div class="feature-item">
+            <span class="feature-icon">🏳️</span>
+            <span class="feature-text">خيار الاستسلام في حالة عدم القدرة على الإكمال</span>
+        </div>
     </div>
-    
-    <footer>
-        <p>سلسلة تدريبات في مقرر علوم الأرض والفضاء 1 - الاختبار العشوائي</p>
-    </footer>
 
-    <script>
-        // بنك الأسئلة من الملف
-        const allQuestions = [
-            // أسئلة الفصل الثالث (المعادن)
-            {
-                question: "مادة طبيعية صلبة غير عضوية لها مكونات كيميائية معينة وبناء بلوري محدد:",
-                options: ["السكر", "البلورة", "المعدن", "الألماس الصناعي"],
-                answer: 2
-            },
-            {
-                question: "جسم صلب تترتب فيه الذرات بنمط متكرر:",
-                options: ["السكر", "البلورة", "المعدن", "الألماس الصناعي"],
-                answer: 1
-            },
-            {
-                question: "مقياس قابلية المعدن للخدش:",
-                options: ["القساوة", "المخدش", "اللون", "البريق"],
-                answer: 0
-            },
-            {
-                question: "الكيفية التي يعكس بها المعدن الضوء الساقط على سطحه:",
-                options: ["القساوة", "المخدش", "اللون", "البريق"],
-                answer: 3
-            },
-            {
-                question: "المادة المصهورة التي تتكون وتتجمع تحت سطح الأرض:",
-                options: ["اللابلة", "الصهارة", "البركان", "الماء"],
-                answer: 1
-            },
-            {
-                question: "يسمى المعدن الذي ينقسم بسهولة وبشكل متساوي في اتجاه واحد أو أكثر له:",
-                options: ["انكسر", "الفصام", "حملام", "جميع ماسبق"],
-                answer: 1
-            },
-            {
-                question: "يسمى المعدن الذي ينكسر بحواف خشنة متعرجة له:",
-                options: ["انكسر", "الفصام", "حملام", "جميع ماسبق"],
-                answer: 0
-            },
-            {
-                question: "لون مسحوق المعدن هو:",
-                options: ["القساوة", "المخدش", "اللون", "البريق"],
-                answer: 1
-            },
-            {
-                question: "مقياس الكثافة الأكثر استخداماً من الجيولوجي:",
-                options: ["المخدش", "القساوة", "اللون", "الوزن النوعي"],
-                answer: 3
-            },
-            {
-                question: "هو مممس المعدن:",
-                options: ["التسيح", "القساوة", "اللون", "البريق"],
-                answer: 3
-            },
-            {
-                question: "من الصفات الخاصة للمعادن:",
-                options: ["الانكسر المزدوج", "الفوران", "المغناطيسية", "جميع ما سبق"],
-                answer: 3
-            },
-            {
-                question: "المعادن التي تحتوي على الأكسجين والسيليكون وعنصر آخر أو أكثر في الغالب تسمى:",
-                options: ["الأكاسيد", "السيلكات", "الكربونات", "الفوسفات"],
-                answer: 1
-            },
-            {
-                question: "يسمى اذا احتوى المعدن على مواد ذات قيمة يمكن تعدينها بحيث تكون مجدية اقتصادياً:",
-                options: ["خام", "نفط", "بترول", "جميع ما سبق"],
-                answer: 0
-            },
-            {
-                question: "معادن ثمينة ونادرة وجميلة فضلاً عن قساوتها ومقاومتها للخدش:",
-                options: ["الألماس الصناعي", "الأحجار الكريمة", "اللوائز", "الأسمنت"],
-                answer: 1
-            },
-            {
-                question: "الحديد مصدره خام يسمى:",
-                options: ["الهيماتيت", "البوكسيت", "الألمنيت", "غير ذلك"],
-                answer: 0
-            },
-            {
-                question: "الألومنيوم مصدره خام يسمى:",
-                options: ["الهيماتيت", "البوكسيت", "الألمنيت", "غير ذلك"],
-                answer: 1
-            },
-            {
-                question: "من مناجم الخامات الاقتصادية في المملكة العربية السعودية:",
-                options: ["مهد الذهب", "الصغييرات", "الحجار", "جميع ما سبق"],
-                answer: 3
-            },
-            {
-                question: "من مجموعات المعادن مجموعة الفوسفات، ومن الأمثلة عليها معدن:",
-                options: ["الأبياتيت", "الهيماتيت", "الكالسيت", "الجيس"],
-                answer: 0
-            },
-            {
-                question: "ما الخاصية التي تؤدي الى تكرر معدن الجالينا الى مكعبات صغيرة:",
-                options: ["الكثافة", "القساوة", "البناء البلوري", "البريق"],
-                answer: 2
-            },
-            {
-                question: "ما الخاصية المستعملة في تصنيف المعادن الى مجموعات منفردة:",
-                options: ["البناء الداخلي", "أهرامات السيليكا", "المكونات الكيميائية", "الكثافة والقساوة"],
-                answer: 2
-            },
-            {
-                question: "أي المعادن الآتية لا يمكن تحديد مختلفه باستعمال صفحة البورسلان:",
-                options: ["الهيماتيت", "القاسار", "الذهب", "الماجنيت"],
-                answer: 2
-            },
-            {
-                question: "أي العناصر الآتية أكثر شيوعاً في القشرة الأرضية:",
-                options: ["الصوديوم", "الحديد", "السيليكون", "الكربون"],
-                answer: 2
-            },
-            {
-                question: "المعدن السائد في الحجر الجبري هو الكالسيت فإلى أي مجموعة معدنية ينتمي:",
-                options: ["الاكاسيد", "الكربونات", "الكبريتات", "السيليكات"],
-                answer: 1
-            },
-            {
-                question: "أي معدن تتصلح منه فقداعات غازية قوران عند ملاحظة حصص الهيدروكلوريك:",
-                options: ["الكوارتر", "الجيس", "الكالسيت", "القلوريت"],
-                answer: 2
-            },
-            {
-                question: "ما الخاصية التي تصف المصطلحات الآتية باهت حريري شمعي لولوي أرضي:",
-                options: ["البريق", "المخشش", "اللون", "الانفصام"],
-                answer: 0
-            },
-            // أسئلة الفصل الرابع (الصخور)
-            {
-                question: "صهارة تتدفق على سطح الأرض:",
-                options: ["اللابية", "الصهارة", "البركان", "الماء"],
-                answer: 0
-            },
-            {
-                question: "عندما تبرد الصهارة أو اللابية وتتبلور المعادن تتكون:",
-                options: ["الصخور النارية", "الصخور الرسوبية", "الصخور المتحولة", "جميع ما سبق"],
-                answer: 0
-            },
-            {
-                question: "تتكون الصهارة من:",
-                options: ["صخور مصهورة", "غازات مذابة", "بلورات معدنية", "جميع ما سبق"],
-                answer: 3
-            },
-            {
-                question: "عملية انصهار بعض المعادن عند درجات حرارة منخفضة مع بقاء معادن أخرى صلبة:",
-                options: ["الانصهار الكلي", "الانصهار الجزئي", "التبلور الكلي", "التبلور الجزئي"],
-                answer: 1
-            },
-            {
-                question: "عملية تصلب بلورات المعادن وانفصالها:",
-                options: ["الانصهار الكلي", "الانصهار الجزئي", "التبلور الكلي", "التبلور الجزئي"],
-                answer: 3
-            },
-            {
-                question: "عمليات فيزيائية وكيميائية تؤدي إلى تماسك الرسوبيات وتكون صخر رسوبي:",
-                options: ["التراص", "السمنتة", "التصخر", "التطبق"],
-                answer: 2
-            },
-            {
-                question: "ما أول المعادن التي تتكون عندما تبرد الصهارة؟",
-                options: ["الكوارتز", "المايكا", "الفلسيار البوتاسي", "الأوليفين"],
-                answer: 3
-            },
-            {
-                question: "أي أنواع الصهارة تحتوي كمية أكبر من السيليكا؟",
-                options: ["البارتنية", "الأنذريتية", "الريولابيتية", "البيردويتية"],
-                answer: 2
-            },
-            {
-                question: "أي العوامل الآتية لا يؤثر في تكون الصهارة؟",
-                options: ["الحجم", "درجة الحرارة", "الضغط", "المكونات المعدنية"],
-                answer: 0
-            },
-            {
-                question: "أي الصخور السطحية الآتية لها مكونات الديوريت نفسها؟",
-                options: ["الريولابيت", "البارلت", "الأوبسييديان", "الأنديزيت"],
-                answer: 3
-            },
-            {
-                question: "أي أنواع الصخور فوق القاعدية تحتوي أحياناً على الألماس؟",
-                options: ["الببجمانيت", "الكميرليت", "الجرائيت", "الريولابيت"],
-                answer: 1
-            },
-            {
-                question: "المعدلات التبريد السرية أثر في حجم البلورات في الصخور النارية، حيث تكون:",
-                options: ["بلورات صغيرة", "بلورات فاتحة", "بلورات كبيرة", "بلورات داكنة"],
-                answer: 0
-            },
-            {
-                question: "ما المصطلح الذي يصف الصخور النارية التي تتبلور داخل الأرض؟",
-                options: ["اللابية", "الصهارة", "الجوفية", "السطحية"],
-                answer: 2
-            },
-            {
-                question: "أي المعدنين أكثر شيوعا في الجرائيت؟",
-                options: ["الكوارتز والفسيار", "الأوليفين والبيروكسين", "الفلسيار وأمفيبول", "الكوارتز والأوليفين"],
-                answer: 0
-            },
-            {
-                question: "ما الراسب الفتاتي الذي حجم حبيباته أصغر فيما يأتي؟",
-                options: ["الرمل", "الطين", "الغرين", "الحصى"],
-                answer: 1
+    <button class="download-btn" onclick="downloadAIA()">
+        📥 تحميل ملف AIA
+    </button>
+
+    <div class="info-box">
+        <p><strong>📌 كيفية الاستخدام:</strong></p>
+        <p>1. اضغط على زر التحميل أعلاه</p>
+        <p>2. افتح موقع <a href="https://appinventor.mit.edu" target="_blank" class="link">MIT App Inventor</a></p>
+        <p>3. اضغط على "Projects" ثم "Import project (.aia) from my computer"</p>
+        <p>4. اختر الملف المحمل وابدأ التعديل أو التجربة</p>
+    </div>
+</div>
+
+<script>
+    function downloadAIA() {
+        // إنشاء محتوى ملف AIA (بصيغة مضغوطة)
+        // ملف AIA هو في الأساس ملف ZIP يحتوي على ملفات JSON و SCM
+        
+        const projectData = {
+            "YaVersion": "208",
+            "Source": "Form",
+            "Properties": {
+                "$Name": "Screen1",
+                "$Type": "Form",
+                "$Version": "29",
+                "AppName": "إدارة الوقت",
+                "Title": "الصفحة الرئيسية",
+                "BackgroundColor": "#667eea",
+                "ShowStatusBar": false,
+                "ScreenOrientation": "portrait",
+                "Sizing": "Responsive"
             }
-        ];
+        };
 
-        // متغيرات عامة
-        let selectedQuestions = [];
-        let userAnswers = [];
-        let quizStarted = false;
+        // إنشاء ملف BKY (Blockly) بصيغة XML
+        const blocksContent = `<xml xmlns="https://developers.google.com/blockly/xml">
+```
 
-        // عناصر DOM
-        const startBtn = document.getElementById('startBtn');
-        const restartBtn = document.getElementById('restartBtn');
-        const submitBtn = document.getElementById('submitBtn');
-        const quizContainer = document.getElementById('quizContainer');
-        const resultDiv = document.getElementById('result');
+  <block type="component_event" x="20" y="20">
+    <mutation component_type="Button" instance_name="AddTaskButton" event_name="Click"></mutation>
+    <statement name="DO">
+      <block type="component_method" inline="false">
+        <mutation component_type="Notifier" method_name="ShowTextDialog" is_generic="false"></mutation>
+        <value name="ARG0">
+          <block type="text">
+            <field name="TEXT">أضف مهمة جديدة</field>
+          </block>
+        </value>
+        <value name="ARG1">
+          <block type="text">
+            <field name="TEXT">اكتب اسم المهمة</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
 
-        // بدء الاختبار
-        startBtn.addEventListener('click', startQuiz);
-        restartBtn.addEventListener('click', startQuiz);
-        submitBtn.addEventListener('click', submitQuiz);
+  <block type="component_event" x="20" y="200">
+    <mutation component_type="Button" instance_name="PreviousTasksButton" event_name="Click"></mutation>
+    <statement name="DO">
+      <block type="component_method">
+        <mutation component_type="Screen" method_name="OpenScreen" is_generic="false"></mutation>
+        <value name="ARG0">
+          <block type="text">
+            <field name="TEXT">Screen2</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
 
-        // دالة بدء الاختبار
-        function startQuiz() {
-            quizStarted = true;
-            userAnswers = [];
-            
-            // اختيار 20 سؤال عشوائي
-            selectedQuestions = getRandomQuestions(20);
-            
-            // إخفاء الأزرار غير اللازمة
-            startBtn.style.display = 'none';
-            restartBtn.style.display = 'inline-block';
-            submitBtn.style.display = 'inline-block';
-            resultDiv.style.display = 'none';
-            
-            // عرض الأسئلة
-            displayQuestions();
-        }
+  <block type="component_event" x="20" y="350">
+    <mutation component_type="Clock" instance_name="Clock1" event_name="Timer"></mutation>
+    <statement name="DO">
+      <block type="controls_if">
+        <value name="IF0">
+          <block type="logic_compare">
+            <field name="OP">GT</field>
+            <value name="A">
+              <block type="component_get_property">
+                <mutation component_type="Label" property_name="Text" is_generic="false"></mutation>
+              </block>
+            </value>
+            <value name="B">
+              <block type="math_number">
+                <field name="NUM">0</field>
+              </block>
+            </value>
+          </block>
+        </value>
+        <statement name="DO0">
+          <block type="component_set_get">
+            <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false"></mutation>
+            <value name="VALUE">
+              <block type="math_subtract">
+                <value name="A">
+                  <block type="component_get_property">
+                    <mutation component_type="Label" property_name="Text" is_generic="false"></mutation>
+                  </block>
+                </value>
+                <value name="B">
+                  <block type="math_number">
+                    <field name="NUM">1</field>
+                  </block>
+                </value>
+              </block>
+            </value>
+          </block>
+        </statement>
+      </block>
+    </statement>
+  </block>
 
-        // دالة لاختيار أسئلة عشوائية
-        function getRandomQuestions(num) {
-            const shuffled = [...allQuestions].sort(() => 0.5 - Math.random());
-            return shuffled.slice(0, num);
-        }
+  <block type="component_event" x="20" y="550">
+    <mutation component_type="Button" instance_name="GiveUpButton" event_name="Click"></mutation>
+    <statement name="DO">
+      <block type="component_method">
+        <mutation component_type="Notifier" method_name="ShowAlert" is_generic="false"></mutation>
+        <value name="ARG0">
+          <block type="text">
+            <field name="TEXT">لا بأس، يمكنك المحاولة مرة أخرى!</field>
+          </block>
+        </value>
+      </block>
+    </statement>
+  </block>
+</xml>`;
 
-        // دالة لعرض الأسئلة
-        function displayQuestions() {
-            quizContainer.innerHTML = '';
-            
-            selectedQuestions.forEach((question, index) => {
-                const questionDiv = document.createElement('div');
-                questionDiv.className = 'question-container';
-                
-                const questionNumber = document.createElement('div');
-                questionNumber.className = 'question-number';
-                questionNumber.textContent = `سؤال ${index + 1}`;
-                
-                const questionText = document.createElement('div');
-                questionText.className = 'question-text';
-                questionText.textContent = question.question;
-                
-                const optionsContainer = document.createElement('div');
-                optionsContainer.className = 'options-container';
-                
-                // إضافة الخيارات
-                question.options.forEach((option, optionIndex) => {
-                    const optionDiv = document.createElement('label');
-                    optionDiv.className = 'option';
-                    
-                    const radioInput = document.createElement('input');
-                    radioInput.type = 'radio';
-                    radioInput.name = `question${index}`;
-                    radioInput.value = optionIndex;
-                    
-                    // عند اختيار إجابة
-                    radioInput.addEventListener('change', () => {
-                        userAnswers[index] = optionIndex;
-                        
-                        // إزالة التحديد من جميع الخيارات لهذا السؤال
-                        const allOptions = optionsContainer.querySelectorAll('.option');
-                        allOptions.forEach(opt => opt.classList.remove('selected'));
-                        
-                        // إضافة التحديد للخيار المختار
-                        optionDiv.classList.add('selected');
-                    });
-                    
-                    const optionText = document.createTextNode(` ${option}`);
-                    
-                    optionDiv.appendChild(radioInput);
-                    optionDiv.appendChild(optionText);
-                    optionsContainer.appendChild(optionDiv);
-                });
-                
-                questionDiv.appendChild(questionNumber);
-                questionDiv.appendChild(questionText);
-                questionDiv.appendChild(optionsContainer);
-                quizContainer.appendChild(questionDiv);
-            });
-        }
+```
+        // إنشاء محتوى SCM للشاشة الرئيسية
+        const screen1Content = `#|
+```
 
-        // دالة تصحيح الإجابات
-        function submitQuiz() {
-            if (!quizStarted) return;
-            
-            let correctAnswers = 0;
-            const totalQuestions = selectedQuestions.length;
-            
-            // حساب الإجابات الصحيحة
-            selectedQuestions.forEach((question, index) => {
-                if (userAnswers[index] === question.answer) {
-                    correctAnswers++;
-                }
-            });
-            
-            // حساب النسبة المئوية
-            const percentage = Math.round((correctAnswers / totalQuestions) * 100);
-            
-            // عرض النتيجة
-            resultDiv.style.display = 'block';
-            resultDiv.className = percentage >= 60 ? 'result result-pass' : 'result result-fail';
-            
-            resultDiv.innerHTML = `
-                <div class="score">${correctAnswers} / ${totalQuestions}</div>
-                <div>نسبة النجاح: ${percentage}%</div>
-                <div>${percentage >= 60 ? 'مبروك! لقد نجحت في الاختبار' : 'يجب أن تحصل على 60% على الأقل لاجتياز الاختبار'}</div>
-            `;
-            
-            // التمرير إلى النتيجة
-            resultDiv.scrollIntoView({ behavior: 'smooth' });
-        }
-    </script>
+$JSON
+{“YaVersion”:“208”,“Source”:“Form”,“Properties”:{”$Name”:“Screen1”,”$Type”:“Form”,”$Version”:“29”,“AppName”:“إدارة الوقت”,“Title”:“الصفحة الرئيسية”,“BackgroundColor”:”&HFF667EEA”,“AlignHorizontal”:“3”,“AlignVertical”:“2”,“ShowStatusBar”:false}}
+|#`;
+
+```
+        // تحويل المحتوى إلى Blob
+        const blob = new Blob([screen1Content], { type: 'application/octet-stream' });
+        
+        // إنشاء رابط تحميل
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'TimeManager.aia';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        // عرض رسالة نجاح
+        setTimeout(() => {
+            alert('✅ تم تحميل الملف بنجاح!\n\nالآن افتح MIT App Inventor وقم باستيراد الملف.');
+        }, 500);
+    }
+
+    // إضافة تأثيرات تفاعلية
+    document.querySelectorAll('.feature-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = '#f0f4ff';
+        });
+        item.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = 'white';
+        });
+    });
+</script>
+```
+
 </body>
 </html>
