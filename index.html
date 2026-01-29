@@ -1,395 +1,648 @@
 <!DOCTYPE html>
-
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تطبيق إدارة الوقت - MIT App Inventor</title>
+    <title>بحث عن اللياقة البدنية وعناصرها المرتبطة بالصحة</title>
     <style>
-        * {
+        /* تنسيقات عامة للطباعة بحجم A4 */
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.8;
+            color: #333;
+            background-color: #fff;
             margin: 0;
             padding: 0;
+            text-align: right;
+        }
+        
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 10mm auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
+            position: relative;
+            page-break-after: always;
             box-sizing: border-box;
         }
-
-```
-    body {
-        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-    }
-
-    .container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 30px;
-        padding: 50px;
-        max-width: 600px;
-        width: 100%;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-        text-align: center;
-        animation: fadeIn 0.5s ease;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-            transform: translateY(-20px);
+        
+        /* تنسيقات الغلاف */
+        .cover {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        
+        .ministry-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #006400;
+            padding-bottom: 15px;
         }
-    }
-
-    .icon {
-        font-size: 80px;
-        margin-bottom: 20px;
-        animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-        0%, 100% {
-            transform: scale(1);
+        
+        .logo {
+            width: 120px;
+            height: 120px;
         }
-        50% {
-            transform: scale(1.1);
+        
+        .vision {
+            background-color: #006400;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
         }
-    }
-
-    h1 {
-        color: #667eea;
-        font-size: 2.5em;
-        margin-bottom: 15px;
-        font-weight: 700;
-    }
-
-    .subtitle {
-        color: #666;
-        font-size: 1.1em;
-        margin-bottom: 40px;
-        line-height: 1.6;
-    }
-
-    .features {
-        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-        border-radius: 20px;
-        padding: 30px;
-        margin: 30px 0;
-        text-align: right;
-    }
-
-    .features h3 {
-        color: #667eea;
-        margin-bottom: 20px;
-        font-size: 1.4em;
-    }
-
-    .feature-item {
-        display: flex;
-        align-items: center;
-        margin: 15px 0;
-        padding: 12px;
-        background: white;
-        border-radius: 12px;
-        transition: transform 0.3s ease;
-    }
-
-    .feature-item:hover {
-        transform: translateX(-5px);
-    }
-
-    .feature-icon {
-        font-size: 24px;
-        margin-left: 15px;
-        min-width: 30px;
-    }
-
-    .feature-text {
-        color: #333;
-        font-size: 1em;
-        text-align: right;
-    }
-
-    .download-btn {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        border: none;
-        padding: 18px 50px;
-        font-size: 1.3em;
-        border-radius: 50px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
-        font-weight: 600;
-        margin: 20px 0;
-    }
-
-    .download-btn:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 15px 40px rgba(102, 126, 234, 0.6);
-    }
-
-    .download-btn:active {
-        transform: translateY(-1px);
-    }
-
-    .info-box {
-        background: #fff3cd;
-        border: 2px solid #ffc107;
-        border-radius: 15px;
-        padding: 20px;
-        margin-top: 30px;
-        text-align: right;
-    }
-
-    .info-box p {
-        color: #856404;
-        font-size: 0.95em;
-        line-height: 1.6;
-        margin: 5px 0;
-    }
-
-    .info-box strong {
-        color: #664d03;
-    }
-
-    .link {
-        color: #667eea;
-        text-decoration: none;
-        font-weight: 600;
-        transition: color 0.3s ease;
-    }
-
-    .link:hover {
-        color: #764ba2;
-        text-decoration: underline;
-    }
-
-    @media (max-width: 600px) {
-        .container {
-            padding: 30px 20px;
+        
+        .title {
+            color: #006400;
+            font-size: 28px;
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #006400;
+            border-radius: 10px;
+            background-color: #f5f5f5;
         }
-
+        
+        .cover-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+        }
+        
+        .student-info {
+            margin-top: 40px;
+            font-size: 18px;
+        }
+        
+        /* تنسيقات المحتوى */
         h1 {
-            font-size: 2em;
+            color: #006400;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 30px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #006400;
         }
-
-        .download-btn {
-            padding: 15px 40px;
-            font-size: 1.1em;
+        
+        h2 {
+            color: #2E7D32;
+            font-size: 20px;
+            margin-top: 25px;
+            margin-bottom: 15px;
         }
-    }
-</style>
-```
-
+        
+        h3 {
+            color: #388E3C;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        p {
+            text-align: justify;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        ul, ol {
+            margin-right: 30px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+        }
+        
+        .content-img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            margin: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        
+        .img-left {
+            float: left;
+            margin-right: 20px;
+            margin-left: 0;
+        }
+        
+        .img-right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+        
+        .clear {
+            clear: both;
+        }
+        
+        .highlight {
+            background-color: #f0f9ff;
+            padding: 15px;
+            border-right: 4px solid #006400;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        
+        /* تنسيقات الفهرس */
+        .toc {
+            margin-top: 30px;
+        }
+        
+        .toc ul {
+            list-style-type: none;
+            padding-right: 0;
+        }
+        
+        .toc li {
+            margin-bottom: 10px;
+        }
+        
+        .toc a {
+            text-decoration: none;
+            color: #006400;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* إخفاء العناصر عند الطباعة */
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            
+            .page {
+                margin: 0;
+                padding: 20mm;
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <div class="icon">⏰</div>
-        <h1>تطبيق إدارة الوقت</h1>
-        <p class="subtitle">نظّم مهامك وحقق أهدافك بكفاءة عالية</p>
-
-```
-    <div class="features">
-        <h3>✨ المميزات الرئيسية</h3>
-        <div class="feature-item">
-            <span class="feature-icon">📝</span>
-            <span class="feature-text">إضافة مهام جديدة بسهولة مع تحديد المدة الزمنية</span>
-        </div>
-        <div class="feature-item">
-            <span class="feature-icon">⏱️</span>
-            <span class="feature-text">عداد وقت تفاعلي لمتابعة تقدمك</span>
-        </div>
-        <div class="feature-item">
-            <span class="feature-icon">🔔</span>
-            <span class="feature-icon">إشعارات تذكيرية للعودة للمهمة</span>
-        </div>
-        <div class="feature-item">
-            <span class="feature-icon">📊</span>
-            <span class="feature-text">صفحة المهام السابقة لمتابعة إنجازاتك</span>
-        </div>
-        <div class="feature-item">
-            <span class="feature-icon">🎨</span>
-            <span class="feature-text">تصميم عصري وواجهة سهلة الاستخدام</span>
-        </div>
-        <div class="feature-item">
-            <span class="feature-icon">🏳️</span>
-            <span class="feature-text">خيار الاستسلام في حالة عدم القدرة على الإكمال</span>
+    <!-- الصفحة 1: الغلاف -->
+    <div class="page">
+        <div class="cover">
+            <div class="ministry-header">
+                <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/f/f5/Saudi_Vision_2030_logo.svg/960px-Saudi_Vision_2030_logo.svg.png" alt="شعار المملكة العربية السعودية" class="logo">
+                <div>
+                    <h2>المملكة العربية السعودية</h2>
+                    <h3>وزارة التعليم - الثانوية التسعون</h3>
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyN10OK6rly_WXp_clxQCKWTy18LxtM4el5sPFo2orKQ&s=10" alt="شعار وزارة التعليم" class="logo">
+            </div>
+            
+            <div class="vision">
+                رؤية المملكة 2030: "وطن طموح.. مجتمع حيوي.. اقتصاد مزدهر"
+            </div>
+            
+            <div class="title">
+                بحث عن اللياقة البدنية وعناصرها المرتبطة بالصحة
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=600&q=80" alt="صورة تمثل اللياقة البدنية" class="cover-image">
+            
+            <div class="student-info">
+                <p > </p>اعداد الطالبة:خديجة البارقي</p>
+                <p>إشراف المعلمة: خلود الغماس</p>
+                <p>مادة: التربية البدنية</p>
+                <p>الفصل الدراسي: الثاني</p>
+                <p>العام الدراسي: 1445هـ</p>
+            </div>
+            
+            <div class="page-number">1</div>
         </div>
     </div>
 
-    <button class="download-btn" onclick="downloadAIA()">
-        📥 تحميل ملف AIA
-    </button>
-
-    <div class="info-box">
-        <p><strong>📌 كيفية الاستخدام:</strong></p>
-        <p>1. اضغط على زر التحميل أعلاه</p>
-        <p>2. افتح موقع <a href="https://appinventor.mit.edu" target="_blank" class="link">MIT App Inventor</a></p>
-        <p>3. اضغط على "Projects" ثم "Import project (.aia) from my computer"</p>
-        <p>4. اختر الملف المحمل وابدأ التعديل أو التجربة</p>
+    <!-- الصفحة 2: الفهرس -->
+    <div class="page">
+        <h1>فهرس المحتويات</h1>
+        <div class="toc">
+            <ul>
+                <li><a href="#intro">1. المقدمة ............................... 3</a></li>
+                <li><a href="#definition">2. مفهوم اللياقة البدنية ................ 4</a></li>
+                <li><a href="#importance">3. أهمية اللياقة البدنية للصحة ........ 5</a></li>
+                <li><a href="#elements">4. عناصر اللياقة البدنية المرتبطة بالصحة 6</a></li>
+                <li><a href="#cardiovascular">5. التحمل القلبي التنفسي ............... 7</a></li>
+                <li><a href="#strength">6. القوة العضلية ........................ 8</a></li>
+                <li><a href="#endurance">7. التحمل العضلي ........................ 9</a></li>
+                <li><a href="#flexibility">8. المرونة ............................. 10</a></li>
+                <li><a href="#composition">9. تركيب الجسم ........................ 11</a></li>
+                <li><a href="#improve">10. كيفية تحسين اللياقة البدنية ........ 12</a></li>
+                <li><a href="#recommendations">11. توصيات لتحسين اللياقة البدنية ... 13</a></li>
+                <li><a href="#conclusion">12. الخاتمة ........................... 14</a></li>
+                <li><a href="#references">13. المراجع ........................... 15</a></li>
+            </ul>
+        </div>
+        
+        <div class="page-number">2</div>
     </div>
-</div>
 
-<script>
-    function downloadAIA() {
-        // إنشاء محتوى ملف AIA (بصيغة مضغوطة)
-        // ملف AIA هو في الأساس ملف ZIP يحتوي على ملفات JSON و SCM
+    <!-- الصفحة 3: المقدمة -->
+    <div class="page">
+        <h1 id="intro">المقدمة</h1>
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="صورة تمثل النشاط البدني" class="content-img img-left">
         
-        const projectData = {
-            "YaVersion": "208",
-            "Source": "Form",
-            "Properties": {
-                "$Name": "Screen1",
-                "$Type": "Form",
-                "$Version": "29",
-                "AppName": "إدارة الوقت",
-                "Title": "الصفحة الرئيسية",
-                "BackgroundColor": "#667eea",
-                "ShowStatusBar": false,
-                "ScreenOrientation": "portrait",
-                "Sizing": "Responsive"
-            }
-        };
-
-        // إنشاء ملف BKY (Blockly) بصيغة XML
-        const blocksContent = `<xml xmlns="https://developers.google.com/blockly/xml">
-```
-
-  <block type="component_event" x="20" y="20">
-    <mutation component_type="Button" instance_name="AddTaskButton" event_name="Click"></mutation>
-    <statement name="DO">
-      <block type="component_method" inline="false">
-        <mutation component_type="Notifier" method_name="ShowTextDialog" is_generic="false"></mutation>
-        <value name="ARG0">
-          <block type="text">
-            <field name="TEXT">أضف مهمة جديدة</field>
-          </block>
-        </value>
-        <value name="ARG1">
-          <block type="text">
-            <field name="TEXT">اكتب اسم المهمة</field>
-          </block>
-        </value>
-      </block>
-    </statement>
-  </block>
-
-  <block type="component_event" x="20" y="200">
-    <mutation component_type="Button" instance_name="PreviousTasksButton" event_name="Click"></mutation>
-    <statement name="DO">
-      <block type="component_method">
-        <mutation component_type="Screen" method_name="OpenScreen" is_generic="false"></mutation>
-        <value name="ARG0">
-          <block type="text">
-            <field name="TEXT">Screen2</field>
-          </block>
-        </value>
-      </block>
-    </statement>
-  </block>
-
-  <block type="component_event" x="20" y="350">
-    <mutation component_type="Clock" instance_name="Clock1" event_name="Timer"></mutation>
-    <statement name="DO">
-      <block type="controls_if">
-        <value name="IF0">
-          <block type="logic_compare">
-            <field name="OP">GT</field>
-            <value name="A">
-              <block type="component_get_property">
-                <mutation component_type="Label" property_name="Text" is_generic="false"></mutation>
-              </block>
-            </value>
-            <value name="B">
-              <block type="math_number">
-                <field name="NUM">0</field>
-              </block>
-            </value>
-          </block>
-        </value>
-        <statement name="DO0">
-          <block type="component_set_get">
-            <mutation component_type="Label" set_or_get="set" property_name="Text" is_generic="false"></mutation>
-            <value name="VALUE">
-              <block type="math_subtract">
-                <value name="A">
-                  <block type="component_get_property">
-                    <mutation component_type="Label" property_name="Text" is_generic="false"></mutation>
-                  </block>
-                </value>
-                <value name="B">
-                  <block type="math_number">
-                    <field name="NUM">1</field>
-                  </block>
-                </value>
-              </block>
-            </value>
-          </block>
-        </statement>
-      </block>
-    </statement>
-  </block>
-
-  <block type="component_event" x="20" y="550">
-    <mutation component_type="Button" instance_name="GiveUpButton" event_name="Click"></mutation>
-    <statement name="DO">
-      <block type="component_method">
-        <mutation component_type="Notifier" method_name="ShowAlert" is_generic="false"></mutation>
-        <value name="ARG0">
-          <block type="text">
-            <field name="TEXT">لا بأس، يمكنك المحاولة مرة أخرى!</field>
-          </block>
-        </value>
-      </block>
-    </statement>
-  </block>
-</xml>`;
-
-```
-        // إنشاء محتوى SCM للشاشة الرئيسية
-        const screen1Content = `#|
-```
-
-$JSON
-{“YaVersion”:“208”,“Source”:“Form”,“Properties”:{”$Name”:“Screen1”,”$Type”:“Form”,”$Version”:“29”,“AppName”:“إدارة الوقت”,“Title”:“الصفحة الرئيسية”,“BackgroundColor”:”&HFF667EEA”,“AlignHorizontal”:“3”,“AlignVertical”:“2”,“ShowStatusBar”:false}}
-|#`;
-
-```
-        // تحويل المحتوى إلى Blob
-        const blob = new Blob([screen1Content], { type: 'application/octet-stream' });
+        <p>تعد اللياقة البدنية أحد الركائز الأساسية للصحة والرفاهية العامة للإنسان، حيث ترتبط ارتباطاً وثيقاً بقدرة الفرد على ممارسة أنشطة الحياة اليومية بكفاءة ونشاط، كما تؤثر بشكل مباشر على الصحة الجسدية والنفسية.</p>
         
-        // إنشاء رابط تحميل
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'TimeManager.aia';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
+        <p>يشهد عصرنا الحالي تغيرات كبيرة في نمط الحياة، حيث أصبحت الحياة أكثر استقراراً وقلة في الحركة بسبب التطور التكنولوجي، مما أدى إلى انتشار العديد من الأمراض المرتبطة بقلة النشاط البدني مثل السمنة وأمراض القلب والسكري.</p>
+        
+        <p>يهدف هذا البحث إلى تسليط الضوء على مفهوم اللياقة البدنية وأهميتها للصحة، مع التركيز على العناصر الأساسية المرتبطة بالصحة، وكيفية تنميتها للحفاظ على صحة جيدة وجودة حياة أفضل، مستنداً في ذلك إلى الكتاب المدرسي ومصادر علمية موثوقة.</p>
+        
+        <div class="highlight">
+            <p>تُعرّف منظمة الصحة العالمية اللياقة البدنية على أنها "القدرة على أداء النشاط البدني المعتاد بشكل مرضٍ دون تعب مفرط، مع توفر الطاقة لممارسة الأنشطة الترفيهية والاستجابة للطوارئ غير المتوقعة".</p>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="page-number">3</div>
+    </div>
 
-        // عرض رسالة نجاح
-        setTimeout(() => {
-            alert('✅ تم تحميل الملف بنجاح!\n\nالآن افتح MIT App Inventor وقم باستيراد الملف.');
-        }, 500);
-    }
+    <!-- الصفحة 4: مفهوم اللياقة البدنية -->
+    <div class="page">
+        <h1 id="definition">مفهوم اللياقة البدنية</h1>
+        
+        <p>اللياقة البدنية هي حالة يكون فيها الفرد قادراً على القيام بأنشطته اليومية بكفاءة وفعالية، مع توفر الطاقة الكافية لممارسة الأنشطة الترفيهية والهوايات، والاستعداد لمواجهة المواقف الطارئة.</p>
+        
+        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="صورة تمثل اللياقة البدنية" class="content-img img-right">
+        
+        <h2>مكونات اللياقة البدنية</h2>
+        <p>تتكون اللياقة البدنية من مكونين رئيسيين:</p>
+        <ol>
+            <li><strong>اللياقة المرتبطة بالصحة:</strong> وهي التي ترتبط مباشرة بصحة الفرد ورفاهيته، وتشمل العناصر التي تحسن من وظائف الأعضاء الحيوية وتقلل من خطر الإصابة بالأمراض.</li>
+            <li><strong>اللياقة المرتبطة بالمهارة:</strong> وهي التي ترتبط بقدرة الفرد على أداء الأنشطة الرياضية والمهارات الحركية المختلفة بكفاءة عالية.</li>
+        </ol>
+        
+        <h2>أبعاد اللياقة البدنية</h2>
+        <p>تشمل اللياقة البدنية عدة أبعاد مترابطة:</p>
+        <ul>
+            <li>البعد الجسدي: يتعلق بسلامة وكفاءة أجهزة الجسم</li>
+            <li>البعد النفسي: يؤثر على المزاج والثقة بالنفس</li>
+            <li>البعد الاجتماعي: يحسن التفاعل الاجتماعي</li>
+            <li>البعد العقلي: يحسن الوظائف المعرفية</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">4</div>
+    </div>
 
-    // إضافة تأثيرات تفاعلية
-    document.querySelectorAll('.feature-item').forEach(item => {
-        item.addEventListener('mouseenter', function() {
-            this.style.backgroundColor = '#f0f4ff';
-        });
-        item.addEventListener('mouseleave', function() {
-            this.style.backgroundColor = 'white';
-        });
-    });
-</script>
-```
+    <!-- الصفحة 5: أهمية اللياقة البدنية للصحة -->
+    <div class="page">
+        <h1 id="importance">أهمية اللياقة البدنية للصحة</h1>
+        
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="فوائد اللياقة البدنية" class="content-img img-left">
+        
+        <p>تتمتع اللياقة البدنية بأهمية كبيرة للصحة العامة، حيث تؤثر إيجابياً على مختلف أجهزة الجسم وتحسن من جودة الحياة بشكل عام.</p>
+        
+        <h2>الفوائد الصحية لللياقة البدنية</h2>
+        
+        <h3>1. فوائد للجهاز القلبي التنفسي</h3>
+        <ul>
+            <li>تقوية عضلة القلب وتحسين كفاءته</li>
+            <li>خفض ضغط الدم المرتفع</li>
+            <li>تحسين الدورة الدموية</li>
+            <li>زيادة كفاءة الرئتين وقدرتهما على تبادل الأكسجين</li>
+        </ul>
+        
+        <h3>2. فوائد للجهاز العضلي الهيكلي</h3>
+        <ul>
+            <li>تقوية العظام وزيادة كثافتها</li>
+            <li>تقوية العضلات وتحسين مرونتها</li>
+            <li>تحسين وضعية الجسم وتوازنه</li>
+            <li>تقليل خطر الإصابة بهشاشة العظام</li>
+        </ul>
+        
+        <h3>3. فوائد للجهاز المناعي</h3>
+        <ul>
+            <li>تعزيز كفاءة الجهاز المناعي</li>
+            <li>تقليل خطر الإصابة بالأمراض المعدية</li>
+            <li>سرعة التعافي من الأمراض</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">5</div>
+    </div>
+
+    <!-- الصفحة 6: عناصر اللياقة البدنية المرتبطة بالصحة -->
+    <div class="page">
+        <h1 id="elements">عناصر اللياقة البدنية المرتبطة بالصحة</h1>
+        
+        <p>بحسب الكتاب المدرسي والمصادر العلمية، فإن عناصر اللياقة البدنية المرتبطة بالصحة تشمل خمسة عناصر رئيسية، كل منها يؤثر بشكل مباشر على صحة الفرد ورفاهيته.</p>
+        
+        <img src="https://images.unsplash.com/photo-1536922246289-88c42f957773?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="عناصر اللياقة البدنية" class="content-img img-right">
+        
+        <h2>العناصر الخمسة الرئيسية</h2>
+        
+        <ol>
+            <li><strong>التحمل القلبي التنفسي:</strong> قدرة الجهازين القلبي والتنفسي على إمداد العضلات بالأكسجين أثناء النشاط البدني المستمر.</li>
+            <li><strong>القوة العضلية:</strong> أقصى قوة تستطيع العضلة أو مجموعة العضلات بذلها ضد مقاومة ما.</li>
+            <li><strong>التحمل العضلي:</strong> قدرة العضلة أو مجموعة العضلات على الاستمرار في الانقباض المتكرر ضد مقاومة.</li>
+            <li><strong>المرونة:</strong> مدى القدرة على تحريك المفاصل خلال مدى حركتها الكامل.</li>
+            <li><strong>تركيب الجسم:</strong> النسب المئوية للدهون والعظام والعضلات والماء في الجسم.</li>
+        </ol>
+        
+        <div class="highlight">
+            <p>تشير الدراسات إلى أن الحفاظ على مستويات جيدة لهذه العناصر الخمسة يقلل من خطر الإصابة بالأمراض المزمنة بنسبة تصل إلى 50%، ويحسن من جودة الحياة بشكل ملحوظ.</p>
+        </div>
+        
+        <div class="clear"></div>
+        <div class="page-number">6</div>
+    </div>
+
+    <!-- الصفحة 7: التحمل القلبي التنفسي -->
+    <div class="page">
+        <h1 id="cardiovascular">التحمل القلبي التنفسي</h1>
+        
+        <p>يعد التحمل القلبي التنفسي من أهم عناصر اللياقة البدنية المرتبطة بالصحة، حيث يعكس كفاءة الجهازين القلبي والتنفسي في تزويد الجسم بالأكسجين والطاقة أثناء النشاط البدني.</p>
+        
+        <img src="https://images.unsplash.com/photo-1434682881908-b43d0467b798?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="التحمل القلبي التنفسي" class="content-img img-left">
+        
+        <h2>أهمية التحمل القلبي التنفسي</h2>
+        <ul>
+            <li>يحسن وظائف القلب ويقلل خطر الإصابة بأمراض القلب التاجية</li>
+            <li>ينظم ضغط الدم ويحسن الدورة الدموية</li>
+            <li>يزيد من كفاءة الرئتين في تبادل الغازات</li>
+            <li>يساعد في التحكم في وزن الجسم</li>
+            <li>يقلل من مستويات الكوليسترول الضار في الدم</li>
+        </ul>
+        
+        <h2>طرق تحسين التحمل القلبي التنفسي</h2>
+        <p>وفقاً للكتاب المدرسي، يمكن تحسين التحمل القلبي التنفسي من خلال:</p>
+        <ol>
+            <li>ممارسة التمارين الهوائية (الأيروبيك) لمدة 30 دقيقة على الأقل، 5 أيام في الأسبوع</li>
+            <li>ممارسة المشي السريع، الجري، السباحة، ركوب الدراجة</li>
+            <li)زيادة شدة ومدة التمارين تدريجياً</li>
+            <li>الحفاظ على انتظام ممارسة النشاط البدني</li>
+        </ol>
+        
+        <div class="clear"></div>
+        <div class="page-number">7</div>
+    </div>
+
+    <!-- الصفحة 8: القوة العضلية -->
+    <div class="page">
+        <h1 id="strength">القوة العضلية</h1>
+        
+        <p>تشير القوة العضلية إلى القدرة القصوى للعضلة أو مجموعة العضلات على بذل قوة ضد مقاومة ما في تقلص واحد أقصى. وهي ضرورية للأنشطة اليومية مثل حمل الحقائب أو دفع الأثاث.</p>
+        
+        <img src="https://img.pikbest.com/png-images/20240514/3d-strong-muscle-art-pic-_10564218.png!f305cw" alt="القوة العضلية" class="content-img img-right">
+        
+        <h2>أهمية القوة العضلية للصحة</h2>
+        <ul>
+            <li>تحسين الوضعية وتقليل آلام الظهر</li>
+            <li>زيادة كثافة العظام والوقاية من الهشاشة</li>
+            <li>تحسين التمثيل الغذائي وحرق السعرات الحرارية</li>
+            <li>تسهيل ممارسة الأنشطة اليومية</li>
+            <li>تقليل خطر الإصابات</li>
+        </ul>
+        
+        <h2>طرق تنمية القوة العضلية</h2>
+        <p>بحسب المصادر العلمية:</p>
+        <ol>
+            <li>تمارين المقاومة باستخدام الأوزان أو الأشرطة المطاطية</li>
+            <li>تمارين وزن الجسم مثل تمارين الضغط ورفع الجسم</li>
+            <li>تدريبات القوة 2-3 مرات أسبوعياً مع يوم راحة بين الجلسات</li>
+            <li>زيادة المقاومة تدريجياً مع التقدم في التدريب</li>
+        </ol>
+        
+        <div class="clear"></div>
+        <div class="page-number">8</div>
+    </div>
+
+    <!-- الصفحة 9: التحمل العضلي -->
+    <div class="page">
+        <h1 id="endurance">التحمل العضلي</h1>
+        
+        <p>التحمل العضلي هو قدرة العضلة أو مجموعة العضلات على أداء انقباضات متكررة لفترة طويلة، أو الحفاظ على انقباض مستمر لمدة طويلة. وهو مهم للأنشطة مثل تسلق السلالم أو حمل الأطفال.</p>
+        
+        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="التحمل العضلي" class="content-img img-left">
+        
+        <h2>الفرق بين القوة العضلية والتحمل العضلي</h2>
+        <p>بينما تركز القوة العضلية على أقصى قوة يمكن بذلها في تقلص واحد، يركز التحمل العضلي على القدرة على الاستمرار في بذل القوة لفترة طويلة.</p>
+        
+        <h2>أهمية التحمل العضلي</h2>
+        <ul>
+            <li>تأخير ظهور التعب العضلي</li>
+            <li>تحسين الأداء في الأنشطة اليومية والرياضية</li>
+            <li>تقليل خطر الإصابات العضلية</li>
+            <li>تحسين الدورة الدموية العضلية</li>
+        </ul>
+        
+        <h2>طرق تحسين التحمل العضلي</h2>
+        <ol>
+            <li>تمارين المقاومة ذات التكرارات العالية والأوزان المتوسطة</li>
+            <li>التمارين الهوائية التي تستخدم مجموعات عضلية كبيرة</li>
+            <li)تمارين الدائرة التي تجمع بين عدة تمارين متتالية</li>
+            <li>زيادة عدد التكرارات تدريجياً مع التقدم</li>
+        </ol>
+        
+        <div class="clear"></div>
+        <div class="page-number">9</div>
+    </div>
+
+    <!-- الصفحة 10: المرونة وتركيب الجسم -->
+    <div class="page">
+        <h1 id="flexibility">المرونة وتركيب الجسم</h1>
+        
+        <h2>المرونة</h2>
+        <p>المرونة هي قدرة المفاصل على الحركة خلال مدى حركتها الكامل، وتعتبر من العناصر المهمة للصحة والحفاظ على الحركة الوظيفية مع التقدم في العمر.</p>
+        
+        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="المرونة" class="content-img img-right">
+        
+        <h3>أهمية المرونة:</h3>
+        <ul>
+            <li>تقليل خطر الإصابات العضلية والمفصلية</li>
+            <li>تحسين الوضعية وتقليل آلام الظهر</li>
+            <li>تحسين الأداء الحركي والرياضي</li>
+            <li>تسهيل ممارسة الأنشطة اليومية</li>
+        </ul>
+        
+        <h3>طرق تحسين المرونة:</h3>
+        <ol>
+            <li>تمارين الإطالة الساكنة والديناميكية</li>
+            <li>ممارسة اليوغا والبيلاتس</li>
+            <li>الإطالة بعد التمارين الرياضية</li>
+            <li>الانتظام في ممارسة تمارين المرونة</li>
+        </ol>
+        
+        <div class="clear"></div>
+        
+        <h2 id="composition">تركيب الجسم</h2>
+        <p>يشير تركيب الجسم إلى النسب المئوية للدهون والعظام والعضلات والماء في الجسم. يعتبر مؤشر كتلة الجسم ونسبة الدهون من المؤشرات المهمة للصحة.</p>
+        
+        <h3>أهمية الحفاظ على تركيب جسم صحي:</h3>
+        <ul>
+            <li>تقليل خطر الأمراض المرتبطة بالسمنة</li>
+            <li>تحسين الصحة الأيضية</li>
+            <li>تحسين الأداء البدني</li>
+            <li>تحسين الثقة بالنفس والصحة النفسية</li>
+        </ul>
+        
+        <div class="page-number">10</div>
+    </div>
+
+    <!-- الصفحة 11: كيفية تحسين اللياقة البدنية -->
+    <div class="page">
+        <h1 id="improve">كيفية تحسين اللياقة البدنية</h1>
+        
+        <p>بناءً على المعلومات من الكتاب المدرسي والمصادر الخارجية، يمكن تحسين اللياقة البدنية من خلال اتباع استراتيجيات منظمة ومستدامة.</p>
+        
+        <img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="تحسين اللياقة البدنية" class="content-img img-left">
+        
+        <h2>مبادئ تحسين اللياقة البدنية</h2>
+        
+        <h3>1. مبدأ التدرج</h3>
+        <p>يجب زيادة شدة ومدة التمارين تدريجياً لتجنب الإصابات ولتحقيق تقدم مستمر.</p>
+        
+        <h3>2. مبدأ الانتظام</h3>
+        <p>المواظبة على ممارسة النشاط البدني بانتظام أهم من شدة التمارين.</p>
+        
+        <h3>3. مبدأ التكامل</h3>
+        <p>يجب أن يشمل البرنامج الرياضي جميع عناصر اللياقة البدنية.</p>
+        
+        <h3>4. مبدأ التخصص</h3>
+        <p>التدريب يجب أن يكون خاصاً بالهدف المطلوب تحقيقه.</p>
+        
+        <h2>برنامج مقترح لتحسين اللياقة البدنية</h2>
+        <p>برنامج أسبوعي مقترح (وفقاً لتوصيات منظمة الصحة العالمية):</p>
+        <ul>
+            <li>150 دقيقة أسبوعياً من النشاط الهوائي المتوسط الشدة</li>
+            <li>تمارين القوة مرتين أسبوعياً تشمل جميع المجموعات العضلية الرئيسية</li>
+            <li>تمارين المرونة 2-3 مرات أسبوعياً</li>
+            <li>تقليل وقت الجلوس والمزيد من الحركة خلال اليوم</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">11</div>
+    </div>
+
+    <!-- الصفحة 12: توصيات لتحسين اللياقة البدنية -->
+    <div class="page">
+        <h1 id="recommendations">توصيات لتحسين اللياقة البدنية</h1>
+        
+        <p>بناءً على ما ورد في البحث، يمكن تقديم التوصيات التالية لتحسين اللياقة البدنية والحفاظ على الصحة:</p>
+        
+        <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="توصيات اللياقة البدنية" class="content-img img-right">
+        
+        <h2>توصيات عامة</h2>
+        <ol>
+            <li>دمج النشاط البدني في الروتين اليومي (استخدام السلالم بدلاً من المصعد، المشي لمسافات قصيرة)</li>
+            <li>اختيار أنشطة بدنية ممتعة لضمان الاستمرارية</li>
+            <li>ممارسة النشاط البدني مع الأصدقاء أو العائلة لزيادة الدافع</li>
+            <li>تحديد أهداف واقعية وقابلة للقياس</li>
+            <li>التنويع في الأنشطة البدنية لتجنب الملل ولتحسين جميع عناصر اللياقة</li>
+        </ol>
+        
+        <h2>توصيات غذائية مصاحبة</h2>
+        <ul>
+            <li>تناول غذاء متوازن يحتوي على جميع العناصر الغذائية</li>
+            <li>شرب كمية كافية من الماء قبل وأثناء وبعد التمارين</li>
+            <li>تناول وجبة خفيفة قبل التمرين بـ 1-2 ساعة</li>
+            <li>الحرص على تناول البروتين بعد التمارين لبناء العضلات</li>
+        </ul>
+        
+        <h2>توصيات للسلامة</h2>
+        <ul>
+            <li>القيام بتمارين الإحماء قبل التمرين والتبريد بعده</li>
+            <li>استخدام المعدات المناسبة والملابس الرياضية المناسبة</li>
+            <li>الاستماع إلى إشارات الجسم وتجنب الإفراط في التدريب</li>
+            <li>استشارة الطبيب قبل البدء بأي برنامج تدريبي في حالة وجود مشاكل صحية</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">12</div>
+    </div>
+
+    <!-- الصفحة 13: الخاتمة -->
+    <div class="page">
+        <h1 id="conclusion">الخاتمة</h1>
+        
+        <p>في ختام هذا البحث، يمكن استخلاص النتائج التالية:</p>
+        
+        <div class="highlight">
+            <h3>النتائج الرئيسية:</h3>
+            <ol>
+                <li>اللياقة البدنية هي حالة من الكفاءة الجسدية تمكن الفرد من أداء الأنشطة اليومية بكفاءة، مع توفر الطاقة لممارسة الأنشطة الترفيهية والاستعداد للطوارئ.</li>
+                <li>تتكون اللياقة البدنية المرتبطة بالصحة من خمسة عناصر رئيسية: التحمل القلبي التنفسي، القوة العضلية، التحمل العضلي، المرونة، وتركيب الجسم.</li>
+                <li>كل عنصر من عناصر اللياقة البدنية له أهميته الصحية الخاصة، وتعمل هذه العناصر معاً لتحسين الصحة العامة والوقاية من الأمراض.</li>
+                <li>تحسين اللياقة البدنية يتطلب اتباع برنامج متكامل يشمل جميع العناصر، مع الالتزام بمبادئ التدريب الصحيحة مثل التدرج والانتظام والتكامل.</li>
+            </ol>
+        </div>
+        
+        <h3>أهمية البحث:</h3>
+        <p>يؤكد هذا البحث على أهمية اللياقة البدنية كأساس للصحة الجيدة وجودة الحياة، خاصة في ظل تغير أنماط الحياة وقلة النشاط البدني في العصر الحديث. كما يقدم دليلاً عملياً لتحسين اللياقة البدنية من خلال فهم عناصرها والعمل على تنميتها بطريقة متوازنة.</p>
+        
+        <h3>توصيات مستقبلية:</h3>
+        <ul>
+            <li>زيادة الوعي بأهمية اللياقة البدنية في المدارس والمجتمع</li>
+            <li>توفير فرص ومرافق لممارسة النشاط البدني للجميع</li>
+            <li>دمج التربية البدنية في استراتيجيات الصحة العامة</li>
+            <li>تشجيع الأبحاث العلمية حول تأثير اللياقة البدنية على الصحة في المجتمع السعودي</li>
+        </ul>
+        
+        <p>ختاماً، فإن الاستثمار في اللياقة البدنية هو استثمار في الصحة والعمر المديد وجودة الحياة، وهو مسؤولية فردية وجماعية لبناء مجتمع صحي ونشيط يتوافق مع رؤية المملكة 2030.</p>
+        
+        <div class="page-number">13</div>
+    </div>
+
+    <!-- الصفحة 14: المراجع -->
+    <div class="page">
+        <h1 id="references">المراجع</h1>
+        
+        <h2>المراجع العربية</h2>
+        <ol>
+            <li>وزارة التعليم السعودية. (1445هـ). كتاب التربية البدنية للصف الثالث الثانوي. الرياض: وزارة التعليم.</li>
+            <li>الهيئة العامة للرياضة. (2022). الدليل الوطني للنشاط البدني. الرياض: الهيئة العامة للرياضة.</li>
+            <li>الغنيم، أحمد. (2021). اللياقة البدنية والصحة. مجلة العلوم الرياضية، 15(3)، 45-62.</li>
+            <li>السديري، محمد. (2020). أسس التربية البدنية والرياضية. الرياض: دار الزهراء.</li>
+        </ol>
+        
+        <h2>المراجع الأجنبية</h2>
+        <ol>
+            <li>American College of Sports Medicine. (2022). ACSM's Guidelines for Exercise Testing and Prescription. Philadelphia: Wolters Kluwer.</li>
+            <li>World Health Organization. (2020). Guidelines on physical activity and sedentary behaviour. Geneva: WHO.</li>
+            <li>Caspersen, C. J., Powell, K. E., & Christenson, G. M. (1985). Physical activity, exercise, and physical fitness: definitions and distinctions for health-related research. Public Health Reports, 100(2), 126–131.</li>
+            <li>Warburton, D. E., Nicol, C. W., & Bredin, S. S. (2006). Health benefits of physical activity: the evidence. Canadian Medical Association Journal, 174(6), 801-809.</li>
+        </ol>
+        
+        <h2>المراجع الإلكترونية</h2>
+        <ol>
+            <li>موقع وزارة التعليم السعودي: https://www.moe.gov.sa</li>
+            <li>موقع رؤية السعودية 2030: https://www.vision2030.gov.sa</li>
+            <li>موقع منظمة الصحة العالمية: https://www.who.int</li>
+            <li>موقع الجمعية الأمريكية للطب الرياضي: https://www.acsm.org</li>
+        </ol>
+        
+     
+        
+        <div class="page-number">14</div>
+    </div>
 
 </body>
 </html>
