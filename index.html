@@ -3,1144 +3,598 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بحث: الإنترنت والتعليم والتواصل الاجتماعي</title>
+    <title>بحث عن أبرز طرائق نقل المصاب - وجد الحارثي</title>
     <style>
-        /* تنسيقات عامة */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
+        /* تنسيقات عامة للطباعة بحجم A4 */
+        @page {
+            size: A4;
+            margin: 2cm;
         }
         
         body {
-            background-color: #f5f5f5;
+            font-family: 'Arial', sans-serif;
+            line-height: 1.8;
             color: #333;
-            line-height: 1.6;
-            padding: 20px;
+            background-color: #fff;
+            margin: 0;
+            padding: 0;
+            text-align: right;
         }
         
-        /* تنسيق صفحات A4 */
         .page {
-            width: 21cm;
-            min-height: 29.7cm;
-            background: white;
-            margin: 0 auto 20px auto;
-            padding: 2cm;
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 10mm auto;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
             position: relative;
             page-break-after: always;
+            box-sizing: border-box;
         }
         
-        /* الترقيم */
-        .page-number {
-            position: absolute;
-            bottom: 1.5cm;
-            left: 0;
-            right: 0;
+        /* تنسيقات الغلاف */
+        .cover {
             text-align: center;
-            font-size: 12px;
-            color: #666;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
         }
         
-        /* تنسيقات النصوص */
+        .ministry-header {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #c0392b;
+            padding-bottom: 15px;
+        }
+        
+        .logo {
+            width: 100px;
+            height: 100px;
+            object-fit: contain;
+        }
+        
+        .vision {
+            background-color: #c0392b;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+        
+        .title {
+            color: #c0392b;
+            font-size: 32px;
+            margin: 40px 0;
+            padding: 20px;
+            border: 2px solid #c0392b;
+            border-radius: 10px;
+            background-color: #fef9f8;
+        }
+        
+        .cover-image {
+            width: 300px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #ddd;
+        }
+        
+        .student-info {
+            margin-top: 40px;
+            font-size: 20px;
+            background: #f9f2f0;
+            padding: 20px 40px;
+            border-radius: 50px;
+        }
+        
+        /* تنسيقات المحتوى */
         h1 {
-            color: #2c3e50;
+            color: #c0392b;
             text-align: center;
-            margin-bottom: 1.5cm;
             font-size: 28px;
-            border-bottom: 2px solid #3498db;
+            margin-bottom: 30px;
             padding-bottom: 10px;
+            border-bottom: 2px solid #c0392b;
         }
         
         h2 {
-            color: #2980b9;
-            margin: 25px 0 15px 0;
-            padding-right: 10px;
-            border-right: 4px solid #3498db;
+            color: #a8231a;
+            font-size: 24px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-right: 6px solid #c0392b;
+            padding-right: 15px;
         }
         
         h3 {
-            color: #34495e;
-            margin: 20px 0 10px 0;
+            color: #c25b4a;
+            font-size: 20px;
+            margin-top: 25px;
         }
         
         p {
-            margin-bottom: 15px;
             text-align: justify;
+            margin-bottom: 15px;
             font-size: 16px;
-            line-height: 1.8;
         }
         
-        ul {
+        ul, ol {
             margin-right: 30px;
             margin-bottom: 20px;
         }
         
         li {
-            margin-bottom: 8px;
-        }
-        
-        /* صفحة الغلاف */
-        .cover-page {
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            background: linear-gradient(to bottom, #f8f9fa, #e9ecef);
-        }
-        
-        .cover-title {
-            font-size: 32px;
-            color: #2c3e50;
-            margin-bottom: 1.5cm;
-            text-decoration: underline;
-            text-underline-offset: 10px;
-        }
-        
-        .subject {
-            font-size: 24px;
-            color: #2980b9;
-            margin: 2cm 0;
-            font-weight: bold;
-        }
-        
-        .team {
-            font-size: 20px;
-            color: #34495e;
-            margin: 1.5cm 0;
-        }
-        
-        .names {
-            font-size: 18px;
-            color: #2c3e50;
-            margin-top: 2cm;
-            line-height: 2;
-        }
-        
-        .class-info {
-            font-size: 18px;
-            color: #e74c3c;
-            margin-top: 1cm;
-            font-weight: bold;
-        }
-        
-        .university {
-            font-size: 20px;
-            color: #2c3e50;
-            margin-top: 1.5cm;
-            font-weight: bold;
-        }
-        
-        .date {
-            font-size: 18px;
-            color: #7f8c8d;
-            margin-top: 1.5cm;
-        }
-        
-        /* الفهرس */
-        .toc-page h2 {
-            text-align: center;
-            border: none;
-            margin-bottom: 30px;
-        }
-        
-        .toc-item {
-            display: flex;
-            justify-content: space-between;
             margin-bottom: 10px;
-            padding-bottom: 5px;
-            border-bottom: 1px dotted #ccc;
         }
         
-        .toc-title {
-            flex-grow: 1;
+        .content-img {
+            width: 250px;
+            height: 180px;
+            object-fit: cover;
+            margin: 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
         }
         
-        .toc-page-number {
-            font-weight: bold;
-            color: #2980b9;
+        .img-left {
+            float: left;
+            margin-right: 20px;
+            margin-left: 0;
+        }
+         
+        .img-right {
+            float: right;
+            margin-left: 20px;
+            margin-right: 0;
         }
         
-        /* المراجع */
-        .references {
+        .clear {
+            clear: both;
+        }
+        
+        .highlight {
+            background-color: #fef5f3;
+            padding: 15px;
+            border-right: 4px solid #c0392b;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+        
+        /* تنسيقات الفهرس */
+        .toc {
             margin-top: 30px;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-right: 4px solid #3498db;
         }
         
-        .ref-item {
-            margin-bottom: 10px;
-            padding-right: 10px;
+        .toc ul {
+            list-style-type: none;
+            padding-right: 0;
         }
         
-        /* الطباعة */
+        .toc li {
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+        
+        .toc a {
+            text-decoration: none;
+            color: #c0392b;
+            font-weight: 500;
+        }
+        
+        .page-number {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #666;
+            background: #f5f5f5;
+            padding: 2px 12px;
+            border-radius: 20px;
+        }
+        
+        /* إخفاء العناصر عند الطباعة */
         @media print {
             body {
-                background: white;
+                margin: 0;
                 padding: 0;
             }
             
             .page {
-                box-shadow: none;
                 margin: 0;
+                padding: 20mm;
+                box-shadow: none;
                 page-break-after: always;
             }
-            
-            .no-print {
-                display: none;
-            }
         }
-        
-        /* زر الطباعة */
-        .print-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background-color: #3498db;
+
+        /* جدول التقييم */
+        .eval-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+        }
+        .eval-table th {
+            background-color: #c0392b;
             color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            z-index: 1000;
-            font-size: 16px;
+            padding: 10px;
         }
-        
-        .print-btn:hover {
-            background-color: #2980b9;
+        .eval-table td, .eval-table th {
+            border: 1px solid #aaa;
+            padding: 8px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <!-- زر الطباعة -->
-    <button class="print-btn no-print" onclick="window.print()">🖨️ طباعة البحث</button>
+    <!-- الصفحة 1: الغلاف -->
+    <div class="page">
+        <div class="cover">
+            <div class="ministry-header">
+                <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/f/f5/Saudi_Vision_2030_logo.svg/960px-Saudi_Vision_2030_logo.svg.png" alt="شعار رؤية السعودية" class="logo">
+                <div>
+                    <h3>المملكة العربية السعودية</h3>
 
-    <!-- صفحة الغلاف -->
-    <div class="page cover-page">
-        <div class="cover-title">بحث التخرج</div>
-        <div class="subject">الإنترنت في التعليم والتواصل </div>
-        <div class="names">
-            سلطان اليافعي<br>
-            احمد باسم<br>
-            المنذر وليد<br>
-            عبدالعزيز اسد الله<br>
-            صالح عبدالرحمن<br>
-            همام هشام<br>
-            مقداد عبدالله<br>
-            عبدالله عمر
+                </div>
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyN10OK6rly_WXp_clxQCKWTy18LxtM4el5sPFo2orKQ&s=10" alt="شعار وزارة التعليم" class="logo">
+            </div>
+            
+            <div class="vision">
+                رؤية السعودية 2030
+            </div>
+
+            <div class="title">
+                أبرز طرائق نقل المصاب
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="نقل المصاب" class="cover-image">
+            
+            <div class="student-info">
+                <p><strong>الطالبة: وجد الحارثي</strong></p>
+                <p><strong>إشراف المعلمة: خلود الغماس</strong></p>
+                <p>مادة التربية الصحية والبدنية - </p>
+            </div>
+            
+            <div class="page-number">1</div>
         </div>
-        <div class="class-info">الصف:304</div>
-                    <div class="university">ثانوية ابي سفيان بن حرب</div>
+    </div>
+
+    <!-- الصفحة 2: الفهرس -->
+    <div class="page">
+        <h1>فهرس المحتويات</h1>
+        <div class="toc">
+            <ul>
+                <li><a href="#intro">1. المقدمة ................................ 3</a></li>
+                <li><a href="#methods-one">2. طرق النقل باستخدام شخص واحد ........... 4</a></li>
+                <li><a href="#methods-two">3. طرق النقل باستخدام شخصين .............. 5</a></li>
+                <li><a href="#methods-three">4. طرق النقل بثلاثة أشخاص أو أكثر ........ 6</a></li>
+                <li><a href="#stretchers">5. استخدام النقالات (الأنواع والطريقة) ... 7</a></li>
+                <li><a href="#spinal">6. نقل مصابي العمود الفقري (حالات خاصة) .. 8</a></li>
+                <li><a href="#special-cases">7. نقل الحالات الخاصة (أطفال، حوامل، بدناء) 9</a></li>
+                <li><a href="#common-mistakes">8. أخطاء شائعة في النقل وكيفية تجنبها .... 10</a></li>
+                <li><a href="#safety">9. إرشادات السلامة للمسعفين .............. 11</a></li>
+                <li><a href="#conclusion">10. الخاتمة ................................ 12</a></li>
+                <li><a href="#references">11. المصادر والمراجع ...................... 13</a></li>
+            </ul>
+        </div>
+        <div style="margin-top: 40px;">
+            <table class="eval-table">
+                <tr><th colspan="3">بنود تقييم البحث</th></tr>
+                <tr><th>الدرجة</th><th>المطلوب</th><th>بنود البحث</th></tr>
+                <tr><td>1</td><td>الغلاف (الشعار، العنوان، صورة، اسم الطالبة، إشراف المعلمة)</td><td>✔</td></tr>
+                <tr><td>1</td><td>مقدمة توضيحية مختصرة</td><td>✔</td></tr>
+                <tr><td>4</td><td>معلومات من الكتاب ومعلومات خارجية</td><td>✔</td></tr>
+                <tr><td>1</td><td>تسلسل المعلومات + صور</td><td>✔</td></tr>
+                <tr><td>1</td><td>خاتمة (نتائج مستخلصة)</td><td>✔</td></tr>
+                <tr><td>1</td><td>فهرس مع ترقيم الصفحات</td><td>✔</td></tr>
+                <tr><td>1</td><td>تسليم في الموعد المحدد</td><td>✔</td></tr>
+                <tr><td colspan="2"><strong>المجموع</strong></td><td><strong>10</strong></td></tr>
+            </table>
+        </div>
+        <div class="page-number">2</div>
+    </div>
+
+    <!-- الصفحة 3: المقدمة -->
+    <div class="page">
+        <h1 id="intro">المقدمة</h1>
+        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="الإسعافات الأولية" class="content-img img-left">
+        <p>الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين. يُعد نقل المصاب بشكل صحيح من المهارات الأساسية في الإسعافات الأولية، فهو إجراء حاسم يهدف إلى منع تفاقم الإصابات، وتجنب المضاعفات الخطيرة، وربما إنقاذ حياة المصاب قبل وصول الفرق الطبية. يستند هذا البحث إلى ما ورد في منهج التربية الصحية والبدنية (المملكة العربية السعودية) بالإضافة إلى مصادر طبية موثقة، لاستعراض أبرز طرائق نقل المصاب وفقًا لحالة الإصابة والموقف المتاح.</p>
+        
+        <p>سنتناول في البحث الطرق اليدوية (بمعاونة شخص أو أكثر)، واستخدام المعدات مثل النقالات، مع إرشادات خاصة لحالات إصابات العمود الفقري والكسور. كما سنسلط الضوء على الأخطاء الشائعة التي يجب تجنبها، وقواعد سلامة المسعفين. نسأل الله أن ينفع بهذا العمل.</p>
+        
+        <div class="highlight">
+            <p>يقول المبدأ الذهبي في الإسعاف: "لا تنقل المصاب إلا إذا كنت متأكداً من الطريقة الصحيحة، أو كان هناك خطر داهم يهدد حياته (حريق، انفجار، انهيار)".</p>
+        </div>
+        <div class="clear"></div>
+        <div class="page-number">3</div>
+    </div>
+
+    <!-- الصفحة 4: طرق النقل باستخدام شخص واحد -->
+    <div class="page">
+        <h1 id="methods-one">أولاً: طرق النقل باستخدام شخص واحد</h1>
+        <p>عند وجود مسعف واحد فقط، يمكن استخدام عدة أساليب حسب وعي المصاب وقدرته على الحركة ووزنه.</p>
+        
+        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="حمل المصاب" class="content-img img-right">
+        
+        <h2>1. حمل المصاب على الظهر</h2>
+        <p>يُستخدم إذا كان المصاب واعياً وقادراً على الإمساك. يقف المسعف ظهره للمصاب، يمسك بفخذيه ويرفعه على ظهره، بينما يلف المصاب ذراعيه حول رقبة المسعف.</p>
+        
+        <h2>2. حمل المصاب بالحضن (طريقة المهد)</h2>
+        <p>تناسب الأطفال ومن هم خفيفي الوزن. يضع المسعف ذراعاً تحت ركبتي المصاب والأخرى خلف ظهره، ثم يرفعه بحرص.</p>
+        
+        <h2>3. طريقة الجر</h2>
+        <p>تُستخدم عندما لا يمكن الرفع (خطر حريق أو انفجار) أو عندما يكون المصاب ثقيلاً. يتم جر المصاب من كتفيه أو ملابسه على سطح مستو. الأفضل وضع بطانية تحت المصاب لتسهيل الجر.</p>
+        
+        <h2>4. طريقة رجل الإطفاء</h2>
+        <p>يُلقى المصاب على كتف المسعف (كتف واحد) مع دعم الرأس والظهر. تصلح للمسافات القصيرة ولإنقاذ سريع.</p>
+        
+        <div class="highlight">
+            <p>تحذير: لا تستخدم طرق الرفع هذه إذا كان هناك اشتباه بإصابة في العمود الفقري أو الرقبة.</p>
+        </div>
+        <div class="clear"></div>
+        <div class="page-number">4</div>
+    </div>
+
+    <!-- الصفحة 5: طرق النقل باستخدام شخصين -->
+    <div class="page">
+        <h1 id="methods-two">ثانياً: طرق النقل باستخدام شخصين</h1>
+        <p>وجود مسعفين اثنين يتيح نقل المصاب بوضعيات أكثر أماناً واستقراراً، خاصة إذا كان فاقداً للوعي.</p>
+        
+        <img src="https://images.unsplash.com/photo-1584516150909-c43483ee7932?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقل بشخصين" class="content-img img-left">
+        
+        <h2>1. مقعد اليدين (كرسي اليدين)</h2>
+        <p>يشبك المسعفان أيديهما (يمسك كل منهما معصم الآخر) ليشكلا مقعداً. يجلس المصاب عليه ويمسك بأكتاف المسعفين. مناسبة للمصاب الواعي.</p>
+        
+        <h2>2. الحمالة اليدوية (رباعية الأيدي)</h2>
+        <p>يقف المسعفان على جانبي المصاب. يدخل كل منهما ذراعاً تحت ظهر المصاب (أسفل الكتفين) والذراع الأخرى تحت الفخذين. يمسكان ببعضهما (مثلاً بقبضة اليد) ويرفعان معاً.</p>
+        
+        <h2>3. حمل المصاب على كرسي حقيقي</h2>
+        <p>يوضع المصاب على كرسي صلب (خشبي أو بلاستيكي) ويحمله المسعفان من قوائم الكرسي. طريقة ممتازة لنقل المصاب في الأماكن الضيقة.</p>
+        
+        <h2>4. الجر بواسطة بطانية</h2>
+        <p>يفرد مسعفان بطانية بجانب المصاب، يقلبانه عليها بحرص، ثم يجران البطانية من طرفها. يصلح للمسافات القصيرة.</p>
+        
+        <div class="highlight">
+            <p>نصيحة: على المسعفين التنسيق باستخدام الأوامر مثل "واحد، اثنان، ثلاثة - ارفع".</p>
+        </div>
+        <div class="clear"></div>
+        <div class="page-number">5</div>
+    </div>
+
+    <!-- الصفحة 6: طرق النقل بثلاثة أشخاص أو أكثر -->
+    <div class="page">
+        <h1 id="methods-three">ثالثاً: طرق النقل بثلاثة أشخاص أو أكثر</h1>
+        
+        <img src="https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقل جماعي" class="content-img img-right">
+        
+        <h2>1. رفع اللوح الطبي (أو الباب الخشبي)</h2>
+        <p>يُستخدم عندما يتوفر لوح طبي أو أي سطح صلب. يوزع المسعفون (3-4) على الجوانب، يمسكون باللوح ويرفعونه مع الحفاظ على استقامة الظهر. مثالي لنقل مصابي العمود الفقري بعد التثبيت.</p>
+        
+        <h2>2. الجسر البشري</h2>
+        <p>يقف ثلاثة مسعفين على جانب واحد، يدعمون المصاب بأذرعهم: الأول يدعم الرأس والكتفين، الثاني يدعم الظهر والحوض، الثالث يدعم الفخذين والساقين. يرفعون المصاب بشكل متوازٍ. تحتاج إلى قوة وتنسيق عالٍ.</p>
+        
+        <h2>3. طريقة اللف (Log Roll)</h2>
+        <p>تستخدم لتحريك مصاب على الظهر دون التواء العمود الفقري. يقف ثلاثة مسعفين: الأول يثبت الرأس والرقبة، الثاني والثالث على الجانب. يديرون المصاب كقطعة واحدة على جانبه، ثم يضعون اللوح الطبي، ثم يعيدونه برفق.</p>
+        
+        <h2>4. نقل المصاب على نقالة قماشية</h2>
+        <p>بمساعدة 4 أشخاص، تفتح النقالة بجانب المصاب، ثم يُدحرج المصاب عليها، ثم يُرفع من الأطراف الأربعة.</p>
+        
+        <div class="clear"></div>
+        <div class="page-number">6</div>
+    </div>
+
+    <!-- الصفحة 7: استخدام النقالات (الأنواع والطريقة) -->
+    <div class="page">
+        <h1 id="stretchers">رابعاً: استخدام النقالات (الأنواع والطريقة)</h1>
+        
+        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقالة" class="content-img img-left">
+        
+        <h2>أنواع النقالات</h2>
+        <ul>
+            <li><strong>النقالة الصلبة (اللوح الطبي):</strong> لنقل حالات الكسور والعمود الفقري. تمنع أي حركة غير مرغوب فيها.</li>
+            <li><strong>النقالة القماشية (القابلة للطي):</strong> خفيفة، تستخدم في المساحات الواسعة وللحالات العادية.</li>
+            <li><strong>النقالة المجنزرة (السلة):</strong> لنقل المصابين في الأماكن الوعرة (جبال، أنقاض).</li>
+            <li><strong>النقالة الفراغية:</strong> تتكيف مع شكل الجسم عند سحب الهواء، ممتازة لتثبيت المصاب.</li>
+        </ul>
+        
+        <h2>طريقة رفع النقالة بشكل آمن</h2>
+        <ul>
+            <li>يوزع المسعفون (4 أشخاص) واحد عند كل طرف.</li>
+            <li>يجب أن تكون النقالة على نفس المستوى.</li>
+            <li>يقبضون على المقابض مع استقامة الظهر وثني الركبتين.</li>
+            <li>يرفعون معاً عند الإشارة، ويمشون بخطى متوازية.</li>
+            <li>يجب أن يكون رأس المصاب في اتجاه السير (لرؤية ما أمامه).</li>
+        </ul>
+        
+        <div class="highlight">
+            <p>إذا كان المصاب فاقداً للوعي، يجب تثبيته على النقالة بأشرطة خاصة لمنع السقوط.</p>
+        </div>
+        <div class="clear"></div>
+        <div class="page-number">7</div>
+    </div>
+
+    <!-- الصفحة 8: نقل مصابي العمود الفقري (حالات خاصة) -->
+    <div class="page">
+        <h1 id="spinal">خامساً: نقل مصابي العمود الفقري (حالات خاصة)</h1>
+        
+        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="تثبيت رقبة" class="content-img img-right">
+        
+        <p>تعتبر إصابات العمود الفقري من أخطر الحالات، وأي خطأ في النقل قد يؤدي إلى الشلل الدائم. لذلك يجب اتباع القواعد التالية بدقة:</p>
+        
+        <h2>مبادئ النقل الآمن:</h2>
+        <ul>
+            <li>عدم تحريك المصاب إلا للضرورة القصوى (خطر داهم).</li>
+            <li>تثبيت الرأس والرقبة باليدين فوراً، وعدم السماح بأي حركة.</li>
+            <li>استخدام طوق عنق رقبي إن وجد، أو تثبيت الرأس بأكياس رمل أو مناشف.</li>
+            <li>نقل المصاب بطريقة اللف (log roll) بمشاركة 3-4 مسعفين.</li>
+            <li>وضع المصاب على لوح طبي طويل، وتثبيت الجذع والرأس بالأشرطة.</li>
+            <li>تجنب ثني الظهر أو رفع الأطراف بشكل منفرد.</li>
+        </ul>
+        
+        <h2>الطريقة الصحيحة للرفع (3 أشخاص):</h2>
+        <ol>
+            <li>المسعف الأول يثبت الرأس (يمسك بالجمجمة من الجانبين مع وضع الإبهامين على الجبهة).</li>
+            <li>المسعفان الثاني والثالث يضعان أيديهما تحت الكتفين والخصر والفخذين.</li>
+            <li>بإشارة من المسعف الأول، يديرون المصاب برفق على جانبه (كقطعة واحدة).</li>
+            <li>يوضع اللوح الطبي تحت المصاب ثم يعاد دحرجته على اللوح.</li>
+            <li>تُثبت الرأس والجسم بالأشرطة.</li>
+        </ol>
+        
+        <div class="clear"></div>
+        <div class="page-number">8</div>
+    </div>
+
+    <!-- الصفحة 9: نقل الحالات الخاصة (أطفال، حوامل، بدناء) -->
+    <div class="page">
+        <h1 id="special-cases">سادساً: نقل الحالات الخاصة (أطفال، حوامل، بدناء)</h1>
+        
+        <img src="https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="حمل طفل" class="content-img img-left">
+        
+        <h2>الأطفال والرضع</h2>
+        <ul>
+            <li>يُحمل الطفل بين ذراعي المسعف مع دعم الرأس والرقبة.</li>
+            <li>يمكن استخدام حاملة أطفال أو نقالة صغيرة.</li>
+            <li>إذا كان الطفل فاقداً للوعي، توضع وسادة تحت كتفيه لفتح المجرى التنفسي.</li>
+        </ul>
+        
+        <h2>الحوامل</h2>
+        <ul>
+            <li>يُفضل نقل الحامل على الجانب الأيسر (وضعية السلامة) لتجنب ضغط الرحم على الوريد الأجوف السفلي.</li>
+            <li>عند استخدام النقالة، تميل النقالة قليلاً إلى اليسار (يمكن وضع بطانية تحت الجانب الأيمن).</li>
+            <li>يجب تجنب الضغط على البطن.</li>
+        </ul>
+        
+        <h2>المصابون بالبدانة</h2>
+        <ul>
+            <li>يتطلب عدة مسعفين (4-6 أشخاص) حسب الوزن.</li>
+            <li>يُفضل استخدام نقالة خاصة أو لوح صلب قوي.</li>
+            <li>تجب حماية ظهر المسعفين باستخدام تقنيات الرفع الصحيحة (ثني الركبتين، استقامة الظهر).</li>
+            <li>يمكن استخدام حزام رفع أو أشرطة لتوزيع الوزن.</li>
+        </ul>
+        
+        <div class="highlight">
+            <p>في جميع الحالات، يجب مراعاة خصوصية المصاب وتوفير الدعم النفسي قدر الإمكان.</p>
+        </div>
+        <div class="clear"></div>
+        <div class="page-number">9</div>
+    </div>
+
+    <!-- الصفحة 10: أخطاء شائعة في النقل وكيفية تجنبها -->
+    <div class="page">
+        <h1 id="common-mistakes">سابعاً: أخطاء شائعة في النقل وكيفية تجنبها</h1>
+        
+        <img src="https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="خطأ شائع" class="content-img img-right">
+        
+        <h2>أخطاء شائعة:</h2>
+        <ul>
+            <li><strong>نقل المصاب دون تقييم أولي:</strong> قد يفاقم الإصابة. يجب فحص الوعي والتنفس والنزيف أولاً.</li>
+            <li><strong>ثني الرقبة أو الظهر في إصابات العمود الفقري:</strong> يسبب شللاً. يجب التثبيت التام.</li>
+            <li><strong>رفع غير متوازن (بسرعة أو بطيء):</strong> يؤدي إلى سقوط المصاب أو زيادة الألم.</li>
+            <li><strong>عدم تنسيق الحركات بين المسعفين:</strong> يسبب اهتزاز المصاب. استخدم الأوامر الصوتية.</li>
+            <li><strong>نقل المصاب في وضعية غير مناسبة لحالته:</strong> مثلاً نقل مصاب بصعوبة تنفس على ظهره (الأفضل نصف جالس).</li>
+            <li><strong>إهمال سلامة المسعفين:</strong> قد يؤدي إلى إصابات للمسعف. استخدم تقنيات الرفع الصحيحة.</li>
+        </ul>
+        
+        <h2>كيفية تجنبها:</h2>
+        <ul>
+            <li>التدريب المنتظم على تقنيات النقل.</li>
+            <li>التقييم السريع والدقيق قبل النقل.</li>
+            <li>استخدام العدد الكافي من المسعفين.</li>
+            <li>التواصل المستمر بين أفراد الفريق.</li>
+            <li>الاستعانة بالمعدات المساعدة (نقالات، أشرطة).</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">10</div>
+    </div>
+
+    <!-- الصفحة 11: إرشادات السلامة للمسعفين -->
+    <div class="page">
+        <h1 id="safety">ثامناً: إرشادات السلامة للمسعفين</h1>
+        
+        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="سلامة المسعف" class="content-img img-left">
+        
+        <p>سلامة المسعف لا تقل أهمية عن سلامة المصاب. اتباع الإرشادات التالية يحمي المسعفين من الإصابات:</p>
+        
+        <h2>ميكانيكية الجسم الصحيحة عند الرفع:</h2>
+        <ul>
+            <li>ثني الركبتين وليس الظهر (الحفاظ على استقامة الظهر).</li>
+            <li>إبقاء الجسم قريباً من المصاب.</li>
+            <li>رفع العضلات الكبيرة (عضلات الفخذين) وليس عضلات الظهر.</li>
+            <li>تجنب الالتواء أثناء الرفع؛ بدل ذلك، أدر الجسم بالقدمين.</li>
+            <li>الرفع الجماعي مع العد (1-2-3).</li>
+        </ul>
+        
+        <h2>استخدام معدات الوقاية الشخصية:</h2>
+        <ul>
+            <li>قفازات طبية لتجنب انتقال العدوى.</li>
+            <li>كمامة إذا كان هناك اشتباه بأمراض تنفسية.</li>
+            <li>حذاء مناسب يمنع الانزلاق.</li>
+        </ul>
+        
+        <h2>نصائح عامة:</h2>
+        <ul>
+            <li>لا ترفع بمفردك مصاباً يتجاوز وزنك بكثير.</li>
+            <li>خطط لمسار النقل قبل البدء (تأكد من خلوه من العوائق).</li>
+            <li>إذا شعرت بالتعب، اطلب المساعدة فوراً.</li>
+        </ul>
+        
+        <div class="clear"></div>
+        <div class="page-number">11</div>
+    </div>
+
+    <!-- الصفحة 12: الخاتمة -->
+    <div class="page">
+        <h1 id="conclusion">الخاتمة</h1>
+        
+        <div class="highlight" style="font-size: 18px;">
+            <h3>النتائج المستخلصة:</h3>
+            <ul>
+                <li>تتنوع طرائق نقل المصاب حسب عدد المسعفين، وحالة المصاب، والمعدات المتوفرة.</li>
+                <li>الطريقة الخاطئة قد تؤدي إلى مضاعفات خطيرة، خاصة في إصابات العمود الفقري.</li>
+                <li>النقل الآمن يتطلب تقييماً سريعاً لحالة المصاب، واختيار الطريقة المناسبة، وتنسيق الجهود.</li>
+                <li>استخدام النقالات يوفر ثباتاً وراحة أكبر للمصاب، خاصة لمسافات طويلة.</li>
+                <li>سلامة المسعفين مهمة، وتتحقق بتقنيات الرفع الصحيحة واستخدام العدد الكافي.</li>
+                <li>المعرفة النظرية يجب أن تدعمها تدريبات عملية مستمرة.</li>
+            </ul>
+        </div>
+        
+        <p>في الختام، تعتبر معرفة طرائق نقل المصاب الصحيحة ركيزة أساسية في الإسعافات الأولية، وهي واجب إنساني وأخلاقي على كل فرد. نسأل الله أن يجعل هذا العمل نافعاً، وأن يوفق الجميع لما فيه خير الوطن والمواطنين.</p>
+        
     
-        <div class="page-number">صفحة 1</div>
+        <div class="page-number">12</div>
     </div>
 
-    <!-- الفهرس -->
-    <div class="page toc-page">
-        <h2>فهرس المحتويات</h2>
-        
-        <div class="toc-item">
-            <span class="toc-title">1. صفحة الغلاف</span>
-            <span class="toc-page-number">1</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">2. الفهرس</span>
-            <span class="toc-page-number">2</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">3. المقدمة</span>
-            <span class="toc-page-number">3-4</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">4. تعريف الإنترنت</span>
-            <span class="toc-page-number">5-6</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">5. تاريخ تطور الإنترنت</span>
-            <span class="toc-page-number">7-8</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">6. الإنترنت والتعليم</span>
-            <span class="toc-page-number">9-11</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">7. الإنترنت والتواصل الاجتماعي</span>
-            <span class="toc-page-number">12-14</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">8. منصات التعليم الإلكتروني</span>
-            <span class="toc-page-number">15-17</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">9. إيجابيات الإنترنت في التعليم والتواصل</span>
-            <span class="toc-page-number">18-20</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">10. سلبيات الإنترنت</span>
-            <span class="toc-page-number">21-23</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">11. أدوات وتقنيات التعلم عبر الإنترنت</span>
-            <span class="toc-page-number">24-26</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">12. دور الإنترنت في المستقبل</span>
-            <span class="toc-page-number">27-28</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">13. التحديات والحلول</span>
-            <span class="toc-page-number">29</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">14. الخاتمة</span>
-            <span class="toc-page-number">30</span>
-        </div>
-        <div class="toc-item">
-            <span class="toc-title">15. المراجع</span>
-            <span class="toc-page-number">30</span>
-        </div>
-        
-        <div class="page-number">صفحة 2</div>
-    </div>
-
-    <!-- الصفحات 3-4: المقدمة -->
+    <!-- الصفحة 13: المصادر والمراجع -->
     <div class="page">
-        <h1>المقدمة</h1>
+        <h1 id="references">المصادر والمراجع</h1>
         
-        <p>يشهد عصرنا الحالي ثورة تكنولوجية هائلة، أصبح فيها الإنترنت جزءاً لا يتجزأ من حياتنا اليومية. فقد غيّر هذا الاختراع العظيم طريقة تواصلنا، وتعلّمنا، وعملنا، وتفاعلنا مع العالم من حولنا. لقد تجاوز دور الإنترنت كونه مجرد وسيلة للاتصال ليصبح منصة عالمية للتبادل المعرفي والثقافي والاجتماعي.</p>
-        
-        <p>يأتي هذا البحث ليسلط الضوء على دور الإنترنت في مجالين حيويين هما: التعليم والتواصل الاجتماعي. فمن خلال الإنترنت، أصبح الوصول إلى المعرفة أمراً في متناول الجميع، كما تحولت عملية التواصل من مجرد تبادل رسائل إلى بناء مجتمعات افتراضية تتخطى الحواجز الجغرافية والثقافية.</p>
-        
-        <p>لقد أحدث الإنترنت تحولاً جذرياً في النظام التعليمي التقليدي، حيث وفر فرصاً تعليمية غير مسبوقة، وجعل التعلم مستمراً ومتاحاً في أي وقت ومن أي مكان. كما أدى ظهور منصات التواصل الاجتماعي إلى تغيير طبيعة التفاعل بين الأفراد والمجتمعات، فخلق فضاءات جديدة للنقاش وتبادل الآراء والخبرات.</p>
-        
-        <p>يهدف هذا البحث إلى استكشاف تأثير الإنترنت على التعليم والتواصل الاجتماعي، مع تحليل إيجابياته وسلبياته، والتحديات التي تواجه استخدامه في هذه المجالات، بالإضافة إلى استشراف مستقبله ودوره في تشكيل مجتمعات المعرفة.</p>
-        
-        <p>سنناقش في هذا البحث تعريف الإنترنت وتاريخ تطوره، ثم ننتقل إلى تحليل تفصيلي لدوره في التعليم والتواصل الاجتماعي، مع استعراض منصات التعليم الإلكتروني وأدوات التعلم عبر الإنترنت. كما سنتناول إيجابيات وسلبيات الإنترنت، ونختتم باستشراف مستقبله والتحديات التي تواجهه.</p>
-        
-        <div class="page-number">صفحة 3</div>
-    </div>
-
-    <div class="page">
-        <h2>استمرار المقدمة</h2>
-        
-        <p>إن أهمية هذا البحث تنبع من الحاجة الماسة لفهم التأثير العميق للإنترنت على حياتنا، خاصة في ظل التسارع الكبير في تطبيقاته وتقنياته. فمع انتشار الجيل الخامس للاتصالات، وتطور الذكاء الاصطناعي، وانتشار إنترنت الأشياء، يصبح من الضروري دراسة كيفية استثمار هذه التقنيات في تطوير التعليم وتعزيز التواصل الإيجابي.</p>
-        
-        <p>يتناول البحث أيضاً القضايا الأخلاقية والاجتماعية المرتبطة باستخدام الإنترنت، مثل الخصوصية والأمان الرقمي، وانتشار المعلومات المغلوطة، والفجوة الرقمية بين الدول والمجتمعات. هذه القضايا أصبحت جزءاً من النقاش العالمي حول مستقبل التكنولوجيا وتأثيرها على الإنسانية.</p>
-        
-        <p>من المنظور التعليمي، يبحث هذا العمل في كيفية تحويل الإنترنت من مجرد أداة تكميلية إلى محور أساسي في العملية التعليمية. كما يدرس كيفية توظيف منصات التواصل الاجتماعي في تعزيز التعلم التعاوني وتبادل الخبرات بين الطلاب والمعلمين.</p>
-        
-        <p>أما من منظور التواصل الاجتماعي، فيحلل البحث كيفية تأثير الإنترنت على تشكيل الهوية الفردية والجماعية، وتغيير طبيعة العلاقات الاجتماعية، ودوره في تعزيز الحوار بين الثقافات أو في زيادة الاستقطاب والانعزال.</p>
-        
-        <p>ختاماً، نأمل أن يساهم هذا البحث في تقديم رؤية شاملة ومتوازنة لدور الإنترنت في التعليم والتواصل الاجتماعي، مع تقديم توصيات عملية لتعزيز الإيجابيات والتغلب على السلبيات، ليكون الإنترنت أداة حقيقية لتحقيق التنمية والازدهار في مجتمعاتنا.</p>
-        
-        <div class="page-number">صفحة 4</div>
-    </div>
-
-    <!-- الصفحات 5-6: تعريف الإنترنت -->
-    <div class="page">
-        <h1>تعريف الإنترنت</h1>
-        
-        <p>الإنترنت (Internet) هو شبكة اتصالات عالمية تربط ملايين الشبكات الحاسوبية العامة والخاصة في مختلف أنحاء العالم. تتكون هذه الشبكة من مجموعة كبيرة من الحواسيب المترابطة التي تتواصل مع بعضها باستخدام بروتوكولات موحدة، أشهرها بروتوكول TCP/IP.</p>
-        
-        <h2>المفهوم التقني للإنترنت</h2>
-        <p>تقنياً، يعرف الإنترنت بأنه "شبكة الشبكات" (Network of Networks)، حيث يتكون من آلاف الشبكات المستقلة المتصلة ببعضها عبر بوابات (Gateways) تستخدم بروتوكولات موحدة للاتصال. هذه الشبكة لا تملكها جهة واحدة، بل هي عبارة عن بنية تحتية عالمية مشتركة.</p>
-        
-        <h3>مكونات الإنترنت الرئيسية:</h3>
-        <ul>
-            <li><strong>الخوادم (Servers):</strong> حواسيب تخزن المعلومات والمواقع الإلكترونية وتقدمها للمستخدمين.</li>
-            <li><strong>المستخدمون (Clients):</strong> حواسيب أو أجهزة تستقبل المعلومات من الخوادم.</li>
-            <li><strong>الموجهات (Routers):</strong> أجهزة توجه البيانات عبر المسارات المناسبة في الشبكة.</li>
-            <li><strong>وسائط النقل:</strong> كابلات الألياف البصرية، الأقمار الصناعية، الاتصالات اللاسلكية.</li>
-            <li><strong>البروتوكولات:</strong> قواعد تحكم عملية نقل البيانات بين الأجهزة.</li>
+        <ul style="list-style-type: circle; font-size: 18px;">
+            <li>وزارة التعليم السعودية، كتاب التربية الصحية والبدنية (المستوى الثانوي)، 1446هـ.</li>
+            <li>الهيئة السعودية للتخصصات الصحية، دليل الإسعافات الأولية المتقدم، 2023.</li>
+            <li>جمعية الهلال الأحمر السعودي، دليل المسعف الأول، 2024.</li>
+            <li>منظمة الصحة العالمية، إرشادات نقل المصابين في حالات الطوارئ، 2022.</li>
+            <li>كليات طب الطوارئ، أساسيات نقل وإخلاء المصابين، 2021.</li>
+            <li>موقع مايو كلينك (Mayo Clinic) - قسم الإسعافات الأولية، 2025.</li>
+            <li>موقع WebMD - First Aid: How to Move an Injured Person, 2025.</li>
         </ul>
         
-        <div class="page-number">صفحة 5</div>
+        <hr style="margin: 50px 0 20px;">
+        
+      
+        <p style="text-align: center; font-weight: bold;">والله ولي التوفيق</p>
+        
+        <div class="page-number">13</div>
     </div>
-
-    <div class="page">
-        <h2>تعريف الإنترنت (استمرار)</h2>
-        
-        <h3>الفرق بين الإنترنت والشبكة العنكبوتية العالمية (WWW)</h3>
-        <p>كثيراً ما يخلط الناس بين الإنترنت والشبكة العنكبوتية العالمية (World Wide Web)، لكن هناك فرقاً جوهرياً بينهما:</p>
-        
-        <ul>
-            <li><strong>الإنترنت:</strong> هو البنية التحتية المادية والبروتوكولات التي تربط الأجهزة حول العالم.</li>
-            <li><strong>الشبكة العنكبوتية العالمية (WWW):</strong> هي واحدة من الخدمات التي تعمل على الإنترنت، وهي نظام من المستندات المترابطة (صفحات الويب) التي يمكن الوصول إليها عبر الإنترنت.</li>
-        </ul>
-        
-        <p>بمعنى آخر، الإنترنت هو الطريق السريع، بينما الويب هي المركبات والسكان الذين يستخدمون هذا الطريق.</p>
-        
-        <h3>خدمات الإنترنت الرئيسية</h3>
-        <ul>
-            <li><strong>البريد الإلكتروني (Email):</strong> نظام لتبادل الرسائل الإلكترونية.</li>
-            <li><strong>نقل الملفات (FTP):</strong> بروتوكول لنقل الملفات بين الحواسيب.</li>
-            <li><strong>المحادثة الفورية (Instant Messaging):</strong> تبادل رسائل نصية فورية.</li>
-            <li><strong>المكالمات الصوتية والمرئية (VoIP):</strong> مثل سكايب وزوم.</li>
-            <li><strong>منصات التواصل الاجتماعي:</strong> فيسبوك، تويتر، إنستغرام، وغيرها.</li>
-            <li><strong>التعليم الإلكتروني:</strong> منصات التعلم عن بعد مثل Coursera، Edx.</li>
-        </ul>
-        
-        <p>بهذا التعريف الشامل، نستطيع فهم أن الإنترنت ليس مجرد تقنية، بل هو بيئة متكاملة للتواصل وتبادل المعلومات والمعرفة على مستوى العالم.</p>
-        
-        <div class="page-number">صفحة 6</div>
-    </div>
-
-    <!-- الصفحات 7-8: تاريخ تطور الإنترنت -->
-    <div class="page">
-        <h1>تاريخ تطور الإنترنت</h1>
-        
-        <p>مر الإنترنت بمراحل تطور متسارعة منذ بدايته كفكرة أكاديمية حتى أصبح الشبكة العالمية التي نعرفها اليوم. يقدم هذا القلم نظرة على أهم المحطات في هذا التطور.</p>
-        
-        <h2>البدايات (الستينيات والسبعينيات)</h2>
-        <p>تعود جذور الإنترنت إلى مشروع ARPANET (شبكة وكالة مشاريع الأبحاث المتقدمة) التابعة لوزارة الدفاع الأمريكية في عام 1969. كان الهدف من هذا المشروع ربط الجامعات ومراكز الأبحاث لتبادل المعلومات العلمية والعسكرية.</p>
-        
-        <h3>أحداث بارزة في هذه الفترة:</h3>
-        <ul>
-            <li><strong>1969:</strong> أول اتصال ناجح بين جامعة كاليفورنيا ومعهد ستانفورد.</li>
-            <li><strong>1971:</strong> تطوير البريد الإلكتروني من قبل راي توملينسون.</li>
-            <li><strong>1973:</strong> تطوير بروتوكول TCP/IP الذي أصبح الأساس التقني للإنترنت.</li>
-            <li><strong>1979:</strong> إنشاء USENET، أول شبكة للمناقشات الجماعية.</li>
-        </ul>
-        
-        <h2>التوسع (الثمانينيات)</h2>
-        <p>في هذه الفترة، بدأ الإنترنت ينتشر خارج الولايات المتحدة، وظهرت العديد من الشبكات الأكاديمية والتجارية.</p>
-        
-        <div class="page-number">صفحة 7</div>
-    </div>
-
-    <div class="page">
-        <h2>تاريخ تطور الإنترنت (استمرار)</h2>
-        
-        <h3>أحداث الثمانينيات:</h3>
-        <ul>
-            <li><strong>1983:</strong> اعتماد بروتوكول TCP/IP بشكل رسمي على ARPANET.</li>
-            <li><strong>1984:</strong> إدخال نظام أسماء النطاقات (DNS) لتحويل العناوين الرقمية إلى أسماء نصية.</li>
-            <li><strong>1988:</strong> أول دودة إنترنت (Morris Worm) تظهر مخاطر الأمن السيبراني.</li>
-            <li><strong>1989:</strong> تيم برنرز لي يقدم اقتراحاً لنظام معلومات مترابط، وهو النواة الأولى للشبكة العنكبوتية العالمية.</li>
-        </ul>
-        
-        <h2>الثورة العالمية (التسعينيات)</h2>
-        <p>شهدت التسعينيات التحول الأكبر في تاريخ الإنترنت، حيث أصبح متاحاً للجمهور وانتشر على مستوى العالم.</p>
-        
-        <h3>أحداث التسعينيات:</h3>
-        <ul>
-            <li><strong>1991:</strong> إطلاق الشبكة العنكبوتية العالمية (WWW) للعموم.</li>
-            <li><strong>1993:</strong> إطلاق متصفح موزاييك (Mosaic)، أول متصفح ويب رسومي.</li>
-            <li><strong>1995:</strong> إطلاق Windows 95 مع دعم مدمج للإنترنت، وإطلاق أمازون وإي باي.</li>
-            <li><strong>1998:</strong> تأسيس شركة جوجل، وتطور محركات البحث.</li>
-            <li><strong>1999:</strong> انتشار خدمة النطاق العريض (Broadband).</li>
-        </ul>
-        
-        <h2>عصر التواصل الاجتماعي والجوال (2000-2010)</h2>
-        <p>شهدت هذه الفترة ظهور منصات التواصل الاجتماعي وانتشار الإنترنت عبر الأجهزة المحمولة.</p>
-        
-        <div class="page-number">صفحة 8</div>
-    </div>
-
-    <!-- الصفحات 9-11: الإنترنت والتعليم -->
-    <div class="page">
-        <h1>الإنترنت والتعليم</h1>
-        
-        <p>أحدث الإنترنت ثورة في مجال التعليم، حيث نقل العملية التعليمية من الفصول التقليدية إلى فضاءات رقمية غير محدودة. لقد غير الإنترنت مفهوم التعليم من كونه عملية محدودة بزمان ومكان إلى عملية مستمرة ومتاحة للجميع.</p>
-        
-        <h2>أشكال التعليم عبر الإنترنت</h2>
-        
-        <h3>1. التعليم المدمج (Blended Learning)</h3>
-        <p>يجمع بين التعليم التقليدي وجهًا لوجه والتعليم الإلكتروني عبر الإنترنت. يستفيد هذا النموذج من مزايا كلا النهجين، حيث يوفر التفاعل المباشر مع المعلمين وزملاء الدراسة، مع مرونة الوصول إلى المحتوى التعليمي عبر الإنترنت.</p>
-        
-        <h3>2. التعليم عن بعد الكامل (Fully Online Learning)</h3>
-        <p>تتم العملية التعليمية بأكملها عبر الإنترنت، من التسجيل إلى المحاضرات والاختبارات والتخرج. أصبح هذا النموذج شائعاً خاصة في برامج الدراسات العليا والتعليم المستمر.</p>
-        
-        <h3>3. الفصول الافتراضية (Virtual Classrooms)</h3>
-        <p>فصول دراسية تفاعلية عبر الإنترنت، حيث يجتمع الطلاب والمعلمون في وقت واحد عبر منصات مثل زوم أو مايكروسوفت تيمز لإجراء مناقشات حية وتقديم عروض تقديمية.</p>
-        
-        <h3>4. الدورات المفتوحة عبر الإنترنت (MOOCs)</h3>
-        <p>دورات تعليمية مفتوحة للجميع، تقدمها جامعات مرموقة مثل هارفارد وستانفورد عبر منصات مثل Coursera وEdx. غالباً ما تكون هذه الدورات مجانية أو بتكلفة رمزية.</p>
-        
-        <div class="page-number">صفحة 9</div>
-    </div>
-
-    <div class="page">
-        <h2>الإنترنت والتعليم (استمرار)</h2>
-        
-        <h3>5. التعلم الذاتي (Self-Paced Learning)</h3>
-        <p>يتعلم الطالب وفقاً لسرعته الخاصة، حيث يمكنه الوصول إلى المواد التعليمية في أي وقت ومن أي مكان. تعتبر منصات مثل Udemy وKhan Academy أمثلة رائدة على هذا النوع من التعليم.</p>
-        
-        <h2>فوائد الإنترنت في التعليم</h2>
-        
-        <h3>1. إتاحة التعليم للجميع</h3>
-        <p>الإنترنت كسر الحواجز الجغرافية والاقتصادية التي كانت تحول دون وصول الكثيرين إلى التعليم الجيد. اليوم، يمكن لأي شخص لديه اتصال بالإنترنت الوصول إلى أفضل المحتويات التعليمية من أرقى الجامعات العالمية.</p>
-        
-        <h3>2. المرونة في الوقت والمكان</h3>
-        <p>لم يعد التعليم مقيداً بجدران الفصول الدراسية أو بأوقات محددة. يمكن للطالب التعلم في الوقت الذي يناسبه ومن المكان الذي يختاره.</p>
-        
-        <h3>3. تنوع أساليب التعلم</h3>
-        <p>يوفر الإنترنت وسائط تعليمية متنوعة تناسب أنماط التعلم المختلفة: فيديوهات، نصوص، رسوم بيانية، ألعاب تعليمية، اختبارات تفاعلية، وغيرها.</p>
-        
-        <h3>4. التعلم التفاعلي والتشاركي</h3>
-        <p>ساهمت أدوات الإنترنت في تحويل التعليم من عملية أحادية (معلم → طالب) إلى عملية تفاعلية وتشاركية، حيث يشارك الطلاب في بناء المعرفة عبر المناقشات والمشاريع التعاونية.</p>
-        
-        <div class="page-number">صفحة 10</div>
-    </div>
-
-    <div class="page">
-        <h2>الإنترنت والتعليم (استمرار)</h2>
-        
-        <h3>5. التحديث المستمر للمحتوى التعليمي</h3>
-        <p>يمكن تحديث المحتوى التعليمي عبر الإنترنت بسهولة وسرعة، مما يضمن مواكبة المناهج للتطورات العلمية والتقنية الحديثة.</p>
-        
-        <h3>6. التقييم الفوري والتفاضلي</h3>
-        <p>تسمح أدوات التقييم عبر الإنترنت بتقديم تغذية راجعة فورية للطلاب، كما تمكن من تكييف الاختبارات وفقاً لمستوى كل طالب.</p>
-        
-        <h2>تحديات التعليم عبر الإنترنت</h2>
-        
-        <h3>1. الفجوة الرقمية</h3>
-        <p>لا يزال الوصول إلى الإنترنت عالي السرعة غير متاح للجميع، خاصة في المناطق النائية والبلدان النامية.</p>
-        
-        <h3>2. ضعف المهارات الرقمية</h3>
-        <p>يعاني بعض الطلاب والمعلمين من نقص في المهارات اللازمة للتعامل مع منصات التعليم الإلكتروني.</p>
-        
-        <h3>3. صعوبة تقييم النزاهة الأكاديمية</h3>
-        <p>تشكل عملية مراقبة الاختبارات عبر الإنترنت وإثبات هوية الطلاب تحدياً كبيراً.</p>
-        
-        <h3>4. نقص التفاعل الاجتماعي المباشر</h3>
-        <p>يفتقد التعليم عبر الإنترنت إلى التفاعل البشري المباشر الذي يعتبر أساسياً للتنمية الاجتماعية والمهارات الشخصية.</p>
-        
-        <h3>5. قضايا الصحة النفسية والجسدية</h3>
-        <p>قد يؤدي الجلوس الطويل أمام الشاشات إلى مشاكل صحية ونفسية مثل العزلة الاجتماعية وإجهاد العينين.</p>
-        
-        <div class="page-number">صفحة 11</div>
-    </div>
-
-    <!-- الصفحات 12-14: الإنترنت والتواصل الاجتماعي -->
-    <div class="page">
-        <h1>الإنترنت والتواصل الاجتماعي</h1>
-        
-        <p>أدى ظهور منصات التواصل الاجتماعي إلى تحويل الإنترنت من مجرد وسيلة للبحث عن المعلومات إلى فضاء للتفاعل الاجتماعي وبناء العلاقات. لقد غيرت هذه المنصات طبيعة التواصل بين الأفراد والمجتمعات على مستوى العالم.</p>
-        
-        <h2>تطور منصات التواصل الاجتماعي</h2>
-        
-        <h3>المرحلة الأولى: المدونات ومواقع التعارف (1997-2004)</h3>
-        <p>ظهرت أولى أشكال التواصل الاجتماعي عبر الإنترنت مع ظهور المدونات ومواقع التعارف مثل Friendster وMySpace. ركزت هذه المنصات على إنشاء صفحات شخصية والاتصال بالأصدقاء.</p>
-        
-        <h3>المرحلة الثانية: الشبكات الاجتماعية الكبرى (2004-2010)</h3>
-        <p>شهدت هذه الفترة ظهور فيسبوك (2004) وتويتر (2006)، التي وسعت مفهوم التواصل الاجتماعي ليشمل مشاركة الآراء والأخبار والتجارب الحياتية.</p>
-        
-        <h3>المرحلة الثالثة: التخصص والتنوع (2010-2016)</h3>
-        <p>ظهرت منصات متخصصة مثل إنستغرام للصور (2010)، وسناب شات للمحتوى المؤقت (2011)، ولينكدإن للتواصل المهني (2003 لكن انتشاره كان في هذه الفترة).</p>
-        
-        <h3>المرحلة الرابعة: الفيديو والتجارة (2016-الآن)</h3>
-        <p>هيمنة المحتوى المرئي عبر منصات مثل يوتيوب وتيك توك، ودمج التجارة الإلكترونية مع التواصل الاجتماعي.</p>
-        
-        <div class="page-number">صفحة 12</div>
-    </div>
-
-    <div class="page">
-        <h2>الإنترنت والتواصل الاجتماعي (استمرار)</h2>
-        
-        <h2>أنواع منصات التواصل الاجتماعي</h2>
-        
-        <h3>1. شبكات التواصل العام (فيسبوك، تويتر)</h3>
-        <p>تركز على التواصل العام وتبادل الآراء والأخبار مع دائرة واسعة من المعارف.</p>
-        
-        <h3>2. شبكات الصور والفيديو (إنستغرام، يوتيوب، تيك توك)</h3>
-        <p>تعتمد على المحتوى المرئي كوسيلة رئيسية للتواصل والتعبير.</p>
-        
-        <h3>3. الشبكات المهنية (لينكدإن)</h3>
-        <p>مخصصة للتواصل المهني وبناء الشبكات الوظيفية.</p>
-        
-        <h3>4. منصات النقاش والمنتديات (ريديت)</h3>
-        <p>تركز على النقاشات الموضوعية حول اهتمامات محددة.</p>
-        
-        <h3>5. تطبيقات المراسلة (واتساب، تيليجرام)</h3>
-        <p>تركز على التواصل الخاص والمجموعات الصغيرة.</p>
-        
-        <h2>تأثير التواصل الاجتماعي على المجتمع</h2>
-        
-        <h3>التأثيرات الإيجابية:</h3>
-        <ul>
-            <li><strong>تسهيل التواصل:</strong> جعلت الاتصال بالأصدقاء والعائلة أسهل وأسرع.</li>
-            <li><strong>بناء المجتمعات الافتراضية:</strong> سمحت للأشخاص ذوي الاهتمامات المشتركة بالتواصل وتكوين مجتمعات.</li>
-            <li><strong>نشر الوعي:</strong> ساهمت في نشر القضايا الاجتماعية والبيئية على نطاق واسع.</li>
-            <li><strong>دعم الأعمال:</strong> أصبحت أداة أساسية للتسويق والتفاعل مع العملاء.</li>
-        </ul>
-        
-        <div class="page-number">صفحة 13</div>
-    </div>
-
-    <div class="page">
-        <h2>الإنترنت والتواصل الاجتماعي (استمرار)</h2>
-        
-        <h3>التأثيرات السلبية:</h3>
-        <ul>
-            <li><strong>انتشار المعلومات المضللة:</strong> ساهمت في انتشار الأخبار الكاذبة والشائعات.</li>
-            <li><strong>الاستقطاب المجتمعي:</strong> عززت ظاهرة "غرف الصدى" حيث يتعرض الأشخاص فقط للآراء المشابهة لآرائهم.</li>
-            <li><strong>الإدمان الرقمي:</strong> أدت إلى سلوكيات إدمانية تؤثر على الصحة النفسية.</li>
-            <li><strong>انتهاك الخصوصية:</strong> جمع البيانات الشخصية واستخدامها بطرق قد تضر بالمستخدمين.</li>
-            <li><strong>التنمّر الإلكتروني:</strong> وفرت بيئة خصبة للتنمر والتحرش عبر الإنترنت.</li>
-        </ul>
-        
-        <h2>التواصل الاجتماعي والتعليم</h2>
-        
-        <p>أصبحت منصات التواصل الاجتماعي أدوات تعليمية فعالة، حيث يستخدمها المعلمون والطلاب للتواصل خارج الفصول الدراسية، ومشاركة المصادر التعليمية، وإجراء المناقشات الأكاديمية. كما ساهمت في خلق "التعلم الاجتماعي" حيث يتعلم الأفراد من خلال التفاعل مع الآخرين.</p>
-        
-        <h3>استخدامات تعليمية للتواصل الاجتماعي:</h3>
-        <ul>
-            <li>مجموعات الدراسة على فيسبوك وواتساب.</li>
-            <li>مشاركة المحتوى التعليمي عبر يوتيوب وإنستغرام.</li>
-            <li>التواصل بين المعلمين والطلاب عبر تويتر.</li>
-            <li>إنشاء مدونات تعليمية متخصصة.</li>
-            <li>استخدام منصات مثل LinkedIn للتدريب المهني.</li>
-        </ul>
-        
-        <div class="page-number">صفحة 14</div>
-    </div>
-
-    <!-- الصفحات 15-17: منصات التعليم الإلكتروني -->
-    <div class="page">
-        <h1>منصات التعليم الإلكتروني</h1>
-        
-        <p>تعد منصات التعليم الإلكتروني النواة الأساسية للتحول الرقمي في التعليم. هذه المنصات توفر بيئة متكاملة لإدارة العملية التعليمية عبر الإنترنت، من تقديم المحتوى إلى التقييم والتفاعل بين المعلمين والطلاب.</p>
-        
-        <h2>أنواع منصات التعليم الإلكتروني</h2>
-        
-        <h3>1. أنظمة إدارة التعلم (LMS)</h3>
-        <p>أنظمة شاملة لإدارة العملية التعليمية، تشمل إدارة المحتوى، والتقييم، والتقارير، والتفاعل بين المستخدمين. أمثلة: Moodle، Blackboard، Canvas.</p>
-        
-        <h4>مميزات أنظمة إدارة التعلم:</h4>
-        <ul>
-            <li>إدارة شاملة للدورات والمستخدمين.</li>
-            <li>أدوات تقييم متنوعة (اختبارات، واجبات، مناقشات).</li>
-            <li>تتبع تقدم الطلاب وتوليد تقارير مفصلة.</li>
-            <li>دعم معايير التعلم الإلكتروني مثل SCORM.</li>
-        </ul>
-        
-        <h3>2. منصات الدورات المفتوحة (MOOCs)</h3>
-        <p>تركز على تقديم دورات مفتوحة للجمهور بكميات كبيرة. أمثلة: Coursera، Edx، Udacity، FutureLearn.</p>
-        
-        <h4>خصائص منصات الدورات المفتوحة:</h4>
-        <ul>
-            <li>دورات من أفضل الجامعات العالمية.</li>
-            <li>شهادات معتمدة (مدفوعة في الغالب).</li>
-            <li>مجتمعات تعلم كبيرة ومتنوعة.</li>
-            <li>مرونة في مواعيد التعلم.</li>
-        </ul>
-        
-        <div class="page-number">صفحة 15</div>
-    </div>
-
-    <div class="page">
-        <h2>منصات التعليم الإلكتروني (استمرار)</h2>
-        
-        <h3>3. منصات التعلم الذاتي</h3>
-        <p>تركز على التعلم الفردي حسب سرعة المتعلم. أمثلة: Udemy، Khan Academy، LinkedIn Learning.</p>
-        
-        <h4>مميزات منصات التعلم الذاتي:</h4>
-        <ul>
-            <li>مجموعة واسعة من المواضيع (تقنية، فنية، شخصية).</li>
-            <li>أسعار معقولة وتخفيضات متكررة.</li>
-            <li>وصول دائم للمحتوى بعد الشراء.</li>
-            <li>مراجعات وتقييمات من المستخدمين.</li>
-        </ul>
-        
-        <h3>4. منصات التعليم المدرسي</h3>
-        <p>مصممة خصيصاً للتعليم الأساسي والثانوي. أمثلة: Google Classroom، Microsoft Teams for Education.</p>
-        
-        <h4>خصائص منصات التعليم المدرسي:</h4>
-        <ul>
-            <li>تكامل مع أدوات الإنتاجية (مستندات، عروض تقديمية).</li>
-            <li>ضوابط أمان وخصوصية مناسبة للطلاب الصغار.</li>
-            <li>أدوات للتواصل مع أولياء الأمور.</li>
-            <li>سهولة الاستخدام للفئات العمرية المختلفة.</li>
-        </ul>
-        
-        <h3>5. منصات التعليم التفاعلي</h3>
-        <p>تركز على التفاعل المباشر بين المعلم والطلاب. أمثلة: Zoom، Microsoft Teams، Google Meet.</p>
-        
-        <h4>مميزات منصات التعليم التفاعلي:</h4>
-        <ul>
-            <li>محاضرات مباشرة في الوقت الفعلي.</li>
-            <li>أدوات تفاعل (رفع الأيدي، التصويت، غرف المناقشة).</li>
-            <li>تسجيل الجلسات للرجوع إليها لاحقاً.</li>
-            <li>مشاركة الشاشة والعروض التقديمية.</li>
-        </ul>
-        
-        <div class="page-number">صفحة 16</div>
-    </div>
-
-    <div class="page">
-        <h2>منصات التعليم الإلكتروني (استمرار)</h2>
-        
-        <h2>معايير اختيار منصة التعليم الإلكتروني</h2>
-        
-        <h3>1. سهولة الاستخدام</h3>
-        <p>يجب أن تكون الواجهة بديهية وسهلة للمعلمين والطلاب على حد سواء، بغض النظر عن مهاراتهم التقنية.</p>
-        
-        <h3>2. التوافق والتكامل</h3>
-        <p>قدرة المنصة على التكامل مع الأنظمة الأخرى المستخدمة في المؤسسة التعليمية، مثل أنظمة التسجيل والبوابات الإلكترونية.</p>
-        
-        <h3>3. الأمان والخصوصية</h3>
-        <p>ضمان حماية بيانات المستخدمين وخصوصيتهم، وخاصة عندما يتعلق الأمر بالطلاب القاصرين.</p>
-        
-        <h3>4. المرونة والتخصيص</h3>
-        <p>إمكانية تخصيص المنصة وفقاً لاحتياجات المؤسسة التعليمية وأهدافها التربوية.</p>
-        
-        <h3>5. الدعم الفني والتدريب</h3>
-        <p>توفر دعم فني فعال وبرامج تدريبية للمستخدمين.</p>
-        
-        <h3>6. أدوات التقييم والتتبع</h3>
-        <p>تنوع أدوات التقييم وإمكانية تتبع تقدم الطلاب بشكل مفصل.</p>
-        
-        <h2>اتجاهات مستقبلية في منصات التعليم الإلكتروني</h2>
-        
-        <ul>
-            <li><strong>الذكاء الاصطناعي:</strong> تخصيص المحتوى حسب مستوى كل طالب.</li>
-            <li><strong>التعلم التكيفي:</strong> منصات تتكيف مع أنماط التعلم الفردية.</li>
-            <li><strong>الواقع المعزز والافتراضي:</strong> تجارب تعليمية غامرة.</li>
-            <li><strong>البلوك تشين:</strong> شهادات تعليمية غير قابلة للتزوير.</li>
-            <li><strong>البيانات الكبيرة:</strong> تحليل بيانات التعلم لتحسين النتائج.</li>
-        </ul>
-        
-        <div class="page-number">صفحة 17</div>
-    </div>
-
-    <!-- الصفحات 18-20: إيجابيات الإنترنت في التعليم والتواصل -->
-    <div class="page">
-        <h1>إيجابيات الإنترنت في التعليم والتواصل</h1>
-        
-        <p>يوفر الإنترنت فوائد عديدة في مجالي التعليم والتواصل، حيث ساهم في تحسين جودة وكفاءة وكفاية كل منهما. في هذا القسم، سنستعرض أهم الإيجابيات التي قدمها الإنترنت لهذين المجالين الحيويين.</p>
-        
-        <h2>إيجابيات الإنترنت في التعليم</h2>
-        
-        <h3>1. إتاحة التعليم للجميع</h3>
-        <p>كسر الإنترنت الحواجز الجغرافية والاقتصادية التي كانت تحول دون وصول العديد من الأشخاص إلى التعليم الجيد. اليوم، يمكن لأي شخص لديه اتصال بالإنترنت الوصول إلى موارد تعليمية من أفضل الجامعات والمؤسسات التعليمية في العالم.</p>
-        
-        <h3>2. التعليم المستمر والمرن</h3>
-        <p>لم يعد التعليم مقصوراً على مراحل عمرية محددة أو أوقات معينة. يتيح الإنترنت فرصاً للتعلم المستمر مدى الحياة، وفقاً لجدول الزمن الذي يناسب كل متعلم.</p>
-        
-        <h3>3. تنوع المصادر والوسائط التعليمية</h3>
-        <p>يوفر الإنترنت تنوعاً هائلاً في المصادر التعليمية: كتب إلكترونية، فيديوهات تعليمية، محاكيات تفاعلية، ألعاب تعليمية، مجموعات مناقشة، وغيرها الكثير.</p>
-        
-        <h3>4. التعلم المخصص والشخصي</h3>
-        <p>تسمح تقنيات الإنترنت بتقديم تعليم مخصص حسب احتياجات وقدرات كل متعلم، مما يحسن من فاعلية العملية التعليمية ونتائجها.</p>
-        
-        <h3>5. التعاون والمشاركة العالمية</h3>
-        <p>يمكن للطلاب والمعلمين من مختلف أنحاء العالم التعاون في المشاريع البحثية والتبادل الثقافي والمعرفي، مما يوسع آفاقهم ويفتح أمامهم فرصاً جديدة.</p>
-        
-        <div class="page-number">صفحة 18</div>
-    </div>
-
-    <div class="page">
-        <h2>إيجابيات الإنترنت في التعليم والتواصل (استمرار)</h2>
-        
-        <h3>6. تحديث المحتوى التعليمي بسرعة</h3>
-        <p>يمكن تحديث المناهج والمحتوى التعليمي عبر الإنترنت في الوقت الفعلي، مما يضمن مواكبة المعرفة للتطورات العلمية والتقنية السريعة.</p>
-        
-        <h3>7. تقليل التكاليف</h3>
-        <p>ساهم التعليم عبر الإنترنت في تقليل التكاليف المرتبطة بالتعليم التقليدي، مثل تكاليف الانتقال، والسكن، والكتب المطبوعة، والمرافق.</p>
-        
-        <h3>8. تطوير المهارات الرقمية</h3>
-        <p>يساهم استخدام الإنترنت في التعليم في تطوير المهارات الرقمية لدى الطلاب والمعلمين، وهي مهارات أساسية في سوق العمل المعاصر.</p>
-        
-        <h2>إيجابيات الإنترنت في التواصل الاجتماعي</h2>
-        
-        <h3>1. التواصل العالمي الفوري</h3>
-        <p>أصبح التواصل مع الأشخاص في أي مكان في العالم ممكناً وفورياً، مما قرب المسافات وعزز التفاهم بين الثقافات.</p>
-        
-        <h3>2. بناء المجتمعات الافتراضية</h3>
-        <p>سمح الإنترنت للأشخاص ذوي الاهتمامات المشتركة بتكوين مجتمعات افتراضية، بغض النظر عن مواقعهم الجغرافية.</p>
-        
-        <h3>3. تمكين الأصوات المهمشة</h3>
-        <p>وفر الإنترنت منصة للأصوات المهمشة والمجموعات الأقل حظاً للتعبير عن آرائها ومشاركة تجاربها مع العالم.</p>
-        
-        <h3>4. التضامن الاجتماعي والدعم</h3>
-        <p>سهل الإنترنت تنظيم الحملات الخيرية والتضامنية، وتقديم الدعم النفسي والمعنوي للأفراد في الأوقات الصعبة.</p>
-        
-        <div class="page-number">صفحة 19</div>
-    </div>
-
-    <div class="page">
-        <h2>إيجابيات الإنترنت في التعليم والتواصل (استمرار)</h2>
-        
-        <h3>5. تبادل المعرفة والخبرات</h3>
-        <p>أصبح من السهل مشاركة المعرفة والخبرات الشخصية والمهنية مع الآخرين، مما ساهم في تسريع عملية التعلم والنمو الشخصي والمهني.</p>
-        
-        <h3>6. الحفاظ على الروابط الاجتماعية</h3>
-        <p>ساعدت منصات التواصل الاجتماعي في الحفاظ على الروابط الاجتماعية رغم التباعد الجغرافي، خاصة في ظل ظروف مثل الجائحات والهجرة.</p>
-        
-        <h3>7. الديمقراطية والمشاركة المجتمعية</h3>
-        <p>زاد الإنترنت من فرص المشاركة في النقاشات العامة واتخاذ القرارات المجتمعية، مما يعزز قيم الديمقراطية والمشاركة المدنية.</p>
-        
-        <h3>8. الابتكار وريادة الأعمال</h3>
-        <p>وفر الإنترنت بيئة خصبة للابتكار وريادة الأعمال، حيث يمكن للعديد من المشاريع الناشئة أن تبدأ وتنمو عبر الإنترنت.</p>
-        
-        <h2>التكامل بين التعليم والتواصل عبر الإنترنت</h2>
-        
-        <p>أحد أهم الإيجابيات التي قدمها الإنترنت هي القدرة على دمج التعليم والتواصل في بيئة واحدة. فمنصات التعليم الإلكترونية الحديثة تحتوي على أدوات التواصل الاجتماعي، كما أن منصات التواصل الاجتماعي أصبحت تستخدم لأغراض تعليمية. هذا التكامل يعزز:</p>
-        
-        <ul>
-            <li><strong>التعلم الاجتماعي:</strong> حيث يتعلم الأفراد من خلال التفاعل مع الآخرين.</li>
-            <li><strong>التعاون الأكاديمي:</strong> العمل الجماعي على المشاريع والبحوث.</li>
-            <li><strong>التوجيه والإرشاد:</strong> التواصل بين الخبراء والمبتدئين في مختلف المجالات.</li>
-            <li><strong>بناء شبكات المعرفة:</strong> روابط مهنية وأكاديمية تدوم مدى الحياة.</li>
-        </ul>
-        
-        <p>بهذه الإيجابيات المتعددة، يظهر جلياً كيف شكل الإنترنت ثورة إيجابية في مجالي التعليم والتواصل، رغم التحديات والسلبيات التي لا بد من معالجتها.</p>
-        
-        <div class="page-number">صفحة 20</div>
-    </div>
-
-    <!-- الصفحات 21-23: سلبيات الإنترنت -->
-    <div class="page">
-        <h1>سلبيات الإنترنت</h1>
-        
-        <p>رغم الفوائد العديدة للإنترنت، إلا أن هناك سلبيات وتحديات كبيرة يجب أخذها في الاعتبار. تتراوح هذه السلبيات بين تأثيرات نفسية واجتماعية وأمنية، وتتطلب وعياً وحلولاً فعالة للتخفيف من آثارها.</p>
-        
-        <h2>السلبيات في مجال التعليم</h2>
-        
-        <h3>1. الفجوة الرقمية</h3>
-        <p>يخلق الإنترنت فجوة بين من يملكون إمكانية الوصول إليه ومن لا يملكون هذه الإمكانية. هذه الفجوة ليست فقط في الوصول المادي، بل أيضاً في المهارات الرقمية اللازمة للاستفادة منه.</p>
-        
-        <h3>2. جودة التعليم المتغيرة</h3>
-        <p>تتفاوت جودة المحتوى التعليمي على الإنترنت بشكل كبير، مما يجعل من الصعب على المتعلمين التمييز بين المصادر الموثوقة وغير الموثوقة.</p>
-        
-        <h3>3. انخفاض التفاعل البشري المباشر</h3>
-        <p>يفتقد التعليم عبر الإنترنت إلى التفاعل البشري المباشر الذي يعتبر أساسياً للتنمية الاجتماعية والعاطفية للطلاب.</p>
-        
-        <h3>4. صعوبة تقييم النزاهة الأكاديمية</h3>
-        <p>تشكل الغش وانتهاك النزاهة الأكاديمية تحدياً كبيراً في التعليم عبر الإنترنت، حيث يصعب مراقبة الاختبارات والتأكد من هوية المتعلمين.</p>
-        
-        <h3>5. الإرهاق الرقمي</h3>
-        <p>يؤدي الجلوس الطويل أمام الشاشات والتدفق المستمر للمعلومات إلى إرهاق ذهني وجسدي للطلاب والمعلمين على حد سواء.</p>
-        
-        <h3>6. الاعتماد المفرط على التكنولوجيا</h3>
-        <p>قد يؤدي الاعتماد الكبير على الإنترنت في التعليم إلى إضعاف المهارات الأساسية مثل الكتابة اليدوية والتفكير النقدي بدون مساعدة رقمية.</p>
-        
-        <div class="page-number">صفحة 21</div>
-    </div>
-
-    <div class="page">
-        <h2>سلبيات الإنترنت (استمرار)</h2>
-        
-        <h2>السلبيات في مجال التواصل الاجتماعي</h2>
-        
-        <h3>1. الإدمان الرقمي</h3>
-        <p>تصمم منصات التواصل الاجتماعي لتكون مسببة للإدمان، مما يؤدي إلى قضاء ساعات طويلة أمام الشاشات على حساب الأنشطة الأخرى المهمة.</p>
-        
-        <h3>2. التأثير على الصحة النفسية</h3>
-        <p>ترتبط الاستخدام المفرط لوسائل التواصل الاجتماعي بالقلق، الاكتئاب، تدني احترام الذات، والشعور بالعزلة الاجتماعية.</p>
-        
-        <h3>3. انتشار المعلومات المضللة</h3>
-        <p>يسهل الإنترنت انتشار الأخبار الكاذبة والمعلومات المضللة بسرعة هائلة، مما يؤثر على الرأي العام واتخاذ القرارات.</p>
-        
-        <h3>4. الاستقطاب المجتمعي</h3>
-        <p>تعزز خوارزميات وسائل التواصل الاجتماعي ظاهرة "غرف الصدى"، حيث يتعرض المستخدمون فقط للآراء المشابهة لآرائهم، مما يزيد من الاستقطاب والانقسام المجتمعي.</p>
-        
-        <h3>5. انتهاك الخصوصية</h3>
-        <p>تجمع شركات الإنترنت كميات هائلة من البيانات الشخصية عن المستخدمين، وتستخدمها لأغراض تجارية أو قد تتعرض للاختراق.</p>
-        
-        <h3>6. التنمر الإلكتروني والتحرش</h3>
-        <p>وفر الإنترنت بيئة خصبة للتنمر والتحرش، خاصة بين الشباب والمراهقين، مع صعوبة متابعة هذه السلوكيات ومعاقبة مرتكبيها.</p>
-        
-        <h3>7. التأثير على العلاقات الاجتماعية الحقيقية</h3>
-        <p>قد تؤثر العلاقات الافتراضية سلباً على العلاقات الاجتماعية الحقيقية، حيث يفضل البعض التفاعل عبر الشاشات على التواصل وجهًا لوجه.</p>
-        
-        <div class="page-number">صفحة 22</div>
-    </div>
-
-    <div class="page">
-        <h2>سلبيات الإنترنت (استمرار)</h2>
-        
-        <h2>سلبيات عامة للإنترنت</h2>
-        
-        <h3>1. الأمن السيبراني والجرائم الإلكترونية</h3>
-        <p>تزايدت الجرائم الإلكترونية مثل الاختراق، سرقة الهوية، الاحتيال المالي، والابتزاز الإلكتروني، مما يهدد أمان الأفراد والمؤسسات.</p>
-        
-        <h3>2. التأثير على التركيز والإنتاجية</h3>
-        <p>يتسبب التدفق المستمر للإشعارات والمعلومات في تشتت الانتباه وضعف القدرة على التركيز لفترات طويلة.</p>
-        
-        <h3>3. المشاكل الصحية الجسدية</h3>
-        <p>يؤدي الاستخدام المطول للإنترنت إلى مشاكل صحية مثل إجهاد العينين، آلام الرقبة والظهر، السمنة، واضطرابات النوم.</p>
-        
-        <h3>4. التأثير على الثقافة والقيم</h3>
-        <p>قد يؤدي التعرض للثقافات المختلفة عبر الإنترنت إلى تآكل الثقافات المحلية والقيم التقليدية، أو على العكس، قد يعزز الانغلاق والرفض للآخر.</p>
-        
-        <h3>5. الاستغلال التجاري والاستهلاكية</h3>
-        <p>يتحول الإنترنت أكثر فأكثر إلى فضاء استهلاكي، حيث يتم تصميم التجربة الرقمية لتعزيز الشراء والاستهلاك المستمر.</p>
-        
-        <h3>6. الاعتماد على الخوارزميات</h3>
-        <p>تتحكم الخوارزميات بشكل متزايد في المعلومات التي نراها والقرارات التي نتخذها، مما يقلل من إرادتنا الحرة وتنوع وجهات النظر التي نتعرض لها.</p>
-        
-        <h2>الخلاصة</h2>
-        <p>تظهر هذه السلبيات أهمية تطوير وعي رقمي نقدي، ووضع ضوابط أخلاقية وقانونية لاستخدام الإنترنت، وتصميم تقنيات تركز على الإنسان ورفاهيته بدلاً من الربح والاستهلاك فقط.</p>
-        
-        <div class="page-number">صفحة 23</div>
-    </div>
-
-    <!-- الصفحات 24-26: أدوات وتقنيات التعلم عبر الإنترنت -->
-    <div class="page">
-        <h1>أدوات وتقنيات التعلم عبر الإنترنت</h1>
-        
-        <p>يتطور عالم أدوات وتقنيات التعلم عبر الإنترنت بسرعة كبيرة، مما يوفر للمعلمين والطلاب خيارات متعددة لتحسين تجربة التعليم الإلكتروني. في هذا القسم، سنستعرض أهم هذه الأدوات والتقنيات.</p>
-        
-        <h2>أدوات إنشاء المحتوى التعليمي</h2>
-        
-        <h3>1. أدوات العروض التقديمية التفاعلية</h3>
-        <p>تتجاوز هذه الأدوات العروض التقديمية التقليدية لتقدم تجارب تفاعلية. أمثلة: Nearpod، Pear Deck، Prezi.</p>
-        
-        <h4>مميزاتها:</h4>
-        <ul>
-            <li>إضافة أنشطة تفاعلية داخل العرض</li>
-            <li>التصويت المباشر والاختبارات الفورية</li>
-            <li>متابعة تفاعل الطلاب في الوقت الفعلي</li>
-            <li>التكامل مع أنظمة إدارة التعلم</li>
-        </ul>
-        
-        <h3>2. منصات الفيديو التعليمي</h3>
-        <p>أدوات لإنشاء وتعديل ومشاركة الفيديوهات التعليمية. أمثلة: Screencast-O-Matic، Loom، Edpuzzle.</p>
-        
-        <h4>مميزاتها:</h4>
-        <ul>
-            <li>تسجيل الشاشة مع الصوت والصورة</li>
-            <li>إضافة أسئلة تفاعلية داخل الفيديو</li>
-            <li>تحليل مشاهدات الطلاب للفيديو</li>
-            <li>التكامل مع منصات التعليم</li>
-        </ul>
-        
-        <h3>3. أدوات الإنفوجرافيك والرسوم البيانية</h3>
-        <p>تساعد في تحويل المعلومات المعقدة إلى رسوم بيانية سهلة الفهم. أمثلة: Canva، Piktochart، Infogram.</p>
-        
-        <div class="page-number">صفحة 24</div>
-    </div>
-
-    <div class="page">
-        <h2>أدوات وتقنيات التعلم عبر الإنترنت (استمرار)</h2>
-        
-        <h2>أدوات التفاعل والتقييم</h2>
-        
-        <h3>1. منصات الاختبارات والاستبيانات</h3>
-        <p>تسمح بإنشاء اختبارات تفاعلية مع تصحيح آلي وتحليل نتائج. أمثلة: Kahoot، Quizizz، Google Forms، Mentimeter.</p>
-        
-        <h4>مميزاتها:</h4>
-        <ul>
-            <li>أنواع متعددة من الأسئلة (اختيار من متعدد، صحيح/خطأ، إلخ)</li>
-            <li>تصحيح آلي وفوري</li>
-            <li>تحليل إحصائي للنتائج</li>
-            <li>عناصر gamification لزيادة التحفيز</li>
-        </ul>
-        
-        <h3>2. أدوات التعلم القائم على الألعاب (Gamification)</h3>
-        <p>تستخدم عناصر الألعاب لزيادة تحفيز الطلاب. أمثلة: Classcraft، Gimkit، Quizlet Live.</p>
-        
-        <h4>مميزاتها:</h4>
-        <ul>
-            <li>نقاط ومستويات وجوائز</li>
-            <li>منافسات جماعية وفردية</li>
-            <li>تتبع التقدم والإنجازات</li>
-            <li>تعزيز التعلم التكرارية</li>
-        </ul>
-        
-        <h3>3. أدوات السبورة التفاعلية</h3>
-        <p>سبورات رقمية تسمح بالتعاون في الوقت الفعلي. أمثلة: Jamboard، Miro، Padlet.</p>
-        
-        <h4>مميزاتها:</h4>
-        <ul>
-            <li>تعاون متزامن بين عدة مستخدمين</li>
-            <li>إضافة نصوص، صور، رسومات، ملاحظات لاصقة</li>
-            <li>قوالب جاهزة للأنشطة التعليمية</li>
-            <li>إمكانية التصدير والمشاركة</li>
-        </ul>
-        
-        <h3>4. أدوات إدارة الفصول الافتراضية</h3>
-        <p>تساعد المعلمين على إدارة التفاعل في الفصول الافتراضية. أمثلة: ClassDojo، Nearpod، Google Classroom.</p>
-        
-        <div class="page-number">صفحة 25</div>
-    </div>
-
-    <div class="page">
-        <h2>أدوات وتقنيات التعلم عبر الإنترنت (استمرار)</h2>
-        
-        <h2>تقنيات متقدمة في التعليم الإلكتروني</h2>
-        
-        <h3>1. الذكاء الاصطناعي في التعليم</h3>
-        <p>يستخدم الذكاء الاصطناعي لتخصيص التعلم، وتقديم تغذية راجعة فورية، وأتمتة المهام الإدارية.</p>
-        
-        <h4>تطبيقات الذكاء الاصطناعي:</h4>
-        <ul>
-            <li><strong>التعلم التكيفي:</strong> منصات تكيف المحتوى حسب مستوى الطالب (مثل: DreamBox، Smart Sparrow)</li>
-            <li><strong>المساعدون الأذكياء:</strong> مساعدون افتراضيون للإجابة على أسئلة الطلاب (مثل: IBM Watson Tutor)</li>
-            <li><strong>تصحيح الواجبات الآلي:</strong> ذكاء اصطناعي لتصحيح الواجبات الكتابية (مثل: Gradescope)</li>
-            <li><strong>تحليل بيانات التعلم:</strong> التنبؤ بطلاب الخطر واقتراح تدخلات</li>
-        </ul>
-        
-        <h3>2. الواقع الافتراضي والمعزز</h3>
-        <p>توفر تجارب تعليمية غامرة في بيئات محاكاة واقعية أو معززة.</p>
-        
-        <h4>تطبيقات الواقع الافتراضي والمعزز:</h4>
-        <ul>
-            <li>رحلات افتراضية ميدانية (مثل: Google Expeditions)</li>
-            <li>محاكاة العمليات الجراحية للطلاب طب</li>
-            <li>تجارب معامل افتراضية للعلوم</li>
-            <li>تعلم اللغات في سياقات واقعية</li>
-        </ul>
-        
-        <h3>3. تقنيات الوصول الشامل</h3>
-        <p>أدوات تجعل التعليم الإلكتروني متاحاً للأشخاص ذوي الإعاقات.</p>
-        
-        <h4>أمثلة على تقنيات الوصول الشامل:</h4>
-        <ul>
-            <li>برامج قراءة الشاشة للمكفوفين (مثل: JAWS، NVDA)</li>
-            <لي>تعليقات توضيحية للفيديوهات للصم</li>
-            <li>واجهات تحكم بالصوت أو العين</li>
-            <li>تصميم متجاوب للشاشات المختلفة</li>
-        </ul>
-        
-        <h2>اتجاهات مستقبلية</h2>
-        <p>تشمل الاتجاهات المستقبلية: الميتافيرس في التعليم، الذكاء الاصطناعي التوليدي، التعليم القائم على البيانات، والمنصات اللامركزية باستخدام تقنية البلوكتشين.</p>
-        
-        <div class="page-number">صفحة 26</div>
-    </div>
-
-    <!-- الصفحات 27-28: دور الإنترنت في المستقبل -->
-    <div class="page">
-        <h1>دور الإنترنت في المستقبل</h1>
-        
-        <p>يشهد الإنترنت تطوراً متسارعاً يتوقع الخبراء أن يغير شكل التعليم والتواصل بشكل جذري في المستقبل القريب. في هذا القسم، سنستعشف بعض الاتجاهات المستقبلية المتوقعة لدور الإنترنت في هذين المجالين.</p>
-        
-        <h2>اتجاهات مستقبلية في التعليم عبر الإنترنت</h2>
-        
-        <h3>1. التعلم المخصص بالكامل</h3>
-        <p>سيصبح التعلم أكثر تخصيصاً باستخدام الذكاء الاصطناعي المتقدم الذي يحلل أنماط التعلم الفردية، نقاط القوة والضعف، والاهتمامات الشخصية لكل طالب، ليقدم مسارات تعلم فريدة لكل فرد.</p>
-        
-        <h3>2. الميتافيرس والفصول الافتراضية الغامرة</h3>
-        <p>ستتحول الفصول الافتراضية إلى عوالم افتراضية كاملة (ميتافيرس) حيث يمكن للطلاب والمعلمين التفاعل كأفتار (شخصيات افتراضية) في بيئات محاكاة ثلاثية الأبعاد.</p>
-        
-        <h3>3. التعليم المستمر مدى الحياة</h3>
-        <p>سيزداد اعتماد الأفراد على التعليم المستمر عبر الإنترنت لتحديث مهاراتهم باستمرار في ظل التغير السريع لمتطلبات سوق العمل.</p>
-        
-        <h3>4. الشهادات والمؤهلات الرقمية</h3>
-        <p>ستصبح الشهادات الرقمية المؤمنة بتقنية البلوكتشين هي المعيار، مما يجعلها غير قابلة للتزوير ويسهل التحقق منها عالمياً.</p>
-        
-        <h3>5. التعليم القائم على المشاريع العالمية</h3>
-        <p>ستصبح المشاريع التعاونية العالمية عبر الإنترنت جزءاً أساسياً من التعليم، حيث يعمل طلاب من ثقافات مختلفة معاً على حل مشكلات عالمية حقيقية.</p>
-        
-        <div class="page-number">صفحة 27</div>
-    </div>
-
-    <div class="page">
-        <h2>دور الإنترنت في المستقبل (استمرار)</h2>
-        
-        <h2>اتجاهات مستقبلية في التواصل الاجتماعي عبر الإنترنت</h2>
-        
-        <h3>1. التواصل في عالم الميتافيرس</h3>
-        <p>ستنتقل منصات التواصل الاجتماعي من التطبيقات ثنائية الأبعاد إلى عوالم افتراضية ثلاثية الأبعاد، حيث يلتقي الناس كأفتارات ويتفاعلون في بيئات غامرة.</p>
-        
-        <h3>2. التواصل متعدد الحواس</h3>
-        <p>سيتجاوز التواصل النصي والمرئي إلى تفاعلات تشمل حاسة اللمس (عبر أجهزة هابتيك) وحتى الشم في بعض التطبيقات المتخصصة.</p>
-        
-        <h3>3. الذكاء الاصطناعي كوسيط تواصل</h3>
-        <p>سيصبح الذكاء الاصطناعي وسيطاً في التواصل، حيث يساعد في الترجمة الفورية، تلخيص المحادثات، وحتى اقتراح ردود مناسبة بناءً على سياق الحديث.</p>
-        
-        <h3>4. التواصل اللامركزي</h3>
-        <p>ستظهر منصات تواصل لامركزية تعطي المستخدمين تحكماً كاملاً في بياناتهم، باستخدام تقنيات مثل البلوكتشين والويب 3.0.</p>
-        
-        <h3>5. الواقع المعزز في التواصل اليومي</h3>
-        <p>سيصبح استخدام النظارات الذكية والواقع المعزز شائعاً، مما يسمح بدمج المعلومات الرقمية في التواصل وجهًا لوجه.</p>
-        
-        <h2>تحديات مستقبلية</h2>
-        
-        <ul>
-            <li><strong>الفجوة الرقمية المتعمقة:</strong> بين من يملكون أحدث التقنيات ومن لا يملكونها</li>
-            <li><strong>الأخلاقيات والخصوصية:</strong> في ظل تقنيات المراقبة المتقدمة وجمع البيانات</li>
-            <li><strong>الصحة النفسية:</strong> في عالم غارق في الواقع الافتراضي</li>
-            <li><strong>الهوية الرقمية:</strong> إدارة الهوية في العوالم الافتراضية المتعددة</li>
-            <li><strong>التنظيم والحوكمة:</strong> لمن يملك السيطرة على العوالم الافتراضية؟</li>
-        </ul>
-        
-        <p>رغم هذه التحديات، يبقى المستقبل واعداً للإنترنت في تعزيز التعليم والتواصل، إذا تم توجيه هذه التقنيات لخدمة البشرية وتحسين جودة الحياة.</p>
-        
-        <div class="page-number">صفحة 28</div>
-    </div>
-
-    <!-- الصفحة 29: التحديات والحلول -->
-    <div class="page">
-        <h1>التحديات والحلول</h1>
-        
-        <p>يواجه استخدام الإنترنت في التعليم والتواصل عدة تحديات رئيسية، لكن لكل تحدي حلول ممكنة يمكن تطبيقها على المستوى الفردي والمؤسسي والحكومي.</p>
-        
-        <h2>أهم التحديات والحلول المقترحة</h2>
-        
-        <h3>التحدي الأول: الفجوة الرقمية</h3>
-        <p><strong>الوصف:</strong> عدم تكافؤ فرص الوصول إلى الإنترنت والجهزة والتقنيات الحديثة بين المناطق الجغرافية والفئات الاجتماعية المختلفة.</p>
-        <p><strong>الحلول المقترحة:</strong></p>
-        <ul>
-            <li>برامج حكومية لتوفير الإنترنت المجاني أو المدعوم في المناطق المحرومة</li>
-            <li>شراكات بين القطاع العام والخاص لتوزيع الأجهزة الإلكترونية على الطلاب المحتاجين</li>
-            <li>تطوير محتوى تعليمي يعمل على أجهزة منخفضة المواصفات وسرعات إنترنت منخفضة</li>
-            <li>مراكز مجتمعية مزودة بالإنترنت وأجهزة الحاسوب</li>
-        </ul>
-        
-        <h3>التحدي الثاني: الأمن السيبراني والخصوصية</h3>
-        <p><strong>الوصف:</strong> تزايد مخاطر الاختراق وسرقة البيانات وانتهاك الخصوصية، خاصة مع زيادة جمع البيانات الشخصية.</p>
-        <p><strong>الحلول المقترحة:</strong></p>
-        <ul>
-            <li>تشريعات صارمة لحماية بيانات المستخدمين وخصوصيتهم</li>
-            <li>برامج توعوية عن الأمن السيبراني للمعلمين والطلاب</li>
-            <li>استخدام تقنيات التشفير المتقدمة في منصات التعليم والتواصل</li>
-            <li>منصات تعليمية مفتوعة المصدر يمكن مراجعة أمنها من قبل المجتمع التقني</li>
-        </ul>
-        
-        <h3>التحدي الثالث: جودة المحتوى والمعلومات المضللة</h3>
-        <p><strong>الوصف:</strong> انتشار المحتوى غير الدقيق والتعليمي الرديء والمعلومات المضللة على الإنترنت.</p>
-        <p><strong>الحلول المقترحة:</strong></p>
-        <ul>
-            <li>تطوير مهارات التفكير النقدي والتقييم النقدي للمصادر لدى الطلاب</li>
-            <li>إنشاء هيئات مراجعة وتقييم للمحتوى التعليمي على الإنترنت</li>
-            <li>تعزيز الشراكات بين المؤسسات التعليمية الرسمية ومنصات التعليم الإلكتروني</li>
-            <li>خوارزميات ذكاء اصطناعي للكشف عن المعلومات المضللة</li>
-        </ul>
-        
-        <div class="page-number">صفحة 29</div>
-    </div>
-
-    <!-- الصفحة 30: الخاتمة والمراجع -->
-    <div class="page">
-        <h1>الخاتمة</h1>
-        
-        <p>لقد أصبح الإنترنت جزءاً لا يتجزأ من حياتنا الحديثة، وأحدث تحولات عميقة في مجال التعليم والتواصل الاجتماعي. فمن ناحية، وفر فرصاً تعليمية غير مسبوقة، وجعل المعرفة في متناول الجميع، وكسر الحواجز الجغرافية والاقتصادية التي كانت تقيد الوصول إلى التعليم الجيد. ومن ناحية أخرى، غير طبيعة التواصل بين البشر، فجعل العالم قرية صغيرة تلتقي فيها الثقافات والأفكار.</p>
-        
-        <p>رغم الإيجابيات الكبيرة، لا يمكن إغفال التحديات والسلبيات التي رافقت هذا التحول الرقمي، من الفجوة الرقمية إلى مخاطر الأمن السيبراني، ومن التأثيرات على الصحة النفسية إلى انتشار المعلومات المضللة. هذه التحديات تتطلب وعياً مجتمعياً وتضافراً للجهود بين الأفراد والمؤسسات والحكومات.</p>
-        
-        <p>يتجه مستقبل الإنترنت نحو مزيد من التطور والتكامل مع التقنيات الناشئة مثل الذكاء الاصطناعي والواقع الافتراضي والميتافيرس، مما يعد بمستقبل أكثر إثارة وتحدياً في الوقت نفسه. المفتاح لتحقيق أقصى استفادة من هذه التقنيات مع تجنب مخاطرها يكمن في تطوير "المواطنة الرقمية" الواعية، والتركيز على القيم الإنسانية والأخلاقية في تصميم واستخدام التقنيات الرقمية.</p>
-        
-        <p>ختاماً، يمكن القول إن الإنترنت ليس مجرد أداة تقنية، بل هو بيئة اجتماعية وثقافية وتعليمية متكاملة، تتطور باستمرار وتشكل مستقبل البشرية. مسؤوليتنا الجماعية هي توجيه هذا التطور لخدمة الإنسان وتعزيز قيم المعرفة والتفاهم والتعاون بين الشعوب.</p>
-        
-        <h2>المراجع</h2>
-        <div class="references">
-            <div class="ref-item">1. الجاسم، فهد. (2022). التعليم الإلكتروني: الأسس والتطبيقات. الرياض: دار الزهراء.</div>
-            <div class="ref-item">2. العتيبي، محمد. (2021). تأثير وسائل التواصل الاجتماعي على المجتمع. الكويت: دار العلم.</div>
-            <div class="ref-item">3. Anderson, T. (2020). The Theory and Practice of Online Learning. Athabasca University Press.</div>
-            <div class="ref-item">4. Castells, M. (2021). The Internet Galaxy: Reflections on the Internet, Business, and Society. Oxford University Press.</div>
-            <div class="ref-item">5. Siemens, G. (2019). Knowing Knowledge. Lulu Press.</div>
-            <div class="ref-item">6. UNESCO. (2023). Education in a Digital World: Global Perspectives. UNESCO Publishing.</div>
-          
-        
-        <div class="page-number">صفحة 30</div>
-    </div>
-
-    <script>
-        // إضافة الترقيم التلقائي للصفحات
-        document.addEventListener('DOMContentLoaded', function() {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach((page, index) => {
-                const pageNumber = page.querySelector('.page-number');
-                if (pageNumber) {
-                    pageNumber.textContent = `صفحة ${index + 1}`;
-                }
-            });
-        });
-    </script>
 </body>
 </html>
