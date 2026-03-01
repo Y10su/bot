@@ -7,7 +7,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         :root {
-            --primary: #8B2626; /* لون متناسق مع تصميمك */
+            --primary: #8B2626; 
             --primary-hover: #5C4033;
             --bg: #1A120B;
             --panel: #2C1E16;
@@ -45,7 +45,7 @@
             border: 1px solid var(--border);
         }
         .sidebar { flex: 1; max-width: 400px; overflow-y: auto;}
-        .preview-section { flex: 2; overflow: hidden; padding: 0; }
+        .preview-section { flex: 2; overflow: hidden; padding: 0; position: relative;}
 
         .form-group { margin-bottom: 15px; }
         label { display: block; margin-bottom: 6px; font-weight: bold; font-size: 13px; color: #E6D5B8;}
@@ -82,13 +82,12 @@
         button:hover { background: var(--primary-hover); transform: translateY(-2px); }
         button:disabled { background: #5C4033; cursor: not-allowed; transform: none; border-color: #5C4033;}
 
-        /* إطار المعاينة المعزول بالكامل */
         #preview-frame {
             width: 100%;
             height: 100%;
             border: none;
             background-color: #1A120B;
-            border-radius: 12px;
+            border-radius: 0 0 12px 12px;
         }
         .preview-header {
             padding: 10px 20px;
@@ -97,6 +96,7 @@
             font-weight: bold;
             display: flex;
             justify-content: space-between;
+            border-radius: 12px 12px 0 0;
         }
     </style>
 </head>
@@ -121,19 +121,16 @@
             <div class="form-group">
                 <label>جودة الاستخراج:</label>
                 <select id="quality-select">
-                    <option value="1">عادية (أسرع، حجم أصغر)</option>
+                    <option value="1">عادية (أسرع، لحجم أصغر)</option>
                     <option value="2" selected>عالية (موصى بها)</option>
                     <option value="3">ممتازة (للشاشات الكبيرة)</option>
-                    <option value="4">فائقة (للطباعة الاحترافية - أبطأ)</option>
+                    <option value="4">فائقة (للطباعة الاحترافية)</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <label>الانتظار قبل التحويل (بالثواني):</label>
                 <input type="number" id="delay-input" value="3" min="0" max="10">
-                <small style="color: #A68A61; display: block; margin-top: 5px;">
-                    * 3 ثوانٍ مقترحة لتحميل الخطوط العربية والصور بكفاءة.
-                </small>
             </div>
 
             <button id="capture-btn" onclick="exportToPDF()">استخراج كملف PDF 📥</button>
@@ -149,7 +146,6 @@
     </div>
 
     <script>
-        // الكود الافتراضي (مشروع القضية الفلسطينية الخاص بك)
         const defaultCode = `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -181,10 +177,8 @@ html, body {
   padding: 20px 0;
 }
 
-/* زر الطباعة مخفي في الـ PDF */
 .btn-print { display: none; }
 
-/* إعدادات الصفحة 16:9 ثابتة ومضبوطة */
 .page {
   width: 1000px;
   height: 562.5px;
@@ -300,176 +294,78 @@ html, body {
   <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٢</span></div>
 </div>
 
-<div class="page">
-  <div class="pg-inner">
-    <div class="ph">
-      <div class="ph-title">محطات تاريخية فاصلة</div>
-      <div class="ph-tag">التسلسل الزمني</div>
-    </div>
-    
-    <div class="grid-timeline">
-      <div class="timeline-card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhD4cJJUqMOz0P0ljt91JDqaTJ198oHxqonHYwABRFJg&s=10" alt="النكبة" class="t-img">
-        <div class="t-year">١٩٤٨ - النكبة</div>
-        <div class="t-desc">شهد هذا العام تهجيراً قسرياً لمئات الآلاف من الفلسطينيين من أراضيهم، وتدمير مئات القرى، مما أدى إلى لجوء واسع النطاق وتغيير ديموغرافي وجغرافي عميق في بنية الخارطة، وهي مأساة لا تزال آثارها ممتدة حتى اليوم.</div>
-      </div>
-      
-      <div class="timeline-card">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/62/%D7%A6%D7%A0%D7%97%D7%A0%D7%99%D7%9D_%D7%91%D7%9B%D7%95%D7%AA%D7%9C_%D7%94%D7%9E%D7%A2%D7%A8%D7%91%D7%99.jpg" alt="النكسة" class="t-img">
-        <div class="t-year">١٩٦٧ - النكسة</div>
-        <div class="t-desc">في حرب يونيو، تم احتلال ما تبقى من الأراضي التاريخية، بما فيها الضفة الغربية، قطاع غزة، والقدس الشرقية. رسخت هذه المرحلة عقيدة المقاومة والصمود لدى الشعب الفلسطيني، وبدأت فصول جديدة من التحدي التاريخي.</div>
-      </div>
-    </div>
-  </div>
-  <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٣</span></div>
-</div>
-
-<div class="page">
-  <div class="pg-inner">
-    <div class="ph">
-      <div class="ph-title">التراث ورموز الصمود</div>
-      <div class="ph-tag">الهوية الوطنية</div>
-    </div>
-    
-    <p style="font-size: 16px; text-align: center; margin-bottom: 5px; color: var(--ink-light);">
-      تتجسد قوة القضية في ارتباط الفلسطيني بأرضه وثقافته، وتبرز الرموز التالية لتعبر عن هذا الانتماء المتجذر:
-    </p>
-
-    <div class="grid-symbols">
-      <div class="symbol-card">
-        <img src="https://www.maspero.eg/image/750/450/2023/10/16979621430.jpg" alt="شجرة الزيتون" class="s-img">
-        <div class="s-title">شجرة الزيتون</div>
-        <div class="s-desc">ترمز إلى السلام والبركة، وإلى تجذر الفلسطيني في أرضه وصموده المستمر جيلاً بعد جيل رغم كل محاولات الاقتلاع.</div>
-      </div>
-      <div class="symbol-card">
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR4pl11g9WCXjX0ef3OgIwOL24qQIPLWa1asq2bmHKsTw&s=10" alt="مفتاح العودة" class="s-img" style="border-color:var(--vintage-gold)">
-        <div class="s-title">مفتاح العودة</div>
-        <div class="s-desc">يحتفظ به الأجداد منذ عام ١٩٤٨، كدليل قاطع ورمز للأمل الذي لا يموت في العودة الحتمية إلى الديار والقرى المسلوبة.</div>
-      </div>
-      <div class="symbol-card">
-        <img src="https://i.etsystatic.com/23158870/r/il/bb4e8d/6047901971/il_fullxfull.6047901971_lvdo.jpg" alt="الكوفية" class="s-img" style="border-color:var(--vintage-red)">
-        <div class="s-title">الكوفية والتطريز</div>
-        <div class="s-desc">الكوفية بخطوطها المتشابكة والثوب المطرز بخيوط الحرير، يمثلان السجل البصري والتاريخي الذي يحفظ الهوية من الاندثار.</div>
-      </div>
-    </div>
-  </div>
-  <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٤</span></div>
-</div>
-
-<div class="page">
-  <div class="pg-inner">
-    <div class="ph">
-      <div class="ph-title">جغرافية فلسطين الأبية</div>
-      <div class="ph-tag">الموقع والمكانة</div>
-    </div>
-    <div style="display: flex; gap: 20px; height: 100%; align-items: flex-start;">
-      <div style="flex: 1; display: flex; flex-direction: column; gap: 15px;">
-         <div class="txt-box">
-           تقع فلسطين في قلب الشرق الأوسط، وتعتبر حلقة الوصل بين قارتي آسيا وأفريقيا، حيث تطل على البحر الأبيض المتوسط غرباً. هذا الموقع الجغرافي الفريد منحها أهمية استراتيجية وتجارية وحضارية كبرى عبر العصور، وجعلها مطمعاً للغزاة على مر التاريخ.
-         </div>
-         <div class="txt-box" style="background: transparent; border: 1px dashed var(--border-color); border-right: 4px solid var(--vintage-gold);">
-           <strong>أبرز المدن التاريخية:</strong><br>
-           تضم فلسطين مدناً عريقة تحكي كل منها فصلاً من فصول الحضارة، مثل: القدس، يافا، حيفا، عكا، غزة، الخليل، ونابلس. وكل حجر في هذه المدن شاهدٌ على أصالة وعروبة هذه الأرض.
-         </div>
-      </div>
-      <div style="flex: 1;">
-         <img src="https://www.maan-ctr.org/magazine/files/image/photos/issue97/mobadarat/1.jpg" alt="جغرافية فلسطين" class="img-standard">
-      </div>
-    </div>
-  </div>
-  <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٥</span></div>
-</div>
-
-<div class="page">
-  <div class="pg-inner">
-    <div class="ph">
-      <div class="ph-title">زهرة المدائن - القدس الشريف</div>
-      <div class="ph-tag">المقدسات الدينية</div>
-    </div>
-    <div style="display: flex; flex-direction: row-reverse; gap: 20px; height: 100%;">
-      <div style="flex: 1.2; text-align: justify; font-size: 16px; line-height: 1.8;">
-        <p>تتمتع مدينة القدس بمكانة روحانية ودينية عظيمة في قلوب المسلمين والعرب؛ فهي أولى القبلتين، وثالث الحرمين الشريفين، إليها كان مسرى النبي محمد ﷺ ومنها معراجه إلى السماء.</p>
-        <div class="txt-box" style="margin-top: 15px; border-right-color: var(--vintage-green);">
-          <strong>المسجد الأقصى المبارك:</strong><br>
-          ليس مجرد بناء مقتصر على مسجد قبة الصخرة المشرفة أو الجامع القِبْلي فحسب، بل هو كل ما دار عليه السور البالغة مساحته حوالي ١٤٤ دونماً. يُعد الحفاظ عليه وحمايته مسؤولية تاريخية وعقيدة راسخة في الوجدان الإسلامي، ورمزاً لعروبة المدينة وصمود أهلها.
-        </div>
-      </div>
-      <div style="flex: 0.8;">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Al-Qibli_Chapel.jpg/330px-Al-Qibli_Chapel.jpg" alt="المسجد الأقصى" class="img-standard" style="border-radius: 8px 8px 0 0; border: 2px solid var(--vintage-gold);">
-      </div>
-    </div>
-  </div>
-  <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٦</span></div>
-</div>
-
-<div class="page">
-  <div class="pg-inner">
-    <div class="ph">
-      <div class="ph-title">الخاتمة وقائمة المصادر</div>
-      <div class="ph-tag">ختام البحث</div>
-    </div>
-    <div class="txt-box" style="margin-bottom: 20px;">
-      <strong>الخاتمة:</strong><br>
-      في ختام هذا البحث، نؤكد أن القضية الفلسطينية ستبقى حيّة تنبض في وجدان الأمة الإسلامية والعربية. إن التمسك بالهوية، معرفة التاريخ، وغرس حب الأرض في الأجيال القادمة هو السلاح الأقوى في وجه كل محاولات الطمس والنسيان. والأمل في غدٍ تشرق فيه شمس الحرية والعدالة لا يزال قائماً ومستمراً.
-    </div>
-    
-    <div style="font-size: 16px; line-height: 1.8;">
-      <strong style="color: var(--vintage-red); font-family: 'Aref Ruqaa', serif; font-size: 24px;">المراجع المعتمدة:</strong>
-      <ol style="margin-right: 35px; margin-top: 10px; color: var(--ink-dark);">
-        <li>كتاب الدراسات الاجتماعية والتاريخية - المرحلة الثانوية - وزارة التعليم بالمملكة العربية السعودية.</li>
-        <li>الموسوعة الفلسطينية - هيئة الموسوعة الفلسطينية، دمشق.</li>
-        <li>"تاريخ فلسطين الحديث" - د. عبد الوهاب المسيري.</li>
-        <li>الصور والمواد البصرية: مكتبة ويكيميديا كومنز (Wikimedia Commons) للملفات الحرة والتاريخية.</li>
-      </ol>
-    </div>
-  </div>
-  <div class="pfooter"><span>القضية الفلسطينية - الصف الأول الثانوي</span><span class="pnum">٧</span></div>
-</div>
-
 </body>
 </html>`;
 
-        // دالة التحديث للمعاينة باستخدام Iframe
         function updatePreview() {
             const code = document.getElementById('html-input').value;
             const iframe = document.getElementById('preview-frame');
             iframe.srcdoc = code;
         }
 
-        // دالة استخراج الـ PDF
         function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const delay = document.getElementById('delay-input').value * 1000;
             const fileName = document.getElementById('file-name').value || 'presentation';
             const qualityScale = parseInt(document.getElementById('quality-select').value);
             
-            // نأخذ الكود من داخل إطار المعاينة لضمان استخراج ما يظهر للمستخدم بالضبط
             const iframe = document.getElementById('preview-frame');
+            
+            // 🔥 [الحل الجذري لمشكلة الجوال] 🔥
+            // حفظ الخصائص الأصلية للإطار
+            const origWidth = iframe.style.width;
+            const origHeight = iframe.style.height;
+            const origPosition = iframe.style.position;
+            const origZIndex = iframe.style.zIndex;
+
+            // نخدع المتصفح ونجعل الإطار بعرض 1000 بكسل فعلياً لثوانٍ معدودة حتى لا تنقص الصورة
+            iframe.style.position = 'absolute';
+            iframe.style.width = '1000px';
+            // جعل الارتفاع تلقائي ليشمل كل الصفحات
+            iframe.style.height = iframe.contentDocument.documentElement.scrollHeight + 'px';
+            iframe.style.zIndex = '-1'; 
+
             const element = iframe.contentDocument.body; 
 
-            // تغيير الزر لانتظار التحميل
             btn.disabled = true;
             if (delay > 0) {
                 btn.innerText = `⏳ ننتظر ${delay/1000} ثانية لتحميل الصور...`;
             }
 
-            // إعداد الـ PDF بالأبعاد الدقيقة التي طلبتها: عرض 1000 وارتفاع 562.5 بكسل
             setTimeout(() => {
                 btn.innerText = "📄 جاري إنشاء ملف PDF...";
                 
                 const opt = {
-                    margin:       0, // بدون هوامش ليقص الحدود تماماً
+                    margin:       0,
                     filename:     `${fileName}.pdf`,
                     image:        { type: 'jpeg', quality: 1 },
-                    html2canvas:  { scale: qualityScale, useCORS: true, windowWidth: 1000 },
-                    // تعيين أبعاد ثابتة للـ PDF تتطابق مع مقاس .page لديك
+                    html2canvas:  { 
+                        scale: qualityScale, 
+                        useCORS: true, 
+                        // 🔥 أوامر إجبارية لمنع القص في الجوال 🔥
+                        windowWidth: 1000, 
+                        width: 1000, 
+                        scrollX: 0, 
+                        scrollY: 0 
+                    },
                     jsPDF:        { unit: 'px', format: [1000, 562.5], orientation: 'landscape' }
                 };
 
                 html2pdf().set(opt).from(element).save().then(() => {
+                    // إرجاع الإطار لحجمه الطبيعي
+                    iframe.style.width = origWidth;
+                    iframe.style.height = origHeight;
+                    iframe.style.position = origPosition;
+                    iframe.style.zIndex = origZIndex;
+
                     btn.disabled = false;
                     btn.innerText = "استخراج كملف PDF 📥";
                 }).catch(err => {
+                    iframe.style.width = origWidth;
+                    iframe.style.height = origHeight;
+                    iframe.style.position = origPosition;
+                    iframe.style.zIndex = origZIndex;
+
                     alert("حدث خطأ! تأكد من اتصالك بالإنترنت لدعم الصور الخارجية.");
                     console.error(err);
                     btn.disabled = false;
@@ -478,7 +374,6 @@ html, body {
             }, delay);
         }
 
-        // إدراج كود المشروع عند فتح الصفحة لأول مرة
         window.onload = () => {
             document.getElementById('html-input').value = defaultCode.trim();
             updatePreview();
