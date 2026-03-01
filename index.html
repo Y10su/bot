@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول الأكواد إلى PDF</title>
+    <title>محول الأكواد الاحترافي إلى PDF</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -20,250 +20,214 @@
             height: 100vh;
             box-sizing: border-box;
         }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .header h2 {
-            margin: 0;
-            color: #1f2937;
-        }
-        .main-container {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            overflow: hidden;
-        }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { margin: 0; color: #1f2937; font-size: 22px; }
+        .main-container { display: flex; gap: 20px; flex: 1; overflow: hidden; }
+        
         @media (max-width: 768px) {
-            .main-container {
-                flex-direction: column;
-                height: auto;
-                overflow: visible;
-            }
+            body { padding: 10px; }
+            .main-container { flex-direction: column; height: auto; overflow: visible; }
         }
+        
         .sidebar, .preview-section {
-            background: #ffffff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-            border: 1px solid #e5e7eb;
-            display: flex;
-            flex-direction: column;
+            background: #ffffff; border-radius: 8px; padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;
+            display: flex; flex-direction: column;
         }
-        .sidebar {
-            flex: 1;
-            max-width: 350px;
-        }
-        .preview-section {
-            flex: 2;
-            padding: 0;
-            overflow: hidden;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-        }
-        label {
-            margin-bottom: 5px;
-            font-weight: 600;
-            font-size: 14px;
-            color: #4b5563;
-        }
+        .sidebar { flex: 1; max-width: 350px; }
+        .preview-section { flex: 2; padding: 0; overflow: hidden; position: relative; }
+        
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: 600; font-size: 13px; color: #4b5563; }
         input, select, textarea {
-            padding: 10px;
-            border: 1px solid #d1d5db;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
+            padding: 10px; border: 1px solid #d1d5db; border-radius: 6px;
+            font-size: 14px; font-family: inherit;
         }
         input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: #3b82f6;
-            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+            outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
         textarea {
-            flex: 1;
-            min-height: 200px;
-            resize: vertical;
-            direction: ltr;
-            font-family: monospace;
-            background-color: #f9fafb;
+            flex: 1; min-height: 200px; resize: vertical; direction: ltr;
+            font-family: monospace; background-color: #f9fafb; font-size: 13px;
         }
         button {
-            background-color: #3b82f6;
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: auto;
-            transition: background-color 0.2s;
+            background-color: #10b981; color: white; border: none; padding: 14px;
+            border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer;
+            margin-top: auto; transition: background-color 0.2s;
         }
-        button:hover {
-            background-color: #2563eb;
-        }
-        button:disabled {
-            background-color: #9ca3af;
-            cursor: not-allowed;
-        }
+        button:hover { background-color: #059669; }
+        button:disabled { background-color: #9ca3af; cursor: not-allowed; }
+        
         .preview-header {
-            padding: 12px 20px;
-            background: #f9fafb;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 14px;
-            font-weight: bold;
-            color: #6b7280;
+            padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;
+            font-size: 13px; font-weight: bold; color: #6b7280;
+            display: flex; justify-content: space-between; align-items: center;
         }
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background-color: #fff;
-        }
+        .preview-header span { display: flex; align-items: center; gap: 5px;}
+        iframe#preview-frame { width: 100%; height: 100%; border: none; background-color: #fff; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>📄 محول HTML إلى PDF</h2>
+        <h2>📄 محول العروض التقديمية إلى PDF</h2>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
             <div class="form-group">
-                <label>اسم الملف:</label>
-                <input type="text" id="file-name" value="مشروعي" placeholder="اكتب اسم الملف هنا">
+                <label>اسم الملف المستخرج:</label>
+                <input type="text" id="file-name" value="عرض_مشروعي" placeholder="اكتب اسم الملف هنا">
             </div>
 
             <div class="form-group" style="flex: 1;">
-                <label>الصق الكود هنا (HTML/CSS):</label>
-                <textarea id="html-input" oninput="updatePreview()"></textarea>
+                <label>الصق كود HTML هنا لتحديث المعاينة:</label>
+                <textarea id="html-input" oninput="updatePreview()" placeholder="الصق كود المشروع هنا..."></textarea>
             </div>
 
             <div class="form-group">
-                <label>جودة الصور داخل الـ PDF:</label>
+                <label>جودة الصور (Resolution):</label>
                 <select id="quality-select">
-                    <option value="1">عادية</option>
-                    <option value="2" selected>عالية</option>
-                    <option value="3">ممتازة (أبطأ في التحميل)</option>
+                    <option value="1">عادية (أسرع، لحجم أصغر)</option>
+                    <option value="2" selected>عالية (موصى بها)</option>
+                    <option value="3">ممتازة (مُفصلة للطباعة)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>وقت الانتظار قبل التصوير (ثواني):</label>
-                <input type="number" id="delay-input" value="3" min="0" max="10">
+                <label>وقت أمان إضافي (بالثواني):</label>
+                <input type="number" id="delay-input" value="2" min="0" max="10">
+                <small style="color: #6b7280; margin-top: 4px; font-size: 11px;">النظام سينتظر تلقائياً تحميل الخطوط والصور، هذا الوقت إضافي للتأكيد.</small>
             </div>
 
             <button id="capture-btn" onclick="exportToPDF()">بدء التحويل إلى PDF 📥</button>
         </div>
 
         <div class="preview-section">
-            <div class="preview-header">المعاينة المباشرة (العرض: 1000 | الارتفاع: 562.5)</div>
+            <div class="preview-header">
+                <span>👁️ المعاينة المباشرة</span>
+                <span style="color: #ef4444;">1000 × 562.5</span>
+            </div>
             <iframe id="preview-frame"></iframe>
         </div>
     </div>
 
     <script>
-        // تحديث إطار المعاينة لترى ما تكتبه
+        // تحديث إطار المعاينة لتتمكن من رؤية تعديلاتك مباشرة
         function updatePreview() {
             const code = document.getElementById('html-input').value;
             const iframe = document.getElementById('preview-frame');
             iframe.srcdoc = code;
         }
 
-        // دالة التحويل (تصوير ثم دمج)
+        // الدالة الرئيسية والذكية لتحويل الكود إلى PDF
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
-            const delay = document.getElementById('delay-input').value * 1000;
+            const delay = (document.getElementById('delay-input').value * 1000) || 0;
             const fileName = document.getElementById('file-name').value || 'document';
             const qualityScale = parseInt(document.getElementById('quality-select').value);
 
             if (!code.trim()) {
-                alert("الرجاء إدخال الكود أولاً!");
+                alert("الرجاء لصق الكود أولاً في الصندوق المخصص.");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerText = `⏳ ننتظر ${delay/1000} ثانية للتحميل...`;
+            btn.innerText = "⏳ جاري إعداد بيئة التصوير...";
 
-            // 1. إنشاء حاوية مخفية في الصفحة لوضع الكود فيها وتصويره
-            // هذه الطريقة تمنع الجوال من التأثير على الأبعاد
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.left = '-9999px'; // إخفاء خارج الشاشة
-            hiddenContainer.style.top = '0';
-            hiddenContainer.style.width = '1000px'; // تثبيت العرض
-            hiddenContainer.innerHTML = code;
-            document.body.appendChild(hiddenContainer);
+            // 1. إنشاء "إطار مخفي" (Iframe) خاص بالتصوير فقط لضمان عدم تأثر الجوال
+            const renderFrame = document.createElement('iframe');
+            renderFrame.style.position = 'fixed';
+            renderFrame.style.top = '0';
+            renderFrame.style.right = '0';
+            renderFrame.style.width = '1000px';  // إجبار العرض
+            renderFrame.style.height = '1000vh'; // إعطاء مساحة طويلة لجميع الشرائح
+            renderFrame.style.zIndex = '-9999';
+            renderFrame.style.visibility = 'hidden'; // إخفاء عن المستخدم ولكن المتصفح يراه ويقرأه
+            
+            document.body.appendChild(renderFrame);
 
-            setTimeout(async () => {
-                btn.innerText = "📸 جاري تصوير الشرائح...";
+            // 2. كتابة الكود داخل الإطار المخفي
+            const frameDoc = renderFrame.contentWindow.document;
+            frameDoc.open();
+            frameDoc.write(code);
+            frameDoc.close();
+
+            // 3. هذه الدالة المدمجة (onload) هي السحر: 
+            // لن تعمل إلا بعد أن ينتهي المتصفح تماماً من تحميل كل الصور وكل الخطوط (Google Fonts)
+            renderFrame.onload = async () => {
                 
+                // إضافة وقت الأمان الذي حددته أنت (كضمان إضافي للشبكات البطيئة)
+                if (delay > 0) {
+                    btn.innerText = `⏳ ننتظر ${delay/1000} ثانية إضافية...`;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+
+                btn.innerText = "📸 جاري تصوير الشرائح بدقة...";
+
                 try {
-                    // مكتبة jsPDF المدمجة
                     const { jsPDF } = window.jspdf;
-                    
-                    // إعداد ملف الـ PDF بأبعادك المطلوبة
                     const pdf = new jsPDF({
                         orientation: 'landscape',
                         unit: 'px',
                         format: [1000, 562.5]
                     });
 
-                    // 2. البحث عن كل شريحة (التي تحمل كلاس .page في كودك)
-                    let pages = hiddenContainer.querySelectorAll('.page');
-                    
-                    // إذا لم يجد كلاس .page، سيصور الحاوية بالكامل كصورة واحدة
+                    // البحث عن الشرائح بناءً على الـ class الخاص بك (.page)
+                    let pages = frameDoc.querySelectorAll('.page');
                     if (pages.length === 0) {
-                        pages = [hiddenContainer];
+                        pages = [frameDoc.body];
                     }
 
-                    // 3. المرور على كل شريحة، تصويرها، ثم إضافتها للـ PDF
+                    // 4. تصوير الشرائح واحدة تلو الأخرى
                     for (let i = 0; i < pages.length; i++) {
                         const pageElement = pages[i];
                         
-                        // التصوير عبر html2canvas
+                        // معالجة الصور داخلياً لتجنب حظر الأمان (CORS)
+                        const imgs = pageElement.querySelectorAll('img');
+                        imgs.forEach(img => {
+                            img.crossOrigin = "anonymous";
+                        });
+
+                        // إعدادات احترافية لمكتبة html2canvas لحل مشكلة تداخل النصوص
                         const canvas = await html2canvas(pageElement, {
                             scale: qualityScale,
                             useCORS: true,
+                            allowTaint: false,
+                            letterRendering: true, // مهم جداً لمنع تداخل الحروف العربية
                             width: 1000,
                             height: 562.5,
-                            windowWidth: 1000, // إجبار المتصفح على عرض 1000
-                            backgroundColor: '#ffffff'
+                            windowWidth: 1000,
+                            backgroundColor: '#F4EBD0' // لون خلفيتك الافتراضي في حال وجود شفافية
                         });
 
-                        // تحويل الكانفاس إلى صورة jpeg
-                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                        const imgData = canvas.toDataURL('image/jpeg', 0.95);
 
-                        // إذا لم تكن الشريحة الأولى، أضف صفحة جديدة في الـ PDF
+                        // إضافة صفحة جديدة في الـ PDF لكل شريحة (ما عدا الأولى)
                         if (i > 0) {
                             pdf.addPage([1000, 562.5], 'landscape');
                         }
                         
-                        // لصق الصورة في صفحة الـ PDF الحالية
+                        // لصق الصورة المأخوذة بكامل أبعاد الصفحة
                         pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 562.5);
                     }
 
-                    btn.innerText = "📄 جاري حفظ الملف...";
+                    btn.innerText = "📄 جاري معالجة و حفظ الملف...";
                     
-                    // 4. تحميل الملف النهائي
+                    // 5. تحميل الملف بجهاز المستخدم
                     pdf.save(`${fileName}.pdf`);
 
                 } catch (error) {
                     console.error("حدث خطأ أثناء التصوير: ", error);
-                    alert("حدث خطأ أثناء معالجة الصور.");
+                    alert("عذراً، حدث خطأ فني أثناء التقاط الصور. تأكد من أن روابط الصور في كودك تعمل بشكل سليم.");
                 } finally {
-                    // تنظيف: إزالة الحاوية المخفية وإرجاع الزر لحالته
-                    document.body.removeChild(hiddenContainer);
+                    // تنظيف الشاشة بحذف الإطار المخفي، وإعادة الزر لطبيعته
+                    document.body.removeChild(renderFrame);
                     btn.disabled = false;
                     btn.innerText = "بدء التحويل إلى PDF 📥";
                 }
-
-            }, delay);
+            };
         }
     </script>
 </body>
