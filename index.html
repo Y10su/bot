@@ -103,14 +103,12 @@
     </div>
 
     <script>
-        // تحديث إطار المعاينة
         function updatePreview() {
             const code = document.getElementById('html-input').value;
             const iframe = document.getElementById('preview-frame');
             iframe.srcdoc = code;
         }
 
-        // دالة التحويل المحدثة (تصوير ثم دمج)
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -126,38 +124,50 @@
             btn.disabled = true;
             btn.innerText = `⏳ جاري إعداد الشاشة...`;
 
-            // 1. إنشاء حاوية مخفية
+            // === خدعة متصفح سفاري (Safari Hack) ===
             const hiddenContainer = document.createElement('div');
             hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.left = '-9999px'; 
+            // بدلاً من إبعادها خارج الشاشة، نضعها في الأعلى لكن بشفافية شبه معدومة!
             hiddenContainer.style.top = '0';
+            hiddenContainer.style.left = '0';
+            hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.opacity = '0.01'; // شفاف جداً ولكن المتصفح يراه ويحمله
+            hiddenContainer.style.pointerEvents = 'none'; // لمنع التفاعل معه
             hiddenContainer.style.width = '1000px'; 
             hiddenContainer.innerHTML = code;
             document.body.appendChild(hiddenContainer);
 
             try {
-                // --- التعديل لحل مشكلة الصور ---
                 btn.innerText = `⏳ ننتظر تحميل الصور والخطوط...`;
 
-                // الانتظار حتى تكتمل الخطوط (بما أنها تعمل معك بشكل ممتاز هنا)
                 await document.fonts.ready;
 
-                // البحث عن جميع الصور في الكود وإجبار النظام على انتظارها
+                // إجبار كل الصور على التحميل الفوري وفك التشفير
                 const images = hiddenContainer.querySelectorAll('img');
                 const imagePromises = Array.from(images).map(img => {
-                    // تفعيل تصريح CORS للصور لتجنب الحظر
                     img.crossOrigin = "anonymous";
-                    if (img.complete) return Promise.resolve();
-                    return new Promise(resolve => {
-                        img.onload = resolve;
-                        img.onerror = resolve; // لو فشلت الصورة يكمل عشان ما يعلق المشروع
+                    img.loading = "eager"; // إلغاء التحميل المتكاسل
+                    img.removeAttribute('loading'); // إزالة أي كود يمنع التحميل
+
+                    return new Promise(async (resolve) => {
+                        if (img.complete && img.naturalHeight !== 0) {
+                            resolve();
+                            return;
+                        }
+                        img.onload = async () => {
+                            try {
+                                if (img.decode) {
+                                    await img.decode(); // إجبار الآيفون على فك تشفير الصورة
+                                }
+                            } catch(e) {}
+                            resolve();
+                        };
+                        img.onerror = resolve; 
                     });
                 });
                 
-                // انتظار تحميل كل الصور
                 await Promise.all(imagePromises);
 
-                // بعد اكتمال الصور، نضيف الثواني اللي حددتها أنت كضمان إضافي للشبكات البطيئة
                 if (delay > 0) {
                     btn.innerText = `⏳ انتظار إضافي للاحتياط...`;
                     await new Promise(r => setTimeout(r, delay));
@@ -177,6 +187,9 @@
                     pages = [hiddenContainer];
                 }
 
+                // تصفير سكرول الشاشة (مهم جداً للجوال عشان ما يقص الصورة)
+                window.scrollTo(0, 0);
+
                 for (let i = 0; i < pages.length; i++) {
                     const pageElement = pages[i];
                     
@@ -187,6 +200,8 @@
                         width: 1000,
                         height: 562.5,
                         windowWidth: 1000,
+                        scrollX: 0, // منع تأثر الصورة بسكرول الجوال
+                        scrollY: 0,
                         backgroundColor: '#ffffff'
                     });
 
