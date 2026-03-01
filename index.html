@@ -1,244 +1,176 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>محول HTML إلى اااPDF</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محول الأكواد إلى PDF</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<style>
-body{
-    font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-    background:#f3f4f6;
-    margin:0;
-    padding:20px;
-    display:flex;
-    flex-direction:column;
-    height:100vh;
-    box-sizing:border-box;
-}
-.header{text-align:center;margin-bottom:20px}
-.main-container{display:flex;gap:20px;flex:1;overflow:hidden}
-.sidebar,.preview-section{
-    background:#fff;
-    border-radius:8px;
-    padding:20px;
-    box-shadow:0 1px 3px rgba(0,0,0,.1);
-    border:1px solid #e5e7eb;
-    display:flex;
-    flex-direction:column
-}
-.sidebar{flex:1;max-width:350px}
-.preview-section{flex:2;padding:0;overflow:hidden}
-.form-group{margin-bottom:15px;display:flex;flex-direction:column}
-label{margin-bottom:5px;font-weight:600;font-size:14px}
-input,select,textarea{
-    padding:10px;
-    border:1px solid #d1d5db;
-    border-radius:6px;
-    font-size:14px;
-    font-family:inherit
-}
-textarea{
-    flex:1;
-    min-height:200px;
-    resize:vertical;
-    direction:ltr;
-    font-family:monospace;
-    background:#f9fafb
-}
-button{
-    background:#3b82f6;
-    color:#fff;
-    border:none;
-    padding:12px;
-    border-radius:6px;
-    font-size:16px;
-    font-weight:bold;
-    cursor:pointer;
-    margin-top:auto
-}
-button:disabled{background:#9ca3af}
-.preview-header{
-    padding:12px 20px;
-    background:#f9fafb;
-    border-bottom:1px solid #e5e7eb;
-    font-size:14px;
-    font-weight:bold
-}
-iframe{width:100%;height:100%;border:none;background:#fff}
-</style>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f3f4f6; color: #333; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { margin: 0; color: #1f2937; }
+        .main-container { display: flex; gap: 20px; flex: 1; overflow: hidden; }
+        @media (max-width: 768px) { .main-container { flex-direction: column; height: auto; overflow: visible; } }
+        .sidebar, .preview-section { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; display: flex; flex-direction: column; }
+        .sidebar { flex: 1; max-width: 350px; }
+        .preview-section { flex: 2; padding: 0; overflow: hidden; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #4b5563; }
+        input, select, textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        textarea { flex: 1; min-height: 200px; resize: vertical; direction: ltr; font-family: monospace; background: #f9fafb; }
+        button { background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: auto; transition: 0.2s; }
+        button:hover { background: #2563eb; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        .preview-header { padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; color: #6b7280; }
+        iframe { width: 100%; height: 100%; border: none; background: #fff; }
+    </style>
 </head>
-
 <body>
 
-<div class="header">
-<h2>📄 محول HTML إلى PDF</h2>
-</div>
+    <div class="header">
+        <h2>📄 محول HTML إلى PDF</h2>
+    </div>
 
-<div class="main-container">
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="form-group">
+                <label>اسم الملف:</label>
+                <input type="text" id="file-name" value="مشروعي" placeholder="اكتب اسم الملف هنا">
+            </div>
 
-<div class="sidebar">
+            <div class="form-group" style="flex: 1;">
+                <label>الصق الكود هنا (HTML/CSS):</label>
+                <textarea id="html-input" oninput="updatePreview()"></textarea>
+            </div>
 
-<div class="form-group">
-<label>اسم الملف:</label>
-<input type="text" id="file-name" value="مشروعي">
-</div>
+            <div class="form-group">
+                <label>جودة الصور داخل الـ PDF:</label>
+                <select id="quality-select">
+                    <option value="1">عادية</option>
+                    <option value="2" selected>عالية</option>
+                    <option value="3">ممتازة (أبطأ في التحميل)</option>
+                </select>
+            </div>
 
-<div class="form-group" style="flex:1;">
-<label>الصق الكود هنا:</label>
-<textarea id="html-input" oninput="updatePreview()"></textarea>
-</div>
+            <div class="form-group">
+                <label>وقت الانتظار قبل التصوير (ثواني):</label>
+                <input type="number" id="delay-input" value="3" min="0" max="10">
+            </div>
 
-<div class="form-group">
-<label>جودة الصور:</label>
-<select id="quality-select">
-<option value="1">عادية</option>
-<option value="2" selected>عالية</option>
-<option value="3">ممتازة</option>
-</select>
-</div>
+            <button id="capture-btn" onclick="exportToPDF()">بدء التحويل إلى PDF 📥</button>
+        </div>
 
-<div class="form-group">
-<label>انتظار إضافي (ثواني):</label>
-<input type="number" id="delay-input" value="2" min="0" max="10">
-</div>
+        <div class="preview-section">
+            <div class="preview-header">المعاينة المباشرة (العرض: 1000 | الارتفاع: 562.5)</div>
+            <iframe id="preview-frame"></iframe>
+        </div>
+    </div>
 
-<button id="capture-btn" onclick="exportToPDF()">تحويل إلى PDF 📥</button>
-
-</div>
-
-<div class="preview-section">
-<div class="preview-header">المعاينة المباشرة</div>
-<iframe id="preview-frame"></iframe>
-</div>
-
-</div>
-
-<script>
-
-function updatePreview(){
-    const code=document.getElementById('html-input').value;
-    document.getElementById('preview-frame').srcdoc=code;
-}
-
-async function convertImageToBase64(img){
-
-    async function fetchImage(url){
-        const response = await fetch(url);
-        if(!response.ok) throw new Error("fail");
-        return await response.blob();
-    }
-
-    try{
-        let blob;
-
-        try{
-            blob = await fetchImage(img.src);
-        }catch{
-            const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(img.src);
-            blob = await fetchImage(proxyUrl);
+    <script>
+        function updatePreview() {
+            const code = document.getElementById('html-input').value;
+            const iframe = document.getElementById('preview-frame');
+            iframe.srcdoc = code;
         }
 
-        return await new Promise(resolve=>{
-            const reader = new FileReader();
-            reader.onloadend = ()=>resolve(reader.result);
-            reader.readAsDataURL(blob);
-        });
+        async function exportToPDF() {
+            const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
+            const delay = document.getElementById('delay-input').value * 1000;
+            const fileName = document.getElementById('file-name').value || 'document';
+            const qualityScale = parseInt(document.getElementById('quality-select').value);
 
-    }catch{
-        return null;
-    }
-}
+            if (!code.trim()) { alert("الرجاء إدخال الكود أولاً!"); return; }
 
-async function preloadImages(container){
-    const images=container.querySelectorAll('img');
-    for(const img of images){
-        const base64=await convertImageToBase64(img);
-        if(base64){
-            img.src=base64;
-        }else{
-            img.remove(); 
-        }
-    }
-}
+            btn.disabled = true;
+            btn.innerText = `⏳ جاري إعداد الشاشة...`;
 
-async function exportToPDF(){
+            const hiddenContainer = document.createElement('div');
+            hiddenContainer.style.position = 'absolute';
+            hiddenContainer.style.top = '0';
+            hiddenContainer.style.left = '0';
+            hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.opacity = '0.01'; 
+            hiddenContainer.style.pointerEvents = 'none';
+            hiddenContainer.style.width = '1000px'; 
+            hiddenContainer.innerHTML = code;
+            document.body.appendChild(hiddenContainer);
 
-    const btn=document.getElementById('capture-btn');
-    const code=document.getElementById('html-input').value;
-    const delay=document.getElementById('delay-input').value*1000;
-    const fileName=document.getElementById('file-name').value||'document';
-    const quality=parseInt(document.getElementById('quality-select').value);
+            try {
+                btn.innerText = `⏳ تمرير الصور عبر البروكسي...`;
+                await document.fonts.ready;
 
-    if(!code.trim()){
-        alert("الرجاء إدخال الكود أولاً");
-        return;
-    }
+                // === إضافة البروكسي لتخطي حظر GitHub Pages ===
+                const images = hiddenContainer.querySelectorAll('img');
+                const imagePromises = Array.from(images).map(img => {
+                    return new Promise((resolve) => {
+                        // إذا كانت الصورة برابط خارجي وليست Base64 بالفعل
+                        if (img.src && !img.src.startsWith('data:')) {
+                            const originalSrc = img.src;
+                            img.crossOrigin = "anonymous";
+                            // نمرر الرابط عبر بروكسي مجاني لتخطي الـ CORS
+                            img.src = 'https://corsproxy.io/?' + encodeURIComponent(originalSrc);
+                        }
 
-    btn.disabled=true;
-    btn.innerText="⏳ جاري تجهيز الصور...";
+                        img.onload = async () => {
+                            try { if (img.decode) await img.decode(); } catch(e) {}
+                            resolve();
+                        };
+                        // لو فشل البروكسي لسبب ما، لا نوقف المشروع بل نكمل
+                        img.onerror = resolve; 
+                    });
+                });
+                
+                await Promise.all(imagePromises);
 
-    const container=document.createElement('div');
-    container.style.position='fixed';
-    container.style.top='0';
-    container.style.left='0';
-    container.style.opacity='0';
-    container.style.width='1000px';
-    container.innerHTML=code;
-    document.body.appendChild(container);
+                if (delay > 0) {
+                    btn.innerText = `⏳ انتظار أخير للاحتياط...`;
+                    await new Promise(r => setTimeout(r, delay));
+                }
 
-    try{
-        await document.fonts.ready;
-        await preloadImages(container);
+                btn.innerText = "📸 جاري تصوير الشرائح...";
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1000, 562.5] });
 
-        if(delay>0){
-            await new Promise(r=>setTimeout(r,delay));
-        }
+                let pages = hiddenContainer.querySelectorAll('.page');
+                if (pages.length === 0) pages = [hiddenContainer];
 
-        const {jsPDF}=window.jspdf;
-        const pdf=new jsPDF({
-            orientation:'landscape',
-            unit:'px',
-            format:[1000,562.5]
-        });
+                window.scrollTo(0, 0);
 
-        let pages=container.querySelectorAll('.page');
-        if(pages.length===0){
-            pages=[container];
-        }
+                for (let i = 0; i < pages.length; i++) {
+                    const canvas = await html2canvas(pages[i], {
+                        scale: qualityScale,
+                        useCORS: true,
+                        allowTaint: false,
+                        width: 1000,
+                        height: 562.5,
+                        windowWidth: 1000,
+                        scrollX: 0,
+                        scrollY: 0,
+                        backgroundColor: '#ffffff'
+                    });
 
-        for(let i=0;i<pages.length;i++){
-            const canvas=await html2canvas(pages[i],{
-                scale:quality,
-                useCORS:true,
-                backgroundColor:'#ffffff'
-            });
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    if (i > 0) pdf.addPage([1000, 562.5], 'landscape');
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 562.5);
+                }
 
-            const imgData=canvas.toDataURL('image/jpeg',0.95);
+                btn.innerText = "📄 جاري حفظ الملف...";
+                pdf.save(`${fileName}.pdf`);
 
-            if(i>0){
-                pdf.addPage([1000,562.5],'landscape');
+            } catch (error) {
+                console.error("خطأ:", error);
+                alert("حدث خطأ أثناء معالجة الصور.");
+            } finally {
+                document.body.removeChild(hiddenContainer);
+                btn.disabled = false;
+                btn.innerText = "بدء التحويل إلى PDF 📥";
             }
-
-            pdf.addImage(imgData,'JPEG',0,0,1000,562.5);
         }
-
-        pdf.save(fileName+".pdf");
-
-    }catch(error){
-        console.error(error);
-        alert("حدث خطأ أثناء إنشاء الملف");
-    }finally{
-        document.body.removeChild(container);
-        btn.disabled=false;
-        btn.innerText="تحويل إلى PDF 📥";
-    }
-}
-
-</script>
-
+    </script>
 </body>
 </html>
