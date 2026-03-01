@@ -3,598 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بحث عن أبرز طرائق نقل المصاب - وجد الحارثي</title>
+    <title>مصور الأكواد الذكي</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
-        /* تنسيقات عامة للطباعة بحجم A4 */
-        @page {
-            size: A4;
-            margin: 2cm;
+        :root {
+            --primary: #4F46E5;
+            --bg: #F3F4F6;
+            --panel: #FFFFFF;
+            --border: #E5E7EB;
         }
-        
         body {
-            font-family: 'Arial', sans-serif;
-            line-height: 1.8;
-            color: #333;
-            background-color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
             margin: 0;
-            padding: 0;
-            text-align: right;
-        }
-        
-        .page {
-            width: 210mm;
-            min-height: 297mm;
-            padding: 20mm;
-            margin: 10mm auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            background: white;
-            position: relative;
-            page-break-after: always;
-            box-sizing: border-box;
-        }
-        
-        /* تنسيقات الغلاف */
-        .cover {
-            text-align: center;
+            padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100%;
+            height: 100vh;
+            box-sizing: border-box;
         }
-        
-        .ministry-header {
-            width: 100%;
+        .header { text-align: center; margin-bottom: 20px; color: #333; }
+        .main-container {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 30px;
-            border-bottom: 3px solid #c0392b;
-            padding-bottom: 15px;
+            gap: 20px;
+            flex: 1;
+            overflow: hidden;
         }
-        
-        .logo {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; height: auto; overflow: visible;}
         }
-        
-        .vision {
-            background-color: #c0392b;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 20px 0;
-            font-weight: bold;
-        }
-        
-        .title {
-            color: #c0392b;
-            font-size: 32px;
-            margin: 40px 0;
+        .sidebar, .preview-section {
+            background: var(--panel);
+            border-radius: 12px;
             padding: 20px;
-            border: 2px solid #c0392b;
-            border-radius: 10px;
-            background-color: #fef9f8;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
         }
-        
-        .cover-image {
-            width: 300px;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 2px solid #ddd;
-        }
-        
-        .student-info {
-            margin-top: 40px;
-            font-size: 20px;
-            background: #f9f2f0;
-            padding: 20px 40px;
-            border-radius: 50px;
-        }
-        
-        /* تنسيقات المحتوى */
-        h1 {
-            color: #c0392b;
-            text-align: center;
-            font-size: 28px;
-            margin-bottom: 30px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #c0392b;
-        }
-        
-        h2 {
-            color: #a8231a;
-            font-size: 24px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-right: 6px solid #c0392b;
-            padding-right: 15px;
-        }
-        
-        h3 {
-            color: #c25b4a;
-            font-size: 20px;
-            margin-top: 25px;
-        }
-        
-        p {
-            text-align: justify;
-            margin-bottom: 15px;
-            font-size: 16px;
-        }
-        
-        ul, ol {
-            margin-right: 30px;
-            margin-bottom: 20px;
-        }
-        
-        li {
-            margin-bottom: 10px;
-        }
-        
-        .content-img {
-            width: 250px;
-            height: 180px;
-            object-fit: cover;
-            margin: 15px;
+        .sidebar { flex: 1; max-width: 400px; overflow-y: auto;}
+        .preview-section { flex: 2; overflow: hidden; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #4B5563;}
+        textarea, select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
             border-radius: 8px;
-            border: 1px solid #ddd;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        }
-        
-        .img-left {
-            float: left;
-            margin-right: 20px;
-            margin-left: 0;
-        }
-         
-        .img-right {
-            float: right;
-            margin-left: 20px;
-            margin-right: 0;
-        }
-        
-        .clear {
-            clear: both;
-        }
-        
-        .highlight {
-            background-color: #fef5f3;
-            padding: 15px;
-            border-right: 4px solid #c0392b;
-            margin: 20px 0;
-            border-radius: 5px;
-            font-weight: 500;
-        }
-        
-        /* تنسيقات الفهرس */
-        .toc {
-            margin-top: 30px;
-        }
-        
-        .toc ul {
-            list-style-type: none;
-            padding-right: 0;
-        }
-        
-        .toc li {
-            margin-bottom: 12px;
-            font-size: 18px;
-        }
-        
-        .toc a {
-            text-decoration: none;
-            color: #c0392b;
-            font-weight: 500;
-        }
-        
-        .page-number {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
+            box-sizing: border-box;
             font-size: 14px;
-            color: #666;
-            background: #f5f5f5;
-            padding: 2px 12px;
-            border-radius: 20px;
+        }
+        /* جعل مربع الكود من اليسار لليمين */
+        textarea { height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc;}
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none;}
+
+        .preview-container {
+            flex: 1;
+            overflow: auto;
+            background: #e5e5f7;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
         }
         
-        /* إخفاء العناصر عند الطباعة */
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-            }
-            
-            .page {
-                margin: 0;
-                padding: 20mm;
-                box-shadow: none;
-                page-break-after: always;
-            }
+        /* منطقة الريندر التي سيتم تصويرها */
+        #render-area {
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: width 0.3s, height 0.3s;
         }
 
-        /* جدول التقييم */
-        .eval-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-        }
-        .eval-table th {
-            background-color: #c0392b;
-            color: white;
-            padding: 10px;
-        }
-        .eval-table td, .eval-table th {
-            border: 1px solid #aaa;
-            padding: 8px;
-            text-align: center;
-        }
+        /* المقاسات */
+        .ratio-16-9 { width: 1280px; height: 720px; }
+        .ratio-a4-p { width: 794px; height: 1123px; }
+        .ratio-a4-l { width: 1123px; height: 794px; }
+        .ratio-auto { width: 100%; min-height: 400px; }
     </style>
 </head>
 <body>
-    <!-- الصفحة 1: الغلاف -->
-    <div class="page">
-        <div class="cover">
-            <div class="ministry-header">
-                <img src="https://upload.wikimedia.org/wikipedia/ar/thumb/f/f5/Saudi_Vision_2030_logo.svg/960px-Saudi_Vision_2030_logo.svg.png" alt="شعار رؤية السعودية" class="logo">
-                <div>
-                    <h3>المملكة العربية السعودية</h3>
 
-                </div>
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyN10OK6rly_WXp_clxQCKWTy18LxtM4el5sPFo2orKQ&s=10" alt="شعار وزارة التعليم" class="logo">
+    <div class="header">
+        <h2>📸 محول HTML إلى صورة</h2>
+    </div>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="form-group">
+                <label>كود HTML / CSS :</label>
+                <textarea id="html-input" placeholder="اكتب كودك هنا..."></textarea>
             </div>
             
-            <div class="vision">
-                رؤية السعودية 2030
+            <div class="form-group">
+                <button onclick="updatePreview()" style="width: 100%; background: #10B981;">تحديث المعاينة 🔄</button>
             </div>
 
-            <div class="title">
-                أبرز طرائق نقل المصاب
+            <div class="form-group">
+                <label>المقاس (الأبعاد):</label>
+                <select id="size-select" onchange="changeSize()">
+                    <option value="ratio-16-9">شاشة 16:9 (1280x720)</option>
+                    <option value="ratio-a4-p">ورقة A4 (طولية)</option>
+                    <option value="ratio-a4-l">ورقة A4 (عرضية)</option>
+                    <option value="ratio-auto">تلقائي (حسب المحتوى)</option>
+                </select>
             </div>
-            
-            <img src="https://images.unsplash.com/photo-1584515933487-779824d29309?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="نقل المصاب" class="cover-image">
-            
-            <div class="student-info">
-                <p><strong>الطالبة: وجد الحارثي</strong></p>
-                <p><strong>إشراف المعلمة: خلود الغماس</strong></p>
-                <p>مادة التربية الصحية والبدنية - </p>
+
+            <div class="form-group">
+                <label>وقت الانتظار قبل التصوير (بالثواني):</label>
+                <input type="number" id="delay-input" value="2" min="0" max="15">
+                <small style="color: #6B7280; display: block; margin-top: 5px;">
+                    * مفيد لضمان تحميل الصور والخطوط الخارجية قبل الالتقاط.
+                </small>
             </div>
+
+            <button id="capture-btn" onclick="captureImage()">التقاط وتحميل الصورة 📥</button>
+        </div>
+
+        <div class="preview-section">
+            <label>المعاينة المباشرة:</label>
+            <div class="preview-container">
+                <div id="render-area" class="ratio-16-9">
+                    </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // تحديث المعاينة فوراً
+        function updatePreview() {
+            const code = document.getElementById('html-input').value;
+            document.getElementById('render-area').innerHTML = code;
+        }
+
+        // تغيير مقاس الإطار
+        function changeSize() {
+            const sizeClass = document.getElementById('size-select').value;
+            const renderArea = document.getElementById('render-area');
+            renderArea.className = sizeClass;
+        }
+
+        // وظيفة التقاط الصورة
+        async function captureImage() {
+            const btn = document.getElementById('capture-btn');
+            const delay = document.getElementById('delay-input').value * 1000;
+            const renderArea = document.getElementById('render-area');
+
+            // نحدث المعاينة للتأكد من أحدث التغييرات
+            updatePreview();
+
+            // تعطيل الزر لمنع التكرار
+            btn.disabled = true;
             
-            <div class="page-number">1</div>
-        </div>
-    </div>
+            if (delay > 0) {
+                btn.innerText = `⏳ ننتظر ${delay/1000} ثانية للتحميل...`;
+            }
 
-    <!-- الصفحة 2: الفهرس -->
-    <div class="page">
-        <h1>فهرس المحتويات</h1>
-        <div class="toc">
-            <ul>
-                <li><a href="#intro">1. المقدمة ................................ 3</a></li>
-                <li><a href="#methods-one">2. طرق النقل باستخدام شخص واحد ........... 4</a></li>
-                <li><a href="#methods-two">3. طرق النقل باستخدام شخصين .............. 5</a></li>
-                <li><a href="#methods-three">4. طرق النقل بثلاثة أشخاص أو أكثر ........ 6</a></li>
-                <li><a href="#stretchers">5. استخدام النقالات (الأنواع والطريقة) ... 7</a></li>
-                <li><a href="#spinal">6. نقل مصابي العمود الفقري (حالات خاصة) .. 8</a></li>
-                <li><a href="#special-cases">7. نقل الحالات الخاصة (أطفال، حوامل، بدناء) 9</a></li>
-                <li><a href="#common-mistakes">8. أخطاء شائعة في النقل وكيفية تجنبها .... 10</a></li>
-                <li><a href="#safety">9. إرشادات السلامة للمسعفين .............. 11</a></li>
-                <li><a href="#conclusion">10. الخاتمة ................................ 12</a></li>
-                <li><a href="#references">11. المصادر والمراجع ...................... 13</a></li>
-            </ul>
-        </div>
-        <div style="margin-top: 40px;">
-            <table class="eval-table">
-                <tr><th colspan="3">بنود تقييم البحث</th></tr>
-                <tr><th>الدرجة</th><th>المطلوب</th><th>بنود البحث</th></tr>
-                <tr><td>1</td><td>الغلاف (الشعار، العنوان، صورة، اسم الطالبة، إشراف المعلمة)</td><td>✔</td></tr>
-                <tr><td>1</td><td>مقدمة توضيحية مختصرة</td><td>✔</td></tr>
-                <tr><td>4</td><td>معلومات من الكتاب ومعلومات خارجية</td><td>✔</td></tr>
-                <tr><td>1</td><td>تسلسل المعلومات + صور</td><td>✔</td></tr>
-                <tr><td>1</td><td>خاتمة (نتائج مستخلصة)</td><td>✔</td></tr>
-                <tr><td>1</td><td>فهرس مع ترقيم الصفحات</td><td>✔</td></tr>
-                <tr><td>1</td><td>تسليم في الموعد المحدد</td><td>✔</td></tr>
-                <tr><td colspan="2"><strong>المجموع</strong></td><td><strong>10</strong></td></tr>
-            </table>
-        </div>
-        <div class="page-number">2</div>
-    </div>
+            // بدء مؤقت الانتظار
+            setTimeout(async () => {
+                btn.innerText = "📸 جاري التقاط الصورة...";
+                try {
+                    // إعدادات التصوير
+                    const canvas = await html2canvas(renderArea, {
+                        scale: 2, // جودة عالية (Retina)
+                        useCORS: true, // مهم جداً لدعم الصور الخارجية
+                        backgroundColor: '#ffffff' 
+                    });
 
-    <!-- الصفحة 3: المقدمة -->
-    <div class="page">
-        <h1 id="intro">المقدمة</h1>
-        <img src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="الإسعافات الأولية" class="content-img img-left">
-        <p>الحمد لله رب العالمين، والصلاة والسلام على أشرف الأنبياء والمرسلين. يُعد نقل المصاب بشكل صحيح من المهارات الأساسية في الإسعافات الأولية، فهو إجراء حاسم يهدف إلى منع تفاقم الإصابات، وتجنب المضاعفات الخطيرة، وربما إنقاذ حياة المصاب قبل وصول الفرق الطبية. يستند هذا البحث إلى ما ورد في منهج التربية الصحية والبدنية (المملكة العربية السعودية) بالإضافة إلى مصادر طبية موثقة، لاستعراض أبرز طرائق نقل المصاب وفقًا لحالة الإصابة والموقف المتاح.</p>
-        
-        <p>سنتناول في البحث الطرق اليدوية (بمعاونة شخص أو أكثر)، واستخدام المعدات مثل النقالات، مع إرشادات خاصة لحالات إصابات العمود الفقري والكسور. كما سنسلط الضوء على الأخطاء الشائعة التي يجب تجنبها، وقواعد سلامة المسعفين. نسأل الله أن ينفع بهذا العمل.</p>
-        
-        <div class="highlight">
-            <p>يقول المبدأ الذهبي في الإسعاف: "لا تنقل المصاب إلا إذا كنت متأكداً من الطريقة الصحيحة، أو كان هناك خطر داهم يهدد حياته (حريق، انفجار، انهيار)".</p>
-        </div>
-        <div class="clear"></div>
-        <div class="page-number">3</div>
-    </div>
+                    // إنشاء رابط لتحميل الصورة
+                    const link = document.createElement('a');
+                    link.download = 'code-screenshot.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
 
-    <!-- الصفحة 4: طرق النقل باستخدام شخص واحد -->
-    <div class="page">
-        <h1 id="methods-one">أولاً: طرق النقل باستخدام شخص واحد</h1>
-        <p>عند وجود مسعف واحد فقط، يمكن استخدام عدة أساليب حسب وعي المصاب وقدرته على الحركة ووزنه.</p>
-        
-        <img src="https://images.unsplash.com/photo-1581091226033-d5c48150dbaa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="حمل المصاب" class="content-img img-right">
-        
-        <h2>1. حمل المصاب على الظهر</h2>
-        <p>يُستخدم إذا كان المصاب واعياً وقادراً على الإمساك. يقف المسعف ظهره للمصاب، يمسك بفخذيه ويرفعه على ظهره، بينما يلف المصاب ذراعيه حول رقبة المسعف.</p>
-        
-        <h2>2. حمل المصاب بالحضن (طريقة المهد)</h2>
-        <p>تناسب الأطفال ومن هم خفيفي الوزن. يضع المسعف ذراعاً تحت ركبتي المصاب والأخرى خلف ظهره، ثم يرفعه بحرص.</p>
-        
-        <h2>3. طريقة الجر</h2>
-        <p>تُستخدم عندما لا يمكن الرفع (خطر حريق أو انفجار) أو عندما يكون المصاب ثقيلاً. يتم جر المصاب من كتفيه أو ملابسه على سطح مستو. الأفضل وضع بطانية تحت المصاب لتسهيل الجر.</p>
-        
-        <h2>4. طريقة رجل الإطفاء</h2>
-        <p>يُلقى المصاب على كتف المسعف (كتف واحد) مع دعم الرأس والظهر. تصلح للمسافات القصيرة ولإنقاذ سريع.</p>
-        
-        <div class="highlight">
-            <p>تحذير: لا تستخدم طرق الرفع هذه إذا كان هناك اشتباه بإصابة في العمود الفقري أو الرقبة.</p>
-        </div>
-        <div class="clear"></div>
-        <div class="page-number">4</div>
-    </div>
+                } catch (error) {
+                    alert("حدث خطأ أثناء التقاط الصورة. تأكد من أن الصور الخارجية تدعم CORS.");
+                    console.error(error);
+                } finally {
+                    // إعادة الزر لحالته الطبيعية
+                    btn.disabled = false;
+                    btn.innerText = "التقاط وتحميل الصورة 📥";
+                }
+            }, delay);
+        }
 
-    <!-- الصفحة 5: طرق النقل باستخدام شخصين -->
-    <div class="page">
-        <h1 id="methods-two">ثانياً: طرق النقل باستخدام شخصين</h1>
-        <p>وجود مسعفين اثنين يتيح نقل المصاب بوضعيات أكثر أماناً واستقراراً، خاصة إذا كان فاقداً للوعي.</p>
-        
-        <img src="https://images.unsplash.com/photo-1584516150909-c43483ee7932?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقل بشخصين" class="content-img img-left">
-        
-        <h2>1. مقعد اليدين (كرسي اليدين)</h2>
-        <p>يشبك المسعفان أيديهما (يمسك كل منهما معصم الآخر) ليشكلا مقعداً. يجلس المصاب عليه ويمسك بأكتاف المسعفين. مناسبة للمصاب الواعي.</p>
-        
-        <h2>2. الحمالة اليدوية (رباعية الأيدي)</h2>
-        <p>يقف المسعفان على جانبي المصاب. يدخل كل منهما ذراعاً تحت ظهر المصاب (أسفل الكتفين) والذراع الأخرى تحت الفخذين. يمسكان ببعضهما (مثلاً بقبضة اليد) ويرفعان معاً.</p>
-        
-        <h2>3. حمل المصاب على كرسي حقيقي</h2>
-        <p>يوضع المصاب على كرسي صلب (خشبي أو بلاستيكي) ويحمله المسعفان من قوائم الكرسي. طريقة ممتازة لنقل المصاب في الأماكن الضيقة.</p>
-        
-        <h2>4. الجر بواسطة بطانية</h2>
-        <p>يفرد مسعفان بطانية بجانب المصاب، يقلبانه عليها بحرص، ثم يجران البطانية من طرفها. يصلح للمسافات القصيرة.</p>
-        
-        <div class="highlight">
-            <p>نصيحة: على المسعفين التنسيق باستخدام الأوامر مثل "واحد، اثنان، ثلاثة - ارفع".</p>
-        </div>
-        <div class="clear"></div>
-        <div class="page-number">5</div>
-    </div>
-
-    <!-- الصفحة 6: طرق النقل بثلاثة أشخاص أو أكثر -->
-    <div class="page">
-        <h1 id="methods-three">ثالثاً: طرق النقل بثلاثة أشخاص أو أكثر</h1>
-        
-        <img src="https://images.unsplash.com/photo-1531844251246-9a1bfaae09fc?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقل جماعي" class="content-img img-right">
-        
-        <h2>1. رفع اللوح الطبي (أو الباب الخشبي)</h2>
-        <p>يُستخدم عندما يتوفر لوح طبي أو أي سطح صلب. يوزع المسعفون (3-4) على الجوانب، يمسكون باللوح ويرفعونه مع الحفاظ على استقامة الظهر. مثالي لنقل مصابي العمود الفقري بعد التثبيت.</p>
-        
-        <h2>2. الجسر البشري</h2>
-        <p>يقف ثلاثة مسعفين على جانب واحد، يدعمون المصاب بأذرعهم: الأول يدعم الرأس والكتفين، الثاني يدعم الظهر والحوض، الثالث يدعم الفخذين والساقين. يرفعون المصاب بشكل متوازٍ. تحتاج إلى قوة وتنسيق عالٍ.</p>
-        
-        <h2>3. طريقة اللف (Log Roll)</h2>
-        <p>تستخدم لتحريك مصاب على الظهر دون التواء العمود الفقري. يقف ثلاثة مسعفين: الأول يثبت الرأس والرقبة، الثاني والثالث على الجانب. يديرون المصاب كقطعة واحدة على جانبه، ثم يضعون اللوح الطبي، ثم يعيدونه برفق.</p>
-        
-        <h2>4. نقل المصاب على نقالة قماشية</h2>
-        <p>بمساعدة 4 أشخاص، تفتح النقالة بجانب المصاب، ثم يُدحرج المصاب عليها، ثم يُرفع من الأطراف الأربعة.</p>
-        
-        <div class="clear"></div>
-        <div class="page-number">6</div>
-    </div>
-
-    <!-- الصفحة 7: استخدام النقالات (الأنواع والطريقة) -->
-    <div class="page">
-        <h1 id="stretchers">رابعاً: استخدام النقالات (الأنواع والطريقة)</h1>
-        
-        <img src="https://images.unsplash.com/photo-1582719508461-905c673771fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="نقالة" class="content-img img-left">
-        
-        <h2>أنواع النقالات</h2>
-        <ul>
-            <li><strong>النقالة الصلبة (اللوح الطبي):</strong> لنقل حالات الكسور والعمود الفقري. تمنع أي حركة غير مرغوب فيها.</li>
-            <li><strong>النقالة القماشية (القابلة للطي):</strong> خفيفة، تستخدم في المساحات الواسعة وللحالات العادية.</li>
-            <li><strong>النقالة المجنزرة (السلة):</strong> لنقل المصابين في الأماكن الوعرة (جبال، أنقاض).</li>
-            <li><strong>النقالة الفراغية:</strong> تتكيف مع شكل الجسم عند سحب الهواء، ممتازة لتثبيت المصاب.</li>
-        </ul>
-        
-        <h2>طريقة رفع النقالة بشكل آمن</h2>
-        <ul>
-            <li>يوزع المسعفون (4 أشخاص) واحد عند كل طرف.</li>
-            <li>يجب أن تكون النقالة على نفس المستوى.</li>
-            <li>يقبضون على المقابض مع استقامة الظهر وثني الركبتين.</li>
-            <li>يرفعون معاً عند الإشارة، ويمشون بخطى متوازية.</li>
-            <li>يجب أن يكون رأس المصاب في اتجاه السير (لرؤية ما أمامه).</li>
-        </ul>
-        
-        <div class="highlight">
-            <p>إذا كان المصاب فاقداً للوعي، يجب تثبيته على النقالة بأشرطة خاصة لمنع السقوط.</p>
-        </div>
-        <div class="clear"></div>
-        <div class="page-number">7</div>
-    </div>
-
-    <!-- الصفحة 8: نقل مصابي العمود الفقري (حالات خاصة) -->
-    <div class="page">
-        <h1 id="spinal">خامساً: نقل مصابي العمود الفقري (حالات خاصة)</h1>
-        
-        <img src="https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="تثبيت رقبة" class="content-img img-right">
-        
-        <p>تعتبر إصابات العمود الفقري من أخطر الحالات، وأي خطأ في النقل قد يؤدي إلى الشلل الدائم. لذلك يجب اتباع القواعد التالية بدقة:</p>
-        
-        <h2>مبادئ النقل الآمن:</h2>
-        <ul>
-            <li>عدم تحريك المصاب إلا للضرورة القصوى (خطر داهم).</li>
-            <li>تثبيت الرأس والرقبة باليدين فوراً، وعدم السماح بأي حركة.</li>
-            <li>استخدام طوق عنق رقبي إن وجد، أو تثبيت الرأس بأكياس رمل أو مناشف.</li>
-            <li>نقل المصاب بطريقة اللف (log roll) بمشاركة 3-4 مسعفين.</li>
-            <li>وضع المصاب على لوح طبي طويل، وتثبيت الجذع والرأس بالأشرطة.</li>
-            <li>تجنب ثني الظهر أو رفع الأطراف بشكل منفرد.</li>
-        </ul>
-        
-        <h2>الطريقة الصحيحة للرفع (3 أشخاص):</h2>
-        <ol>
-            <li>المسعف الأول يثبت الرأس (يمسك بالجمجمة من الجانبين مع وضع الإبهامين على الجبهة).</li>
-            <li>المسعفان الثاني والثالث يضعان أيديهما تحت الكتفين والخصر والفخذين.</li>
-            <li>بإشارة من المسعف الأول، يديرون المصاب برفق على جانبه (كقطعة واحدة).</li>
-            <li>يوضع اللوح الطبي تحت المصاب ثم يعاد دحرجته على اللوح.</li>
-            <li>تُثبت الرأس والجسم بالأشرطة.</li>
-        </ol>
-        
-        <div class="clear"></div>
-        <div class="page-number">8</div>
-    </div>
-
-    <!-- الصفحة 9: نقل الحالات الخاصة (أطفال، حوامل، بدناء) -->
-    <div class="page">
-        <h1 id="special-cases">سادساً: نقل الحالات الخاصة (أطفال، حوامل، بدناء)</h1>
-        
-        <img src="https://images.unsplash.com/photo-1544717301-9cdcb1f5940f?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="حمل طفل" class="content-img img-left">
-        
-        <h2>الأطفال والرضع</h2>
-        <ul>
-            <li>يُحمل الطفل بين ذراعي المسعف مع دعم الرأس والرقبة.</li>
-            <li>يمكن استخدام حاملة أطفال أو نقالة صغيرة.</li>
-            <li>إذا كان الطفل فاقداً للوعي، توضع وسادة تحت كتفيه لفتح المجرى التنفسي.</li>
-        </ul>
-        
-        <h2>الحوامل</h2>
-        <ul>
-            <li>يُفضل نقل الحامل على الجانب الأيسر (وضعية السلامة) لتجنب ضغط الرحم على الوريد الأجوف السفلي.</li>
-            <li>عند استخدام النقالة، تميل النقالة قليلاً إلى اليسار (يمكن وضع بطانية تحت الجانب الأيمن).</li>
-            <li>يجب تجنب الضغط على البطن.</li>
-        </ul>
-        
-        <h2>المصابون بالبدانة</h2>
-        <ul>
-            <li>يتطلب عدة مسعفين (4-6 أشخاص) حسب الوزن.</li>
-            <li>يُفضل استخدام نقالة خاصة أو لوح صلب قوي.</li>
-            <li>تجب حماية ظهر المسعفين باستخدام تقنيات الرفع الصحيحة (ثني الركبتين، استقامة الظهر).</li>
-            <li>يمكن استخدام حزام رفع أو أشرطة لتوزيع الوزن.</li>
-        </ul>
-        
-        <div class="highlight">
-            <p>في جميع الحالات، يجب مراعاة خصوصية المصاب وتوفير الدعم النفسي قدر الإمكان.</p>
-        </div>
-        <div class="clear"></div>
-        <div class="page-number">9</div>
-    </div>
-
-    <!-- الصفحة 10: أخطاء شائعة في النقل وكيفية تجنبها -->
-    <div class="page">
-        <h1 id="common-mistakes">سابعاً: أخطاء شائعة في النقل وكيفية تجنبها</h1>
-        
-        <img src="https://images.unsplash.com/photo-1584432810601-6c7f27d2362b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="خطأ شائع" class="content-img img-right">
-        
-        <h2>أخطاء شائعة:</h2>
-        <ul>
-            <li><strong>نقل المصاب دون تقييم أولي:</strong> قد يفاقم الإصابة. يجب فحص الوعي والتنفس والنزيف أولاً.</li>
-            <li><strong>ثني الرقبة أو الظهر في إصابات العمود الفقري:</strong> يسبب شللاً. يجب التثبيت التام.</li>
-            <li><strong>رفع غير متوازن (بسرعة أو بطيء):</strong> يؤدي إلى سقوط المصاب أو زيادة الألم.</li>
-            <li><strong>عدم تنسيق الحركات بين المسعفين:</strong> يسبب اهتزاز المصاب. استخدم الأوامر الصوتية.</li>
-            <li><strong>نقل المصاب في وضعية غير مناسبة لحالته:</strong> مثلاً نقل مصاب بصعوبة تنفس على ظهره (الأفضل نصف جالس).</li>
-            <li><strong>إهمال سلامة المسعفين:</strong> قد يؤدي إلى إصابات للمسعف. استخدم تقنيات الرفع الصحيحة.</li>
-        </ul>
-        
-        <h2>كيفية تجنبها:</h2>
-        <ul>
-            <li>التدريب المنتظم على تقنيات النقل.</li>
-            <li>التقييم السريع والدقيق قبل النقل.</li>
-            <li>استخدام العدد الكافي من المسعفين.</li>
-            <li>التواصل المستمر بين أفراد الفريق.</li>
-            <li>الاستعانة بالمعدات المساعدة (نقالات، أشرطة).</li>
-        </ul>
-        
-        <div class="clear"></div>
-        <div class="page-number">10</div>
-    </div>
-
-    <!-- الصفحة 11: إرشادات السلامة للمسعفين -->
-    <div class="page">
-        <h1 id="safety">ثامناً: إرشادات السلامة للمسعفين</h1>
-        
-        <img src="https://images.unsplash.com/photo-1599058917212-d750089bc07e?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="سلامة المسعف" class="content-img img-left">
-        
-        <p>سلامة المسعف لا تقل أهمية عن سلامة المصاب. اتباع الإرشادات التالية يحمي المسعفين من الإصابات:</p>
-        
-        <h2>ميكانيكية الجسم الصحيحة عند الرفع:</h2>
-        <ul>
-            <li>ثني الركبتين وليس الظهر (الحفاظ على استقامة الظهر).</li>
-            <li>إبقاء الجسم قريباً من المصاب.</li>
-            <li>رفع العضلات الكبيرة (عضلات الفخذين) وليس عضلات الظهر.</li>
-            <li>تجنب الالتواء أثناء الرفع؛ بدل ذلك، أدر الجسم بالقدمين.</li>
-            <li>الرفع الجماعي مع العد (1-2-3).</li>
-        </ul>
-        
-        <h2>استخدام معدات الوقاية الشخصية:</h2>
-        <ul>
-            <li>قفازات طبية لتجنب انتقال العدوى.</li>
-            <li>كمامة إذا كان هناك اشتباه بأمراض تنفسية.</li>
-            <li>حذاء مناسب يمنع الانزلاق.</li>
-        </ul>
-        
-        <h2>نصائح عامة:</h2>
-        <ul>
-            <li>لا ترفع بمفردك مصاباً يتجاوز وزنك بكثير.</li>
-            <li>خطط لمسار النقل قبل البدء (تأكد من خلوه من العوائق).</li>
-            <li>إذا شعرت بالتعب، اطلب المساعدة فوراً.</li>
-        </ul>
-        
-        <div class="clear"></div>
-        <div class="page-number">11</div>
-    </div>
-
-    <!-- الصفحة 12: الخاتمة -->
-    <div class="page">
-        <h1 id="conclusion">الخاتمة</h1>
-        
-        <div class="highlight" style="font-size: 18px;">
-            <h3>النتائج المستخلصة:</h3>
-            <ul>
-                <li>تتنوع طرائق نقل المصاب حسب عدد المسعفين، وحالة المصاب، والمعدات المتوفرة.</li>
-                <li>الطريقة الخاطئة قد تؤدي إلى مضاعفات خطيرة، خاصة في إصابات العمود الفقري.</li>
-                <li>النقل الآمن يتطلب تقييماً سريعاً لحالة المصاب، واختيار الطريقة المناسبة، وتنسيق الجهود.</li>
-                <li>استخدام النقالات يوفر ثباتاً وراحة أكبر للمصاب، خاصة لمسافات طويلة.</li>
-                <li>سلامة المسعفين مهمة، وتتحقق بتقنيات الرفع الصحيحة واستخدام العدد الكافي.</li>
-                <li>المعرفة النظرية يجب أن تدعمها تدريبات عملية مستمرة.</li>
-            </ul>
-        </div>
-        
-        <p>في الختام، تعتبر معرفة طرائق نقل المصاب الصحيحة ركيزة أساسية في الإسعافات الأولية، وهي واجب إنساني وأخلاقي على كل فرد. نسأل الله أن يجعل هذا العمل نافعاً، وأن يوفق الجميع لما فيه خير الوطن والمواطنين.</p>
-        
-    
-        <div class="page-number">12</div>
-    </div>
-
-    <!-- الصفحة 13: المصادر والمراجع -->
-    <div class="page">
-        <h1 id="references">المصادر والمراجع</h1>
-        
-        <ul style="list-style-type: circle; font-size: 18px;">
-            <li>وزارة التعليم السعودية، كتاب التربية الصحية والبدنية (المستوى الثانوي)، 1446هـ.</li>
-            <li>الهيئة السعودية للتخصصات الصحية، دليل الإسعافات الأولية المتقدم، 2023.</li>
-            <li>جمعية الهلال الأحمر السعودي، دليل المسعف الأول، 2024.</li>
-            <li>منظمة الصحة العالمية، إرشادات نقل المصابين في حالات الطوارئ، 2022.</li>
-            <li>كليات طب الطوارئ، أساسيات نقل وإخلاء المصابين، 2021.</li>
-            <li>موقع مايو كلينك (Mayo Clinic) - قسم الإسعافات الأولية، 2025.</li>
-            <li>موقع WebMD - First Aid: How to Move an Injured Person, 2025.</li>
-        </ul>
-        
-        <hr style="margin: 50px 0 20px;">
-        
-      
-        <p style="text-align: center; font-weight: bold;">والله ولي التوفيق</p>
-        
-        <div class="page-number">13</div>
-    </div>
+        // كود تجريبي يظهر عند فتح الصفحة لأول مرة
+        const defaultCode = `
+<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; font-family:sans-serif;">
+    <h1 style="font-size: 4rem; margin:0;">أهلاً بك! ✨</h1>
+    <p style="font-size: 1.5rem; opacity: 0.9;">قم بكتابة كود HTML هنا لتصويره</p>
+</div>`;
+        document.getElementById('html-input').value = defaultCode.trim();
+        updatePreview();
+    </script>
 </body>
 </html>
