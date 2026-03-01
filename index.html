@@ -21,9 +21,6 @@ body{
 }
 .header{text-align:center;margin-bottom:20px}
 .main-container{display:flex;gap:20px;flex:1;overflow:hidden}
-@media(max-width:768px){
-    .main-container{flex-direction:column;height:auto;overflow:visible}
-}
 .sidebar,.preview-section{
     background:#fff;
     border-radius:8px;
@@ -91,7 +88,7 @@ iframe{width:100%;height:100%;border:none;background:#fff}
 </div>
 
 <div class="form-group" style="flex:1;">
-<label>الصق الكود هنا (HTML/CSS):</label>
+<label>الصق الكود هنا:</label>
 <textarea id="html-input" oninput="updatePreview()"></textarea>
 </div>
 
@@ -121,20 +118,36 @@ iframe{width:100%;height:100%;border:none;background:#fff}
 </div>
 
 <script>
+
 function updatePreview(){
     const code=document.getElementById('html-input').value;
     document.getElementById('preview-frame').srcdoc=code;
 }
 
 async function convertImageToBase64(img){
+
+    async function fetchImage(url){
+        const response = await fetch(url);
+        if(!response.ok) throw new Error("fail");
+        return await response.blob();
+    }
+
     try{
-        const response=await fetch(img.src,{mode:'cors'});
-        const blob=await response.blob();
+        let blob;
+
+        try{
+            blob = await fetchImage(img.src);
+        }catch{
+            const proxyUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent(img.src);
+            blob = await fetchImage(proxyUrl);
+        }
+
         return await new Promise(resolve=>{
-            const reader=new FileReader();
-            reader.onloadend=()=>resolve(reader.result);
+            const reader = new FileReader();
+            reader.onloadend = ()=>resolve(reader.result);
             reader.readAsDataURL(blob);
         });
+
     }catch{
         return null;
     }
@@ -147,12 +160,13 @@ async function preloadImages(container){
         if(base64){
             img.src=base64;
         }else{
-            img.remove(); // منع ظهور alt كنص
+            img.remove(); 
         }
     }
 }
 
 async function exportToPDF(){
+
     const btn=document.getElementById('capture-btn');
     const code=document.getElementById('html-input').value;
     const delay=document.getElementById('delay-input').value*1000;
@@ -165,7 +179,7 @@ async function exportToPDF(){
     }
 
     btn.disabled=true;
-    btn.innerText="⏳ جاري المعالجة...";
+    btn.innerText="⏳ جاري تجهيز الصور...";
 
     const container=document.createElement('div');
     container.style.position='fixed';
@@ -223,6 +237,7 @@ async function exportToPDF(){
         btn.innerText="تحويل إلى PDF 📥";
     }
 }
+
 </script>
 
 </body>
