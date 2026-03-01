@@ -3,213 +3,386 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مصور الأكواد الذكي</title>
+    <title>محول العروض التقديمية إلى PDF</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <style>
-        :root {
-            --primary: #4F46E5;
-            --bg: #F3F4F6;
-            --panel: #FFFFFF;
-            --border: #E5E7EB;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-            box-sizing: border-box;
-        }
-        .header { text-align: center; margin-bottom: 20px; color: #333; }
-        .main-container {
-            display: flex;
-            gap: 20px;
-            flex: 1;
-            overflow: hidden;
-        }
-        @media (max-width: 768px) {
-            .main-container { flex-direction: column; height: auto; overflow: visible;}
-        }
-        .sidebar, .preview-section {
-            background: var(--panel);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            display: flex;
-            flex-direction: column;
-        }
-        .sidebar { flex: 1; max-width: 400px; overflow-y: auto;}
-        .preview-section { flex: 2; overflow: hidden; }
-
-        .form-group { margin-bottom: 15px; }
-        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #4B5563;}
-        textarea, select, input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            box-sizing: border-box;
-            font-size: 14px;
-        }
-        /* جعل مربع الكود من اليسار لليمين */
-        textarea { height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc;}
-        button {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-        button:hover { opacity: 0.9; transform: translateY(-1px); }
-        button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none;}
-
-        .preview-container {
-            flex: 1;
-            overflow: auto;
-            background: #e5e5f7;
-            border: 2px dashed #cbd5e1;
-            border-radius: 8px;
-            display: flex;
-            align-items: flex-start;
-            justify-content: center;
-            padding: 20px;
-        }
-        
-        /* منطقة الريندر التي سيتم تصويرها */
-        #render-area {
-            background: white;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
-            position: relative;
-            overflow: hidden;
-            transition: width 0.3s, height 0.3s;
-        }
-
-        /* المقاسات */
-        .ratio-16-9 { width: 1280px; height: 720px; }
-        .ratio-a4-p { width: 794px; height: 1123px; }
-        .ratio-a4-l { width: 1123px; height: 794px; }
-        .ratio-auto { width: 100%; min-height: 400px; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Tajawal', sans-serif; background: #f3f4f6; color: #333; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { margin: 0; color: #1f2937; }
+        .main-container { display: flex; gap: 20px; flex: 1; overflow: hidden; }
+        @media (max-width: 768px) { .main-container { flex-direction: column; height: auto; overflow: visible; } }
+        .sidebar, .preview-section { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; display: flex; flex-direction: column; }
+        .sidebar { flex: 1; max-width: 350px; }
+        .preview-section { flex: 2; padding: 0; overflow: hidden; }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #4b5563; }
+        input, select, textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
+        textarea { flex: 1; min-height: 200px; resize: vertical; direction: ltr; font-family: monospace; background: #f9fafb; font-size: 12px;}
+        button { background: #8b7355; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: auto; transition: 0.2s; }
+        button:hover { background: #5d4037; }
+        button:disabled { background: #9ca3af; cursor: not-allowed; }
+        .preview-header { padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; color: #6b7280; display: flex; justify-content: space-between;}
+        .tag { background: #fdf3e7; color: #d97706; padding: 2px 8px; border-radius: 4px; font-size: 12px;}
+        iframe { width: 100%; height: 100%; border: none; background: #fff; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>📸 محول HTML إلى صورة</h2>
+        <h2>📄 محول العروض التقديمية إلى PDF</h2>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
             <div class="form-group">
-                <label>كود HTML / CSS :</label>
-                <textarea id="html-input" placeholder="اكتب كودك هنا..."></textarea>
+                <label>اسم الملف المستخرج:</label>
+                <input type="text" id="file-name" value="عرض_قضية_فلسطين" placeholder="اكتب اسم الملف هنا">
             </div>
-            
-            <div class="form-group">
-                <button onclick="updatePreview()" style="width: 100%; background: #10B981;">تحديث المعاينة 🔄</button>
+
+            <div class="form-group" style="flex: 1;">
+                <label>كود الـ HTML / CSS:</label>
+                <textarea id="html-input" oninput="updatePreview()"></textarea>
             </div>
 
             <div class="form-group">
-                <label>المقاس (الأبعاد):</label>
-                <select id="size-select" onchange="changeSize()">
-                    <option value="ratio-16-9">شاشة 16:9 (1280x720)</option>
-                    <option value="ratio-a4-p">ورقة A4 (طولية)</option>
-                    <option value="ratio-a4-l">ورقة A4 (عرضية)</option>
-                    <option value="ratio-auto">تلقائي (حسب المحتوى)</option>
+                <label>جودة الاستخراج (PDF):</label>
+                <select id="quality-select">
+                    <option value="1">عادية</option>
+                    <option value="2" selected>عالية (موصى بها)</option>
+                    <option value="3">ممتازة</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>وقت الانتظار قبل التصوير (بالثواني):</label>
-                <input type="number" id="delay-input" value="2" min="0" max="15">
-                <small style="color: #6B7280; display: block; margin-top: 5px;">
-                    * مفيد لضمان تحميل الصور والخطوط الخارجية قبل الالتقاط.
-                </small>
+                <label>وقت أمان إضافي (بالثواني):</label>
+                <input type="number" id="delay-input" value="3" min="0" max="10">
             </div>
 
-            <button id="capture-btn" onclick="captureImage()">التقاط وتحميل الصورة 📥</button>
+            <button id="capture-btn" onclick="exportToPDF()">استخراج كملف PDF 📥</button>
         </div>
 
         <div class="preview-section">
-            <label>المعاينة المباشرة:</label>
-            <div class="preview-container">
-                <div id="render-area" class="ratio-16-9">
-                    </div>
+            <div class="preview-header">
+                <span>المعاينة المباشرة</span>
+                <span class="tag">1280 × 720</span>
             </div>
+            <iframe id="preview-frame"></iframe>
         </div>
     </div>
 
     <script>
-        // تحديث المعاينة فوراً
+        // الكود الافتراضي (عرضك التقديمي الجديد)
+        const userCode = `<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>عرض تقديمي: قضية فلسطين</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { display: block; margin: 0; padding: 20px 0; background-color: #2b2b2b; font-family: 'Tajawal', sans-serif; }
+        .page { width: 1280px; height: 720px; overflow: hidden; position: relative; margin: 0 auto 30px auto; background-color: #f7f4ec; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 8px solid #8b7355; box-sizing: border-box; background-image: radial-gradient(#e6dfcc 15%, transparent 16%), radial-gradient(#e6dfcc 15%, transparent 16%); background-size: 40px 40px; background-position: 0 0, 20px 20px; }
+        .content-wrapper { display: flex; flex-direction: column; height: 100%; padding: 40px 60px; box-sizing: border-box; z-index: 2; position: relative; }
+        h1, h2, h3, p, li, th, td { color: #3e2723; margin: 0; }
+        h1 { font-size: 55px; font-weight: 800; color: #5d4037; text-align: center; margin-bottom: 15px; }
+        h2 { font-size: 42px; font-weight: 700; border-bottom: 4px solid #8b7355; padding-bottom: 10px; margin-bottom: 20px; display: inline-block; }
+        p, li { font-size: 26px; line-height: 1.6; font-weight: 500; margin-bottom: 12px; }
+        .cover-slide { background-color: #3e2723; color: #fff; text-align: center; justify-content: center; align-items: center; background-image: linear-gradient(rgba(62, 39, 35, 0.85), rgba(62, 39, 35, 0.85)), url('https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_1920,c_scale,q_auto/cnnarabic/2024/03/13/images/263725.jpg'); background-size: cover; background-position: center; }
+        .cover-slide h1 { color: #f5deb3; font-size: 80px; text-shadow: 2px 4px 8px rgba(0,0,0,0.6); }
+        .cover-slide .subject { font-size: 35px; color: #d7ccc8; margin-bottom: 40px; background: rgba(0,0,0,0.5); padding: 10px 30px; border-radius: 10px; }
+        .cover-slide .presenter { font-size: 30px; color: #fff; border-top: 2px solid #f5deb3; padding-top: 20px; margin-top: auto; }
+        .two-columns { display: flex; gap: 40px; flex: 1; }
+        .column { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+        .image-box { width: 100%; height: 320px; border-radius: 15px; object-fit: cover; border: 6px solid #fff; box-shadow: 0 8px 16px rgba(0,0,0,0.2); }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fff; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        th, td { border: 2px solid #8b7355; padding: 12px; text-align: center; font-size: 24px; }
+        th { background-color: #8b7355; color: #fff; font-weight: 700; }
+        .footer-bar { position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; background-color: #8b7355; }
+        ul { list-style-type: none; padding-right: 15px; }
+        ul li::before { content: "■"; color: #7e191b; font-size: 20px; margin-left: 10px; display: inline-block; }
+        .highlight { color: #7e191b; font-weight: 700; }
+        /* إخفاء خلفية الـ body عند الطباعة أو التحويل */
+        @media print { body { background: none; padding: 0; } .page { margin: 0 auto; box-shadow: none; border: none;} }
+    </style>
+</head>
+<body>
+
+    <div class="page">
+        <div class="content-wrapper cover-slide">
+            <div class="subject">مادة الاجتماعيات</div>
+            <h1>قضية فلسطين</h1>
+            <p style="font-size: 32px; color: #fff; margin-bottom: 20px;">الجذور التاريخية والصمود المستمر</p>
+            <div class="presenter">تقديم: عهود يحيى غزواني</div>
+        </div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>محاور العرض التقديمي</h2>
+            <div class="two-columns">
+                <div class="column">
+                    <ul>
+                        <li>الأهمية التاريخية والدينية لفلسطين</li>
+                        <li>بدايات التدخل: وعد بلفور والانتداب</li>
+                        <li>قرارات التقسيم (1947)</li>
+                        <li>النكبة وتهجير الفلسطينيين (1948)</li>
+                        <li>أبرز المحطات والحروب العربية</li>
+                        <li>مقارنة مساحة الأراضي عبر الزمن</li>
+                        <li>الخلاصة والوضع الراهن</li>
+                    </ul>
+                </div>
+                <div class="column" style="align-items: center;">
+                    <img src="https://static.euronews.com/articles/stories/05/66/38/44/534x534_cmsv2_8fe1654c-9f76-5327-a05e-49f3c69f4fe8-5663844.jpg" class="image-box" alt="خريطة فلسطين التاريخية">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>الأهمية التاريخية والدينية</h2>
+            <div class="two-columns">
+                <div class="column">
+                    <p>تحظى فلسطين بمكانة عظيمة في قلوب المسلمين والعرب لعدة أسباب:</p>
+                    <ul>
+                        <li><span class="highlight">المسجد الأقصى:</span> أولى القبلتين وثالث الحرمين الشريفين.</li>
+                        <li><span class="highlight">أرض الإسراء والمعراج:</span> مسرى النبي محمد ﷺ.</li>
+                        <li><span class="highlight">مهد الحضارات:</span> تعاقبت عليها أعرق الحضارات الإنسانية.</li>
+                        <li><span class="highlight">الموقع الاستراتيجي:</span> حلقة وصل بين القارات.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <img src="https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_1920,c_scale,q_auto/cnnarabic/2024/03/13/images/263725.jpg" class="image-box" alt="المسجد الأقصى وقبة الصخرة">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>وعد بلفور والانتداب البريطاني</h2>
+            <p>بدأت المأساة الفعلية بتدخل القوى الاستعمارية لتغيير المنطقة:</p>
+            <div class="two-columns">
+                <div class="column">
+                    <ul>
+                        <li><span class="highlight">وعد بلفور (1917):</span> تصريح من الحكومة البريطانية بإنشاء "وطن قومي لليهود" (وعد من لا يملك لمن لا يستحق).</li>
+                        <li><span class="highlight">الانتداب البريطاني (1920-1948):</span> سهل الانتداب هجرة اليهود وتسليحهم.</li>
+                        <li><span class="highlight">المقاومة المبكرة:</span> اندلعت ثورات عديدة أبرزها ثورة البراق والثورة الكبرى.</li>
+                    </ul>
+                </div>
+                <div class="column" style="align-items: center;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Balfour_portrait_and_declaration.JPG/500px-Balfour_portrait_and_declaration.JPG" class="image-box" style="width: auto;" alt="رسالة وعد بلفور">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>قرار التقسيم (القرار رقم 181)</h2>
+            <p>في 1947، أصدرت الأمم المتحدة قراراً ظالماً بتقسيم فلسطين:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>الجهة المستفيدة</th>
+                        <th>نسبة الأرض الممنوحة</th>
+                        <th>ملاحظات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>الدولة العربية</td>
+                        <td>42.88%</td>
+                        <td>رغم أن العرب كانوا يمثلون الأغلبية الساحقة.</td>
+                    </tr>
+                    <tr>
+                        <td>الدولة اليهودية</td>
+                        <td>56.47%</td>
+                        <td>مُنحت أفضل الأراضي الزراعية والساحلية.</td>
+                    </tr>
+                    <tr>
+                        <td>منطقة دولية (القدس)</td>
+                        <td>0.65%</td>
+                        <td>تبقى تحت الوصاية الدولية لأهميتها.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p style="margin-top: 15px; text-align: center; color: #7e191b;">رفض العرب والفلسطينيون هذا القرار الجائر، مما مهد للحرب.</p>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>النكبة الفلسطينية 1948</h2>
+            <div class="two-columns">
+                <div class="column">
+                    <p>مع انتهاء الانتداب، أُعلن قيام دولة الاحتلال، وبدأت عمليات التطهير:</p>
+                    <ul>
+                        <li><span class="highlight">التهجير القسري:</span> تشريد أكثر من 750 ألف فلسطيني من أراضيهم.</li>
+                        <li><span class="highlight">التدمير:</span> مسح أكثر من 530 قرية ومدينة فلسطينية.</li>
+                        <li><span class="highlight">المجازر:</span> ارتكاب مذابح مروعة مثل مجزرة دير ياسين لترويع السكان.</li>
+                    </ul>
+                </div>
+                <div class="column">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRcSVFgKV4BywmQqu2dHRDQWQtpzv7rZwQnXCEnBNOHNavaFoDXZijQrzyE&s=10" class="image-box" alt="لاجئون فلسطينيون 1948">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper">
+            <h2>الحروب العربية والصمود المستمر</h2>
+            <p>شهدت القضية محطات فاصلة أدت إلى تقلص الأراضي وصمود الشعب:</p>
+            <div class="two-columns">
+                <div class="column">
+                    <ul>
+                        <li><span class="highlight">حرب 1948:</span> الجيوش العربية تشارك لدعم فلسطين.</li>
+                        <li><span class="highlight">نكسة 1967:</span> احتلال ما تبقى من فلسطين (الضفة وغزة) إضافة لسيناء والجولان.</li>
+                        <li><span class="highlight">الانتفاضات:</span> انتفاضة الحجارة (1987) والأقصى (2000)، كرموز للصمود.</li>
+                    </ul>
+                </div>
+                <div class="column" style="background-color: #fff; border: 2px solid #8b7355; padding: 15px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center;">
+                    <h3 style="color: #7e191b; text-align: center; margin-bottom: 15px; font-size: 26px;">حقيقة ديموغرافية وجغرافية</h3>
+                    <p style="font-size: 24px; text-align: center; margin: 0;">رغم مصادرة مساحات شاسعة وبناء المستوطنات وجدار الفصل، لا يزال الشعب الفلسطيني متمسكاً بهويته وحقه في العودة، مقدماً أروع الأمثلة في الثبات.</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+    <div class="page">
+        <div class="content-wrapper" style="text-align: center; justify-content: center; align-items: center;">
+            <h2 style="border: none; font-size: 55px; color: #7e191b; margin-bottom: 30px;">الخلاصة</h2>
+            <p style="font-size: 34px; max-width: 900px; text-align: center; margin-bottom: 50px;">"قضية فلسطين ليست مجرد قضية أرض، بل هي قضية عقيدة، وهوية، وعدالة إنسانية تأبى النسيان. ستظل فلسطين حية في وجداننا حتى استعادة الحقوق."</p>
+            
+            <div style="background-color: #8b7355; color: #fff; padding: 15px 50px; border-radius: 50px; font-size: 30px; font-weight: 700;">
+                شكراً لحسن استماعكم
+            </div>
+            <p style="margin-top: 30px; font-size: 26px; color: #5d4037;">إعداد وتقديم: عهود يحيى غزواني | مادة الاجتماعيات</p>
+        </div>
+        <div class="footer-bar"></div>
+    </div>
+
+</body>
+</html>`;
+
+        // إدراج الكود عند فتح الصفحة
+        window.onload = () => {
+            document.getElementById('html-input').value = userCode.trim();
+            updatePreview();
+        };
+
         function updatePreview() {
             const code = document.getElementById('html-input').value;
-            document.getElementById('render-area').innerHTML = code;
+            const iframe = document.getElementById('preview-frame');
+            iframe.srcdoc = code;
         }
 
-        // تغيير مقاس الإطار
-        function changeSize() {
-            const sizeClass = document.getElementById('size-select').value;
-            const renderArea = document.getElementById('render-area');
-            renderArea.className = sizeClass;
-        }
-
-        // وظيفة التقاط الصورة
-        async function captureImage() {
+        async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
             const delay = document.getElementById('delay-input').value * 1000;
-            const renderArea = document.getElementById('render-area');
+            const fileName = document.getElementById('file-name').value || 'document';
+            const qualityScale = parseInt(document.getElementById('quality-select').value);
 
-            // نحدث المعاينة للتأكد من أحدث التغييرات
-            updatePreview();
+            if (!code.trim()) { alert("الرجاء إدخال الكود أولاً!"); return; }
 
-            // تعطيل الزر لمنع التكرار
             btn.disabled = true;
-            
-            if (delay > 0) {
-                btn.innerText = `⏳ ننتظر ${delay/1000} ثانية للتحميل...`;
-            }
+            btn.innerText = `⏳ جاري إعداد الشريحة...`;
 
-            // بدء مؤقت الانتظار
-            setTimeout(async () => {
-                btn.innerText = "📸 جاري التقاط الصورة...";
-                try {
-                    // إعدادات التصوير
-                    const canvas = await html2canvas(renderArea, {
-                        scale: 2, // جودة عالية (Retina)
-                        useCORS: true, // مهم جداً لدعم الصور الخارجية
-                        backgroundColor: '#ffffff' 
+            const hiddenContainer = document.createElement('div');
+            hiddenContainer.style.position = 'absolute';
+            hiddenContainer.style.top = '0';
+            hiddenContainer.style.left = '0';
+            hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.opacity = '0.01'; 
+            hiddenContainer.style.pointerEvents = 'none';
+            // تحديث العرض ليطابق 1280
+            hiddenContainer.style.width = '1280px'; 
+            hiddenContainer.innerHTML = code;
+            document.body.appendChild(hiddenContainer);
+
+            try {
+                btn.innerText = `⏳ تمرير الصور والخطوط...`;
+                await document.fonts.ready;
+
+                const images = hiddenContainer.querySelectorAll('img');
+                const imagePromises = Array.from(images).map(img => {
+                    return new Promise((resolve) => {
+                        if (img.src && !img.src.startsWith('data:')) {
+                            const originalSrc = img.src;
+                            img.crossOrigin = "anonymous";
+                            img.src = 'https://corsproxy.io/?' + encodeURIComponent(originalSrc);
+                        }
+                        img.onload = async () => {
+                            try { if (img.decode) await img.decode(); } catch(e) {}
+                            resolve();
+                        };
+                        img.onerror = resolve; 
+                    });
+                });
+                
+                await Promise.all(imagePromises);
+
+                if (delay > 0) {
+                    btn.innerText = `⏳ انتظار أخير للاحتياط...`;
+                    await new Promise(r => setTimeout(r, delay));
+                }
+
+                btn.innerText = "📸 جاري تصوير الشرائح...";
+                const { jsPDF } = window.jspdf;
+                // تحديث أبعاد الـ PDF لتطابق 1280x720
+                const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1280, 720] });
+
+                let pages = hiddenContainer.querySelectorAll('.page');
+                if (pages.length === 0) pages = [hiddenContainer];
+
+                window.scrollTo(0, 0);
+
+                for (let i = 0; i < pages.length; i++) {
+                    const canvas = await html2canvas(pages[i], {
+                        scale: qualityScale,
+                        useCORS: true,
+                        allowTaint: false,
+                        // تحديث أبعاد الكانفاس لتطابق 1280x720
+                        width: 1280,
+                        height: 720,
+                        windowWidth: 1280,
+                        scrollX: 0,
+                        scrollY: 0,
+                        backgroundColor: '#ffffff'
                     });
 
-                    // إنشاء رابط لتحميل الصورة
-                    const link = document.createElement('a');
-                    link.download = 'code-screenshot.png';
-                    link.href = canvas.toDataURL('image/png');
-                    link.click();
-
-                } catch (error) {
-                    alert("حدث خطأ أثناء التقاط الصورة. تأكد من أن الصور الخارجية تدعم CORS.");
-                    console.error(error);
-                } finally {
-                    // إعادة الزر لحالته الطبيعية
-                    btn.disabled = false;
-                    btn.innerText = "التقاط وتحميل الصورة 📥";
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    if (i > 0) pdf.addPage([1280, 720], 'landscape');
+                    // لصق الصورة באبعادها الجديدة
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 1280, 720);
                 }
-            }, delay);
-        }
 
-        // كود تجريبي يظهر عند فتح الصفحة لأول مرة
-        const defaultCode = `
-<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; font-family:sans-serif;">
-    <h1 style="font-size: 4rem; margin:0;">أهلاً بك! ✨</h1>
-    <p style="font-size: 1.5rem; opacity: 0.9;">قم بكتابة كود HTML هنا لتصويره</p>
-</div>`;
-        document.getElementById('html-input').value = defaultCode.trim();
-        updatePreview();
+                btn.innerText = "📄 جاري حفظ الملف...";
+                pdf.save(`${fileName}.pdf`);
+
+            } catch (error) {
+                console.error("خطأ:", error);
+                alert("حدث خطأ أثناء معالجة الصور.");
+            } finally {
+                document.body.removeChild(hiddenContainer);
+                btn.disabled = false;
+                btn.innerText = "استخراج كملف PDF 📥";
+            }
+        }
     </script>
 </body>
 </html>
