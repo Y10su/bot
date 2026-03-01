@@ -3,26 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول HTML إلى PDF | الإصدار النهائي</title>
+    <title>محول الأكواد إلى PDF</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <style>
-        :root {
-            --bg-color: #fcfaf8;
-            --panel-bg: #ffffff;
-            --primary: #467a5e; /* أخضر هادئ */
-            --primary-hover: #365e48;
-            --border: #e2dcd2;
-            --text-dark: #333333;
-            --text-muted: #777777;
-        }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-dark);
+            background-color: #f3f4f6;
+            color: #333;
             margin: 0;
             padding: 20px;
             display: flex;
@@ -30,104 +20,84 @@
             height: 100vh;
             box-sizing: border-box;
         }
-
         .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { margin: 0; color: var(--text-dark); font-size: 24px; font-weight: bold; }
-        
-        .main-container {
-            display: flex; gap: 20px; flex: 1; overflow: hidden; max-width: 1200px; margin: 0 auto; width: 100%;
-        }
+        .header h2 { margin: 0; color: #1f2937; }
+        .main-container { display: flex; gap: 20px; flex: 1; overflow: hidden; }
         
         @media (max-width: 768px) {
-            body { padding: 10px; height: auto; }
             .main-container { flex-direction: column; height: auto; overflow: visible; }
         }
         
         .sidebar, .preview-section {
-            background: var(--panel-bg); border-radius: 12px; padding: 24px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02); border: 1px solid var(--border);
+            background: #ffffff; border-radius: 8px; padding: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb;
             display: flex; flex-direction: column;
         }
-        .sidebar { flex: 1; max-width: 380px; }
-        .preview-section { flex: 2; padding: 0; overflow: hidden; position: relative; }
+        .sidebar { flex: 1; max-width: 350px; }
+        .preview-section { flex: 2; padding: 0; overflow: hidden; }
         
-        .form-group { margin-bottom: 16px; display: flex; flex-direction: column; }
-        label { margin-bottom: 6px; font-weight: 600; font-size: 14px; color: var(--text-dark); }
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #4b5563; }
         input, select, textarea {
-            padding: 12px; border: 1px solid var(--border); border-radius: 8px;
-            font-size: 14px; font-family: inherit; background-color: var(--bg-color); transition: 0.2s;
+            padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit;
         }
         input:focus, select:focus, textarea:focus {
-            outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(70, 122, 94, 0.1);
+            outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
         }
         textarea {
-            flex: 1; min-height: 220px; resize: vertical; direction: ltr;
-            font-family: monospace; font-size: 13px;
+            flex: 1; min-height: 200px; resize: vertical; direction: ltr; font-family: monospace; background-color: #f9fafb;
         }
-        
-        .flex-row { display: flex; gap: 10px; }
-        .flex-row .form-group { flex: 1; }
-
         button {
-            background-color: var(--primary); color: white; border: none; padding: 16px;
-            border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer;
-            margin-top: 10px; transition: all 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px;
+            background-color: #3b82f6; color: white; border: none; padding: 12px; border-radius: 6px;
+            font-size: 16px; font-weight: bold; cursor: pointer; margin-top: auto; transition: background-color 0.2s;
         }
-        button:hover { background-color: var(--primary-hover); transform: translateY(-1px); }
-        button:disabled { background-color: #aebdb4; cursor: not-allowed; transform: none; }
+        button:hover { background-color: #2563eb; }
+        button:disabled { background-color: #9ca3af; cursor: not-allowed; }
         
         .preview-header {
-            padding: 15px 24px; background: var(--panel-bg); border-bottom: 1px solid var(--border);
-            font-size: 14px; font-weight: bold; color: var(--text-dark);
-            display: flex; justify-content: space-between; align-items: center;
+            padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb;
+            font-size: 14px; font-weight: bold; color: #6b7280;
         }
-        .tag { background: #fdf3e7; color: #d97706; padding: 4px 8px; border-radius: 6px; font-size: 12px; }
-        iframe#preview-frame { width: 100%; height: 100%; border: none; background-color: #f3f4f6; }
+        iframe { width: 100%; height: 100%; border: none; background-color: #fff; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>أداة تحويل الأكواد إلى PDF 📄</h2>
+        <h2>📄 محول HTML إلى PDF</h2>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
             <div class="form-group">
-                <label>اسم الملف المستخرج</label>
-                <input type="text" id="file-name" value="عرض_تاريخي" placeholder="بدون صيغة...">
+                <label>اسم الملف:</label>
+                <input type="text" id="file-name" value="مشروعي" placeholder="اكتب اسم الملف هنا">
             </div>
 
             <div class="form-group" style="flex: 1;">
-                <label>كود الـ HTML (الصق كودك هنا)</label>
-                <textarea id="html-input" oninput="updatePreview()" placeholder="الصق الكود هنا..."></textarea>
+                <label>الصق الكود هنا (HTML/CSS):</label>
+                <textarea id="html-input" oninput="updatePreview()"></textarea>
             </div>
 
-            <div class="flex-row">
-                <div class="form-group">
-                    <label>الجودة</label>
-                    <select id="quality-select">
-                        <option value="1">عادية</option>
-                        <option value="2" selected>عالية</option>
-                        <option value="3">ممتازة</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>تأخير إضافي</label>
-                    <input type="number" id="delay-input" value="2" min="0" max="10" title="بالثواني">
-                </div>
+            <div class="form-group">
+                <label>جودة الصور داخل الـ PDF:</label>
+                <select id="quality-select">
+                    <option value="1">عادية</option>
+                    <option value="2" selected>عالية</option>
+                    <option value="3">ممتازة (أبطأ في التحميل)</option>
+                </select>
             </div>
 
-            <button id="capture-btn" onclick="exportToPDF()">
-                بدء التحويل إلى PDF 📥
-            </button>
+            <div class="form-group">
+                <label>وقت الانتظار قبل التصوير (ثواني):</label>
+                <input type="number" id="delay-input" value="3" min="0" max="10">
+            </div>
+
+            <button id="capture-btn" onclick="exportToPDF()">بدء التحويل إلى PDF 📥</button>
         </div>
 
         <div class="preview-section">
-            <div class="preview-header">
-                <span>المعاينة المباشرة</span>
-                <span class="tag">الحدود: 1000x562.5</span>
-            </div>
+            <div class="preview-header">المعاينة المباشرة (العرض: 1000 | الارتفاع: 562.5)</div>
             <iframe id="preview-frame"></iframe>
         </div>
     </div>
@@ -140,102 +110,105 @@
             iframe.srcdoc = code;
         }
 
-        // دالة التحويل الأساسية
+        // دالة التحويل المحدثة (تصوير ثم دمج)
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
-            const delay = (document.getElementById('delay-input').value * 1000) || 0;
+            const delay = document.getElementById('delay-input').value * 1000;
             const fileName = document.getElementById('file-name').value || 'document';
             const qualityScale = parseInt(document.getElementById('quality-select').value);
 
             if (!code.trim()) {
-                alert("الرجاء لصق الكود أولاً.");
+                alert("الرجاء إدخال الكود أولاً!");
                 return;
             }
 
             btn.disabled = true;
-            btn.innerHTML = "⏳ جاري الإعداد...";
+            btn.innerText = `⏳ جاري إعداد الشاشة...`;
 
-            // 1. إنشاء إطار مخفي بالكامل خارج الشاشة لتجنب ضغط متصفح الجوال
-            const hiddenIframe = document.createElement('iframe');
-            hiddenIframe.style.position = 'fixed';
-            hiddenIframe.style.top = '0';
-            hiddenIframe.style.right = '200vw'; // إبعاده عن الشاشة
-            hiddenIframe.style.width = '1000px'; 
-            hiddenIframe.style.height = '10000px'; // ارتفاع عالي جداً لاحتواء كل الشرائح
-            hiddenIframe.style.border = 'none';
-            document.body.appendChild(hiddenIframe);
+            // 1. إنشاء حاوية مخفية
+            const hiddenContainer = document.createElement('div');
+            hiddenContainer.style.position = 'absolute';
+            hiddenContainer.style.left = '-9999px'; 
+            hiddenContainer.style.top = '0';
+            hiddenContainer.style.width = '1000px'; 
+            hiddenContainer.innerHTML = code;
+            document.body.appendChild(hiddenContainer);
 
-            const frameDoc = hiddenIframe.contentWindow.document;
-            frameDoc.open();
-            frameDoc.write(code);
-            frameDoc.close();
+            try {
+                // --- التعديل لحل مشكلة الصور ---
+                btn.innerText = `⏳ ننتظر تحميل الصور والخطوط...`;
 
-            // الانتظار حتى يقرأ المتصفح محتوى الإطار
-            hiddenIframe.onload = async () => {
-                try {
-                    btn.innerHTML = "⏳ جاري تحميل الخطوط والصور...";
+                // الانتظار حتى تكتمل الخطوط (بما أنها تعمل معك بشكل ممتاز هنا)
+                await document.fonts.ready;
 
-                    // === السحر هنا: إجبار النظام على انتظار الخطوط والصور ===
-                    
-                    // انتظار الخطوط (يمنع تداخل النصوص)
-                    await hiddenIframe.contentWindow.document.fonts.ready;
-
-                    // انتظار الصور (يمنع اختفاء الصور)
-                    const images = frameDoc.querySelectorAll('img');
-                    const imagePromises = Array.from(images).map(img => {
-                        if (img.complete) return Promise.resolve();
-                        return new Promise(resolve => {
-                            img.onload = resolve;
-                            img.onerror = resolve; // حتى لو فشلت صورة، لا يتوقف النظام
-                        });
+                // البحث عن جميع الصور في الكود وإجبار النظام على انتظارها
+                const images = hiddenContainer.querySelectorAll('img');
+                const imagePromises = Array.from(images).map(img => {
+                    // تفعيل تصريح CORS للصور لتجنب الحظر
+                    img.crossOrigin = "anonymous";
+                    if (img.complete) return Promise.resolve();
+                    return new Promise(resolve => {
+                        img.onload = resolve;
+                        img.onerror = resolve; // لو فشلت الصورة يكمل عشان ما يعلق المشروع
                     });
-                    await Promise.all(imagePromises);
+                });
+                
+                // انتظار تحميل كل الصور
+                await Promise.all(imagePromises);
 
-                    // إضافة التأخير الإضافي كضمان
-                    if (delay > 0) {
-                        await new Promise(r => setTimeout(r, delay));
-                    }
-
-                    btn.innerHTML = "📸 جاري تصوير الشرائح...";
-
-                    const { jsPDF } = window.jspdf;
-                    const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1000, 562.5] });
-
-                    let pages = frameDoc.querySelectorAll('.page');
-                    if (pages.length === 0) pages = [frameDoc.body];
-
-                    // تصوير الشرائح
-                    for (let i = 0; i < pages.length; i++) {
-                        const canvas = await html2canvas(pages[i], {
-                            scale: qualityScale,
-                            useCORS: true,
-                            allowTaint: false,
-                            letterRendering: true,
-                            width: 1000,
-                            height: 562.5,
-                            windowWidth: 1000
-                        });
-
-                        const imgData = canvas.toDataURL('image/jpeg', 0.95);
-
-                        if (i > 0) pdf.addPage([1000, 562.5], 'landscape');
-                        pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 562.5);
-                    }
-
-                    btn.innerHTML = "📄 جاري حفظ الملف...";
-                    pdf.save(`${fileName}.pdf`);
-
-                } catch (error) {
-                    console.error("خطأ:", error);
-                    alert("حدث خطأ أثناء معالجة الملف.");
-                } finally {
-                    // تنظيف وإعادة الزر
-                    document.body.removeChild(hiddenIframe);
-                    btn.disabled = false;
-                    btn.innerHTML = "بدء التحويل إلى PDF 📥";
+                // بعد اكتمال الصور، نضيف الثواني اللي حددتها أنت كضمان إضافي للشبكات البطيئة
+                if (delay > 0) {
+                    btn.innerText = `⏳ انتظار إضافي للاحتياط...`;
+                    await new Promise(r => setTimeout(r, delay));
                 }
-            };
+
+                btn.innerText = "📸 جاري تصوير الشرائح...";
+                
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({
+                    orientation: 'landscape',
+                    unit: 'px',
+                    format: [1000, 562.5]
+                });
+
+                let pages = hiddenContainer.querySelectorAll('.page');
+                if (pages.length === 0) {
+                    pages = [hiddenContainer];
+                }
+
+                for (let i = 0; i < pages.length; i++) {
+                    const pageElement = pages[i];
+                    
+                    const canvas = await html2canvas(pageElement, {
+                        scale: qualityScale,
+                        useCORS: true,
+                        allowTaint: false,
+                        width: 1000,
+                        height: 562.5,
+                        windowWidth: 1000,
+                        backgroundColor: '#ffffff'
+                    });
+
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+
+                    if (i > 0) {
+                        pdf.addPage([1000, 562.5], 'landscape');
+                    }
+                    pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 562.5);
+                }
+
+                btn.innerText = "📄 جاري حفظ الملف...";
+                pdf.save(`${fileName}.pdf`);
+
+            } catch (error) {
+                console.error("حدث خطأ أثناء التصوير: ", error);
+                alert("حدث خطأ أثناء معالجة الصور.");
+            } finally {
+                document.body.removeChild(hiddenContainer);
+                btn.disabled = false;
+                btn.innerText = "بدء التحويل إلى PDF 📥";
+            }
         }
     </script>
 </body>
