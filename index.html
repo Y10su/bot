@@ -3,174 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>محول الأكواد إلى PDF</title>
-    
+    <title>مصور الأكواد الذكي</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, sans-serif; background: #f3f4f6; color: #333; margin: 0; padding: 20px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { margin: 0; color: #1f2937; }
-        .main-container { display: flex; gap: 20px; flex: 1; overflow: hidden; }
-        @media (max-width: 768px) { .main-container { flex-direction: column; height: auto; overflow: visible; } }
-        .sidebar, .preview-section { background: #fff; border-radius: 8px; padding: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); border: 1px solid #e5e7eb; display: flex; flex-direction: column; }
-        .sidebar { flex: 1; max-width: 350px; }
-        .preview-section { flex: 2; padding: 0; overflow: hidden; }
-        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        label { margin-bottom: 5px; font-weight: 600; font-size: 14px; color: #4b5563; }
-        input, select, textarea { padding: 10px; border: 1px solid #d1d5db; border-radius: 6px; font-size: 14px; font-family: inherit; }
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2); }
-        textarea { flex: 1; min-height: 200px; resize: vertical; direction: ltr; font-family: monospace; background: #f9fafb; }
-        button { background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: auto; transition: 0.2s; }
-        button:hover { background: #2563eb; }
-        button:disabled { background: #9ca3af; cursor: not-allowed; }
-        .preview-header { padding: 12px 20px; background: #f9fafb; border-bottom: 1px solid #e5e7eb; font-size: 14px; font-weight: bold; color: #6b7280; }
-        iframe { width: 100%; height: 100%; border: none; background: #fff; }
+        :root {
+            --primary: #4F46E5;
+            --bg: #F3F4F6;
+            --panel: #FFFFFF;
+            --border: #E5E7EB;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            box-sizing: border-box;
+        }
+        .header { text-align: center; margin-bottom: 20px; color: #333; }
+        .main-container {
+            display: flex;
+            gap: 20px;
+            flex: 1;
+            overflow: hidden;
+        }
+        @media (max-width: 768px) {
+            .main-container { flex-direction: column; height: auto; overflow: visible;}
+        }
+        .sidebar, .preview-section {
+            background: var(--panel);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar { flex: 1; max-width: 400px; overflow-y: auto;}
+        .preview-section { flex: 2; overflow: hidden; }
+
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #4B5563;}
+        textarea, select, input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        /* جعل مربع الكود من اليسار لليمين */
+        textarea { height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc;}
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 16px;
+            transition: all 0.2s;
+        }
+        button:hover { opacity: 0.9; transform: translateY(-1px); }
+        button:disabled { background: #9CA3AF; cursor: not-allowed; transform: none;}
+
+        .preview-container {
+            flex: 1;
+            overflow: auto;
+            background: #e5e5f7;
+            border: 2px dashed #cbd5e1;
+            border-radius: 8px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        /* منطقة الريندر التي سيتم تصويرها */
+        #render-area {
+            background: white;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* المقاسات */
+        .ratio-16-9 { width: 1280px; height: 720px; }
+        .ratio-a4-p { width: 794px; height: 1123px; }
+        .ratio-a4-l { width: 1123px; height: 794px; }
+        .ratio-auto { width: 100%; min-height: 400px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h2>📄 محول HTML إلى PDF</h2>
+        <h2>📸 محول HTML إلى صورة</h2>
     </div>
 
     <div class="main-container">
         <div class="sidebar">
             <div class="form-group">
-                <label>اسم الملف:</label>
-                <input type="text" id="file-name" value="مشروعي" placeholder="اكتب اسم الملف هنا">
+                <label>كود HTML / CSS :</label>
+                <textarea id="html-input" placeholder="اكتب كودك هنا..."></textarea>
             </div>
-
-            <div class="form-group" style="flex: 1;">
-                <label>الصق الكود هنا (HTML/CSS):</label>
-                <textarea id="html-input" oninput="updatePreview()"></textarea>
+            
+            <div class="form-group">
+                <button onclick="updatePreview()" style="width: 100%; background: #10B981;">تحديث المعاينة 🔄</button>
             </div>
 
             <div class="form-group">
-                <label>جودة الصور داخل الـ PDF:</label>
-                <select id="quality-select">
-                    <option value="1">عادية</option>
-                    <option value="2" selected>عالية</option>
-                    <option value="3">ممتازة (أبطأ في التحميل)</option>
+                <label>المقاس (الأبعاد):</label>
+                <select id="size-select" onchange="changeSize()">
+                    <option value="ratio-16-9">شاشة 16:9 (1280x720)</option>
+                    <option value="ratio-a4-p">ورقة A4 (طولية)</option>
+                    <option value="ratio-a4-l">ورقة A4 (عرضية)</option>
+                    <option value="ratio-auto">تلقائي (حسب المحتوى)</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <label>وقت الانتظار قبل التصوير (ثواني):</label>
-                <input type="number" id="delay-input" value="3" min="0" max="10">
+                <label>وقت الانتظار قبل التصوير (بالثواني):</label>
+                <input type="number" id="delay-input" value="2" min="0" max="15">
+                <small style="color: #6B7280; display: block; margin-top: 5px;">
+                    * مفيد لضمان تحميل الصور والخطوط الخارجية قبل الالتقاط.
+                </small>
             </div>
 
-            <button id="capture-btn" onclick="exportToPDF()">بدء التحويل إلى PDF 📥</button>
+            <button id="capture-btn" onclick="captureImage()">التقاط وتحميل الصورة 📥</button>
         </div>
 
         <div class="preview-section">
-            <div class="preview-header">المعاينة المباشرة (العرض: 1000 | الارتفاع: 562.5)</div>
-            <iframe id="preview-frame"></iframe>
+            <label>المعاينة المباشرة:</label>
+            <div class="preview-container">
+                <div id="render-area" class="ratio-16-9">
+                    </div>
+            </div>
         </div>
     </div>
 
     <script>
+        // تحديث المعاينة فوراً
         function updatePreview() {
             const code = document.getElementById('html-input').value;
-            const iframe = document.getElementById('preview-frame');
-            iframe.srcdoc = code;
+            document.getElementById('render-area').innerHTML = code;
         }
 
-        async function exportToPDF() {
+        // تغيير مقاس الإطار
+        function changeSize() {
+            const sizeClass = document.getElementById('size-select').value;
+            const renderArea = document.getElementById('render-area');
+            renderArea.className = sizeClass;
+        }
+
+        // وظيفة التقاط الصورة
+        async function captureImage() {
             const btn = document.getElementById('capture-btn');
-            const code = document.getElementById('html-input').value;
             const delay = document.getElementById('delay-input').value * 1000;
-            const fileName = document.getElementById('file-name').value || 'document';
-            const qualityScale = parseInt(document.getElementById('quality-select').value);
+            const renderArea = document.getElementById('render-area');
 
-            if (!code.trim()) { alert("الرجاء إدخال الكود أولاً!"); return; }
+            // نحدث المعاينة للتأكد من أحدث التغييرات
+            updatePreview();
 
+            // تعطيل الزر لمنع التكرار
             btn.disabled = true;
-            btn.innerText = `⏳ جاري إعداد الشاشة...`;
-
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.top = '0';
-            hiddenContainer.style.left = '0';
-            hiddenContainer.style.zIndex = '-9999';
-            hiddenContainer.style.opacity = '0.01'; 
-            hiddenContainer.style.pointerEvents = 'none';
-            hiddenContainer.style.width = '1000px'; 
-            hiddenContainer.innerHTML = code;
-            document.body.appendChild(hiddenContainer);
-
-            try {
-                btn.innerText = `⏳ تمرير الصور عبر البروكسي...`;
-                await document.fonts.ready;
-
-                // === إضافة البروكسي لتخطي حظر GitHub Pages ===
-                const images = hiddenContainer.querySelectorAll('img');
-                const imagePromises = Array.from(images).map(img => {
-                    return new Promise((resolve) => {
-                        // إذا كانت الصورة برابط خارجي وليست Base64 بالفعل
-                        if (img.src && !img.src.startsWith('data:')) {
-                            const originalSrc = img.src;
-                            img.crossOrigin = "anonymous";
-                            // نمرر الرابط عبر بروكسي مجاني لتخطي الـ CORS
-                            img.src = 'https://corsproxy.io/?' + encodeURIComponent(originalSrc);
-                        }
-
-                        img.onload = async () => {
-                            try { if (img.decode) await img.decode(); } catch(e) {}
-                            resolve();
-                        };
-                        // لو فشل البروكسي لسبب ما، لا نوقف المشروع بل نكمل
-                        img.onerror = resolve; 
-                    });
-                });
-                
-                await Promise.all(imagePromises);
-
-                if (delay > 0) {
-                    btn.innerText = `⏳ انتظار أخير للاحتياط...`;
-                    await new Promise(r => setTimeout(r, delay));
-                }
-
-                btn.innerText = "📸 جاري تصوير الشرائح...";
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [1000, 562.5] });
-
-                let pages = hiddenContainer.querySelectorAll('.page');
-                if (pages.length === 0) pages = [hiddenContainer];
-
-                window.scrollTo(0, 0);
-
-                for (let i = 0; i < pages.length; i++) {
-                    const canvas = await html2canvas(pages[i], {
-                        scale: qualityScale,
-                        useCORS: true,
-                        allowTaint: false,
-                        width: 1000,
-                        height: 562.5,
-                        windowWidth: 1000,
-                        scrollX: 0,
-                        scrollY: 0,
-                        backgroundColor: '#ffffff'
-                    });
-
-                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                    if (i > 0) pdf.addPage([1000, 562.5], 'landscape');
-                    pdf.addImage(imgData, 'JPEG', 0, 0, 1000, 562.5);
-                }
-
-                btn.innerText = "📄 جاري حفظ الملف...";
-                pdf.save(`${fileName}.pdf`);
-
-            } catch (error) {
-                console.error("خطأ:", error);
-                alert("حدث خطأ أثناء معالجة الصور.");
-            } finally {
-                document.body.removeChild(hiddenContainer);
-                btn.disabled = false;
-                btn.innerText = "بدء التحويل إلى PDF 📥";
+            
+            if (delay > 0) {
+                btn.innerText = `⏳ ننتظر ${delay/1000} ثانية للتحميل...`;
             }
+
+            // بدء مؤقت الانتظار
+            setTimeout(async () => {
+                btn.innerText = "📸 جاري التقاط الصورة...";
+                try {
+                    // إعدادات التصوير
+                    const canvas = await html2canvas(renderArea, {
+                        scale: 2, // جودة عالية (Retina)
+                        useCORS: true, // مهم جداً لدعم الصور الخارجية
+                        backgroundColor: '#ffffff' 
+                    });
+
+                    // إنشاء رابط لتحميل الصورة
+                    const link = document.createElement('a');
+                    link.download = 'code-screenshot.png';
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+
+                } catch (error) {
+                    alert("حدث خطأ أثناء التقاط الصورة. تأكد من أن الصور الخارجية تدعم CORS.");
+                    console.error(error);
+                } finally {
+                    // إعادة الزر لحالته الطبيعية
+                    btn.disabled = false;
+                    btn.innerText = "التقاط وتحميل الصورة 📥";
+                }
+            }, delay);
         }
+
+        // كود تجريبي يظهر عند فتح الصفحة لأول مرة
+        const defaultCode = `
+<div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color:white; font-family:sans-serif;">
+    <h1 style="font-size: 4rem; margin:0;">أهلاً بك! ✨</h1>
+    <p style="font-size: 1.5rem; opacity: 0.9;">قم بكتابة كود HTML هنا لتصويره</p>
+</div>`;
+        document.getElementById('html-input').value = defaultCode.trim();
+        updatePreview();
     </script>
 </body>
 </html>
