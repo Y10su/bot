@@ -32,7 +32,6 @@
         .row { display: flex; gap: 10px; }
         .row .form-group { flex: 1; }
 
-        /* قسم أوامر الذكاء الاصطناعي */
         .ai-prompts { background: #f0fdf4; border: 1px dashed #22c55e; padding: 12px; border-radius: 8px; margin-bottom: 15px;}
         .ai-prompts p { margin: 0 0 8px 0; font-size: 12px; color: #166534; font-weight: bold; text-align: center;}
         .prompt-btns { display: flex; gap: 8px; }
@@ -109,7 +108,7 @@
     </div>
 
     <script>
-        // --- نصوص أوامر الذكاء الاصطناعي الجاهزة ---
+        // أوامر الذكاء الاصطناعي المحدثة لضبط الخطوط واتجاه الأرقام
         const prompts = {
             a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
 
@@ -121,20 +120,21 @@
 **العام الدراسي:** [مثال: 1447هـ / 2026م]
 **عدد الصفحات المطلوبة:** [مثال: 5 صفحات]
 
-**متطلبات تقنية صارمة — لا تتجاوزها:**
-- كل صفحة تكون: <div class="page"> بالضبط
-- أبعاد كل صفحة في CSS: width: 794px; height: 1123px; overflow: hidden; position: relative;
-- الـ body يكون: display: block; (لا flex ولا grid ولا justify-content)
-- لا تضع letter-spacing على أي نص عربي
-- استخدم Google Fonts: Cairo أو Tajawal أو Amiri
-- كل صفحة مكتفية بذاتها — لا يتجاوز المحتوى الـ 1123px
+**متطلبات تقنية صارمة جداً — لا تتجاوزها:**
+1. يجب أن يبدأ الكود بـ <html lang="ar" dir="rtl"> لضمان عدم انقلاب الأرقام لليسار.
+2. يجب استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal أو Amiri) صراحةً باستخدام علامة <link> في الـ <head>.
+3. الـ body يجب أن يحتوي على: display: block; direction: rtl; text-align: right; unicode-bidi: isolate; (ممنوع استخدام flex أو grid في الـ body).
+4. كل صفحة تكون: <div class="page"> بالضبط.
+5. أبعاد كل صفحة في CSS: width: 794px; height: 1123px; overflow: hidden; position: relative;
+6. لا تضع letter-spacing على أي نص عربي.
+7. كل صفحة مكتفية بذاتها — لا يتجاوز المحتوى الـ 1123px ارتفاعاً.
 
 **هيكل كل صفحة:**
 صفحة 1: غلاف (اسم البحث، الطالب، المعلم، العام الدراسي)
 صفحة 2+: محتوى البحث (عناوين h2، فقرات، جداول، صناديق)
 صفحة أخيرة: المراجع والمصادر
 
-**نمط التصميم:** احترافي وأنيق باستخدام ألوان متناسقة وحدود ذهبية أو ملونة`,
+**نمط التصميم:** احترافي وأنيق باستخدام ألوان متناسقة وحدود ذهبية أو ملونة.`,
             
             169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:
 
@@ -143,13 +143,14 @@
 **المقدِّم:** [الاسم]
 **عدد الشرائح:** [مثال: 8 شرائح]
 
-**متطلبات تقنية صارمة — لا تتجاوزها:**
-- كل شريحة تكون: <div class="page"> بالضبط
-- أبعاد كل شريحة في CSS: width: 1280px; height: 720px; overflow: hidden; position: relative;
-- الـ body يكون: display: block; (لا flex ولا grid ولا justify-content)
-- لا تضع letter-spacing على أي نص عربي
-- استخدم Google Fonts: Cairo أو Tajawal
-- كل شريحة مكتفية بذاتها — لا يتجاوز المحتوى 720px
+**متطلبات تقنية صارمة جداً — لا تتجاوزها:**
+1. يجب أن يبدأ الكود بـ <html lang="ar" dir="rtl"> لضمان عدم انقلاب الأرقام لليسار.
+2. يجب استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal) صراحةً باستخدام علامة <link> في الـ <head>.
+3. الـ body يجب أن يحتوي على: display: block; direction: rtl; text-align: right; unicode-bidi: isolate; (ممنوع استخدام flex أو grid في الـ body).
+4. كل شريحة تكون: <div class="page"> بالضبط.
+5. أبعاد كل شريحة في CSS: width: 1280px; height: 720px; overflow: hidden; position: relative;
+6. لا تضع letter-spacing على أي نص عربي.
+7. كل شريحة مكتفية بذاتها — لا يتجاوز المحتوى 720px ارتفاعاً.
 
 **هيكل الشرائح:**
 شريحة 1: غلاف (عنوان كبير + اسم المقدِّم)
@@ -157,10 +158,9 @@
 شرائح 3+: محتوى (نقاط، جداول، مقارنات، معلومات)
 شريحة أخيرة: خلاصة أو شكر
 
-**نمط التصميم:** حديث وجريء، خلفيات ملونة، نصوص واسعة وواضحة، مناسب للعرض`
+**نمط التصميم:** حديث وجريء، خلفيات ملونة، نصوص واسعة وواضحة، مناسب للعرض.`
         };
 
-        // دالة نسخ الأمر
         function copyPrompt(type, btnElement) {
             navigator.clipboard.writeText(prompts[type]).then(() => {
                 const originalText = btnElement.innerText;
@@ -179,7 +179,6 @@
             });
         }
 
-        // دالة مسح الكود
         function clearCode() {
             if(confirm("هل أنت متأكد من مسح الكود الحالي؟")) {
                 document.getElementById('html-input').value = '';
@@ -187,7 +186,6 @@
             }
         }
 
-        // تحديث التاج الخاص بالأبعاد
         function updateTag() {
             const format = document.getElementById('format-select').value;
             const tag = document.getElementById('size-tag');
@@ -198,14 +196,12 @@
             }
         }
 
-        // تحديث إطار المعاينة
         function updatePreview() {
             const code = document.getElementById('html-input').value;
             const iframe = document.getElementById('preview-frame');
             iframe.srcdoc = code;
         }
 
-        // دالة التحويل الأساسية
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -215,13 +211,12 @@
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
-            // تحديد الأبعاد بناءً على اختيار المستخدم
             let docWidth, docHeight, pdfOrientation;
             if (formatType === 'a4') {
                 docWidth = 794;
                 docHeight = 1123;
                 pdfOrientation = 'portrait';
-            } else { // 16:9
+            } else { 
                 docWidth = 1280;
                 docHeight = 720;
                 pdfOrientation = 'landscape';
@@ -230,8 +225,9 @@
             btn.disabled = true;
             btn.innerText = `⏳ جاري التجهيز...`;
 
-            // إعداد الحاوية المخفية
             const hiddenContainer = document.createElement('div');
+            // تأكيد اتجاه اليمين لليسار برمجياً على الحاوية الوهمية لتجنب خطأ المكتبة
+            hiddenContainer.dir = 'rtl'; 
             hiddenContainer.style.position = 'absolute';
             hiddenContainer.style.top = '0';
             hiddenContainer.style.left = '0';
@@ -246,7 +242,6 @@
                 btn.innerText = `⏳ تمرير الصور والخطوط...`;
                 await document.fonts.ready;
 
-                // نظام البروكسي لتخطي الحظر
                 const images = hiddenContainer.querySelectorAll('img');
                 const imagePromises = Array.from(images).map(img => {
                     return new Promise((resolve) => {
@@ -268,7 +263,6 @@
                 btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
                 
-                // إنشاء ملف الـ PDF بالأبعاد الديناميكية
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
 
                 let pages = hiddenContainer.querySelectorAll('.page');
@@ -286,6 +280,7 @@
                         windowWidth: docWidth,
                         scrollX: 0,
                         scrollY: 0,
+                        letterRendering: true, // ضروري جداً لضبط تباعد الحروف العربية والأرقام
                         backgroundColor: '#ffffff'
                     });
 
