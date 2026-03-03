@@ -50,7 +50,7 @@
 <body>
 
     <div class="header">
-        <h2>🛠️ منصة قمة لتحويل الأكواد إلى PDF</h2>
+        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
     </div>
 
     <div class="main-container">
@@ -108,7 +108,6 @@
     </div>
 
     <script>
-        // الأوامر المحدثة لحل مشكلة النقاط (bullets) وحجم الصفحة
         const prompts = {
             a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
 
@@ -126,7 +125,7 @@
 3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
 4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;
 5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
-6. لا تضع letter-spacing على أي نص عربي.
+6. ممنوع استخدام letter-spacing نهائياً.
 
 **هيكل كل صفحة:**
 صفحة 1: غلاف احترافي.
@@ -147,7 +146,7 @@
 3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
 4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;
 5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
-6. لا تضع letter-spacing على أي نص عربي.
+6. ممنوع استخدام letter-spacing نهائياً.
 
 **هيكل الشرائح:**
 شريحة 1: غلاف (عنوان كبير + اسم المقدِّم).
@@ -230,7 +229,7 @@
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
-            // حقن CSS إجباري لحل مشكلة القوائم (في حال أخطأ الذكاء الاصطناعي واستخدمها)
+            // حقن CSS إجباري لحل مشكلة القوائم ومسافات الحروف
             const styleFix = document.createElement('style');
             styleFix.innerHTML = `
                 ul { list-style-type: none !important; padding-right: 0 !important; }
@@ -238,7 +237,7 @@
                 ol { list-style-type: none !important; padding-right: 0 !important; counter-reset: item; }
                 ol li { counter-increment: item; }
                 ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
-                * { box-sizing: border-box !important; }
+                * { box-sizing: border-box !important; letter-spacing: normal !important; }
             `;
             hiddenContainer.appendChild(styleFix);
             
@@ -274,7 +273,6 @@
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
 
-                // تصفير الموقع بالكامل قبل التصوير لمنع القص العشوائي
                 window.scrollTo(0, 0);
 
                 for (let i = 0; i < pages.length; i++) {
@@ -286,11 +284,11 @@
                         height: docHeight,
                         windowWidth: docWidth,
                         windowHeight: docHeight,
-                        x: 0, // إجبار الإحداثيات على الصفر لمنع الإزاحة
+                        x: 0, 
                         y: 0,
                         scrollX: 0,
                         scrollY: 0,
-                        letterRendering: true,
+                        letterRendering: false, // 🔴 تم إيقافها نهائياً لمنع تقطيع الحروف العربية
                         backgroundColor: '#ffffff'
                     });
 
