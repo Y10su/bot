@@ -50,7 +50,7 @@
 <body>
 
     <div class="header">
-        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
+        <h2>🛠️ منصة سلطان لتحويل الأكواد إلى PDF</h2>
     </div>
 
     <div class="main-container">
@@ -108,7 +108,7 @@
     </div>
 
     <script>
-        // أوامر الذكاء الاصطناعي المحدثة لضبط الخطوط واتجاه الأرقام
+        // الأوامر المحدثة لحل مشكلة النقاط (bullets) وحجم الصفحة
         const prompts = {
             a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
 
@@ -121,20 +121,18 @@
 **عدد الصفحات المطلوبة:** [مثال: 5 صفحات]
 
 **متطلبات تقنية صارمة جداً — لا تتجاوزها:**
-1. يجب أن يبدأ الكود بـ <html lang="ar" dir="rtl"> لضمان عدم انقلاب الأرقام لليسار.
-2. يجب استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal أو Amiri) صراحةً باستخدام علامة <link> في الـ <head>.
-3. الـ body يجب أن يحتوي على: display: block; direction: rtl; text-align: right; unicode-bidi: isolate; (ممنوع استخدام flex أو grid في الـ body).
-4. كل صفحة تكون: <div class="page"> بالضبط.
-5. أبعاد كل صفحة في CSS: width: 794px; height: 1123px; overflow: hidden; position: relative;
+1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
+2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
+3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
+4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;
+5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
 6. لا تضع letter-spacing على أي نص عربي.
-7. كل صفحة مكتفية بذاتها — لا يتجاوز المحتوى الـ 1123px ارتفاعاً.
 
 **هيكل كل صفحة:**
-صفحة 1: غلاف (اسم البحث، الطالب، المعلم، العام الدراسي)
-صفحة 2+: محتوى البحث (عناوين h2، فقرات، جداول، صناديق)
-صفحة أخيرة: المراجع والمصادر
-
-**نمط التصميم:** احترافي وأنيق باستخدام ألوان متناسقة وحدود ذهبية أو ملونة.`,
+صفحة 1: غلاف احترافي.
+صفحة 2+: محتوى البحث.
+صفحة أخيرة: المراجع.
+نمط التصميم: احترافي وأنيق بألوان متناسقة.`,
             
             169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:
 
@@ -144,21 +142,17 @@
 **عدد الشرائح:** [مثال: 8 شرائح]
 
 **متطلبات تقنية صارمة جداً — لا تتجاوزها:**
-1. يجب أن يبدأ الكود بـ <html lang="ar" dir="rtl"> لضمان عدم انقلاب الأرقام لليسار.
-2. يجب استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal) صراحةً باستخدام علامة <link> في الـ <head>.
-3. الـ body يجب أن يحتوي على: display: block; direction: rtl; text-align: right; unicode-bidi: isolate; (ممنوع استخدام flex أو grid في الـ body).
-4. كل شريحة تكون: <div class="page"> بالضبط.
-5. أبعاد كل شريحة في CSS: width: 1280px; height: 720px; overflow: hidden; position: relative;
+1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
+2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
+3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
+4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;
+5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
 6. لا تضع letter-spacing على أي نص عربي.
-7. كل شريحة مكتفية بذاتها — لا يتجاوز المحتوى 720px ارتفاعاً.
 
 **هيكل الشرائح:**
-شريحة 1: غلاف (عنوان كبير + اسم المقدِّم)
-شريحة 2: جدول المحتويات أو مقدمة
-شرائح 3+: محتوى (نقاط، جداول، مقارنات، معلومات)
-شريحة أخيرة: خلاصة أو شكر
-
-**نمط التصميم:** حديث وجريء، خلفيات ملونة، نصوص واسعة وواضحة، مناسب للعرض.`
+شريحة 1: غلاف (عنوان كبير + اسم المقدِّم).
+شرائح 2+: محتوى منظم.
+نمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
         };
 
         function copyPrompt(type, btnElement) {
@@ -226,7 +220,6 @@
             btn.innerText = `⏳ جاري التجهيز...`;
 
             const hiddenContainer = document.createElement('div');
-            // تأكيد اتجاه اليمين لليسار برمجياً على الحاوية الوهمية لتجنب خطأ المكتبة
             hiddenContainer.dir = 'rtl'; 
             hiddenContainer.style.position = 'absolute';
             hiddenContainer.style.top = '0';
@@ -236,6 +229,19 @@
             hiddenContainer.style.pointerEvents = 'none';
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
+            
+            // حقن CSS إجباري لحل مشكلة القوائم (في حال أخطأ الذكاء الاصطناعي واستخدمها)
+            const styleFix = document.createElement('style');
+            styleFix.innerHTML = `
+                ul { list-style-type: none !important; padding-right: 0 !important; }
+                ul li::before { content: "• " !important; font-weight: bold; margin-left: 5px; color: inherit; }
+                ol { list-style-type: none !important; padding-right: 0 !important; counter-reset: item; }
+                ol li { counter-increment: item; }
+                ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
+                * { box-sizing: border-box !important; }
+            `;
+            hiddenContainer.appendChild(styleFix);
+            
             document.body.appendChild(hiddenContainer);
 
             try {
@@ -268,6 +274,7 @@
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
 
+                // تصفير الموقع بالكامل قبل التصوير لمنع القص العشوائي
                 window.scrollTo(0, 0);
 
                 for (let i = 0; i < pages.length; i++) {
@@ -278,9 +285,12 @@
                         width: docWidth,
                         height: docHeight,
                         windowWidth: docWidth,
+                        windowHeight: docHeight,
+                        x: 0, // إجبار الإحداثيات على الصفر لمنع الإزاحة
+                        y: 0,
                         scrollX: 0,
                         scrollY: 0,
-                        letterRendering: true, // ضروري جداً لضبط تباعد الحروف العربية والأرقام
+                        letterRendering: true,
                         backgroundColor: '#ffffff'
                     });
 
