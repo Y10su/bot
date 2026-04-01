@@ -50,7 +50,7 @@
 <body>
 
     <div class="header">
-        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
+        <h2>🛠️  ز منصة تحويل الأكواد إلى PDF</h2>
     </div>
 
     <div class="main-container">
@@ -195,6 +195,75 @@
             iframe.srcdoc = code;
         }
 
+        // ----- تحسين معالجة الصور -----
+        async function resolveImageToDataURL(img) {
+            const originalSrc = img.getAttribute('src');
+            if (!originalSrc) return null;
+            
+            // إذا كانت الصورة بالفعل dataURL أو blobURL نعيدها كما هي
+            if (originalSrc.startsWith('data:') || originalSrc.startsWith('blob:')) {
+                return originalSrc;
+            }
+
+            // تحويل المسار النسبي إلى مسار مطلق بناءً على الصفحة الحالية
+            let absoluteUrl = originalSrc;
+            try {
+                if (!originalSrc.startsWith('http://') && !originalSrc.startsWith('https://') && !originalSrc.startsWith('//')) {
+                    absoluteUrl = new URL(originalSrc, window.location.href).href;
+                } else if (originalSrc.startsWith('//')) {
+                    absoluteUrl = 'https:' + originalSrc;
+                }
+            } catch(e) {
+                absoluteUrl = originalSrc;
+            }
+
+            // محاولة جلب الصورة مباشرة (مع إضافة CORS)
+            const fetchImage = async (url, useProxy = false) => {
+                const fetchUrl = useProxy ? `https://corsproxy.io/?${encodeURIComponent(url)}` : url;
+                try {
+                    const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const blob = await response.blob();
+                    return new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onloadend = () => resolve(reader.result);
+                        reader.onerror = () => resolve(null);
+                        reader.readAsDataURL(blob);
+                    });
+                } catch (err) {
+                    console.warn(`فشل جلب الصورة (${useProxy ? 'بروكسي' : 'مباشر'}): ${url}`, err);
+                    return null;
+                }
+            };
+
+            let dataUrl = await fetchImage(absoluteUrl, false);
+            if (!dataUrl) {
+                dataUrl = await fetchImage(absoluteUrl, true);
+            }
+            return dataUrl;
+        }
+
+        async function convertImagesToDataURLs(container) {
+            const images = Array.from(container.querySelectorAll('img'));
+            const promises = images.map(async (img) => {
+                const originalSrc = img.getAttribute('src');
+                if (!originalSrc) return;
+                // لا نحول الصور التي هي بالفعل dataURLs أو blobURLs
+                if (originalSrc.startsWith('data:') || originalSrc.startsWith('blob:')) return;
+                
+                const dataUrl = await resolveImageToDataURL(img);
+                if (dataUrl) {
+                    img.setAttribute('src', dataUrl);
+                    img.setAttribute('data-original-src', originalSrc); // احتفظ بالمرجع الأصلي
+                } else {
+                    console.warn(`فشل تحميل الصورة: ${originalSrc}`);
+                    // يمكن تعيين صورة بديلة أو تركها
+                }
+            });
+            await Promise.all(promises);
+        }
+
+        // -------------------------------------------------
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -238,32 +307,32 @@
                 ol li { counter-increment: item; }
                 ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
                 * { box-sizing: border-box !important; letter-spacing: normal !important; }
+                img { max-width: 100%; height: auto; display: block; }
             `;
             hiddenContainer.appendChild(styleFix);
             
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `⏳ تمرير الصور والخطوط...`;
+                btn.innerText = `⏳ معالجة الصور...`;
+                // تحويل جميع الصور إلى DataURLs
+                await convertImagesToDataURLs(hiddenContainer);
+                
+                // الانتظار حتى يتم تحميل الخطوط بالكامل
                 await document.fonts.ready;
 
+                // انتظار اضافي للتأكد من اكتمال تحميل أي صور تم تغييرها
                 const images = hiddenContainer.querySelectorAll('img');
-                const imagePromises = Array.from(images).map(img => {
+                const imageLoadPromises = Array.from(images).map(img => {
+                    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
                     return new Promise((resolve) => {
-                        if (img.src && !img.src.startsWith('data:')) {
-                            const originalSrc = img.src;
-                            img.crossOrigin = "anonymous";
-                            img.src = 'https://corsproxy.io/?' + encodeURIComponent(originalSrc);
-                        }
-                        img.onload = async () => {
-                            try { if (img.decode) await img.decode(); } catch(e) {}
-                            resolve();
-                        };
-                        img.onerror = resolve; 
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        // إذا كان الصورة بالفعل جاهزة ولكن لم تطلق الحدث
+                        if (img.complete) resolve();
                     });
                 });
-                
-                await Promise.all(imagePromises);
+                await Promise.all(imageLoadPromises);
 
                 btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
@@ -273,13 +342,13 @@
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
 
-                window.scrollTo(0, 0);
-
+                // دورة تصوير الصفحات
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
                         scale: qualityScale,
-                        useCORS: true,
+                        useCORS: true,       // مهم لضمان عدم تلوث canvas عند وجود صور من مصادر خارجية
                         allowTaint: false,
+                        logging: false,
                         width: docWidth,
                         height: docHeight,
                         windowWidth: docWidth,
@@ -288,8 +357,18 @@
                         y: 0,
                         scrollX: 0,
                         scrollY: 0,
-                        letterRendering: false, // 🔴 تم إيقافها نهائياً لمنع تقطيع الحروف العربية
-                        backgroundColor: '#ffffff'
+                        backgroundColor: '#ffffff',
+                        letterRendering: false, // منع تقطيع الحروف العربية
+                        onclone: (clonedDoc) => {
+                            // في حالة الاستنساخ نضمن وجود جميع الصور بشكل صحيح
+                            const clonedImages = clonedDoc.querySelectorAll('img');
+                            clonedImages.forEach(img => {
+                                const originalImg = hiddenContainer.querySelector(`img[src="${img.src}"]`);
+                                if (originalImg && originalImg.src.startsWith('data:')) {
+                                    img.src = originalImg.src;
+                                }
+                            });
+                        }
                     });
 
                     const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -303,8 +382,16 @@
 
             } catch (error) {
                 console.error("خطأ:", error);
-                alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود.");
+                alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود وأن جميع الصور قابلة للتحميل.");
             } finally {
+                // تنظيف: إزالة أي blob URLs (إذا استخدمناها) من الصور التي تم تغييرها
+                const allImages = hiddenContainer.querySelectorAll('img');
+                allImages.forEach(img => {
+                    const src = img.getAttribute('src');
+                    if (src && src.startsWith('blob:')) {
+                        URL.revokeObjectURL(src);
+                    }
+                });
                 document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
                 btn.innerText = "استخراج كملف PDF 📥";
