@@ -50,7 +50,7 @@
 <body>
 
     <div class="header">
-        <h2>🛠️  ز منصة تحويل الأكواد إلى PDF</h2>
+        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
     </div>
 
     <div class="main-container">
@@ -195,74 +195,93 @@
             iframe.srcdoc = code;
         }
 
-        // ----- تحسين معالجة الصور -----
-        async function resolveImageToDataURL(img) {
-            const originalSrc = img.getAttribute('src');
-            if (!originalSrc) return null;
+        // ---------- تحسين معالجة الصور بشكل قوي ----------
+        async function urlToDataURL(url) {
+            // إذا كانت dataURL بالفعل نعيدها
+            if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
             
-            // إذا كانت الصورة بالفعل dataURL أو blobURL نعيدها كما هي
-            if (originalSrc.startsWith('data:') || originalSrc.startsWith('blob:')) {
-                return originalSrc;
-            }
-
-            // تحويل المسار النسبي إلى مسار مطلق بناءً على الصفحة الحالية
-            let absoluteUrl = originalSrc;
+            // محاولة تحويل الرابط النسبي لمطلق
+            let absoluteUrl = url;
             try {
-                if (!originalSrc.startsWith('http://') && !originalSrc.startsWith('https://') && !originalSrc.startsWith('//')) {
-                    absoluteUrl = new URL(originalSrc, window.location.href).href;
-                } else if (originalSrc.startsWith('//')) {
-                    absoluteUrl = 'https:' + originalSrc;
+                if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
+                    absoluteUrl = new URL(url, window.location.href).href;
+                } else if (url.startsWith('//')) {
+                    absoluteUrl = 'https:' + url;
                 }
             } catch(e) {
-                absoluteUrl = originalSrc;
+                absoluteUrl = url;
             }
-
-            // محاولة جلب الصورة مباشرة (مع إضافة CORS)
-            const fetchImage = async (url, useProxy = false) => {
-                const fetchUrl = useProxy ? `https://corsproxy.io/?${encodeURIComponent(url)}` : url;
+            
+            // قائمة بروكسيات احتياطية
+            const proxies = [
+                null, // بدون بروكسي أولاً
+                'https://corsproxy.io/?',
+                'https://api.allorigins.win/raw?url=',
+                'https://cors-anywhere.herokuapp.com/'
+            ];
+            
+            for (const proxy of proxies) {
                 try {
+                    let fetchUrl = absoluteUrl;
+                    if (proxy) fetchUrl = proxy + encodeURIComponent(absoluteUrl);
                     const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
-                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    if (!response.ok) continue;
                     const blob = await response.blob();
-                    return new Promise((resolve) => {
+                    return await new Promise((resolve) => {
                         const reader = new FileReader();
                         reader.onloadend = () => resolve(reader.result);
                         reader.onerror = () => resolve(null);
                         reader.readAsDataURL(blob);
                     });
                 } catch (err) {
-                    console.warn(`فشل جلب الصورة (${useProxy ? 'بروكسي' : 'مباشر'}): ${url}`, err);
-                    return null;
+                    console.warn(`فشل الجلب باستخدام ${proxy || 'مباشر'} للصورة: ${absoluteUrl}`, err);
                 }
-            };
-
-            let dataUrl = await fetchImage(absoluteUrl, false);
-            if (!dataUrl) {
-                dataUrl = await fetchImage(absoluteUrl, true);
             }
-            return dataUrl;
+            
+            // الحل الأخير: استخدام canvas لتحويل الصورة إن أمكن
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        resolve(canvas.toDataURL('image/jpeg', 0.9));
+                    } catch(e) {
+                        console.warn("فشل تحويل الصورة عبر Canvas", e);
+                        resolve(null);
+                    }
+                };
+                img.onerror = () => resolve(null);
+                img.src = absoluteUrl;
+                setTimeout(() => resolve(null), 5000); // مهلة 5 ثوان
+            });
         }
-
-        async function convertImagesToDataURLs(container) {
+        
+        async function convertAllImagesToDataURLs(container) {
             const images = Array.from(container.querySelectorAll('img'));
+            console.log(`عدد الصور المراد معالجتها: ${images.length}`);
             const promises = images.map(async (img) => {
-                const originalSrc = img.getAttribute('src');
-                if (!originalSrc) return;
-                // لا نحول الصور التي هي بالفعل dataURLs أو blobURLs
-                if (originalSrc.startsWith('data:') || originalSrc.startsWith('blob:')) return;
+                const src = img.getAttribute('src');
+                if (!src) return;
+                // إذا كانت dataURL بالفعل، نتخطى
+                if (src.startsWith('data:')) return;
                 
-                const dataUrl = await resolveImageToDataURL(img);
+                const dataUrl = await urlToDataURL(src);
                 if (dataUrl) {
                     img.setAttribute('src', dataUrl);
-                    img.setAttribute('data-original-src', originalSrc); // احتفظ بالمرجع الأصلي
+                    img.setAttribute('data-original-src', src); // للرجوع
+                    console.log(`تم تحويل الصورة: ${src}`);
                 } else {
-                    console.warn(`فشل تحميل الصورة: ${originalSrc}`);
-                    // يمكن تعيين صورة بديلة أو تركها
+                    console.warn(`تعذر تحويل الصورة: ${src}`);
                 }
             });
             await Promise.all(promises);
         }
-
+        
         // -------------------------------------------------
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
@@ -285,8 +304,9 @@
             }
 
             btn.disabled = true;
-            btn.innerText = `⏳ جاري التجهيز...`;
+            btn.innerText = `⏳ جاري تجهيز الصفحات...`;
 
+            // إنشاء حاوية مخفية لعرض المحتوى
             const hiddenContainer = document.createElement('div');
             hiddenContainer.dir = 'rtl'; 
             hiddenContainer.style.position = 'absolute';
@@ -298,7 +318,7 @@
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
-            // حقن CSS إجباري لحل مشكلة القوائم ومسافات الحروف
+            // حقن CSS إضافي لضمان عدم وجود قوائم ومسافات
             const styleFix = document.createElement('style');
             styleFix.innerHTML = `
                 ul { list-style-type: none !important; padding-right: 0 !important; }
@@ -307,91 +327,80 @@
                 ol li { counter-increment: item; }
                 ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
                 * { box-sizing: border-box !important; letter-spacing: normal !important; }
-                img { max-width: 100%; height: auto; display: block; }
+                img { max-width: 100%; height: auto; }
             `;
             hiddenContainer.appendChild(styleFix);
             
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `⏳ معالجة الصور...`;
-                // تحويل جميع الصور إلى DataURLs
-                await convertImagesToDataURLs(hiddenContainer);
+                btn.innerText = `🖼️ تحويل جميع الصور إلى DataURL...`;
+                // تحويل جميع الصور في الحاوية المخفية إلى dataURL (بما في ذلك تلك التي في iframe? لا, كلها في DOM)
+                await convertAllImagesToDataURLs(hiddenContainer);
                 
-                // الانتظار حتى يتم تحميل الخطوط بالكامل
+                // الانتظار حتى يتم تحميل الخطوط
                 await document.fonts.ready;
-
-                // انتظار اضافي للتأكد من اكتمال تحميل أي صور تم تغييرها
-                const images = hiddenContainer.querySelectorAll('img');
-                const imageLoadPromises = Array.from(images).map(img => {
-                    if (img.complete && img.naturalHeight !== 0) return Promise.resolve();
+                
+                // انتظار إضافي لاستقرار الصور (قد يكون بعضها تم تغييره للتو)
+                const allImages = hiddenContainer.querySelectorAll('img');
+                await Promise.all(Array.from(allImages).map(img => {
+                    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
                     return new Promise((resolve) => {
                         img.onload = () => resolve();
                         img.onerror = () => resolve();
-                        // إذا كان الصورة بالفعل جاهزة ولكن لم تطلق الحدث
                         if (img.complete) resolve();
+                        setTimeout(resolve, 3000);
                     });
-                });
-                await Promise.all(imageLoadPromises);
-
+                }));
+                
                 btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
                 
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
-
+                
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
-
-                // دورة تصوير الصفحات
+                
+                // إعداد html2canvas مع خيارات قوية
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
                         scale: qualityScale,
-                        useCORS: true,       // مهم لضمان عدم تلوث canvas عند وجود صور من مصادر خارجية
+                        useCORS: true,
                         allowTaint: false,
                         logging: false,
                         width: docWidth,
                         height: docHeight,
                         windowWidth: docWidth,
                         windowHeight: docHeight,
-                        x: 0, 
+                        x: 0,
                         y: 0,
                         scrollX: 0,
                         scrollY: 0,
                         backgroundColor: '#ffffff',
-                        letterRendering: false, // منع تقطيع الحروف العربية
+                        letterRendering: false,
                         onclone: (clonedDoc) => {
-                            // في حالة الاستنساخ نضمن وجود جميع الصور بشكل صحيح
+                            // في حالة النسخ المكرر، تأكد من أن جميع الصور تحمل dataURL الصحيحة
                             const clonedImages = clonedDoc.querySelectorAll('img');
-                            clonedImages.forEach(img => {
-                                const originalImg = hiddenContainer.querySelector(`img[src="${img.src}"]`);
-                                if (originalImg && originalImg.src.startsWith('data:')) {
-                                    img.src = originalImg.src;
+                            clonedImages.forEach((clonedImg, idx) => {
+                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) {
+                                    clonedImg.src = allImages[idx].src;
                                 }
                             });
                         }
                     });
-
+                    
                     const imgData = canvas.toDataURL('image/jpeg', 1.0);
                     if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
-                    
                     pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
                 }
-
-                btn.innerText = "📄 جاري حفظ الملف...";
+                
+                btn.innerText = "💾 حفظ الملف...";
                 pdf.save(`${fileName}.pdf`);
-
+                
             } catch (error) {
                 console.error("خطأ:", error);
                 alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود وأن جميع الصور قابلة للتحميل.");
             } finally {
-                // تنظيف: إزالة أي blob URLs (إذا استخدمناها) من الصور التي تم تغييرها
-                const allImages = hiddenContainer.querySelectorAll('img');
-                allImages.forEach(img => {
-                    const src = img.getAttribute('src');
-                    if (src && src.startsWith('blob:')) {
-                        URL.revokeObjectURL(src);
-                    }
-                });
                 document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
                 btn.innerText = "استخراج كملف PDF 📥";
