@@ -15,7 +15,7 @@
         .main-container { display: flex; gap: 15px; flex: 1; overflow: hidden; }
         @media (max-width: 768px) { .main-container { flex-direction: column; height: auto; overflow: visible; } body {height: auto; padding: 10px;} }
         
-        .sidebar { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; display: flex; flex-direction: column; flex: 1; max-width: 420px; overflow-y: auto;}
+        .sidebar { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; display: flex; flex-direction: column; flex: 1; max-width: 380px; overflow-y: auto;}
         .preview-section { background: #fff; border-radius: 10px; padding: 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; display: flex; flex-direction: column; flex: 2; overflow: hidden; }
         
         .form-group { margin-bottom: 12px; display: flex; flex-direction: column; }
@@ -27,16 +27,15 @@
         .clear-btn { background: #fee2e2; color: #ef4444; border: none; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .clear-btn:hover { background: #fca5a5; color: #b91c1c; }
         
-        textarea { flex: 1; min-height: 150px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc; font-size: 12px;}
+        textarea { flex: 1; min-height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc; font-size: 12px;}
         
-        .row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .row .form-group { flex: 1; min-width: 120px; }
+        .row { display: flex; gap: 10px; }
+        .row .form-group { flex: 1; }
 
         .ai-prompts { background: #f0fdf4; border: 1px dashed #22c55e; padding: 12px; border-radius: 8px; margin-bottom: 15px;}
         .ai-prompts p { margin: 0 0 8px 0; font-size: 12px; color: #166534; font-weight: bold; text-align: center;}
-        .prompt-btns { display: flex; gap: 8px; margin-bottom: 8px; }
-        .prompt-btns:last-child { margin-bottom: 0; }
-        .prompt-btn { flex: 1; background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px; text-align: center;}
+        .prompt-btns { display: flex; gap: 8px; }
+        .prompt-btn { flex: 1; background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px;}
         .prompt-btn:hover { background: #22c55e; color: #fff; }
 
         .export-btn { background: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
@@ -60,12 +59,8 @@
             <div class="ai-prompts">
                 <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
                 <div class="prompt-btns">
-                    <button class="prompt-btn" onclick="copyPrompt('a4_ar', this)">📄 بحث عربي (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169_ar', this)">🖥️ عرض عربي (16:9)</button>
-                </div>
-                <div class="prompt-btns">
-                    <button class="prompt-btn" style="border-color:#3b82f6; color:#1d4ed8;" onclick="copyPrompt('a4_en', this)">📄 English Paper (A4)</button>
-                    <button class="prompt-btn" style="border-color:#3b82f6; color:#1d4ed8;" onclick="copyPrompt('169_en', this)">🖥️ English Pres. (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض تقديمي (16:9)</button>
                 </div>
             </div>
 
@@ -76,21 +71,14 @@
 
             <div class="row">
                 <div class="form-group">
-                    <label>اتجاه المستند:</label>
-                    <select id="dir-select" onchange="updatePreview()">
-                        <option value="rtl">عربي (RTL)</option>
-                        <option value="ltr">إنجليزي (LTR)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>المقاس:</label>
+                    <label>مقاس الصفحة:</label>
                     <select id="format-select" onchange="updateTag()">
-                        <option value="169">عرض (16:9)</option>
-                        <option value="a4">بحث (A4)</option>
+                        <option value="169">عرض تقديمي (16:9)</option>
+                        <option value="a4">بحث / تقرير (A4)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>الجودة:</label>
+                    <label>جودة الـ PDF:</label>
                     <select id="quality-select">
                         <option value="1">عادية</option>
                         <option value="2" selected>عالية</option>
@@ -121,75 +109,49 @@
 
     <script>
         const prompts = {
-            a4_ar: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
 
 **عنوان البحث:** [اكتب العنوان هنا]
-**المادة:** [المادة]
+**المادة:** [مثال: فيزياء / كيمياء / رياضيات]
 **الطالب:** [الاسم]
 **المعلم:** [الاسم]
+**الصف:** [مثال: أول ثانوي]
+**العام الدراسي:** [مثال: 1447هـ / 2026م]
 **عدد الصفحات المطلوبة:** [مثال: 5 صفحات]
 
 **متطلبات تقنية صارمة جداً — لا تتجاوزها:**
 1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
-2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).
+2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
 3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
 4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;
-5. لا تستخدم القوائم الافتراضية (ul, ol). للنقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة يدوياً هكذا: <p>• النقطة الأولى</p>.
+5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
 6. ممنوع استخدام letter-spacing نهائياً.
 
-**هيكل البحث:** صفحة 1: غلاف احترافي. صفحة 2+: المحتوى. صفحة أخيرة: المراجع.`,
+**هيكل كل صفحة:**
+صفحة 1: غلاف احترافي.
+صفحة 2+: محتوى البحث.
+صفحة أخيرة: المراجع.
+نمط التصميم: احترافي وأنيق بألوان متناسقة.`,
             
-            169_ar: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:
 
 **عنوان العرض:** [اكتب العنوان هنا]
-**المادة / الموضوع:** [الموضوع]
+**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]
 **المقدِّم:** [الاسم]
 **عدد الشرائح:** [مثال: 8 شرائح]
 
 **متطلبات تقنية صارمة جداً — لا تتجاوزها:**
 1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
-2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo).
+2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
 3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
 4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;
-5. لا تستخدم القوائم الافتراضية (ul, ol). للنقاط استخدم: <p>• النقطة الأولى</p>.
+5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
 6. ممنوع استخدام letter-spacing نهائياً.
 
-**الهيكل:** شريحة 1: غلاف. شرائح 2+: محتوى. نمط حديث، خلفيات ملونة ونصوص كبيرة.`,
-
-            a4_en: `You are a professional HTML document designer. Create a complete HTML code for an English academic paper/report with the following details:
-
-**Title:** [Write Title Here]
-**Subject:** [Subject Name]
-**Student:** [Name]
-**Teacher:** [Name]
-**Number of Pages:** [Example: 5 pages]
-
-**Strict Technical Requirements — Do NOT violate:**
-1. The code must start with: <html lang="en" dir="ltr">.
-2. Explicitly import Google Fonts (such as Roboto or Open Sans).
-3. The body must include: display: block; direction: ltr; text-align: left; margin: 0; padding: 0; box-sizing: border-box;
-4. Each page must be: <div class="page"> with: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;
-5. Do NOT use default lists (ul, ol). For bullet points, use regular <p> or <div> elements and add the bullet manually like: <p>• First point</p> or <p>1- First point</p>.
-6. Do NOT use letter-spacing at all.
-
-**Structure:** Page 1: Professional Cover. Pages 2+: Content. Last Page: References. Professional and elegant design.`,
-
-            169_en: `You are a professional HTML presentation designer. Create a complete HTML code for an English presentation with the following details:
-
-**Presentation Title:** [Write Title Here]
-**Subject / Topic:** [Topic Name]
-**Presenter:** [Name]
-**Number of Slides:** [Example: 8 slides]
-
-**Strict Technical Requirements — Do NOT violate:**
-1. The code must start with: <html lang="en" dir="ltr">.
-2. Explicitly import Google Fonts (such as Montserrat or Open Sans).
-3. The body must include: display: block; direction: ltr; text-align: left; margin: 0; padding: 0; box-sizing: border-box;
-4. Each slide must be: <div class="page"> with: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;
-5. Do NOT use default lists (ul, ol). For bullet points, use regular <p> or <div> elements and add the bullet manually like: <p>• First point</p>.
-6. Do NOT use letter-spacing at all.
-
-**Slide Structure:** Slide 1: Cover (Big title + presenter name). Slides 2+: Organized content. Modern design, colorful backgrounds, large readable text.`
+**هيكل الشرائح:**
+شريحة 1: غلاف (عنوان كبير + اسم المقدِّم).
+شرائح 2+: محتوى منظم.
+نمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
         };
 
         function copyPrompt(type, btnElement) {
@@ -201,19 +163,6 @@
                 btnElement.innerText = "✅ تم النسخ!";
                 btnElement.style.background = "#22c55e";
                 btnElement.style.color = "#fff";
-                
-                if(type.includes('_en')) {
-                    document.getElementById('dir-select').value = 'ltr';
-                } else {
-                    document.getElementById('dir-select').value = 'rtl';
-                }
-                
-                if(type.includes('a4')) {
-                    document.getElementById('format-select').value = 'a4';
-                } else {
-                    document.getElementById('format-select').value = '169';
-                }
-                updateTag();
 
                 setTimeout(() => {
                     btnElement.innerText = originalText;
@@ -246,11 +195,12 @@
             iframe.srcdoc = code;
         }
 
-        // تحويل الروابط الخارجية بذكاء لتجنب تعليق الكانفاس
+        // ---------- تحسين معالجة الصور بشكل قوي ----------
         async function urlToDataURL(url) {
-            if (!url) return null;
-            if (url.startsWith('data:') || url.startsWith('blob:')) return url;
+            // إذا كانت dataURL بالفعل نعيدها
+            if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
             
+            // محاولة تحويل الرابط النسبي لمطلق
             let absoluteUrl = url;
             try {
                 if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
@@ -262,15 +212,19 @@
                 absoluteUrl = url;
             }
             
+            // قائمة بروكسيات احتياطية
             const proxies = [
+                null, // بدون بروكسي أولاً
+                'https://corsproxy.io/?',
                 'https://api.allorigins.win/raw?url=',
-                'https://corsproxy.io/?'
+                'https://cors-anywhere.herokuapp.com/'
             ];
             
             for (const proxy of proxies) {
                 try {
-                    let fetchUrl = proxy + encodeURIComponent(absoluteUrl);
-                    const response = await fetch(fetchUrl, { mode: 'cors' });
+                    let fetchUrl = absoluteUrl;
+                    if (proxy) fetchUrl = proxy + encodeURIComponent(absoluteUrl);
+                    const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
                     if (!response.ok) continue;
                     const blob = await response.blob();
                     return await new Promise((resolve) => {
@@ -280,37 +234,61 @@
                         reader.readAsDataURL(blob);
                     });
                 } catch (err) {
-                    continue; // حاول البروكسي اللي بعده
+                    console.warn(`فشل الجلب باستخدام ${proxy || 'مباشر'} للصورة: ${absoluteUrl}`, err);
                 }
             }
-            return null; // إذا فشلت كل المحاولات الأفضل إرجاع null لمنع تحطم النظام
+            
+            // الحل الأخير: استخدام canvas لتحويل الصورة إن أمكن
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "Anonymous";
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(img, 0, 0);
+                        resolve(canvas.toDataURL('image/jpeg', 0.9));
+                    } catch(e) {
+                        console.warn("فشل تحويل الصورة عبر Canvas", e);
+                        resolve(null);
+                    }
+                };
+                img.onerror = () => resolve(null);
+                img.src = absoluteUrl;
+                setTimeout(() => resolve(null), 5000); // مهلة 5 ثوان
+            });
         }
         
-        async function prepareImagesSafely(container) {
+        async function convertAllImagesToDataURLs(container) {
             const images = Array.from(container.querySelectorAll('img'));
+            console.log(`عدد الصور المراد معالجتها: ${images.length}`);
             const promises = images.map(async (img) => {
                 const src = img.getAttribute('src');
-                if (!src || src.startsWith('data:')) return;
+                if (!src) return;
+                // إذا كانت dataURL بالفعل، نتخطى
+                if (src.startsWith('data:')) return;
                 
                 const dataUrl = await urlToDataURL(src);
                 if (dataUrl) {
                     img.setAttribute('src', dataUrl);
+                    img.setAttribute('data-original-src', src); // للرجوع
+                    console.log(`تم تحويل الصورة: ${src}`);
                 } else {
-                    // الحل السحري: إذا الصورة فشلت، نبدلها ببكسل شفاف عشان ما يعلق html2canvas!
-                    console.warn('تم إخفاء الصورة لتجنب تعليق الأداة:', src);
-                    img.setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'); 
+                    console.warn(`تعذر تحويل الصورة: ${src}`);
                 }
             });
             await Promise.all(promises);
         }
         
+        // -------------------------------------------------
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
             const fileName = document.getElementById('file-name').value || 'document';
             const qualityScale = parseInt(document.getElementById('quality-select').value);
             const formatType = document.getElementById('format-select').value;
-            const docDirection = document.getElementById('dir-select').value;
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
@@ -326,60 +304,89 @@
             }
 
             btn.disabled = true;
-            btn.innerText = `⏳ جاري التجهيز...`;
+            btn.innerText = `⏳ جاري تجهيز الصفحات...`;
 
+            // إنشاء حاوية مخفية لعرض المحتوى
             const hiddenContainer = document.createElement('div');
-            hiddenContainer.dir = docDirection;
-            
-            // إصلاح موقع الـ Container بحيث يراه المتصفح ولا يتم تجاهله
-            hiddenContainer.style.position = 'fixed';
+            hiddenContainer.dir = 'rtl'; 
+            hiddenContainer.style.position = 'absolute';
             hiddenContainer.style.top = '0';
             hiddenContainer.style.left = '0';
             hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.opacity = '0.01'; 
+            hiddenContainer.style.pointerEvents = 'none';
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
+            // حقن CSS إضافي لضمان عدم وجود قوائم ومسافات
             const styleFix = document.createElement('style');
             styleFix.innerHTML = `
-                ul { list-style-type: none !important; padding: 0 !important; margin: 0 !important; }
-                ul li::before { content: "• "; font-weight: bold; margin: 0 5px; }
-                ol { list-style-type: none !important; padding: 0 !important; margin: 0 !important; counter-reset: item; }
+                ul { list-style-type: none !important; padding-right: 0 !important; }
+                ul li::before { content: "• " !important; font-weight: bold; margin-left: 5px; color: inherit; }
+                ol { list-style-type: none !important; padding-right: 0 !important; counter-reset: item; }
                 ol li { counter-increment: item; }
-                ol li::before { content: counter(item) "- "; font-weight: bold; margin: 0 5px; }
+                ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
                 * { box-sizing: border-box !important; letter-spacing: normal !important; }
                 img { max-width: 100%; height: auto; }
             `;
             hiddenContainer.appendChild(styleFix);
+            
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `🖼️ معالجة الصور...`;
-                // هنا نضمن أن جميع الصور إما بصيغة آمنة أو شفافة
-                await prepareImagesSafely(hiddenContainer);
+                btn.innerText = `🖼️ تحويل جميع الصور إلى DataURL...`;
+                // تحويل جميع الصور في الحاوية المخفية إلى dataURL (بما في ذلك تلك التي في iframe? لا, كلها في DOM)
+                await convertAllImagesToDataURLs(hiddenContainer);
                 
-                await Promise.race([
-                    document.fonts.ready,
-                    new Promise(resolve => setTimeout(resolve, 1500))
-                ]);
+                // الانتظار حتى يتم تحميل الخطوط
+                await document.fonts.ready;
                 
-                btn.innerText = "📸 جاري التصوير...";
+                // انتظار إضافي لاستقرار الصور (قد يكون بعضها تم تغييره للتو)
+                const allImages = hiddenContainer.querySelectorAll('img');
+                await Promise.all(Array.from(allImages).map(img => {
+                    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
+                    return new Promise((resolve) => {
+                        img.onload = () => resolve();
+                        img.onerror = () => resolve();
+                        if (img.complete) resolve();
+                        setTimeout(resolve, 3000);
+                    });
+                }));
+                
+                btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
+                
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
                 
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
                 
+                // إعداد html2canvas مع خيارات قوية
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
                         scale: qualityScale,
-                        useCORS: false, // لا داعي لها لأننا حولنا كل شيء لـ DataURL محلياً
-                        allowTaint: false, // يجب أن تكون false لمنع الـ SecurityError
+                        useCORS: true,
+                        allowTaint: false,
                         logging: false,
                         width: docWidth,
                         height: docHeight,
                         windowWidth: docWidth,
                         windowHeight: docHeight,
-                        backgroundColor: '#ffffff'
+                        x: 0,
+                        y: 0,
+                        scrollX: 0,
+                        scrollY: 0,
+                        backgroundColor: '#ffffff',
+                        letterRendering: false,
+                        onclone: (clonedDoc) => {
+                            // في حالة النسخ المكرر، تأكد من أن جميع الصور تحمل dataURL الصحيحة
+                            const clonedImages = clonedDoc.querySelectorAll('img');
+                            clonedImages.forEach((clonedImg, idx) => {
+                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) {
+                                    clonedImg.src = allImages[idx].src;
+                                }
+                            });
+                        }
                     });
                     
                     const imgData = canvas.toDataURL('image/jpeg', 1.0);
@@ -391,12 +398,10 @@
                 pdf.save(`${fileName}.pdf`);
                 
             } catch (error) {
-                console.error("خطأ التصدير:", error);
-                alert("للأسف الكود يحتوي على عناصر غير قابلة للتصوير (مثل إطارات أو ملفات فيديو). الرجاء التحقق من كود الـ HTML.");
+                console.error("خطأ:", error);
+                alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود وأن جميع الصور قابلة للتحميل.");
             } finally {
-                if (document.body.contains(hiddenContainer)) {
-                    document.body.removeChild(hiddenContainer);
-                }
+                document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
                 btn.innerText = "استخراج كملف PDF 📥";
             }
@@ -404,3 +409,6 @@
     </script>
 </body>
 </html>
+
+
+عدله خل في بروميت للانقليزي و خيار لطباعه انقليري زى
