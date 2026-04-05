@@ -77,7 +77,7 @@
             <div class="row">
                 <div class="form-group">
                     <label>اتجاه المستند:</label>
-                    <select id="dir-select">
+                    <select id="dir-select" onchange="updatePreview()">
                         <option value="rtl">عربي (RTL)</option>
                         <option value="ltr">إنجليزي (LTR)</option>
                     </select>
@@ -202,14 +202,12 @@
                 btnElement.style.background = "#22c55e";
                 btnElement.style.color = "#fff";
                 
-                // تغيير اتجاه الإعدادات تلقائياً حسب لغة البرومبت المنسوخ
                 if(type.includes('_en')) {
                     document.getElementById('dir-select').value = 'ltr';
                 } else {
                     document.getElementById('dir-select').value = 'rtl';
                 }
                 
-                // تغيير المقاس تلقائياً
                 if(type.includes('a4')) {
                     document.getElementById('format-select').value = 'a4';
                 } else {
@@ -249,7 +247,8 @@
         }
 
         async function urlToDataURL(url) {
-            if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
+            if (!url) return null;
+            if (url.startsWith('data:') || url.startsWith('blob:')) return url;
             
             let absoluteUrl = url;
             try {
@@ -265,8 +264,7 @@
             const proxies = [
                 null,
                 'https://corsproxy.io/?',
-                'https://api.allorigins.win/raw?url=',
-                'https://cors-anywhere.herokuapp.com/'
+                'https://api.allorigins.win/raw?url='
             ];
             
             for (const proxy of proxies) {
@@ -283,7 +281,7 @@
                         reader.readAsDataURL(blob);
                     });
                 } catch (err) {
-                    console.warn(`فشل الجلب باستخدام ${proxy || 'مباشر'} للصورة: ${absoluteUrl}`, err);
+                    continue;
                 }
             }
             
@@ -299,13 +297,12 @@
                         ctx.drawImage(img, 0, 0);
                         resolve(canvas.toDataURL('image/jpeg', 0.9));
                     } catch(e) {
-                        console.warn("فشل تحويل الصورة عبر Canvas", e);
                         resolve(null);
                     }
                 };
                 img.onerror = () => resolve(null);
                 img.src = absoluteUrl;
-                setTimeout(() => resolve(null), 5000); 
+                setTimeout(() => resolve(null), 3000); // 3 seconds timeout
             });
         }
         
@@ -313,13 +310,14 @@
             const images = Array.from(container.querySelectorAll('img'));
             const promises = images.map(async (img) => {
                 const src = img.getAttribute('src');
-                if (!src) return;
-                if (src.startsWith('data:')) return;
+                if (!src || src.startsWith('data:')) return;
                 
                 const dataUrl = await urlToDataURL(src);
                 if (dataUrl) {
                     img.setAttribute('src', dataUrl);
-                    img.setAttribute('data-original-src', src); 
+                } else {
+                    // في حال فشل تحويل الصورة، نعطيها خاصية عشان ما تعلق الكانفاس
+                    img.crossOrigin = "Anonymous"; 
                 }
             });
             await Promise.all(promises);
@@ -349,53 +347,42 @@
             btn.disabled = true;
             btn.innerText = `⏳ جاري تجهيز الصفحات...`;
 
+            // حاوية التصوير
             const hiddenContainer = document.createElement('div');
-            // تعيين اتجاه الصفحة بناءً على الخيار المحدد
-            hiddenContainer.dir = docDirection; 
+            hiddenContainer.dir = docDirection; // عربي أو إنجليزي
             hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.top = '0';
+            hiddenContainer.style.top = '-9999px'; // إبعادها عن الشاشة لتجنب التداخل
             hiddenContainer.style.left = '0';
             hiddenContainer.style.zIndex = '-9999';
-            hiddenContainer.style.opacity = '0.01'; 
-            hiddenContainer.style.pointerEvents = 'none';
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
+            // ستايلات مدمجة لضمان عدم خراب التنسيق
             const styleFix = document.createElement('style');
-            // إصلاح التنسيقات لتتوافق مع كلا الاتجاهين
             styleFix.innerHTML = `
-                ul { list-style-type: none !important; padding-right: 0 !important; padding-left: 0 !important; }
-                ul li::before { content: "• " !important; font-weight: bold; margin: 0 5px; color: inherit; }
-                ol { list-style-type: none !important; padding-right: 0 !important; padding-left: 0 !important; counter-reset: item; }
+                ul { list-style-type: none !important; padding: 0 !important; margin: 0 !important; }
+                ul li::before { content: "• "; font-weight: bold; margin: 0 5px; }
+                ol { list-style-type: none !important; padding: 0 !important; margin: 0 !important; counter-reset: item; }
                 ol li { counter-increment: item; }
-                ol li::before { content: counter(item) "- " !important; font-weight: bold; margin: 0 5px; color: inherit; }
+                ol li::before { content: counter(item) "- "; font-weight: bold; margin: 0 5px; }
                 * { box-sizing: border-box !important; letter-spacing: normal !important; }
                 img { max-width: 100%; height: auto; }
             `;
             hiddenContainer.appendChild(styleFix);
-            
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `🖼️ تحويل جميع الصور إلى DataURL...`;
+                btn.innerText = `🖼️ معالجة الصور...`;
                 await convertAllImagesToDataURLs(hiddenContainer);
                 
-                await document.fonts.ready;
-                
-                const allImages = hiddenContainer.querySelectorAll('img');
-                await Promise.all(Array.from(allImages).map(img => {
-                    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
-                    return new Promise((resolve) => {
-                        img.onload = () => resolve();
-                        img.onerror = () => resolve();
-                        if (img.complete) resolve();
-                        setTimeout(resolve, 3000);
-                    });
-                }));
+                // انتظار تحميل الخطوط مع وضع حد أقصى (Timeout) حتى لا يعلق
+                await Promise.race([
+                    document.fonts.ready,
+                    new Promise(resolve => setTimeout(resolve, 2000))
+                ]);
                 
                 btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
-                
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
                 
                 let pages = hiddenContainer.querySelectorAll('.page');
@@ -404,41 +391,34 @@
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
                         scale: qualityScale,
-                        useCORS: true,
-                        allowTaint: false,
+                        useCORS: true,       // لتخطي حماية المواقع إن أمكن
+                        allowTaint: true,    // السماح بالصور غير المحمية
                         logging: false,
                         width: docWidth,
                         height: docHeight,
                         windowWidth: docWidth,
                         windowHeight: docHeight,
-                        x: 0,
-                        y: 0,
-                        scrollX: 0,
-                        scrollY: 0,
-                        backgroundColor: '#ffffff',
-                        letterRendering: false,
-                        onclone: (clonedDoc) => {
-                            const clonedImages = clonedDoc.querySelectorAll('img');
-                            clonedImages.forEach((clonedImg, idx) => {
-                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) {
-                                    clonedImg.src = allImages[idx].src;
-                                }
-                            });
-                        }
+                        backgroundColor: '#ffffff'
                     });
                     
-                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                    if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
-                    pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
+                    try {
+                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                        if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
+                        pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
+                    } catch(err) {
+                        console.error("خطأ في الصورة (Tainted Canvas): ", err);
+                        alert("حدث خطأ أثناء تصوير الشريحة رقم " + (i+1) + " بسبب صورة غير مدعومة من رابط خارجي. سيتم إكمال باقي الملف.");
+                    }
                 }
                 
                 btn.innerText = "💾 حفظ الملف...";
                 pdf.save(`${fileName}.pdf`);
                 
             } catch (error) {
-                console.error("خطأ:", error);
-                alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود وأن جميع الصور قابلة للتحميل.");
+                console.error("خطأ عام:", error);
+                alert("واجهنا خطأ أثناء معالجة الملف، الرجاء التأكد من الأكواد.");
             } finally {
+                // التنظيف وإرجاع الزر لحالته
                 document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
                 btn.innerText = "استخراج كملف PDF 📥";
