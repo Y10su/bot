@@ -246,6 +246,7 @@
             iframe.srcdoc = code;
         }
 
+        // تحويل الروابط الخارجية بذكاء لتجنب تعليق الكانفاس
         async function urlToDataURL(url) {
             if (!url) return null;
             if (url.startsWith('data:') || url.startsWith('blob:')) return url;
@@ -262,16 +263,14 @@
             }
             
             const proxies = [
-                null,
-                'https://corsproxy.io/?',
-                'https://api.allorigins.win/raw?url='
+                'https://api.allorigins.win/raw?url=',
+                'https://corsproxy.io/?'
             ];
             
             for (const proxy of proxies) {
                 try {
-                    let fetchUrl = absoluteUrl;
-                    if (proxy) fetchUrl = proxy + encodeURIComponent(absoluteUrl);
-                    const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
+                    let fetchUrl = proxy + encodeURIComponent(absoluteUrl);
+                    const response = await fetch(fetchUrl, { mode: 'cors' });
                     if (!response.ok) continue;
                     const blob = await response.blob();
                     return await new Promise((resolve) => {
@@ -281,32 +280,13 @@
                         reader.readAsDataURL(blob);
                     });
                 } catch (err) {
-                    continue;
+                    continue; // حاول البروكسي اللي بعده
                 }
             }
-            
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        resolve(canvas.toDataURL('image/jpeg', 0.9));
-                    } catch(e) {
-                        resolve(null);
-                    }
-                };
-                img.onerror = () => resolve(null);
-                img.src = absoluteUrl;
-                setTimeout(() => resolve(null), 3000); // 3 seconds timeout
-            });
+            return null; // إذا فشلت كل المحاولات الأفضل إرجاع null لمنع تحطم النظام
         }
         
-        async function convertAllImagesToDataURLs(container) {
+        async function prepareImagesSafely(container) {
             const images = Array.from(container.querySelectorAll('img'));
             const promises = images.map(async (img) => {
                 const src = img.getAttribute('src');
@@ -316,8 +296,9 @@
                 if (dataUrl) {
                     img.setAttribute('src', dataUrl);
                 } else {
-                    // في حال فشل تحويل الصورة، نعطيها خاصية عشان ما تعلق الكانفاس
-                    img.crossOrigin = "Anonymous"; 
+                    // الحل السحري: إذا الصورة فشلت، نبدلها ببكسل شفاف عشان ما يعلق html2canvas!
+                    console.warn('تم إخفاء الصورة لتجنب تعليق الأداة:', src);
+                    img.setAttribute('src', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'); 
                 }
             });
             await Promise.all(promises);
@@ -345,19 +326,19 @@
             }
 
             btn.disabled = true;
-            btn.innerText = `⏳ جاري تجهيز الصفحات...`;
+            btn.innerText = `⏳ جاري التجهيز...`;
 
-            // حاوية التصوير
             const hiddenContainer = document.createElement('div');
-            hiddenContainer.dir = docDirection; // عربي أو إنجليزي
-            hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.top = '-9999px'; // إبعادها عن الشاشة لتجنب التداخل
+            hiddenContainer.dir = docDirection;
+            
+            // إصلاح موقع الـ Container بحيث يراه المتصفح ولا يتم تجاهله
+            hiddenContainer.style.position = 'fixed';
+            hiddenContainer.style.top = '0';
             hiddenContainer.style.left = '0';
             hiddenContainer.style.zIndex = '-9999';
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
-            // ستايلات مدمجة لضمان عدم خراب التنسيق
             const styleFix = document.createElement('style');
             styleFix.innerHTML = `
                 ul { list-style-type: none !important; padding: 0 !important; margin: 0 !important; }
@@ -373,15 +354,15 @@
 
             try {
                 btn.innerText = `🖼️ معالجة الصور...`;
-                await convertAllImagesToDataURLs(hiddenContainer);
+                // هنا نضمن أن جميع الصور إما بصيغة آمنة أو شفافة
+                await prepareImagesSafely(hiddenContainer);
                 
-                // انتظار تحميل الخطوط مع وضع حد أقصى (Timeout) حتى لا يعلق
                 await Promise.race([
                     document.fonts.ready,
-                    new Promise(resolve => setTimeout(resolve, 2000))
+                    new Promise(resolve => setTimeout(resolve, 1500))
                 ]);
                 
-                btn.innerText = "📸 جاري تصوير الصفحات...";
+                btn.innerText = "📸 جاري التصوير...";
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
                 
@@ -391,8 +372,8 @@
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
                         scale: qualityScale,
-                        useCORS: true,       // لتخطي حماية المواقع إن أمكن
-                        allowTaint: true,    // السماح بالصور غير المحمية
+                        useCORS: false, // لا داعي لها لأننا حولنا كل شيء لـ DataURL محلياً
+                        allowTaint: false, // يجب أن تكون false لمنع الـ SecurityError
                         logging: false,
                         width: docWidth,
                         height: docHeight,
@@ -401,25 +382,21 @@
                         backgroundColor: '#ffffff'
                     });
                     
-                    try {
-                        const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                        if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
-                        pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
-                    } catch(err) {
-                        console.error("خطأ في الصورة (Tainted Canvas): ", err);
-                        alert("حدث خطأ أثناء تصوير الشريحة رقم " + (i+1) + " بسبب صورة غير مدعومة من رابط خارجي. سيتم إكمال باقي الملف.");
-                    }
+                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                    if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
+                    pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
                 }
                 
                 btn.innerText = "💾 حفظ الملف...";
                 pdf.save(`${fileName}.pdf`);
                 
             } catch (error) {
-                console.error("خطأ عام:", error);
-                alert("واجهنا خطأ أثناء معالجة الملف، الرجاء التأكد من الأكواد.");
+                console.error("خطأ التصدير:", error);
+                alert("للأسف الكود يحتوي على عناصر غير قابلة للتصوير (مثل إطارات أو ملفات فيديو). الرجاء التحقق من كود الـ HTML.");
             } finally {
-                // التنظيف وإرجاع الزر لحالته
-                document.body.removeChild(hiddenContainer);
+                if (document.body.contains(hiddenContainer)) {
+                    document.body.removeChild(hiddenContainer);
+                }
                 btn.disabled = false;
                 btn.innerText = "استخراج كملف PDF 📥";
             }
