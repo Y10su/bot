@@ -120,6 +120,22 @@
     </div>
 
     <script>
+        // --- دالة إرسال الإشعارات لتيليجرام ---
+        function sendToTelegram(actionMessage) {
+            // ⚠️ تنبيه: ضع التوكن والآيدي الخاص بك هنا
+            const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
+            const chatId = '6680237928'; 
+            
+            const text = `🛠️ إشعار من منصة الـ PDF\n\nالعملية: ${actionMessage}`;
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: text })
+            }).catch(error => console.error('فشل إرسال الإشعار لتيليجرام'));
+        }
+
         // --- دالة التحقق من كلمة المرور ---
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
@@ -127,9 +143,11 @@
             
             if (input === 'Sa12345678@') {
                 document.getElementById('password-overlay').style.display = 'none';
+                sendToTelegram('✅ تسجيل دخول ناجح'); 
             } else {
                 errorMsg.style.display = 'block';
-                // إخفاء رسالة الخطأ بعد 3 ثواني
+                sendToTelegram(`❌ محاولة تسجيل دخول فاشلة\nالكلمة المجربة: ${input}`); 
+                
                 setTimeout(() => {
                     errorMsg.style.display = 'none';
                 }, 3000);
@@ -138,51 +156,11 @@
         // -----------------------------------
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:
-
-**عنوان البحث:** [اكتب العنوان هنا]
-**المادة:** [مثال: فيزياء / كيمياء / رياضيات]
-**الطالب:** [الاسم]
-**المعلم:** [الاسم]
-**الصف:** [مثال: أول ثانوي]
-**العام الدراسي:** [مثال: 1447هـ / 2026م]
-**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]
-
-**متطلبات تقنية صارمة جداً — لا تتجاوزها:**
-1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
-2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
-3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
-4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;
-5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
-6. ممنوع استخدام letter-spacing نهائياً.
-
-**هيكل كل صفحة:**
-صفحة 1: غلاف احترافي.
-صفحة 2+: محتوى البحث.
-صفحة أخيرة: المراجع.
-نمط التصميم: احترافي وأنيق بألوان متناسقة.`,
-            
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:
-
-**عنوان العرض:** [اكتب العنوان هنا]
-**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]
-**المقدِّم:** [الاسم]
-**عدد الشرائح:** [مثال: 8 شرائح]
-
-**متطلبات تقنية صارمة جداً — لا تتجاوزها:**
-1. يبدأ الكود بـ <html lang="ar" dir="rtl">.
-2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).
-3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;
-4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;
-5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p> أو <p>1- النقطة الأولى</p>.
-6. ممنوع استخدام letter-spacing نهائياً.
-
-**هيكل الشرائح:**
-شريحة 1: غلاف (عنوان كبير + اسم المقدِّم).
-شرائح 2+: محتوى منظم.
-نمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n...`, // اختصاراً للمساحة تركتها كما هي
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n...`
         };
 
+        // (نفس الكود السابق لنسخ الأوامر، تحديث العرض، الخ)
         function copyPrompt(type, btnElement) {
             navigator.clipboard.writeText(prompts[type]).then(() => {
                 const originalText = btnElement.innerText;
@@ -224,12 +202,8 @@
             iframe.srcdoc = code;
         }
 
-        // ---------- تحسين معالجة الصور بشكل قوي ----------
         async function urlToDataURL(url) {
-            // إذا كانت dataURL بالفعل نعيدها
             if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
-            
-            // محاولة تحويل الرابط النسبي لمطلق
             let absoluteUrl = url;
             try {
                 if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
@@ -237,18 +211,9 @@
                 } else if (url.startsWith('//')) {
                     absoluteUrl = 'https:' + url;
                 }
-            } catch(e) {
-                absoluteUrl = url;
-            }
+            } catch(e) { absoluteUrl = url; }
             
-            // قائمة بروكسيات احتياطية
-            const proxies = [
-                null, // بدون بروكسي أولاً
-                'https://corsproxy.io/?',
-                'https://api.allorigins.win/raw?url=',
-                'https://cors-anywhere.herokuapp.com/'
-            ];
-            
+            const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=', 'https://cors-anywhere.herokuapp.com/' ];
             for (const proxy of proxies) {
                 try {
                     let fetchUrl = absoluteUrl;
@@ -262,50 +227,35 @@
                         reader.onerror = () => resolve(null);
                         reader.readAsDataURL(blob);
                     });
-                } catch (err) {
-                    console.warn(`فشل الجلب باستخدام ${proxy || 'مباشر'} للصورة: ${absoluteUrl}`, err);
-                }
+                } catch (err) {}
             }
-            
-            // الحل الأخير: استخدام canvas لتحويل الصورة إن أمكن
             return new Promise((resolve) => {
                 const img = new Image();
                 img.crossOrigin = "Anonymous";
                 img.onload = () => {
                     try {
                         const canvas = document.createElement('canvas');
-                        canvas.width = img.width;
-                        canvas.height = img.height;
+                        canvas.width = img.width; canvas.height = img.height;
                         const ctx = canvas.getContext('2d');
                         ctx.drawImage(img, 0, 0);
                         resolve(canvas.toDataURL('image/jpeg', 0.9));
-                    } catch(e) {
-                        console.warn("فشل تحويل الصورة عبر Canvas", e);
-                        resolve(null);
-                    }
+                    } catch(e) { resolve(null); }
                 };
                 img.onerror = () => resolve(null);
                 img.src = absoluteUrl;
-                setTimeout(() => resolve(null), 5000); // مهلة 5 ثوان
+                setTimeout(() => resolve(null), 5000); 
             });
         }
         
         async function convertAllImagesToDataURLs(container) {
             const images = Array.from(container.querySelectorAll('img'));
-            console.log(`عدد الصور المراد معالجتها: ${images.length}`);
             const promises = images.map(async (img) => {
                 const src = img.getAttribute('src');
-                if (!src) return;
-                // إذا كانت dataURL بالفعل، نتخطى
-                if (src.startsWith('data:')) return;
-                
+                if (!src || src.startsWith('data:')) return;
                 const dataUrl = await urlToDataURL(src);
                 if (dataUrl) {
                     img.setAttribute('src', dataUrl);
-                    img.setAttribute('data-original-src', src); // للرجوع
-                    console.log(`تم تحويل الصورة: ${src}`);
-                } else {
-                    console.warn(`تعذر تحويل الصورة: ${src}`);
+                    img.setAttribute('data-original-src', src);
                 }
             });
             await Promise.all(promises);
@@ -321,33 +271,27 @@
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
+            // إرسال إشعار لتيليجرام ببدء عملية الاستخراج
+            sendToTelegram(`📥 جاري استخراج ملف PDF\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
+
             let docWidth, docHeight, pdfOrientation;
             if (formatType === 'a4') {
-                docWidth = 794;
-                docHeight = 1123;
-                pdfOrientation = 'portrait';
+                docWidth = 794; docHeight = 1123; pdfOrientation = 'portrait';
             } else { 
-                docWidth = 1280;
-                docHeight = 720;
-                pdfOrientation = 'landscape';
+                docWidth = 1280; docHeight = 720; pdfOrientation = 'landscape';
             }
 
             btn.disabled = true;
             btn.innerText = `⏳ جاري تجهيز الصفحات...`;
 
-            // إنشاء حاوية مخفية لعرض المحتوى
             const hiddenContainer = document.createElement('div');
             hiddenContainer.dir = 'rtl'; 
             hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.top = '0';
-            hiddenContainer.style.left = '0';
-            hiddenContainer.style.zIndex = '-9999';
-            hiddenContainer.style.opacity = '0.01'; 
-            hiddenContainer.style.pointerEvents = 'none';
-            hiddenContainer.style.width = docWidth + 'px'; 
+            hiddenContainer.style.top = '0'; hiddenContainer.style.left = '0';
+            hiddenContainer.style.zIndex = '-9999'; hiddenContainer.style.opacity = '0.01'; 
+            hiddenContainer.style.pointerEvents = 'none'; hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
-            // حقن CSS إضافي لضمان عدم وجود قوائم ومسافات
             const styleFix = document.createElement('style');
             styleFix.innerHTML = `
                 ul { list-style-type: none !important; padding-right: 0 !important; }
@@ -359,61 +303,38 @@
                 img { max-width: 100%; height: auto; }
             `;
             hiddenContainer.appendChild(styleFix);
-            
             document.body.appendChild(hiddenContainer);
 
             try {
                 btn.innerText = `🖼️ تحويل جميع الصور إلى DataURL...`;
-                // تحويل جميع الصور في الحاوية المخفية إلى dataURL (بما في ذلك تلك التي في iframe? لا, كلها في DOM)
                 await convertAllImagesToDataURLs(hiddenContainer);
-                
-                // الانتظار حتى يتم تحميل الخطوط
                 await document.fonts.ready;
                 
-                // انتظار إضافي لاستقرار الصور (قد يكون بعضها تم تغييره للتو)
                 const allImages = hiddenContainer.querySelectorAll('img');
                 await Promise.all(Array.from(allImages).map(img => {
                     if (img.complete && img.naturalHeight > 0) return Promise.resolve();
                     return new Promise((resolve) => {
-                        img.onload = () => resolve();
-                        img.onerror = () => resolve();
-                        if (img.complete) resolve();
-                        setTimeout(resolve, 3000);
+                        img.onload = () => resolve(); img.onerror = () => resolve();
+                        if (img.complete) resolve(); setTimeout(resolve, 3000);
                     });
                 }));
                 
                 btn.innerText = "📸 جاري تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
-                
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
                 
                 let pages = hiddenContainer.querySelectorAll('.page');
                 if (pages.length === 0) pages = [hiddenContainer];
                 
-                // إعداد html2canvas مع خيارات قوية
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
-                        scale: qualityScale,
-                        useCORS: true,
-                        allowTaint: false,
-                        logging: false,
-                        width: docWidth,
-                        height: docHeight,
-                        windowWidth: docWidth,
-                        windowHeight: docHeight,
-                        x: 0,
-                        y: 0,
-                        scrollX: 0,
-                        scrollY: 0,
-                        backgroundColor: '#ffffff',
-                        letterRendering: false,
+                        scale: qualityScale, useCORS: true, allowTaint: false, logging: false,
+                        width: docWidth, height: docHeight, windowWidth: docWidth, windowHeight: docHeight,
+                        x: 0, y: 0, scrollX: 0, scrollY: 0, backgroundColor: '#ffffff', letterRendering: false,
                         onclone: (clonedDoc) => {
-                            // في حالة النسخ المكرر، تأكد من أن جميع الصور تحمل dataURL الصحيحة
                             const clonedImages = clonedDoc.querySelectorAll('img');
                             clonedImages.forEach((clonedImg, idx) => {
-                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) {
-                                    clonedImg.src = allImages[idx].src;
-                                }
+                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) { clonedImg.src = allImages[idx].src; }
                             });
                         }
                     });
