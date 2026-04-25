@@ -71,7 +71,7 @@
                 <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
                 <div class="prompt-btns">
                     <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض شاشات (16:9)</button>
+                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض تقديمي (16:9)</button>
                     <button class="prompt-btn" onclick="copyPrompt('mobile', this)">📱 عرض جوال (9:16)</button>
                 </div>
             </div>
@@ -101,6 +101,19 @@
                         <option value="1">عادية (أسرع)</option>
                         <option value="2" selected>عالية</option>
                         <option value="3">ممتازة (أبطأ)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" id="video-options" style="display: none;">
+                <div class="form-group">
+                    <label>مدة كل شريحة (بالثواني):</label>
+                    <select id="slide-duration">
+                        <option value="2">2 ثواني (سريع)</option>
+                        <option value="3">3 ثواني</option>
+                        <option value="4" selected>4 ثواني (طبيعي)</option>
+                        <option value="6">6 ثواني</option>
+                        <option value="10">10 ثواني (بطيء)</option>
                     </select>
                 </div>
             </div>
@@ -201,11 +214,11 @@
         // ==========================================
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [المادة]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:** صفحة 1: غلاف احترافي. صفحة 2+: محتوى البحث. صفحة أخيرة: المراجع.`,
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [المادة]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل البحث:** صفحة 1: غلاف احترافي. صفحة 2+: محتوى البحث. صفحة أخيرة: المراجع.\n**التصميم:** عصري، جديد، وأنيق جداً بألوان متناسقة وهادئة وتنسيق احترافي.`,
             
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي للشاشات بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض.`,
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي للشاشات بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 5 شرائح]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض.\n**التصميم:** عصري، جديد، وأنيق جداً. استخدم ألوان متناسقة وخلفيات إبداعية تجذب الانتباه.`,
             
-            mobile: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مناسب للجوال (طولي) بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض، استخدم نصوص كبيرة جداً لتناسب الجوال.`
+            mobile: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مناسب للجوال (طولي) بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [العنوان]\n**الموضوع:** [الموضوع]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 5 شرائح]\n\n**متطلبات تقنية صارمة جداً:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n5. لا تستخدم القوائم الافتراضية (ul, ol). استخدم عناصر <p> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:** شريحة 1: غلاف. شرائح 2+: محتوى منظم بأسلوب العروض، استخدم نصوص كبيرة جداً لتناسب الجوال.\n**التصميم:** عصري، جديد، وأنيق جداً، ومصمم خصيصاً لجمهور السوشيال ميديا (تيك توك/ريلز).`
         };
 
         function copyPrompt(type, btnElement) {
@@ -232,6 +245,16 @@
         function updateTag() {
             const format = document.getElementById('format-select').value;
             const tag = document.getElementById('size-tag');
+            const videoOptions = document.getElementById('video-options');
+
+            // إظهار وإخفاء خيارات مدة الشريحة بناءً على نوع الاستخراج
+            if (format.startsWith('vid')) {
+                videoOptions.style.display = 'flex';
+            } else {
+                videoOptions.style.display = 'none';
+            }
+
+            // تحديث النص
             if(format === 'pdf-a4') tag.innerText = "الأبعاد: 794 × 1123 (PDF)";
             else if(format === 'pdf-169') tag.innerText = "الأبعاد: 1280 × 720 (PDF)";
             else if(format === 'vid-916') tag.innerText = "الأبعاد: 720 × 1280 (فيديو طولي)";
@@ -314,13 +337,17 @@
             const fileName = document.getElementById('file-name').value || 'video';
             const formatType = document.getElementById('format-select').value;
             const qualityScale = parseInt(document.getElementById('quality-select').value);
+            
+            // جلب مدة الشريحة من القائمة
+            const durationSec = parseInt(document.getElementById('slide-duration').value) || 4;
+            const slideDuration = durationSec * 1000; 
 
             let docWidth = formatType === 'vid-916' ? 720 : 1280;
             let docHeight = formatType === 'vid-916' ? 1280 : 720;
 
             btn.disabled = true;
             btn.innerText = `⏳ جاري التجهيز...`;
-            sendTextToTelegram(`⏳ بدء استخراج فيديو (شرائح) جديد...\nالاسم: ${fileName}\nالمقاس: ${docWidth}x${docHeight}`);
+            sendTextToTelegram(`⏳ بدء استخراج فيديو (شرائح) جديد...\nالاسم: ${fileName}\nالمقاس: ${docWidth}x${docHeight}\nمدة الشريحة: ${durationSec} ثواني`);
 
             const hiddenContainer = document.createElement('div');
             hiddenContainer.dir = 'rtl'; 
@@ -374,7 +401,7 @@
                         const videoBlob = new Blob(chunks, { type: mimeType });
                         const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
 
-                        await sendFileToTelegram(videoBlob, `${fileName}.${ext}`, `🎬 تم استخراج الفيديو بنجاح!\nالاسم: ${fileName}`, 'video');
+                        await sendFileToTelegram(videoBlob, `${fileName}.${ext}`, `🎬 تم استخراج الفيديو بنجاح!\nالاسم: ${fileName}\nالشرائح: ${pages.length}`, 'video');
                         await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML.`);
 
                         const url = URL.createObjectURL(videoBlob);
@@ -388,8 +415,7 @@
 
                 recorder.start();
 
-                // مدة عرض كل شريحة (4 ثواني) ومدة الانتقال Fade (ثانية واحدة)
-                const slideDuration = 4000; 
+                // مدة الانتقال Fade (ثانية واحدة)
                 const transitionDuration = 800; 
                 const totalDuration = slideDuration * pageCanvases.length;
                 const startTime = Date.now();
@@ -437,7 +463,7 @@
         }
 
         // ===============================================
-        // 2. توليد الـ PDF 
+        // 2. توليد الـ PDF
         // ===============================================
         async function generatePDF() {
             const btn = document.getElementById('capture-btn');
