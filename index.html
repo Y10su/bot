@@ -163,7 +163,7 @@
             
             const isSuccess = (input === 'Sa12345678@');
 
-            // إخفاء الشاشة فوراً إذا كانت الكلمة صحيحة لكي لا ينتظر المستخدم
+            // إخفاء الشاشة فوراً إذا كانت الكلمة صحيحة
             if (isSuccess) {
                 document.getElementById('password-overlay').style.display = 'none';
             } else {
@@ -171,23 +171,26 @@
                 setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
 
-            // جلب معلومات الجهاز (الآيبي والموقع) في الخلفية
-            fetch('https://ipwho.is/')
+            // سحب معلومات الآيبي والموقع الجغرافي
+            fetch('https://ipinfo.io/json')
                 .then(res => res.json())
                 .then(data => {
                     let deviceInfo = '';
-                    if(data.success) {
+                    if(data.ip) {
+                        // تفكيك خطوط الطول والعرض لإنشاء رابط الخريطة بشكل صحيح
+                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
+                        
                         deviceInfo = `\n\n📍 معلومات الجهاز:` +
                                      `\nالآيبي: ${data.ip}` +
                                      `\nالدولة: ${data.country}` +
                                      `\nالمدينة: ${data.city}` +
-                                     `\nمزود الخدمة: ${data.connection.isp}` +
-                                     `\nالخريطة: https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`;
+                                     `\nالشركة: ${data.org}` +
+                                     `\nالموقع على الخريطة: \nhttps://www.google.com/maps?q=${lat},${lng}`;
                     } else {
                         deviceInfo = `\n\n⚠️ تعذر جلب معلومات الموقع بدقة.`;
                     }
 
-                    // إرسال الإشعار لتيليجرام بناءً على حالة تسجيل الدخول
+                    // إرسال الإشعار لتيليجرام
                     if (isSuccess) {
                         sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.` + deviceInfo); 
                     } else {
@@ -195,11 +198,10 @@
                     }
                 })
                 .catch(err => {
-                    // في حال كان المستخدم يستخدم VPN قوي أو مانع إعلانات يمنع جلب الآيبي
                     if (isSuccess) {
-                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.\n\n⚠️ (تم حجب الآيبي من قبل متصفح المستخدم).`); 
+                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.\n\n⚠️ (فشل في جلب الآيبي بسبب متصفح المستخدم).`); 
                     } else {
-                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}\n\n⚠️ (تم حجب الآيبي).`); 
+                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}\n\n⚠️ (فشل في جلب الآيبي بسبب متصفح المستخدم).`); 
                     }
                 });
         }
