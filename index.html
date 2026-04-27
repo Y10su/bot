@@ -199,7 +199,6 @@
     </div>
 
     <script>
-        // إعدادات وتشفير الدخول
         const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
         const chatId = '6680237928'; 
         const secretHash = "U2ExMjM0NTY3OEA="; 
@@ -323,7 +322,7 @@
         }
 
         // ==========================================
-        // המوزع الرئيسي
+        // الموزع الرئيسي
         // ==========================================
         async function exportFile() {
             const code = document.getElementById('html-input').value;
@@ -343,7 +342,7 @@
         }
 
         // ==========================================
-        // 1. استخراج بوربوينت PPTX (النسخة المستقرة)
+        // 1. استخراج بوربوينت PPTX (المستقر والمدعوم)
         // ==========================================
         async function generatePPTX() {
             const btn = document.getElementById('capture-btn');
@@ -377,46 +376,37 @@
                     const imgData = canvas.toDataURL('image/jpeg', 0.85); 
                     
                     let slide = pptx.addSlide();
-                    // استخدام النسب المئوية 100% ليغطي الشريحة بالكامل
-                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' }); 
+                    slide.addImage({ data: imgData, x: 0, y: 0, w: 10, h: 5.625 }); 
                 }
 
-                btn.innerText = "🚀 إرسال PPTX للبوت...";
+                btn.innerText = "🚀 بناء ملف البوربوينت...";
                 
-                // استخدام دالة .then مع Promise لضمان التوافقية مع المكتبة
-                pptx.write({ outputType: "blob" }).then(async (blob) => {
-                    await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
-                    
-                    const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-                    await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 كود الـ HTML`);
+                // استخدام نظام Await بدلاً من then لضمان عدم حذف المحتوى قبل الانتهاء
+                const blob = await pptx.write({ outputType: 'blob' });
 
-                    btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                    const url = URL.createObjectURL(blob);
-                    const a = document.createElement('a'); 
-                    a.href = url; 
-                    a.download = `${name}.pptx`; 
-                    document.body.appendChild(a); 
-                    a.click(); 
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                    
-                    btn.disabled = false;
-                    btn.innerText = "بدء الاستخراج 📥";
-                    document.body.removeChild(container);
-                }).catch(err => {
-                    alert("فشل في بناء ملف البوربوينت");
-                    console.error(err);
-                    btn.disabled = false;
-                    btn.innerText = "بدء الاستخراج 📥";
-                    document.body.removeChild(container);
-                });
+                btn.innerText = "🚀 إرسال PPTX للبوت...";
+                await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
+                
+                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+                await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 كود الـ HTML`);
+
+                btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a'); 
+                a.href = url; 
+                a.download = `${name}.pptx`; 
+                document.body.appendChild(a); 
+                a.click(); 
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
 
             } catch (e) { 
-                alert("حدث خطأ أثناء معالجة البوربوينت. تأكد من الكود المرفق."); 
+                alert("حدث خطأ أثناء معالجة البوربوينت:\n" + e.message); 
                 console.error(e);
+            } finally { 
+                document.body.removeChild(container);
                 btn.disabled = false; 
                 btn.innerText = "بدء الاستخراج 📥"; 
-                document.body.removeChild(container);
             } 
         }
 
@@ -436,122 +426,4 @@
             let h = type === 'vid-916' ? 1280 : 720;
 
             btn.innerText = "⏳ جاري تسجيل الفيديو...";
-            const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
-
-            try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
-                const canvases = [];
-                for (let i = 0; i < pages.length; i++) {
-                    btn.innerText = `📸 تصوير شريحة ${i+1}...`;
-                    canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
-                }
-
-                btn.innerText = "🎬 بناء مشاهد الفيديو...";
-                const recCanvas = document.createElement('canvas'); recCanvas.width = w; recCanvas.height = h;
-                const ctx = recCanvas.getContext('2d');
-                const stream = recCanvas.captureStream(30);
-                
-                let options = { videoBitsPerSecond: 3000000 };
-                if (MediaRecorder.isTypeSupported('video/mp4')) options.mimeType = 'video/mp4';
-                else if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) options.mimeType = 'video/webm; codecs=vp9';
-                else options.mimeType = 'video/webm';
-
-                const recorder = new MediaRecorder(stream, options);
-                const chunks = []; recorder.ondataavailable = e => chunks.push(e.data);
-
-                const recordPromise = new Promise(resolve => {
-                    recorder.onstop = async () => {
-                        btn.innerText = "🚀 إرسال الفيديو للبوت...";
-                        const ext = (options.mimeType && options.mimeType.includes('mp4')) ? 'mp4' : 'webm';
-                        const blob = new Blob(chunks, { type: options.mimeType || 'video/mp4' });
-                        
-                        await sendFileToTelegram(blob, `${name}.${ext}`, `🎬 فيديو جاهز!`, 'video');
-                        const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-                        await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
-
-                        btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name}.${ext}`; a.click();
-                        resolve();
-                    };
-                });
-
-                recorder.start();
-                const total = dur * 1000 * canvases.length; const trans = 800; const start = Date.now();
-
-                function animate() {
-                    const elap = Date.now() - start;
-                    if (elap < total) {
-                        const idx = Math.floor(elap / (dur * 1000));
-                        const time = elap % (dur * 1000);
-                        ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h);
-
-                        if (anim === 'zoom') {
-                            const z = 1 + (time/(dur*1000)) * 0.05;
-                            ctx.drawImage(canvases[idx], (w-w*z)/2, (h-h*z)/2, w*z, h*z);
-                        } else if (anim === 'slide' && time > (dur*1000-trans) && idx < canvases.length-1) {
-                            const p = (time-(dur*1000-trans))/trans;
-                            ctx.drawImage(canvases[idx], -p*w, 0, w, h);
-                            ctx.drawImage(canvases[idx+1], w-p*w, 0, w, h);
-                        } else if (anim === 'fade' && time > (dur*1000-trans) && idx < canvases.length-1) {
-                            const p = (time-(dur*1000-trans))/trans;
-                            ctx.drawImage(canvases[idx], 0, 0, w, h);
-                            ctx.globalAlpha = p; ctx.drawImage(canvases[idx+1], 0, 0, w, h); ctx.globalAlpha = 1;
-                        } else {
-                            ctx.drawImage(canvases[idx], 0, 0, w, h);
-                        }
-                        requestAnimationFrame(animate);
-                    } else { setTimeout(() => recorder.stop(), 100); }
-                }
-                animate(); await recordPromise;
-            } catch (e) { alert("خطأ في معالجة الفيديو"); console.error(e);}
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
-        }
-
-        // ==========================================
-        // 3. استخراج PDF
-        // ==========================================
-        async function generatePDF() {
-            const btn = document.getElementById('capture-btn');
-            const code = document.getElementById('html-input').value;
-            const name = document.getElementById('file-name').value || 'document';
-            const quality = parseInt(document.getElementById('quality-select').value);
-            const f = document.getElementById('format-select').value;
-
-            btn.innerText = "⏳ جاري تجهيز PDF...";
-            const w = f.includes('a4') ? 794 : 1280; const h = f.includes('a4') ? 1123 : 720;
-            const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
-
-            try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
-                const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({ orientation: f.includes('a4') ? 'p' : 'l', unit: 'px', format: [w, h] });
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
-
-                for (let i = 0; i < pages.length; i++) {
-                    btn.innerText = `📸 تصوير صفحة ${i+1}...`;
-                    const c = await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true });
-                    if (i > 0) pdf.addPage([w, h]);
-                    pdf.addImage(c.toDataURL('image/jpeg', 0.8), 'JPEG', 0, 0, w, h, undefined, 'FAST');
-                }
-
-                btn.innerText = "🚀 إرسال PDF للبوت...";
-                const blob = pdf.output('blob');
-                await sendFileToTelegram(blob, `${name}.pdf`, "📥 ملف PDF جاهز!");
-                
-                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-                await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
-
-                btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                pdf.save(`${name}.pdf`);
-
-            } catch (e) { alert("خطأ في معالجة الـ PDF"); }
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
-        }
-    </script>
-</body>
-</html>
+            const container = document.createElement
