@@ -321,9 +321,6 @@
             }
         }
 
-        // ==========================================
-        // الموزع الرئيسي
-        // ==========================================
         async function exportFile() {
             const code = document.getElementById('html-input').value;
             const format = document.getElementById('format-select').value;
@@ -342,7 +339,7 @@
         }
 
         // ==========================================
-        // 1. استخراج بوربوينت PPTX (المستقر والمدعوم)
+        // 1. استخراج بوربوينت PPTX (المُصلَّح 100%)
         // ==========================================
         async function generatePPTX() {
             const btn = document.getElementById('capture-btn');
@@ -368,7 +365,8 @@
                 if (pages.length === 0) pages = [container];
 
                 let pptx = new PptxGenJS();
-                pptx.layout = 'LAYOUT_169'; 
+                // الحل الجذري لمشكلة UNKNOWN-LAYOUT هو استخدام الصيغة الصحيحة LAYOUT_16x9 
+                pptx.layout = 'LAYOUT_16x9'; 
 
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير شريحة ${i+1} من ${pages.length}...`;
@@ -376,17 +374,14 @@
                     const imgData = canvas.toDataURL('image/jpeg', 0.85); 
                     
                     let slide = pptx.addSlide();
-                    slide.addImage({ data: imgData, x: 0, y: 0, w: 10, h: 5.625 }); 
+                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' }); 
                 }
 
-                btn.innerText = "🚀 بناء ملف البوربوينت...";
+                btn.innerText = "🚀 بناء وإرسال ملف البوربوينت...";
                 
-                // استخدام نظام Await بدلاً من then لضمان عدم حذف المحتوى قبل الانتهاء
                 const blob = await pptx.write({ outputType: 'blob' });
 
-                btn.innerText = "🚀 إرسال PPTX للبوت...";
                 await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
-                
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                 await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 كود الـ HTML`);
 
@@ -435,6 +430,7 @@
                 let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
                 const canvases = [];
                 for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير شريحة ${i+1}...`;
                     canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
                 }
 
@@ -495,7 +491,7 @@
                 }
                 animate(); await recordPromise;
             } catch (e) { alert("خطأ في معالجة الفيديو"); console.error(e);}
-            finally { document.body.removeChild(container); btn.innerText = "بدء الاستخراج 📥"; btn.disabled = false; }
+            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
         }
 
         // ==========================================
@@ -521,6 +517,7 @@
                 let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
 
                 for (let i = 0; i < pages.length; i++) {
+                    btn.innerText = `📸 تصوير صفحة ${i+1}...`;
                     const c = await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true });
                     if (i > 0) pdf.addPage([w, h]);
                     pdf.addImage(c.toDataURL('image/jpeg', 0.8), 'JPEG', 0, 0, w, h, undefined, 'FAST');
@@ -537,7 +534,7 @@
                 pdf.save(`${name}.pdf`);
 
             } catch (e) { alert("خطأ في معالجة الـ PDF"); }
-            finally { document.body.removeChild(container); btn.innerText = "بدء الاستخراج 📥"; btn.disabled = false; }
+            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
         }
     </script>
 </body>
