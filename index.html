@@ -84,7 +84,7 @@
     <div id="converter-tab" class="main-container tab-content active-tab">
         <div class="box-panel">
             <div class="ai-prompts">
-                <p>🤖 أوامر سريعة للذكاء الاصطناعي:</p>
+                <p>🤖 أوامر جاهزة للذكاء الاصطناعي (النسخة الأصلية):</p>
                 <div class="prompt-btns">
                     <button class="prompt-btn" onclick="copyQuickPrompt('a4', this)">📄 بحث أكاديمي</button>
                     <button class="prompt-btn" onclick="copyQuickPrompt('169', this)">🖥️ عرض شاشات</button>
@@ -165,30 +165,34 @@
                 </select>
             </div>
 
-            <label>المتطلبات (اضغط 👁️ لشطب المتطلب):</label>
+            <label>المعلومات المطلوبة (اضغط 👁️ لشطب المتطلب):</label>
             <div class="req-row">
                 <button class="toggle-req" onclick="toggleInput(this, 'req-title')">👁️</button>
-                <input type="text" id="req-title" placeholder="عنوان العمل (مثال: الذكاء الاصطناعي)" oninput="generatePromptText()">
+                <input type="text" id="req-title" placeholder="عنوان البحث أو العرض" oninput="generatePromptText()">
             </div>
             <div class="req-row">
                 <button class="toggle-req" onclick="toggleInput(this, 'req-subject')">👁️</button>
-                <input type="text" id="req-subject" placeholder="المادة (مثال: حاسب آلي)" oninput="generatePromptText()">
+                <input type="text" id="req-subject" placeholder="المادة" oninput="generatePromptText()">
             </div>
             <div class="req-row">
                 <button class="toggle-req" onclick="toggleInput(this, 'req-name')">👁️</button>
-                <input type="text" id="req-name" placeholder="اسم المقدم / الطالب" oninput="generatePromptText()">
+                <input type="text" id="req-name" placeholder="اسم الطالب / المقدِّم" oninput="generatePromptText()">
             </div>
             <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-group')">👁️</button>
-                <input type="text" id="req-group" placeholder="أسماء المجموعة" oninput="generatePromptText()">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-teacher')">👁️</button>
+                <input type="text" id="req-teacher" placeholder="اسم المعلم" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-grade')">👁️</button>
+                <input type="text" id="req-grade" placeholder="الصف" oninput="generatePromptText()">
+            </div>
+            <div class="req-row">
+                <button class="toggle-req" onclick="toggleInput(this, 'req-year')">👁️</button>
+                <input type="text" id="req-year" placeholder="العام الدراسي" oninput="generatePromptText()">
             </div>
             <div class="req-row">
                 <button class="toggle-req" onclick="toggleInput(this, 'req-pages')">👁️</button>
-                <input type="text" id="req-pages" placeholder="عدد الصفحات / الشرائح" oninput="generatePromptText()">
-            </div>
-            <div class="req-row">
-                <button class="toggle-req" onclick="toggleInput(this, 'req-no-numbers')">👁️</button>
-                <input type="text" id="req-no-numbers" placeholder="ملاحظات إضافية" oninput="generatePromptText()">
+                <input type="text" id="req-pages" placeholder="عدد الصفحات / الشرائح المطلوبة" oninput="generatePromptText()">
             </div>
 
             <label style="margin-top: 15px;">✨ الأمر النهائي للذكاء الاصطناعي:</label>
@@ -263,16 +267,63 @@
             generatePromptText();
         }
 
+        // ==========================================
+        // نظام النص الأصلي للمولد الذكي
+        // ==========================================
         function generatePromptText() {
             const type = document.getElementById('prompt-type').value;
-            let p = `أنت مصمم HTML محترف. أنشئ كود كامل لـ ${type === 'a4' ? 'بحث (A4)' : 'عرض تقديمى'} عصري وأنيق بالعربية.\n\nالمعلومات المطلوب إدراجها:\n`;
+            let p = "";
+
+            if (type === 'a4') {
+                p += "أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n";
+            } else if (type === '169') {
+                p += "أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n";
+            } else if (type === '916') {
+                p += "أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مخصص للجوال بالعربية وفق المواصفات التالية:\n\n";
+            }
+
+            const title = document.getElementById('req-title');
+            const subject = document.getElementById('req-subject');
+            const name = document.getElementById('req-name');
+            const teacher = document.getElementById('req-teacher');
+            const grade = document.getElementById('req-grade');
+            const year = document.getElementById('req-year');
+            const pages = document.getElementById('req-pages');
+
+            if (!title.disabled) p += `**${type === 'a4' ? 'عنوان البحث' : 'عنوان العرض'}:** ${title.value || '[اكتب العنوان هنا]'}\n`;
+            if (!subject.disabled) p += `**المادة:** ${subject.value || '[مثال: فيزياء / كيمياء / رياضيات]'}\n`;
+            if (!name.disabled) p += `**${type === 'a4' ? 'الطالب' : 'المقدِّم'}:** ${name.value || '[الاسم]'}\n`;
             
-            ['req-title', 'req-subject', 'req-name', 'req-group', 'req-pages', 'req-no-numbers'].forEach(id => {
-                const el = document.getElementById(id);
-                if (!el.disabled && el.value) p += `- ${el.placeholder}: ${el.value}\n`;
-            });
-            
-            p += `\nالمواصفات التقنية الصارمة:\n1. استدعاء خطوط Google Fonts (مثل Cairo).\n2. تصميم فخم وعصري بدون ترقيم صفحات للمراجع.\n3. الكود مقسم لشرائح داخل <div class="page"> أبعادها ${type === 'a4' ? 'width: 794px; height: 1123px;' : (type === '169' ? 'width: 1280px; height: 720px;' : 'width: 720px; height: 1280px;')}.\n4. ممنوع استخدام القوائم الافتراضية (ul, ol)، استخدم عناصر النصوص <p>.`;
+            if (type === 'a4') {
+                if (!teacher.disabled) p += `**المعلم:** ${teacher.value || '[الاسم]'}\n`;
+                if (!grade.disabled) p += `**الصف:** ${grade.value || '[مثال: أول ثانوي]'}\n`;
+                if (!year.disabled) p += `**العام الدراسي:** ${year.value || '[مثال: 1447هـ / 2026م]'}\n`;
+            }
+
+            if (!pages.disabled) p += `**${type === 'a4' ? 'عدد الصفحات المطلوبة' : 'عدد الشرائح'}:** ${pages.value || (type === 'a4' ? '[مثال: 5 صفحات]' : '[مثال: 8 شرائح]')}\n`;
+
+            p += "\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n";
+            p += "1. يبدأ الكود بـ <html lang=\"ar\" dir=\"rtl\">\n";
+            p += "2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n";
+            p += "3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n";
+
+            if (type === 'a4') {
+                p += "4. كل صفحة تكون: <div class=\"page\">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+            } else if (type === '169') {
+                p += "4. كل شريحة تكون: <div class=\"page\">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+            } else if (type === '916') {
+                p += "4. كل شريحة تكون: <div class=\"page\">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+            }
+
+            p += "5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n";
+            p += "6. ممنوع استخدام letter-spacing نهائياً.\n\n";
+
+            if (type === 'a4') {
+                p += "**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.";
+            } else {
+                p += "**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.";
+            }
+
             document.getElementById('final-prompt-output').value = p;
         }
 
@@ -285,9 +336,9 @@
 
         function copyQuickPrompt(type, btn) {
             const list = {
-                a4: "أنت مصمم HTML محترف. صمم بحث أكاديمي (A4) فخم وعصري بالعربية باستخدام خط Tajawal وبدون ترقيم صفحات.",
-                169: "أنت مصمم عروض محترف. صمم عرضاً تقديمياً (16:9) Ultra-Modern بألوان متناسقة وخطوط كبيرة جداً.",
-                mobile: "أنت مصمم واجهات تيك توك. صمم عرضاً تقديمياً للجوال (9:16) بتنسيق طولي جذاب جداً ونصوص ضخمة واضحة."
+                a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
+                169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`,
+                mobile: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مخصص للجوال بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
             };
             navigator.clipboard.writeText(list[type]);
             const old = btn.innerText; btn.innerText = "✅ تم!";
@@ -321,6 +372,9 @@
             }
         }
 
+        // ==========================================
+        // الموزع الرئيسي
+        // ==========================================
         async function exportFile() {
             const code = document.getElementById('html-input').value;
             const format = document.getElementById('format-select').value;
@@ -339,7 +393,7 @@
         }
 
         // ==========================================
-        // 1. استخراج بوربوينت PPTX (المُصلَّح 100%)
+        // 1. استخراج بوربوينت PPTX
         // ==========================================
         async function generatePPTX() {
             const btn = document.getElementById('capture-btn');
@@ -365,7 +419,6 @@
                 if (pages.length === 0) pages = [container];
 
                 let pptx = new PptxGenJS();
-                // الحل الجذري لمشكلة UNKNOWN-LAYOUT هو استخدام الصيغة الصحيحة LAYOUT_16x9 
                 pptx.layout = 'LAYOUT_16x9'; 
 
                 for (let i = 0; i < pages.length; i++) {
