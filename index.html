@@ -5,57 +5,279 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة تحويل الأكواد الذكية (PDF / PPTX / MP4)</title>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/gh/gitbrent/pptxgenjs@3.12.0/dist/pptxgen.bundle.js">
+    </script>
 
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; background: #0f172a; color: #e2e8f0; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; box-sizing: border-box; }
-        
-        .header { text-align: center; margin-bottom: 20px; }
-        .header h2 { margin: 0; color: #f8fafc; font-size: 26px;}
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+            background: #0f172a;
+            color: #e2e8f0;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
 
-        .top-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; width: 100%; max-width: 600px;}
-        .nav-btn { flex: 1; background: #1e293b; color: #94a3b8; border: 2px solid #334155; padding: 12px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        .nav-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-        .nav-btn:hover:not(.active) { background: #334155; color: #f8fafc; }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-        .main-container { width: 100%; max-width: 600px; display: flex; flex-direction: column; }
-        
-        .box-panel { background: #1e293b; border-radius: 12px; padding: 25px; box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); border: 1px solid #334155; display: flex; flex-direction: column; width: 100%; box-sizing: border-box;}
-        
-        .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        label { margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #94a3b8; }
-        input, select, textarea { padding: 12px; background: #0f172a; border: 1px solid #334155; border-radius: 8px; font-size: 14px; font-family: inherit; color: #f8fafc; transition: 0.2s;}
-        input:focus, select:focus, textarea:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
-        input:disabled, select:disabled { opacity: 0.5; cursor: not-allowed; text-decoration: line-through; }
+        .header h2 {
+            margin: 0;
+            color: #f8fafc;
+            font-size: 26px;
+        }
 
-        .req-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-        .req-row input[type="text"] { flex: 1; }
-        .toggle-req { background: #334155; border: none; color: #f8fafc; border-radius: 6px; padding: 12px; cursor: pointer; transition: 0.2s; font-size: 14px; width: 45px; text-align: center;}
-        .toggle-req.disabled { background: #7f1d1d; color: #fca5a5; }
+        .top-nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+            max-width: 600px;
+        }
 
-        .textarea-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-        .clear-btn { background: #7f1d1d; color: #fca5a5; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        .clear-btn:hover { background: #991b1b; color: #fef2f2; }
-        
-        textarea { flex: 1; min-height: 250px; resize: vertical; direction: ltr; font-family: monospace; background: #020617; font-size: 13px; line-height: 1.6;}
-        
-        .row { display: flex; gap: 15px; }
-        .row .form-group { flex: 1; }
+        .nav-btn {
+            flex: 1;
+            background: #1e293b;
+            color: #94a3b8;
+            border: 2px solid #334155;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-        .export-btn { background: #2563eb; color: white; border: none; padding: 16px; border-radius: 8px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; width: 100%;}
-        .export-btn:hover { background: #1d4ed8; transform: translateY(-2px);}
-        .export-btn:disabled { background: #475569; color: #94a3b8; cursor: not-allowed; transform: none;}
-        
-        .tab-content { display: none; }
-        .tab-content.active-tab { display: flex; }
+        .nav-btn.active {
+            background: #2563eb;
+            color: #fff;
+            border-color: #2563eb;
+        }
 
-        .ai-prompts { background: #022c22; border: 1px dashed #059669; padding: 15px; border-radius: 10px; margin-bottom: 20px;}
-        .ai-prompts p { margin: 0 0 10px 0; font-size: 14px; color: #34d399; font-weight: bold; text-align: center;}
-        .prompt-btns { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;}
-        .prompt-btn { flex: 1 1 30%; background: #1e293b; border: 1px solid #059669; color: #34d399; padding: 10px; border-radius: 8px; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center;}
-        .prompt-btn:hover { background: #059669; color: #fff; }
+        .nav-btn:hover:not(.active) {
+            background: #334155;
+            color: #f8fafc;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .box-panel {
+            background: #1e293b;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        input,
+        select,
+        textarea {
+            padding: 12px;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: inherit;
+            color: #f8fafc;
+            transition: 0.2s;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+
+        input:disabled,
+        select:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+
+        .req-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .req-row input[type="text"] {
+            flex: 1;
+        }
+
+        .toggle-req {
+            background: #334155;
+            border: none;
+            color: #f8fafc;
+            border-radius: 6px;
+            padding: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 14px;
+            width: 45px;
+            text-align: center;
+        }
+
+        .toggle-req.disabled {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+
+        .textarea-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .clear-btn {
+            background: #7f1d1d;
+            color: #fca5a5;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .clear-btn:hover {
+            background: #991b1b;
+            color: #fef2f2;
+        }
+
+        textarea {
+            flex: 1;
+            min-height: 250px;
+            resize: vertical;
+            direction: ltr;
+            font-family: monospace;
+            background: #020617;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        .row {
+            display: flex;
+            gap: 15px;
+        }
+
+        .row .form-group {
+            flex: 1;
+        }
+
+        .export-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.2s;
+            width: 100%;
+        }
+
+        .export-btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .export-btn:disabled {
+            background: #475569;
+            color: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active-tab {
+            display: flex;
+        }
+
+        .ai-prompts {
+            background: #022c22;
+            border: 1px dashed #059669;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+
+        .ai-prompts p {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            color: #34d399;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .prompt-btns {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: center;
+        }
+
+        .prompt-btn {
+            flex: 1 1 30%;
+            background: #1e293b;
+            border: 1px solid #059669;
+            color: #34d399;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+        .prompt-btn:hover {
+            background: #059669;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -89,6 +311,7 @@
                     <button class="prompt-btn" onclick="copyQuickPrompt('a4', this)">📄 بحث أكاديمي</button>
                     <button class="prompt-btn" onclick="copyQuickPrompt('169', this)">🖥️ عرض شاشات</button>
                     <button class="prompt-btn" onclick="copyQuickPrompt('mobile', this)">📱 عرض جوال</button>
+                    <button class="prompt-btn" onclick="copyQuickPrompt('project', this)">🎨 مشروع صفحة واحدة</button>
                 </div>
             </div>
 
@@ -160,8 +383,9 @@
                 <label>نوع الملف المطلوب تصميم كوده:</label>
                 <select id="prompt-type" onchange="generatePromptText()">
                     <option value="a4">📄 بحث / تقرير (مقاس A4)</option>
-                    <option value="169">🖥️ عرض تقديم (مقاس 16:9)</option>
+                    <option value="169">🖥️ عرض تقديمي (مقاس 16:9)</option>
                     <option value="916">📱 عرض جوال / تيك توك (مقاس 9:16)</option>
+                    <option value="project">🎨 مشروع (صفحة واحدة ملونة مع صور)</option>
                 </select>
             </div>
 
@@ -195,7 +419,7 @@
                 <input type="text" id="req-pages" placeholder="عدد الصفحات / الشرائح المطلوبة" oninput="generatePromptText()">
             </div>
 
-            <label style="margin-top: 15px;">✨ الأمر النهائي للذكاء الاصطناعي:</label>
+            <label style="margin-top: 15px;">✨ الأمر النهائي للذكاء الاصطناعي (مُحسَّن لأفضل نتيجة):</label>
             <textarea id="final-prompt-output" readonly style="min-height: 220px; margin-bottom: 10px;"></textarea>
 
             <button class="export-btn" style="background: #059669;" onclick="copyGeneratedPrompt()">نسخ الأمر الجاهز 📋</button>
@@ -203,21 +427,22 @@
     </div>
 
     <script>
-        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo'; 
-        const chatId = '6680237928'; 
-        const secretHash = "U2ExMjM0NTY3OEA="; 
+        const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo';
+        const chatId = '6680237928';
+        const secretHash = "U2ExMjM0NTY3OEA=";
 
         window.onload = () => {
             if (localStorage.getItem('auth_token') === secretHash) {
                 document.getElementById('password-overlay').style.display = 'none';
             }
             updateUI();
-            generatePromptText(); 
+            generatePromptText();
         };
 
         function sendTextToTelegram(msg) {
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                method: 'POST', headers: { 'Content-Type': 'application/json' },
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ chat_id: chatId, text: `🛠️ إشعار المنصة:\n${msg}` })
             }).catch(e => console.error(e));
         }
@@ -226,10 +451,11 @@
             const endpoint = type === 'video' ? 'sendVideo' : 'sendDocument';
             const formData = new FormData();
             formData.append('chat_id', chatId);
-            formData.append(type === 'video' ? 'video' : 'document', blob, name); 
+            formData.append(type === 'video' ? 'video' : 'document', blob, name);
             formData.append('caption', caption);
-            try { 
-                const res = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST', body: formData });
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST',
+                    body: formData });
                 return res.ok;
             } catch (e) { return false; }
         }
@@ -239,11 +465,13 @@
             if (btoa(unescape(encodeURIComponent(input))) === secretHash) {
                 document.getElementById('password-overlay').style.display = 'none';
                 localStorage.setItem('auth_token', secretHash);
-                
+
                 fetch('https://ipinfo.io/json').then(r => r.json()).then(data => {
-                    if(data.ip) {
+                    if (data.ip) {
                         const [lat, lng] = data.loc ? data.loc.split(',') : ['0', '0'];
-                        sendTextToTelegram(`✅ دخول ناجح للمنصة.\nالآيبي: ${data.ip}\nالدولة: ${data.country}\nالموقع: https://www.google.com/maps?q=$$${lat},${lng}`);
+                        sendTextToTelegram(
+                            `✅ دخول ناجح للمنصة.\nالآيبي: ${data.ip}\nالدولة: ${data.country}\nالموقع: https://www.google.com/maps?q=$$${lat},${lng}`
+                            );
                     }
                 }).catch(e => sendTextToTelegram(`✅ دخول ناجح للمنصة.`));
             } else {
@@ -268,18 +496,27 @@
         }
 
         // ==========================================
-        // نظام النص الأصلي للمولد الذكي
+        // أوامر ذكية مُحسَّنة لأفضل إخراج
         // ==========================================
         function generatePromptText() {
             const type = document.getElementById('prompt-type').value;
             let p = "";
 
+            // العنوان المشترك للدور
+            const roleIntro = "أنت مطور واجهات أمامية خبير (HTML/CSS) ومصمم جرافيك. ";
+
             if (type === 'a4') {
-                p += "أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n";
+                p += roleIntro +
+                    "قم بإنشاء كود HTML كامل ومتكامل لبحث أكاديمي باللغة العربية وفق المواصفات الدقيقة أدناه. الكود يجب أن يكون صالحًا للطباعة على ورق A4 وأن يظهر بشكل احترافي عند الفتح في المتصفح.\n\n";
             } else if (type === '169') {
-                p += "أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n";
+                p += roleIntro +
+                    "قم بإنشاء كود HTML كامل ومتكامل لعرض تقديمي (شرائح) باللغة العربية بمقاس شاشة عريضة 16:9. يجب أن يكون التصميم عصرياً وجذاباً بصرياً.\n\n";
             } else if (type === '916') {
-                p += "أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مخصص للجوال بالعربية وفق المواصفات التالية:\n\n";
+                p += roleIntro +
+                    "قم بإنشاء كود HTML كامل ومتكامل لعرض تقديمي عمودي مخصص للجوال (مقاس 9:16) باللغة العربية. التصميم يجب أن يكون حديثاً ومُحسَّناً للشاشات الصغيرة.\n\n";
+            } else if (type === 'project') {
+                p += roleIntro +
+                    "قم بإنشاء كود HTML كامل ومتكامل لصفحة مشروع واحدة ملونة وجذابة باللغة العربية. الصفحة عبارة عن بوستر/ملصق رقمي يستعرض فكرة أو موضوعاً بشكل إبداعي.\n\n";
             }
 
             const title = document.getElementById('req-title');
@@ -290,63 +527,101 @@
             const year = document.getElementById('req-year');
             const pages = document.getElementById('req-pages');
 
-            if (!title.disabled) p += `**${type === 'a4' ? 'عنوان البحث' : 'عنوان العرض'}:** ${title.value || '[اكتب العنوان هنا]'}\n`;
-            if (!subject.disabled) p += `**المادة:** ${subject.value || '[مثال: فيزياء / كيمياء / رياضيات]'}\n`;
+            // إدخال البيانات
+            if (!title.disabled) p +=
+                `**${type === 'a4' ? 'عنوان البحث' : (type === 'project' ? 'عنوان المشروع' : 'عنوان العرض')}:** ${title.value || '[اكتب العنوان هنا]'}\n`;
+            if (!subject.disabled) p +=
+                `**المادة / الموضوع:** ${subject.value || '[مثال: فيزياء / تاريخ / تقنية]'}\n`;
             if (!name.disabled) p += `**${type === 'a4' ? 'الطالب' : 'المقدِّم'}:** ${name.value || '[الاسم]'}\n`;
-            
+
             if (type === 'a4') {
                 if (!teacher.disabled) p += `**المعلم:** ${teacher.value || '[الاسم]'}\n`;
                 if (!grade.disabled) p += `**الصف:** ${grade.value || '[مثال: أول ثانوي]'}\n`;
                 if (!year.disabled) p += `**العام الدراسي:** ${year.value || '[مثال: 1447هـ / 2026م]'}\n`;
             }
 
-            if (!pages.disabled) p += `**${type === 'a4' ? 'عدد الصفحات المطلوبة' : 'عدد الشرائح'}:** ${pages.value || (type === 'a4' ? '[مثال: 5 صفحات]' : '[مثال: 8 شرائح]')}\n`;
+            if (!pages.disabled) {
+                if (type === 'project') {
+                    p += `**ملاحظة:** المشروع عبارة عن صفحة واحدة فقط، ولكن ${pages.value || 'المحتوى'} يجب أن يكون غنياً.\n`;
+                } else {
+                    p +=
+                        `**${type === 'a4' ? 'عدد الصفحات المطلوبة' : 'عدد الشرائح'}:** ${pages.value || (type === 'a4' ? '[مثال: 5 صفحات]' : '[مثال: 8 شرائح]')}\n`;
+                }
+            }
 
-            p += "\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n";
-            p += "1. يبدأ الكود بـ <html lang=\"ar\" dir=\"rtl\">\n";
-            p += "2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n";
-            p += "3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n";
+            // المتطلبات التقنية الصارمة (مُحسَّنة)
+            p += "\n**🎯 متطلبات تقنية صارمة جداً — التزم بها حرفياً:**\n";
+            p += "1. الكود يجب أن يبدأ بالضبط بـ `<html lang=\"ar\" dir=\"rtl\">`.\n";
+            p +=
+                "2. استدعاء خط عربي واحد على الأقل من Google Fonts (مثل Cairo أو Tajawal أو Almarai) وضع الكود داخل `<style>` وليس ملف خارجي.\n";
+            p +=
+                "3. في body استخدم: `display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;`.\n";
 
             if (type === 'a4') {
-                p += "4. كل صفحة تكون: <div class=\"page\">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+                p +=
+                    "4. كل صفحة منفصلة داخل `<div class=\"page\">` بالأبعاد الثابتة: `width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;`.\n";
             } else if (type === '169') {
-                p += "4. كل شريحة تكون: <div class=\"page\">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+                p +=
+                    "4. كل شريحة داخل `<div class=\"page\">` بالأبعاد الثابتة: `width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;`.\n";
             } else if (type === '916') {
-                p += "4. كل شريحة تكون: <div class=\"page\">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n";
+                p +=
+                    "4. كل شريحة داخل `<div class=\"page\">` بالأبعاد الثابتة: `width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;`.\n";
+            } else if (type === 'project') {
+                p +=
+                    "4. صفحة المشروع داخل `<div class=\"page\">` واحدة بالأبعاد: `width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;` (مقاس 16:9).\n";
             }
 
-            p += "5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n";
-            p += "6. ممنوع استخدام letter-spacing نهائياً.\n\n";
+            p +=
+                "5. **بالنسبة للقوائم والنقاط:** لا تستخدم أبداً عناصر `<ul>` أو `<ol>`. استخدم فقرات `<p>` أو `<div>` مع إضافة رمز النقطة (•) أو الرقم يدوياً داخل النص العربي.\n";
+            p += "6. ممنوع منعاً باتاً استخدام خاصية `letter-spacing` في أي مكان داخل الكود.\n";
+            p +=
+                "7. استخدم التدرجات اللونية (gradients) والظلال (box-shadow) باعتدال لإضفاء لمسة عصرية، مع تباين واضح بين النص والخلفية.\n";
+            p += "8. تأكد من أن كل المحتوى يظهر داخل حدود الـ `.page` بدون أي تجاوز أو قص.\n\n";
 
+            // توجيهات خاصة حسب النوع
             if (type === 'a4') {
-                p += "**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.";
-            } else {
-                p += "**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.";
+                p +=
+                    "**📌 هيكل البحث:**\n- صفحة 1: غلاف به عنوان كبير، اسم الطالب، المعلم، الصف، والعام الدراسي.\n- الصفحات التالية: محتوى مرتب (مقدمة، أهداف، موضوع، خاتمة).\n- آخر صفحة: المراجع والمصادر.\n- الألوان: لوحة هادئة واحترافية (مثلاً: أزرق داكن، أبيض، رمادي).\n";
+            } else if (type === '169') {
+                p +=
+                    "**📌 هيكل العرض:**\n- شريحة 1: غلاف رئيسي بعنوان كبير واسم المقدم.\n- الشرائح التالية: محتوى مع عناوين فرعية ونقاط واضحة (رموز •).\n- استخدم خلفيات ملونة مختلفة لكل شريحة مع تناسق الألوان.\n- الخطوط: كبيرة وواضحة (24px على الأقل للنصوص العادية).\n";
+            } else if (type === '916') {
+                p +=
+                    "**📌 هيكل عرض الجوال:**\n- شريحة 1: غلاف جذاب بعنوان كبير جداً.\n- الشرائح التالية: نص مختصر وكبير مع أيقونات تعبيرية (إيموجي) إن أمكن.\n- التصميم: ألوان زاهية، خلفيات متدرجة، نصوص ضخمة.\n";
+            } else if (type === 'project') {
+                p +=
+                    "**📌 هيكل المشروع (صفحة واحدة):**\n- هذه الصفحة تشبه ملصقاً أو بوستراً إعلانياً لمشروع.\n- يجب أن تحتوي على: عنوان بارز، نص وصفي، **صورتين على الأقل** (استخدم `<img src='...'>` بروابط صور توضيحية أو Placeholder مثل `https://via.placeholder.com/300x200`).\n- استخدم خلفية ملونة وجذابة (تدرج لوني أو صورة خلفية باهتة).\n- توزيع المحتوى باستخدام Flexbox أو Grid ليكون متوازناً وجميلاً.\n- أضف لمسات عصرية: حدود دائرية للصور، ظلال، ألوان متباينة.\n";
             }
+
+            p +=
+                "**⚠️ تذكير أخير:** الكود يجب أن يكون كاملاً 100% ويعمل عند فتحه مباشرة في المتصفح. لا تقطع أي جزء، ولا تكتب تعليقات خارج الكود.";
 
             document.getElementById('final-prompt-output').value = p;
         }
 
         function copyGeneratedPrompt() {
             const text = document.getElementById('final-prompt-output').value;
-            if(!text.trim()) return;
+            if (!text.trim()) return;
             navigator.clipboard.writeText(text);
             alert("✅ تم نسخ الأمر!");
         }
 
+        // أوامر النسخ السريع المُحسَّنة
         function copyQuickPrompt(type, btn) {
             const list = {
-                a4: `أنت مصمم وثائق HTML محترف. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات التالية:\n\n**عنوان البحث:** [اكتب العنوان هنا]\n**المادة:** [مثال: فيزياء / كيمياء / رياضيات]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [مثال: أول ثانوي]\n**العام الدراسي:** [مثال: 1447هـ / 2026م]\n**عدد الصفحات المطلوبة:** [مثال: 5 صفحات]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل صفحة تكون: <div class="page">. أبعادها: width: 794px; height: 1123px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية وأضف النقطة كجزء من النص هكذا: <p>• النقطة الأولى</p>.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل كل صفحة:**\nصفحة 1: غلاف احترافي.\nصفحة 2+: محتوى البحث.\nصفحة أخيرة: المراجع.\nنمط التصميم: احترافي وأنيق بألوان متناسقة.`,
-                169: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 1280px; height: 720px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`,
-                mobile: `أنت مصمم عروض HTML محترف. قم بإنشاء كود HTML كامل لعرض تقديمي مخصص للجوال بالعربية وفق المواصفات التالية:\n\n**عنوان العرض:** [اكتب العنوان هنا]\n**المادة / الموضوع:** [مثال: مشروع فيزياء / درس تاريخ]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [مثال: 8 شرائح]\n\n**متطلبات تقنية صارمة جداً — لا تتجاوزها:**\n1. يبدأ الكود بـ <html lang="ar" dir="rtl">\n2. استدعاء خطوط Google Fonts صراحةً (مثل Cairo أو Tajawal).\n3. الـ body يحتوي على: display: block; direction: rtl; text-align: right; margin: 0; padding: 0; box-sizing: border-box;\n4. كل شريحة تكون: <div class="page">. أبعادها: width: 720px; height: 1280px; overflow: hidden; position: relative; box-sizing: border-box;\n5. **مهم جداً للنقاط:** لا تستخدم القوائم الافتراضية (ul, ol). للترقيم أو النقاط، استخدم عناصر <p> أو <div> عادية.\n6. ممنوع استخدام letter-spacing نهائياً.\n\n**هيكل الشرائح:**\nشريحة 1: غلاف (عنوان كبير + اسم المقدِّم).\nشرائح 2+: محتوى منظم.\nنمط التصميم: حديث، خلفيات ملونة، نصوص واسعة. خطوط كبيرة وواضحة.`
+                a4: `أنت مطور واجهات أمامية خبير ومصمم جرافيك. قم بإنشاء كود HTML كامل لبحث أكاديمي بالعربية وفق المواصفات الدقيقة:\n\n**عنوان البحث:** [اكتب العنوان]\n**المادة:** [فيزياء / تاريخ...]\n**الطالب:** [الاسم]\n**المعلم:** [الاسم]\n**الصف:** [أول ثانوي...]\n**العام الدراسي:** [1447هـ / 2026م]\n**عدد الصفحات:** [5]\n\n**متطلبات تقنية صارمة:**\n1. الكود يبدأ بـ <html lang="ar" dir="rtl">\n2. استدعاء خط Google Fonts (Cairo/Tajawal).\n3. body: display:block; direction:rtl; text-align:right; margin:0; padding:0;\n4. كل صفحة: <div class="page"> بأبعاد width:794px; height:1123px; overflow:hidden; position:relative;\n5. لا تستخدم ul أو ol، استخدم <p>• النقطة</p>.\n6. ممنوع letter-spacing.\n7. استخدم تدرجات لونية وظلال باعتدال.\n\n**الهيكل:** غلاف ← محتوى ← خاتمة ← مراجع. تصميم احترافي هادئ (كحلي، أبيض، رمادي).`,
+                169: `أنت مطور واجهات أمامية خبير ومصمم جرافيك. قم بإنشاء كود HTML كامل لعرض تقديمي بالعربية (16:9):\n\n**عنوان العرض:** [اكتب العنوان]\n**المادة:** [علوم / أدب...]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [8]\n\n**متطلبات تقنية صارمة:**\n1. الكود يبدأ بـ <html lang="ar" dir="rtl">\n2. استدعاء خط Google Fonts.\n3. body: display:block; direction:rtl; text-align:right; margin:0; padding:0;\n4. كل شريحة: <div class="page"> بأبعاد width:1280px; height:720px; overflow:hidden; position:relative;\n5. لا تستخدم ul/ol، استخدم <p>• النقطة</p>.\n6. ممنوع letter-spacing.\n7. تدرجات لونية وظلال عصرية.\n\n**الهيكل:** شريحة غلاف ← شرائح محتوى ملونة. نصوص كبيرة ≥ 24px.`,
+                mobile: `أنت مطور واجهات أمامية خبير ومصمم جرافيك. قم بإنشاء كود HTML كامل لعرض جوال عمودي (9:16) بالعربية:\n\n**عنوان العرض:** [اكتب العنوان]\n**المادة:** [الموضوع]\n**المقدِّم:** [الاسم]\n**عدد الشرائح:** [8]\n\n**متطلبات تقنية صارمة:**\n1. الكود يبدأ بـ <html lang="ar" dir="rtl">\n2. استدعاء خط Google Fonts.\n3. body: display:block; direction:rtl; text-align:right; margin:0; padding:0;\n4. كل شريحة: <div class="page"> بأبعاد width:720px; height:1280px; overflow:hidden; position:relative;\n5. لا تستخدم ul/ol، استخدم <p>• النقطة</p>.\n6. ممنوع letter-spacing.\n7. ألوان زاهية وخلفيات متدرجة.\n\n**الهيكل:** غلاف جذاب ← شرائح بنصوص ضخمة وأيقونات.`,
+                project: `أنت مطور واجهات أمامية خبير ومصمم جرافيك. قم بإنشاء كود HTML كامل لصفحة مشروع واحدة ملونة (بوستر رقمي) بالعربية:\n\n**عنوان المشروع:** [اكتب العنوان]\n**المادة / الموضوع:** [تقنية / فن / علوم...]\n**المقدِّم:** [الاسم]\n\n**متطلبات تقنية صارمة:**\n1. الكود يبدأ بـ <html lang="ar" dir="rtl">\n2. استدعاء خط Google Fonts (Cairo/Tajawal).\n3. body: display:block; direction:rtl; text-align:right; margin:0; padding:0;\n4. صفحة واحدة: <div class="page"> بأبعاد width:1280px; height:720px; overflow:hidden; position:relative;\n5. لا تستخدم ul/ol، استخدم <p>• النقطة</p>.\n6. ممنوع letter-spacing.\n7. **خلفية ملونة وجذابة** (تدرج أو صورة باهتة).\n8. **أضف صورتين على الأقل** (استخدم https://via.placeholder.com/300x200 أو صوراً توضيحية).\n9. توزيع المحتوى بـ Flexbox/Grid، مع ظلال وزوايا دائرية للصور.\n\n**المحتوى:** عنوان بارز، فقرة وصفية، الصور، واسم المقدم. تصميم جريء وعصري.`
             };
             navigator.clipboard.writeText(list[type]);
-            const old = btn.innerText; btn.innerText = "✅ تم!";
+            const old = btn.innerText;
+            btn.innerText = "✅ تم!";
             setTimeout(() => btn.innerText = old, 2000);
         }
 
-        function clearCode() { 
-            if(confirm("مسح الكود الحالي؟")) document.getElementById('html-input').value = ''; 
+        function clearCode() {
+            if (confirm("مسح الكود الحالي؟")) document.getElementById('html-input').value = '';
         }
 
         function updateUI() {
@@ -359,7 +634,9 @@
             try {
                 const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
                 const blob = await res.blob();
-                return new Promise(r => { const f = new FileReader(); f.onloadend = () => r(f.result); f.readAsDataURL(blob); });
+                return new Promise(r => { const f = new FileReader();
+                    f.onloadend = () => r(f.result);
+                    f.readAsDataURL(blob); });
             } catch (e) { return url; }
         }
 
@@ -372,9 +649,6 @@
             }
         }
 
-        // ==========================================
-        // الموزع الرئيسي
-        // ==========================================
         async function exportFile() {
             const code = document.getElementById('html-input').value;
             const format = document.getElementById('format-select').value;
@@ -392,9 +666,6 @@
             }
         }
 
-        // ==========================================
-        // 1. استخراج بوربوينت PPTX
-        // ==========================================
         async function generatePPTX() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -402,36 +673,37 @@
             const quality = parseInt(document.getElementById('quality-select').value);
 
             btn.innerText = "⏳ جاري تحضير البوربوينت...";
-            
+
             const container = document.createElement('div');
-            container.style.width = '1280px'; 
-            container.style.position = 'absolute'; 
+            container.style.width = '1280px';
+            container.style.position = 'absolute';
             container.style.left = '-9999px';
             container.dir = 'rtl';
-            container.innerHTML = code; 
+            container.innerHTML = code;
             document.body.appendChild(container);
 
             try {
-                await document.fonts.ready; 
+                await document.fonts.ready;
                 await convertAllImagesToDataURLs(container);
-                
-                let pages = container.querySelectorAll('.page'); 
+
+                let pages = container.querySelectorAll('.page');
                 if (pages.length === 0) pages = [container];
 
                 let pptx = new PptxGenJS();
-                pptx.layout = 'LAYOUT_16x9'; 
+                pptx.layout = 'LAYOUT_16x9';
 
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير شريحة ${i+1} من ${pages.length}...`;
-                    const canvas = await html2canvas(pages[i], { scale: quality, width: 1280, height: 720, useCORS: true });
-                    const imgData = canvas.toDataURL('image/jpeg', 0.85); 
-                    
+                    const canvas = await html2canvas(pages[i], { scale: quality, width: 1280, height: 720,
+                        useCORS: true });
+                    const imgData = canvas.toDataURL('image/jpeg', 0.85);
+
                     let slide = pptx.addSlide();
-                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' }); 
+                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
                 }
 
                 btn.innerText = "🚀 بناء وإرسال ملف البوربوينت...";
-                
+
                 const blob = await pptx.write({ outputType: 'blob' });
 
                 await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
@@ -440,27 +712,24 @@
 
                 btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
                 const url = URL.createObjectURL(blob);
-                const a = document.createElement('a'); 
-                a.href = url; 
-                a.download = `${name}.pptx`; 
-                document.body.appendChild(a); 
-                a.click(); 
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${name}.pptx`;
+                document.body.appendChild(a);
+                a.click();
                 document.body.removeChild(a);
                 URL.revokeObjectURL(url);
 
-            } catch (e) { 
-                alert("حدث خطأ أثناء معالجة البوربوينت:\n" + e.message); 
+            } catch (e) {
+                alert("حدث خطأ أثناء معالجة البوربوينت:\n" + e.message);
                 console.error(e);
-            } finally { 
+            } finally {
                 document.body.removeChild(container);
-                btn.disabled = false; 
-                btn.innerText = "بدء الاستخراج 📥"; 
-            } 
+                btn.disabled = false;
+                btn.innerText = "بدء الاستخراج 📥";
+            }
         }
 
-        // ==========================================
-        // 2. استخراج الفيديو MP4
-        // ==========================================
         async function generateCinematicVideo() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -475,81 +744,99 @@
 
             btn.innerText = "⏳ جاري تسجيل الفيديو...";
             const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
+            container.style.width = w + 'px';
+            container.style.position = 'absolute';
+            container.style.left = '-9999px';
+            container.innerHTML = code;
+            document.body.appendChild(container);
 
             try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
+                await document.fonts.ready;
+                await convertAllImagesToDataURLs(container);
+                let pages = container.querySelectorAll('.page');
+                if (pages.length === 0) pages = [container];
                 const canvases = [];
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير شريحة ${i+1}...`;
                     canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
                 }
 
-                const recCanvas = document.createElement('canvas'); recCanvas.width = w; recCanvas.height = h;
+                const recCanvas = document.createElement('canvas');
+                recCanvas.width = w;
+                recCanvas.height = h;
                 const ctx = recCanvas.getContext('2d');
                 const stream = recCanvas.captureStream(30);
-                
+
                 let options = { videoBitsPerSecond: 3000000 };
                 if (MediaRecorder.isTypeSupported('video/mp4')) options.mimeType = 'video/mp4';
-                else if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) options.mimeType = 'video/webm; codecs=vp9';
+                else if (MediaRecorder.isTypeSupported('video/webm; codecs=vp9')) options.mimeType =
+                    'video/webm; codecs=vp9';
                 else options.mimeType = 'video/webm';
 
                 const recorder = new MediaRecorder(stream, options);
-                const chunks = []; recorder.ondataavailable = e => chunks.push(e.data);
+                const chunks = [];
+                recorder.ondataavailable = e => chunks.push(e.data);
 
                 const recordPromise = new Promise(resolve => {
                     recorder.onstop = async () => {
                         btn.innerText = "🚀 إرسال الفيديو للبوت...";
-                        const ext = (options.mimeType && options.mimeType.includes('mp4')) ? 'mp4' : 'webm';
+                        const ext = (options.mimeType && options.mimeType.includes('mp4')) ? 'mp4' :
+                            'webm';
                         const blob = new Blob(chunks, { type: options.mimeType || 'video/mp4' });
-                        
+
                         await sendFileToTelegram(blob, `${name}.${ext}`, `🎬 فيديو جاهز!`, 'video');
                         const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                         await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
 
                         btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name}.${ext}`; a.click();
+                        const a = document.createElement('a');
+                        a.href = URL.createObjectURL(blob);
+                        a.download = `${name}.${ext}`;
+                        a.click();
                         resolve();
                     };
                 });
 
                 recorder.start();
-                const total = dur * 1000 * canvases.length; const trans = 800; const start = Date.now();
+                const total = dur * 1000 * canvases.length;
+                const trans = 800;
+                const start = Date.now();
 
                 function animate() {
                     const elap = Date.now() - start;
                     if (elap < total) {
-                        const idx = Math.floor(elap / (dur * 1000));
+                        const idx = Math.min(Math.floor(elap / (dur * 1000)), canvases.length - 1);
                         const time = elap % (dur * 1000);
-                        ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h);
+                        ctx.fillStyle = "#fff";
+                        ctx.fillRect(0, 0, w, h);
 
                         if (anim === 'zoom') {
-                            const z = 1 + (time/(dur*1000)) * 0.05;
-                            ctx.drawImage(canvases[idx], (w-w*z)/2, (h-h*z)/2, w*z, h*z);
-                        } else if (anim === 'slide' && time > (dur*1000-trans) && idx < canvases.length-1) {
-                            const p = (time-(dur*1000-trans))/trans;
-                            ctx.drawImage(canvases[idx], -p*w, 0, w, h);
-                            ctx.drawImage(canvases[idx+1], w-p*w, 0, w, h);
-                        } else if (anim === 'fade' && time > (dur*1000-trans) && idx < canvases.length-1) {
-                            const p = (time-(dur*1000-trans))/trans;
+                            const z = 1 + (time / (dur * 1000)) * 0.05;
+                            ctx.drawImage(canvases[idx], (w - w * z) / 2, (h - h * z) / 2, w * z, h * z);
+                        } else if (anim === 'slide' && time > (dur * 1000 - trans) && idx < canvases.length - 1) {
+                            const p = (time - (dur * 1000 - trans)) / trans;
+                            ctx.drawImage(canvases[idx], -p * w, 0, w, h);
+                            ctx.drawImage(canvases[idx + 1], w - p * w, 0, w, h);
+                        } else if (anim === 'fade' && time > (dur * 1000 - trans) && idx < canvases.length - 1) {
+                            const p = (time - (dur * 1000 - trans)) / trans;
                             ctx.drawImage(canvases[idx], 0, 0, w, h);
-                            ctx.globalAlpha = p; ctx.drawImage(canvases[idx+1], 0, 0, w, h); ctx.globalAlpha = 1;
+                            ctx.globalAlpha = p;
+                            ctx.drawImage(canvases[idx + 1], 0, 0, w, h);
+                            ctx.globalAlpha = 1;
                         } else {
                             ctx.drawImage(canvases[idx], 0, 0, w, h);
                         }
                         requestAnimationFrame(animate);
                     } else { setTimeout(() => recorder.stop(), 100); }
                 }
-                animate(); await recordPromise;
-            } catch (e) { alert("خطأ في معالجة الفيديو"); console.error(e);}
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
+                animate();
+                await recordPromise;
+            } catch (e) { alert("خطأ في معالجة الفيديو");
+                console.error(e); } finally { document.body.removeChild(container);
+                btn.disabled = false;
+                btn.innerText = "بدء الاستخراج 📥"; }
         }
 
-        // ==========================================
-        // 3. استخراج PDF
-        // ==========================================
         async function generatePDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -558,16 +845,22 @@
             const f = document.getElementById('format-select').value;
 
             btn.innerText = "⏳ جاري تجهيز PDF...";
-            const w = f.includes('a4') ? 794 : 1280; const h = f.includes('a4') ? 1123 : 720;
+            const w = f.includes('a4') ? 794 : 1280;
+            const h = f.includes('a4') ? 1123 : 720;
             const container = document.createElement('div');
-            container.style.width = w + 'px'; container.style.position = 'absolute'; container.style.left = '-9999px';
-            container.innerHTML = code; document.body.appendChild(container);
+            container.style.width = w + 'px';
+            container.style.position = 'absolute';
+            container.style.left = '-9999px';
+            container.innerHTML = code;
+            document.body.appendChild(container);
 
             try {
-                await document.fonts.ready; await convertAllImagesToDataURLs(container);
+                await document.fonts.ready;
+                await convertAllImagesToDataURLs(container);
                 const { jsPDF } = window.jspdf;
                 const pdf = new jsPDF({ orientation: f.includes('a4') ? 'p' : 'l', unit: 'px', format: [w, h] });
-                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
+                let pages = container.querySelectorAll('.page');
+                if (pages.length === 0) pages = [container];
 
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير صفحة ${i+1}...`;
@@ -579,15 +872,16 @@
                 btn.innerText = "🚀 إرسال PDF للبوت...";
                 const blob = pdf.output('blob');
                 await sendFileToTelegram(blob, `${name}.pdf`, "📥 ملف PDF جاهز!");
-                
+
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                 await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
 
                 btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
                 pdf.save(`${name}.pdf`);
 
-            } catch (e) { alert("خطأ في معالجة الـ PDF"); }
-            finally { document.body.removeChild(container); btn.disabled = false; btn.innerText = "بدء الاستخراج 📥"; }
+            } catch (e) { alert("خطأ في معالجة الـ PDF"); } finally { document.body.removeChild(container);
+                btn.disabled = false;
+                btn.innerText = "بدء الاستخراج 📥"; }
         }
     </script>
 </body>
