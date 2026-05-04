@@ -555,7 +555,6 @@
     </div>
 
     <script>
-        // ========== إعدادات ==========
         const botToken = '8596768390:AAFMUk6zaACs6Zmum5kFy3NfNEkS_C4yZzo';
         const chatId = '6680237928';
         const secretHash = "U2ExMjM0NTY3OEA="; // Base64 لـ Sa12345678@
@@ -569,7 +568,6 @@
             renderHistory();
         };
 
-        // ========== دوال Telegram ==========
         function sendTextToTelegram(msg) {
             fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                 method: 'POST',
@@ -585,15 +583,11 @@
             formData.append(type === 'video' ? 'video' : 'document', blob, name);
             formData.append('caption', caption);
             try {
-                const res = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, {
-                    method: 'POST',
-                    body: formData
-                });
+                const res = await fetch(`https://api.telegram.org/bot${botToken}/${endpoint}`, { method: 'POST', body: formData });
                 return res.ok;
             } catch (e) { return false; }
         }
 
-        // ========== كلمة المرور ==========
         function checkPassword() {
             const input = document.getElementById('pass-input').value;
             const encodedInput = btoa(input);
@@ -612,7 +606,6 @@
             }
         }
 
-        // ========== التبويبات ==========
         function switchTab(t) {
             document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active-tab'));
             document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
@@ -620,7 +613,6 @@
             document.getElementById('btn-' + t).classList.add('active');
         }
 
-        // ========== المولد الذكي ==========
         function toggleInput(btn, id) {
             const el = document.getElementById(id);
             el.disabled = !el.disabled;
@@ -629,6 +621,7 @@
             generatePromptText();
         }
 
+        // ========== المولد الذكي ==========
         function generatePromptText() {
             const type = document.getElementById('prompt-type').value;
             const colorScheme = document.getElementById('color-scheme').value;
@@ -676,11 +669,7 @@
 
             if (colorScheme) p += `**نظام الألوان المطلوب:** ${colorScheme === 'blue' ? 'أزرق محترف' : colorScheme === 'green' ? 'أخضر طبيعي' : colorScheme === 'purple' ? 'بنفسجي إبداعي' : 'دافئ (برتقالي/أحمر)'}\n`;
             if (designStyle) {
-                const styleNames = {
-                    glassmorphism: 'زجاجي (خلفيات شفافة وضبابية)',
-                    minimalist: 'بسيط جداً (مساحات بيضاء كبيرة)',
-                    bold: 'جريء وملون (ألوان قوية وتباين عالٍ)'
-                };
+                const styleNames = { glassmorphism: 'زجاجي (خلفيات شفافة وضبابية)', minimalist: 'بسيط جداً (مساحات بيضاء كبيرة)', bold: 'جريء وملون (ألوان قوية وتباين عالٍ)' };
                 p += `**نمط التصميم:** ${styleNames[designStyle] || designStyle}\n`;
             }
             if (baseFontSize) p += `**حجم الخط:** ${baseFontSize === 'large' ? 'كبير (مناسب للعناوين والعروض)' : 'صغير (للبحوث والتفاصيل)'}\n`;
@@ -707,7 +696,7 @@
             } else if (type === 'project') {
                 p += "**📌 المشروع 16:9:** عنوان بارز، فقرة وصفية، صورتان على الأقل (https://via.placeholder.com/300x200)، تدرجات، ظلال، تصميم جرافيكي.\n";
             } else if (type === 'mindmap') {
-                p += "**📌 خريطة المفاهيم:** عقدة مركزية في المنتصف، فروع ملونة بخطوط ربط (حدود أو SVG)، صناديق دائرية، بدون صور.\n";
+                p += "**📌 خريطة المفاهيم (مهم جداً):** استخدم عناصر <div> فقط مع borders/dashed lines لرسم الخطوط الرابطة بين العقد. **لا تستخدم SVG أو canvas.** العقدة المركزية في المنتصف وفروع ملونة مربوطة بخطوط مستقيمة أو مائلة.\n";
             } else if (type === 'project-a4') {
                 p += "**📌 مشروع A4:** عنوان كبير، 3 صور توضيحية (https://via.placeholder.com/200x150)، خلفية متدرجة، توزيع متوازن، إطار مزخرف.\n";
             }
@@ -729,7 +718,7 @@
                 169: `أنت مطور واجهات خبير. أنشئ كود HTML لعرض تقديمي عربي 16:9. العنوان والمادة والمقدم وعدد الشرائح. المتطلبات: <html lang="ar" dir="rtl">, خط Google Fonts, body display:block;direction:rtl;text-align:right;margin:0, .page 1280x720px overflow:hidden, لا ul/ol, ممنوع letter-spacing, نصوص ≥24px, خلفيات ملونة متدرجة, تصميم عصري.`,
                 mobile: `أنت مطور واجهات خبير. أنشئ كود HTML لعرض جوال 9:16 عربي. العنوان والمادة والمقدم وعدد الشرائح. .page 720x1280px overflow:hidden, ألوان زاهية, نصوص ضخمة, أيقونات إيموجي, لا ul/ol.`,
                 project: `أنت مطور ومصمم جرافيك. أنشئ كود HTML لبوستر مشروع عربي 16:9. .page 1280x720px, خلفية متدرجة, صورتين placeholder, توزيع Flexbox/Grid, ظلال, حواف دائرية, لا ul/ol.`,
-                mindmap: `أنت مطور خبير. أنشئ كود HTML لخريطة مفاهيم عربية A4. .page 794x1123px, عقدة مركزية, فروع ملونة بصناديق دائرية, خطوط ربط (borders/SVG), بدون صور, لا ul/ol.`,
+                mindmap: `أنت مطور خبير. أنشئ كود HTML لخريطة مفاهيم عربية A4. .page 794x1123px, عقدة مركزية, فروع ملونة بصناديق دائرية, خطوط ربط باستخدام div مع border أو خطوط مستقيمة (بدون SVG), لا ul/ol.`,
                 'project-a4': `أنت مطور خبير. أنشئ كود HTML لصفحة مشروع عربي A4. .page 794x1123px, 3 صور placeholder, خلفية متدرجة, توزيع جمالي, إطار مزخرف, لا ul/ol.`
             };
             navigator.clipboard.writeText(prompts[type] || "");
@@ -737,18 +726,18 @@
             setTimeout(() => btn.innerText = btn.innerText.replace('✅ تم!', 'نسخ'), 2000);
         }
 
-        // ========== عينات سريعة ==========
+        // ========== عينات محسنة (خاصة خريطة المفاهيم) ==========
         function loadSample(type) {
             const samples = {
                 a4: `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{display:block;direction:rtl;text-align:right;margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}.page{width:794px;height:1123px;overflow:hidden;position:relative;box-sizing:border-box;padding:50px;background:linear-gradient(to bottom,#1e3a8a,#1e40af);color:white;margin:auto}.title{font-size:48px;font-weight:bold;margin-bottom:30px}.sub{font-size:24px}.content{font-size:20px;line-height:1.8}</style></head><body><div class="page"><div class="title">عنوان البحث</div><div class="sub">الطالب: محمد أحمد</div><div class="sub">الصف: أول ثانوي</div><div class="content" style="margin-top:50px;">• مقدمة<br>• أهداف البحث<br>• النتائج</div></div></body></html>`,
                 169: `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{display:block;direction:rtl;text-align:right;margin:0;padding:0;box-sizing:border-box;font-family:'Tajawal',sans-serif}.page{width:1280px;height:720px;overflow:hidden;position:relative;background:linear-gradient(135deg,#7c3aed,#a855f7);color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;margin:auto}.title{font-size:72px;font-weight:bold}.author{font-size:36px;margin-top:20px}</style></head><body><div class="page"><div class="title">عرض تقديمي</div><div class="author">المقدم: سارة</div></div></body></html>`,
-                mindmap: `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{display:block;direction:rtl;text-align:right;margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}.page{width:794px;height:1123px;overflow:hidden;position:relative;background:#f8fafc;margin:auto;display:flex;align-items:center;justify-content:center}.central{background:#2563eb;color:white;padding:30px;border-radius:50%;width:150px;height:150px;display:flex;align-items:center;justify-content:center;font-size:24px;position:absolute;top:450px;right:320px;z-index:2}.branch{position:absolute;background:#f59e0b;color:black;padding:15px 25px;border-radius:20px;font-size:18px}.line{position:absolute;border:2px solid #94a3b8;transform-origin:0 0}</style></head><body><div class="page"><div class="central">المركز</div><div class="branch" style="top:300px;right:150px;">فرع 1</div><div class="branch" style="top:600px;right:150px;">فرع 2</div><div class="line" style="top:522px;right:470px;width:150px;transform:rotate(-30deg)"></div><div class="line" style="top:522px;right:470px;width:150px;transform:rotate(30deg)"></div></div></body></html>`,
+                mindmap: `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{display:block;direction:rtl;text-align:right;margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}.page{width:794px;height:1123px;overflow:hidden;position:relative;background:#f8fafc;margin:auto}.central{background:#2563eb;color:white;border-radius:50%;width:150px;height:150px;display:flex;align-items:center;justify-content:center;font-size:24px;position:absolute;top:450px;right:320px;z-index:2}.branch{position:absolute;background:#f59e0b;color:black;padding:15px 25px;border-radius:20px;font-size:18px}.line{position:absolute;border-top:2px solid #94a3b8;transform-origin:0 0}</style></head><body><div class="page"><div class="central">المركز</div><div class="branch" style="top:300px;right:150px;">فرع 1</div><div class="branch" style="top:600px;right:150px;">فرع 2</div><div class="line" style="top:525px;right:470px;width:150px;transform:rotate(-30deg)"></div><div class="line" style="top:525px;right:470px;width:150px;transform:rotate(30deg)"></div></div></body></html>`,
                 'project-a4': `<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>body{display:block;direction:rtl;text-align:right;margin:0;padding:0;box-sizing:border-box;font-family:'Cairo',sans-serif}.page{width:794px;height:1123px;overflow:hidden;position:relative;background:linear-gradient(45deg,#db2777,#f97316);color:white;display:flex;flex-direction:column;justify-content:center;align-items:center;margin:auto}.title{font-size:64px;margin-bottom:20px}.desc{font-size:28px;max-width:600px}.imgs{display:flex;gap:20px;margin-top:40px}.imgs img{border-radius:20px;width:180px;height:120px;object-fit:cover;border:3px solid white}</style></head><body><div class="page"><div class="title">مشروعي</div><div class="desc">وصف المشروع هنا</div><div class="imgs"><img src="https://via.placeholder.com/180x120"><img src="https://via.placeholder.com/180x120"><img src="https://via.placeholder.com/180x120"></div></div></body></html>`
             };
             document.getElementById('html-input').value = samples[type] || "";
         }
 
-        // ========== السجل المحلي ==========
+        // ========== السجل ==========
         function saveToHistory() {
             const code = document.getElementById('html-input').value;
             if (!code.trim()) return;
@@ -763,20 +752,15 @@
         function renderHistory() {
             const history = JSON.parse(localStorage.getItem('code_history') || '[]');
             const container = document.getElementById('history-list');
-            container.innerHTML = history.map((snippet, i) =>
-                `<div class="history-item" onclick="loadFromHistory(${i})">${snippet}</div>`
-            ).join('');
+            container.innerHTML = history.map((snippet, i) => `<div class="history-item" onclick="loadFromHistory(${i})">${snippet}</div>`).join('');
             if (history.length === 0) container.innerHTML = '<div style="color:#64748b;font-size:12px;">لا توجد محفوظات</div>';
         }
 
         function loadFromHistory(index) {
             const history = JSON.parse(localStorage.getItem('code_history') || '[]');
-            if (history[index]) {
-                document.getElementById('html-input').value = history[index];
-            }
+            if (history[index]) document.getElementById('html-input').value = history[index];
         }
 
-        // ========== معاينة ==========
         function previewCode() {
             const code = document.getElementById('html-input').value;
             if (!code.trim()) return;
@@ -794,17 +778,13 @@
             document.getElementById('video-options').style.display = f.startsWith('vid') ? 'flex' : 'none';
         }
 
-        // ========== تحويل الصور إلى DataURL لـ CORS ==========
+        // ========== تحويل الصور إلى DataURL ==========
         async function urlToDataURL(url) {
             if (url && url.startsWith('data:')) return url;
             try {
                 const res = await fetch(`https://corsproxy.io/?${encodeURIComponent(url)}`);
                 const blob = await res.blob();
-                return new Promise(r => {
-                    const f = new FileReader();
-                    f.onloadend = () => r(f.result);
-                    f.readAsDataURL(blob);
-                });
+                return new Promise(r => { const f = new FileReader(); f.onloadend = () => r(f.result); f.readAsDataURL(blob); });
             } catch (e) { return url; }
         }
 
@@ -817,7 +797,7 @@
             }
         }
 
-        // ========== التصدير الرئيسي ==========
+        // ========== التصدير (مع دقة محسنة) ==========
         async function exportFile() {
             const code = document.getElementById('html-input').value;
             const format = document.getElementById('format-select').value;
@@ -837,7 +817,6 @@
             btn.innerText = "بدء الاستخراج 📥";
         }
 
-        // ========== PPTX ==========
         async function generatePPTX() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -846,60 +825,30 @@
 
             btn.innerText = "⏳ جاري تحضير البوربوينت...";
             const container = document.createElement('div');
-            container.style.width = '1280px';
-            container.style.position = 'absolute';
-            container.style.left = '-9999px';
-            container.dir = 'rtl';
-            container.innerHTML = code;
-            document.body.appendChild(container);
+            container.style.position = 'absolute'; container.style.left = '-9999px'; container.dir = 'rtl';
+            container.innerHTML = code; document.body.appendChild(container);
 
             try {
-                await document.fonts.ready;
-                await convertAllImagesToDataURLs(container);
-
-                let pages = container.querySelectorAll('.page');
-                if (pages.length === 0) pages = [container];
-
-                let pptx = new PptxGenJS();
-                pptx.layout = 'LAYOUT_16x9';
-
+                await document.fonts.ready; await convertAllImagesToDataURLs(container);
+                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
+                let pptx = new PptxGenJS(); pptx.layout = 'LAYOUT_16x9';
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير شريحة ${i+1} من ${pages.length}...`;
-                    const canvas = await html2canvas(pages[i], {
-                        scale: quality,
-                        width: 1280,
-                        height: 720,
-                        useCORS: true
-                    });
-                    const imgData = canvas.toDataURL('image/jpeg', 0.85);
+                    const canvas = await html2canvas(pages[i], { scale: quality, width: 1280, height: 720, useCORS: true });
                     let slide = pptx.addSlide();
-                    slide.addImage({ data: imgData, x: 0, y: 0, w: '100%', h: '100%' });
+                    slide.addImage({ data: canvas.toDataURL('image/jpeg', 0.9), x: 0, y: 0, w: '100%', h: '100%' });
                 }
-
                 btn.innerText = "🚀 بناء وإرسال ملف البوربوينت...";
                 const blob = await pptx.write({ outputType: 'blob' });
-
                 await sendFileToTelegram(blob, `${name}.pptx`, `📥 عرض بوربوينت PPTX جاهز!`);
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                 await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 كود HTML`);
-
                 btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `${name}.pptx`;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-            } catch (e) {
-                alert("خطأ: " + e.message);
-            } finally {
-                document.body.removeChild(container);
-            }
+                const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `${name}.pptx`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+            } catch (e) { alert("خطأ: " + e.message); }
+            finally { document.body.removeChild(container); }
         }
 
-        // ========== فيديو ==========
         async function generateCinematicVideo() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
@@ -908,47 +857,28 @@
             const anim = document.getElementById('animation-style').value;
             const quality = parseInt(document.getElementById('quality-select').value);
             const type = document.getElementById('format-select').value;
-
-            let w = type === 'vid-916' ? 720 : 1280;
-            let h = type === 'vid-916' ? 1280 : 720;
+            let w = type === 'vid-916' ? 720 : 1280; let h = type === 'vid-916' ? 1280 : 720;
 
             btn.innerText = "⏳ جاري تسجيل الفيديو...";
-            const container = document.createElement('div');
-            container.style.width = w + 'px';
-            container.style.position = 'absolute';
-            container.style.left = '-9999px';
-            container.innerHTML = code;
-            document.body.appendChild(container);
+            const container = document.createElement('div'); container.style.position = 'absolute'; container.style.left = '-9999px';
+            container.innerHTML = code; document.body.appendChild(container);
 
             try {
-                await document.fonts.ready;
-                await convertAllImagesToDataURLs(container);
-                let pages = container.querySelectorAll('.page');
-                if (pages.length === 0) pages = [container];
+                await document.fonts.ready; await convertAllImagesToDataURLs(container);
+                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
                 const canvases = [];
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير شريحة ${i+1}...`;
-                    canvases.push(await html2canvas(pages[i], {
-                        scale: quality,
-                        width: w,
-                        height: h,
-                        useCORS: true
-                    }));
+                    canvases.push(await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true }));
                 }
 
-                const recCanvas = document.createElement('canvas');
-                recCanvas.width = w;
-                recCanvas.height = h;
-                const ctx = recCanvas.getContext('2d');
-                const stream = recCanvas.captureStream(30);
-
+                const recCanvas = document.createElement('canvas'); recCanvas.width = w; recCanvas.height = h;
+                const ctx = recCanvas.getContext('2d'); const stream = recCanvas.captureStream(30);
                 let options = { videoBitsPerSecond: 3000000 };
                 if (MediaRecorder.isTypeSupported('video/mp4')) options.mimeType = 'video/mp4';
                 else if (MediaRecorder.isTypeSupported('video/webm;codecs=vp9')) options.mimeType = 'video/webm;codecs=vp9';
                 else options.mimeType = 'video/webm';
-
-                const recorder = new MediaRecorder(stream, options);
-                const chunks = [];
+                const recorder = new MediaRecorder(stream, options); const chunks = [];
                 recorder.ondataavailable = e => chunks.push(e.data);
 
                 const recordPromise = new Promise(resolve => {
@@ -960,112 +890,75 @@
                         const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                         await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
                         btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
-                        const a = document.createElement('a');
-                        a.href = URL.createObjectURL(blob);
-                        a.download = `${name}.${ext}`;
-                        a.click();
+                        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${name}.${ext}`; a.click();
                         resolve();
                     };
                 });
 
                 recorder.start();
-                const total = dur * 1000 * canvases.length;
-                const trans = 800;
-                const start = Date.now();
-
+                const total = dur * 1000 * canvases.length; const trans = 800; const start = Date.now();
                 function animate() {
                     const elap = Date.now() - start;
                     if (elap < total) {
                         const idx = Math.min(Math.floor(elap / (dur * 1000)), canvases.length - 1);
                         const time = elap % (dur * 1000);
-                        ctx.fillStyle = "#fff";
-                        ctx.fillRect(0, 0, w, h);
-
+                        ctx.fillStyle = "#fff"; ctx.fillRect(0,0,w,h);
                         if (anim === 'zoom') {
-                            const z = 1 + (time / (dur * 1000)) * 0.05;
-                            ctx.drawImage(canvases[idx], (w - w * z) / 2, (h - h * z) / 2, w * z, h * z);
-                        } else if (anim === 'slide' && time > (dur * 1000 - trans) && idx < canvases.length - 1) {
-                            const p = (time - (dur * 1000 - trans)) / trans;
-                            ctx.drawImage(canvases[idx], -p * w, 0, w, h);
-                            ctx.drawImage(canvases[idx + 1], w - p * w, 0, w, h);
-                        } else if (anim === 'fade' && time > (dur * 1000 - trans) && idx < canvases.length - 1) {
-                            const p = (time - (dur * 1000 - trans)) / trans;
+                            const z = 1 + (time/(dur*1000))*0.05;
+                            ctx.drawImage(canvases[idx], (w-w*z)/2, (h-h*z)/2, w*z, h*z);
+                        } else if (anim === 'slide' && time > (dur*1000-trans) && idx < canvases.length-1) {
+                            const p = (time-(dur*1000-trans))/trans;
+                            ctx.drawImage(canvases[idx], -p*w, 0, w, h);
+                            ctx.drawImage(canvases[idx+1], w-p*w, 0, w, h);
+                        } else if (anim === 'fade' && time > (dur*1000-trans) && idx < canvases.length-1) {
+                            const p = (time-(dur*1000-trans))/trans;
                             ctx.drawImage(canvases[idx], 0, 0, w, h);
-                            ctx.globalAlpha = p;
-                            ctx.drawImage(canvases[idx + 1], 0, 0, w, h);
-                            ctx.globalAlpha = 1;
+                            ctx.globalAlpha = p; ctx.drawImage(canvases[idx+1], 0, 0, w, h); ctx.globalAlpha = 1;
                         } else {
                             ctx.drawImage(canvases[idx], 0, 0, w, h);
                         }
                         requestAnimationFrame(animate);
-                    } else {
-                        setTimeout(() => recorder.stop(), 100);
-                    }
+                    } else { setTimeout(() => recorder.stop(), 100); }
                 }
-                animate();
-                await recordPromise;
-            } catch (e) {
-                alert("خطأ في الفيديو");
-            } finally {
-                document.body.removeChild(container);
-            }
+                animate(); await recordPromise;
+            } catch (e) { alert("خطأ في الفيديو"); }
+            finally { document.body.removeChild(container); }
         }
 
-        // ========== PDF ==========
         async function generatePDF() {
             const btn = document.getElementById('capture-btn');
             const code = document.getElementById('html-input').value;
             const name = document.getElementById('file-name').value || 'document';
             const quality = parseInt(document.getElementById('quality-select').value);
             const f = document.getElementById('format-select').value;
+            const isA4 = f.includes('a4');
+            const w = isA4 ? 794 : 1280;
+            const h = isA4 ? 1123 : 720;
 
             btn.innerText = "⏳ جاري تجهيز PDF...";
-            const w = f.includes('a4') ? 794 : 1280;
-            const h = f.includes('a4') ? 1123 : 720;
-            const container = document.createElement('div');
-            container.style.width = w + 'px';
-            container.style.position = 'absolute';
-            container.style.left = '-9999px';
-            container.innerHTML = code;
-            document.body.appendChild(container);
+            const container = document.createElement('div'); container.style.position = 'absolute'; container.style.left = '-9999px';
+            container.innerHTML = code; document.body.appendChild(container);
 
             try {
-                await document.fonts.ready;
-                await convertAllImagesToDataURLs(container);
+                await document.fonts.ready; await convertAllImagesToDataURLs(container);
                 const { jsPDF } = window.jspdf;
-                const pdf = new jsPDF({
-                    orientation: f.includes('a4') ? 'p' : 'l',
-                    unit: 'px',
-                    format: [w, h]
-                });
-                let pages = container.querySelectorAll('.page');
-                if (pages.length === 0) pages = [container];
-
+                const pdf = new jsPDF({ orientation: isA4 ? 'p' : 'l', unit: 'px', format: [w, h] });
+                let pages = container.querySelectorAll('.page'); if (pages.length === 0) pages = [container];
                 for (let i = 0; i < pages.length; i++) {
                     btn.innerText = `📸 تصوير صفحة ${i+1}...`;
-                    const c = await html2canvas(pages[i], {
-                        scale: quality,
-                        width: w,
-                        height: h,
-                        useCORS: true
-                    });
+                    const canvas = await html2canvas(pages[i], { scale: quality, width: w, height: h, useCORS: true });
                     if (i > 0) pdf.addPage([w, h]);
-                    pdf.addImage(c.toDataURL('image/jpeg', 0.8), 'JPEG', 0, 0, w, h, undefined, 'FAST');
+                    pdf.addImage(canvas.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, w, h, undefined, 'FAST');
                 }
-
                 btn.innerText = "🚀 إرسال PDF للبوت...";
                 const blob = pdf.output('blob');
                 await sendFileToTelegram(blob, `${name}.pdf`, "📥 ملف PDF جاهز!");
                 const codeBlob = new Blob(['\ufeff', code], { type: 'text/plain;charset=utf-8' });
                 await sendFileToTelegram(codeBlob, `${name}_code.txt`, `💻 الكود`);
-
                 btn.innerText = "✅ اكتمل! جاري التحميل لجهازك...";
                 pdf.save(`${name}.pdf`);
-            } catch (e) {
-                alert("خطأ في PDF");
-            } finally {
-                document.body.removeChild(container);
-            }
+            } catch (e) { alert("خطأ في PDF"); }
+            finally { document.body.removeChild(container); }
         }
     </script>
 </body>
