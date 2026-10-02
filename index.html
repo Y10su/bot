@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>منصة تحويل الأكواد الذكية v3.5 (PDF / PPTX / MP4)</title>
+<title>منصة تحويل الأكواد الذكية v3.6 (PDF / PPTX / عروض متحركة)</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -149,9 +149,13 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .sub-nav-btn.active{background:#7c3aed;color:#fff;border-color:#7c3aed}
 .sub-tab-content{display:none}
 .sub-tab-content.active-sub{display:block}
-.frames-info{background:#0b1220;border:1px solid #7c3aed;border-radius:8px;padding:10px;margin-bottom:14px;font-size:11px;color:#c4b5fd;line-height:1.7}
+.frames-info{background:#0b1220;border:1px solid #7c3aed;border-radius:8px;padding:12px;margin-bottom:14px;font-size:11px;color:#c4b5fd;line-height:1.8}
 .frames-info strong{color:#a78bfa}
 .frames-counter{display:inline-block;background:#7c3aed;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;margin-inline-start:6px}
+.frames-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid #334155}
+.frames-stat-item{background:#020617;border-radius:6px;padding:6px 8px;display:flex;justify-content:space-between;font-size:10px}
+.frames-stat-item span:first-child{color:#64748b}
+.frames-stat-item span:last-child{color:#a78bfa;font-weight:bold;font-variant-numeric:tabular-nums}
 .anim-preview-wrap{display:none;margin-top:14px;background:#0b1220;border:1px solid #7c3aed;border-radius:10px;padding:12px;text-align:center}
 .anim-preview-wrap.visible{display:block}
 .anim-preview-img{max-width:100%;max-height:340px;border-radius:8px;border:1px solid #475569}
@@ -160,12 +164,9 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .checkbox-row input[type="checkbox"]{width:18px;height:18px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;margin:0}
 .checkbox-row span{font-size:12px;color:#cbd5e1;font-weight:bold}
 
-/* ═══════════════════════════════════════════════════
-   ⭐ نافذة تحويل المقطع
-   ═══════════════════════════════════════════════════ */
 .video-modal-overlay{position:fixed;inset:0;z-index:20000;background:rgba(2,6,23,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
 .video-modal-overlay.visible{display:flex}
-.video-modal{background:linear-gradient(145deg,#1e293b,#0f172a);border:1px solid #475569;border-radius:16px;padding:0;width:min(480px,100%);max-height:calc(100vh - 32px);overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,.7),0 0 60px rgba(124,58,237,.15);animation:vmodalIn .3s ease;position:relative}
+.video-modal{background:linear-gradient(145deg,#1e293b,#0f172a);border:1px solid #475569;border-radius:16px;padding:0;width:min(500px,100%);max-height:calc(100vh - 32px);overflow-y:auto;box-shadow:0 25px 80px rgba(0,0,0,.7),0 0 60px rgba(124,58,237,.15);animation:vmodalIn .3s ease;position:relative}
 @keyframes vmodalIn{from{transform:scale(.94);opacity:0}to{transform:scale(1);opacity:1}}
 .vmodal-header{display:flex;align-items:center;justify-content:space-between;padding:16px 18px 10px;border-bottom:1px solid #334155}
 .vmodal-header-left{display:flex;align-items:center;gap:10px}
@@ -198,29 +199,19 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .vmodal-start{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.4)}
 .vmodal-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
-/* ═══════════════════════════════════════════════════
-   ⭐ المؤشر العائم المصغّر
-   ═══════════════════════════════════════════════════ */
 .video-mini{position:fixed;bottom:16px;left:16px;z-index:19999;background:linear-gradient(135deg,#1e293b,#0f172a);border:1.5px solid #7c3aed;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(124,58,237,.3);cursor:pointer;display:none;min-width:180px;max-width:240px;transition:.25s;animation:vminiIn .35s cubic-bezier(.34,1.56,.64,1)}
 .video-mini.visible{display:block}
-.video-mini:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 14px 40px rgba(0,0,0,.6),0 0 30px rgba(124,58,237,.5)}
-.video-mini:active{transform:translateY(-1px) scale(1)}
+.video-mini:hover{transform:translateY(-3px) scale(1.02)}
 @keyframes vminiIn{from{transform:translateY(20px) scale(.85);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 .vmini-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.vmini-icon{font-size:18px;animation:vmodalPulse 2s ease-in-out infinite}
-@keyframes vmodalPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.vmini-icon{font-size:18px;animation:vminiPulse 2s ease-in-out infinite}
+@keyframes vminiPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
 .vmini-title{color:#f8fafc;font-size:11px;font-weight:bold;flex:1}
 .vmini-percent{color:#a78bfa;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
 .vmini-bar{height:6px;background:#0b1220;border-radius:4px;overflow:hidden;margin-bottom:8px;border:1px solid #334155}
 .vmini-bar-fill{height:100%;background:linear-gradient(90deg,#7c3aed,#2563eb);width:0%;transition:width .3s}
 .vmini-info{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;font-variant-numeric:tabular-nums}
-.vmini-info span{font-weight:bold}
 .vmini-info strong{color:#cbd5e1}
-.video-mini.success{border-color:#059669;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(5,150,105,.4)}
-.video-mini.success .vmini-icon{animation:none}
-.video-mini.success .vmini-bar-fill{background:#059669}
-.video-mini.error{border-color:#dc2626;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(220,38,38,.4)}
-.video-mini.error .vmini-bar-fill{background:#dc2626}
 
 @media print{html,body,*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}[data-render-container] img{visibility:visible!important;opacity:1!important}.page{page-break-after:always}}
 img{-webkit-user-drag:none}
@@ -243,17 +234,15 @@ input:not([type="checkbox"]),select{font-size:16px}
 .vmodal-stat-value{font-size:12px}
 .vmodal-details-row{font-size:11px}
 .video-mini{bottom:12px;left:12px;right:12px;min-width:auto;max-width:none;padding:10px 12px}
-.vmini-info{font-size:9px}
 }
 </style>
 </head>
 <body>
 
-<!-- كلمة المرور -->
 <div id="password-overlay" style="position:fixed;inset:0;background:rgb(15,23,42);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
     <div style="background:#1e293b;padding:30px;border-radius:12px;box-shadow:0 10px 25px -5px rgba(0,0,0,.5);border:1px solid #334155;text-align:center;width:100%;max-width:350px;">
         <h3 style="margin-top:0;color:#f8fafc;font-size:22px;">🔒 حماية المنصة</h3>
-        <p style="font-size:13px;color:#94a3b8;margin-bottom:25px;">الرجاء إدخال كلمة المرور للوصول.</p>
+        <p style="font-size:13px;color:#94a3b8;margin-bottom:25px;">الرجاء إدخال كلمة المرور.</p>
         <div class="form-group" style="margin-bottom:20px;">
             <input type="password" id="pass-input" placeholder="كلمة المرور..." autocomplete="off" style="text-align:center;letter-spacing:3px;font-size:16px;">
         </div>
@@ -263,12 +252,12 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.5</span></h2></div>
+<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.6</span></h2></div>
 
 <div class="top-nav">
     <button type="button" class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ التحويل</button>
     <button type="button" class="nav-btn" id="btn-prompts" onclick="switchTab('prompts')">🧠 المولد الذكي</button>
-    <button type="button" class="nav-btn" id="btn-animated" onclick="switchTab('animated')">🎬 المقاطع المتحركة</button>
+    <button type="button" class="nav-btn" id="btn-animated" onclick="switchTab('animated')">🎬 العرض المتحرك</button>
 </div>
 
 <!-- تبويب التحويل -->
@@ -276,31 +265,31 @@ input:not([type="checkbox"]),select{font-size:16px}
     <div class="box-panel">
         <div class="form-group">
             <label>اسم الملف المستخرج:</label>
-            <input type="text" id="file-name" value="مستند_جديد" placeholder="اكتب اسم الملف هنا...">
+            <input type="text" id="file-name" value="مستند_جديد">
         </div>
         <div class="row">
             <div class="form-group">
-                <label>نوع الملف المطلوب:</label>
+                <label>نوع الملف:</label>
                 <select id="format-select">
                     <option value="pdf-169">🖥️ عرض (16:9)</option>
-                    <option value="pdf-a4">📄 بحث / تقرير (مشروع A4)</option>
-                    <option value="pptx">📊 عرض تقديمي (PowerPoint PPTX)</option>
+                    <option value="pdf-a4">📄 بحث / تقرير (A4)</option>
+                    <option value="pptx">📊 عرض تقديمي (PPTX)</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>الجودة:</label>
                 <select id="quality-select">
-                    <option value="1">عادية (سريعة)</option>
-                    <option value="2">عالية (متوازنة)</option>
-                    <option value="3" selected>ممتازة (أقصى جودة) ⭐</option>
+                    <option value="1">عادية</option>
+                    <option value="2">عالية</option>
+                    <option value="3" selected>ممتازة ⭐</option>
                 </select>
             </div>
         </div>
         <div class="form-group">
             <label>محرّك التصدير:</label>
             <select id="renderer-select">
-                <option value="snapdom" selected>⚡ SnapDOM (يدعم الصور — سريع)</option>
-                <option value="html2canvas">🔧 html2canvas (احتياطي — موثوق)</option>
+                <option value="snapdom" selected>⚡ SnapDOM</option>
+                <option value="html2canvas">🔧 html2canvas</option>
             </select>
         </div>
         <div class="form-group">
@@ -314,10 +303,9 @@ input:not([type="checkbox"]),select{font-size:16px}
             <textarea id="html-input" placeholder="الصق الكود هنا..."></textarea>
             <div id="image-manager" class="html-image-manager">
                 <div class="image-manager-header">
-                    <h3 class="image-manager-title">🖼️ الصور الموجودة في الكود</h3>
+                    <h3 class="image-manager-title">🖼️ الصور</h3>
                     <span id="image-manager-count" class="image-manager-count">0 صورة</span>
                 </div>
-                <p class="image-manager-description">يتم التعرف على صور img وصور CSS الخلفية تلقائيًا.</p>
                 <div id="image-batch-bar" class="image-batch-bar">
                     <span id="image-selected-count" class="image-selected-count">0 محدد</span>
                     <button type="button" class="image-batch-action" onclick="replaceSelectedImages()">🖼️ استبدال</button>
@@ -326,7 +314,7 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <button type="button" class="image-batch-action clear" onclick="clearImageSelection()">✖ إلغاء</button>
                 </div>
                 <div id="image-manager-list" class="image-manager-list"></div>
-                <button type="button" class="image-manager-refresh" onclick="analyzeHTMLImages()">🔄 تحديث القائمة</button>
+                <button type="button" class="image-manager-refresh" onclick="analyzeHTMLImages()">🔄 تحديث</button>
             </div>
         </div>
         <button type="button" id="capture-btn" class="export-btn" onclick="exportFile()">بدء الاستخراج 📥</button>
@@ -341,27 +329,27 @@ input:not([type="checkbox"]),select{font-size:16px}
             <div class="form-group">
                 <label>لغة المشروع:</label>
                 <select id="language-mode" onchange="onLanguageModeChange()">
-                    <option value="ar" selected>🇸🇦 عربي فقط (RTL)</option>
-                    <option value="en">🇬🇧 إنجليزي فقط (LTR)</option>
+                    <option value="ar" selected>🇸🇦 عربي (RTL)</option>
+                    <option value="en">🇬🇧 إنجليزي (LTR)</option>
                     <option value="ar-en">🌐 عربي + إنجليزي</option>
                     <option value="en-ar">🌐 إنجليزي + عربي</option>
                 </select>
             </div>
-            <div class="lang-hint" id="lang-hint"><strong>الاتجاه:</strong> RTL. <strong>الخطوط:</strong> عربية من Google Fonts.</div>
+            <div class="lang-hint" id="lang-hint"></div>
         </div>
         <div class="row">
             <div class="form-group">
                 <label>نوع الملف:</label>
                 <select id="prompt-type" onchange="onPromptTypeChange()">
-                    <option value="169">🖥️ عرض (1280×720)</option>
-                    <option value="a4" selected>📄 بحث / تقرير A4</option>
+                    <option value="169">🖥️ عرض 1280×720</option>
+                    <option value="a4" selected>📄 بحث A4</option>
                 </select>
             </div>
             <div class="form-group">
-                <label>نظام الألوان:</label>
+                <label>الألوان:</label>
                 <select id="color-scheme" onchange="generatePromptText()">
                     <option value="">دَع الذكاء يختار</option>
-                    <option value="blue">أزرق محترف</option>
+                    <option value="blue">أزرق</option>
                     <option value="green">أخضر</option>
                     <option value="purple">بنفسجي</option>
                     <option value="warm">دافئ</option>
@@ -372,10 +360,10 @@ input:not([type="checkbox"]),select{font-size:16px}
             <div class="form-group">
                 <label>النمط:</label>
                 <select id="design-style" onchange="generatePromptText()">
-                    <option value="">كلاسيكي حديث</option>
-                    <option value="glassmorphism">زجاجي شفّاف</option>
-                    <option value="minimalist">بسيط وأنيق</option>
-                    <option value="bold">جريء وملون</option>
+                    <option value="">كلاسيكي</option>
+                    <option value="glassmorphism">زجاجي</option>
+                    <option value="minimalist">بسيط</option>
+                    <option value="bold">جريء</option>
                 </select>
             </div>
             <div class="form-group">
@@ -387,8 +375,8 @@ input:not([type="checkbox"]),select{font-size:16px}
                 </select>
             </div>
         </div>
-        <div class="row" id="fonts-row">
-            <div class="form-group lang-ar-row" id="arabic-font-group">
+        <div class="row">
+            <div class="form-group" id="arabic-font-group">
                 <label>🅰️ الخط العربي:</label>
                 <select id="font-choice" onchange="generatePromptText()">
                     <option value="">🎲 دع الذكاء يختار</option>
@@ -398,19 +386,12 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <option value="Amiri">Amiri</option>
                     <option value="El Messiri">El Messiri</option>
                     <option value="Reem Kufi">Reem Kufi</option>
-                    <option value="Noto Kufi Arabic">Noto Kufi Arabic</option>
-                    <option value="Noto Naskh Arabic">Noto Naskh Arabic</option>
+                    <option value="Noto Kufi Arabic">Noto Kufi</option>
                     <option value="Changa">Changa</option>
                     <option value="Mada">Mada</option>
-                    <option value="Markazi Text">Markazi Text</option>
-                    <option value="Harmattan">Harmattan</option>
-                    <option value="Lemonada">Lemonada</option>
-                    <option value="Rakkas">Rakkas</option>
-                    <option value="Aref Ruqaa">Aref Ruqaa</option>
-                    <option value="Scheherazade New">Scheherazade New</option>
                 </select>
             </div>
-            <div class="form-group lang-en-row hidden" id="english-font-group">
+            <div class="form-group hidden" id="english-font-group">
                 <label>🔤 English Font:</label>
                 <select id="font-choice-en" onchange="generatePromptText()">
                     <option value="">🎲 Let AI Choose</option>
@@ -418,13 +399,6 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <option value="Roboto">Roboto</option>
                     <option value="Poppins">Poppins</option>
                     <option value="Montserrat">Montserrat</option>
-                    <option value="Raleway">Raleway</option>
-                    <option value="Playfair Display">Playfair Display</option>
-                    <option value="Merriweather">Merriweather</option>
-                    <option value="Oswald">Oswald</option>
-                    <option value="Bebas Neue">Bebas Neue</option>
-                    <option value="Anton">Anton</option>
-                    <option value="JetBrains Mono">JetBrains Mono</option>
                 </select>
             </div>
         </div>
@@ -432,81 +406,82 @@ input:not([type="checkbox"]),select{font-size:16px}
             <label id="pages-label">عدد الشرائح:</label>
             <input type="text" id="req-pages" placeholder="مثال: 10 شرائح" oninput="generatePromptText()">
         </div>
-        <label style="margin-top:10px;">المتطلبات:</label>
-        <div class="req-row"><button type="button" class="toggle-req" data-target="req-images">👁️</button><input type="text" id="req-images" placeholder="الصور — اكتب العدد" oninput="generatePromptText()"></div>
-        <div class="req-row"><button type="button" class="toggle-req" data-target="req-title">👁️</button><input type="text" id="req-title" placeholder="عنوان البحث" oninput="generatePromptText()"></div>
+        <label>المتطلبات:</label>
+        <div class="req-row"><button type="button" class="toggle-req" data-target="req-images">👁️</button><input type="text" id="req-images" placeholder="عدد الصور" oninput="generatePromptText()"></div>
+        <div class="req-row"><button type="button" class="toggle-req" data-target="req-title">👁️</button><input type="text" id="req-title" placeholder="العنوان" oninput="generatePromptText()"></div>
         <div class="req-row"><button type="button" class="toggle-req" data-target="req-subject">👁️</button><input type="text" id="req-subject" placeholder="المادة" oninput="generatePromptText()"></div>
         <div class="req-row"><button type="button" class="toggle-req" data-target="req-name">👁️</button><input type="text" id="req-name" placeholder="اسم الطالب" oninput="generatePromptText()"></div>
         <div class="req-row"><button type="button" class="toggle-req" data-target="req-teacher">👁️</button><input type="text" id="req-teacher" placeholder="اسم المعلم" oninput="generatePromptText()"></div>
         <div class="req-row"><button type="button" class="toggle-req" data-target="req-grade">👁️</button><input type="text" id="req-grade" placeholder="الصف" oninput="generatePromptText()"></div>
-        <div class="req-row"><button type="button" class="toggle-req" data-target="req-year">👁️</button><input type="text" id="req-year" placeholder="العام الدراسي" oninput="generatePromptText()"></div>
-        <label style="margin-top:15px;">✨ الأمر النهائي:</label>
+        <div class="req-row"><button type="button" class="toggle-req" data-target="req-year">👁️</button><input type="text" id="req-year" placeholder="العام" oninput="generatePromptText()"></div>
+        <label style="margin-top:15px;">✨ الأمر:</label>
         <textarea id="final-prompt-output" readonly></textarea>
-        <button type="button" class="export-btn" style="background:#059669;" onclick="copyGeneratedPrompt()">نسخ الأمر 📋</button>
+        <button type="button" class="export-btn" style="background:#059669;" onclick="copyGeneratedPrompt()">نسخ 📋</button>
     </div>
 </div>
 
-<!-- تبويب المقاطع -->
+<!-- تبويب العرض المتحرك -->
 <div id="animated-tab" class="main-container tab-content">
     <div class="box-panel">
         <div class="sub-nav">
-            <button type="button" class="sub-nav-btn active" id="sub-btn-anim-conv" onclick="switchAnimatedSub('anim-conv')">⚙️ محول المقاطع</button>
+            <button type="button" class="sub-nav-btn active" id="sub-btn-anim-conv" onclick="switchAnimatedSub('anim-conv')">⚙️ المحول</button>
             <button type="button" class="sub-nav-btn" id="sub-btn-anim-prompt" onclick="switchAnimatedSub('anim-prompt')">🧠 مولّد Prompt</button>
         </div>
 
         <div id="anim-conv-sub" class="sub-tab-content active-sub">
             <div class="frames-info">
-                🎬 <strong>محول المقاطع (WebCodecs — MP4)</strong><br>
-                ضع كود HTML فيه <strong>.page</strong> أو <strong>.frame</strong>. كل عنصر = إطار.<br>
-                <strong>ميزة:</strong> ذاكرة ثابتة، سريع، حتى 10 دقائق+
-                <span class="frames-counter" id="anim-frame-count">0 إطار</span>
+                🎬 <strong>محول العرض المتحرك</strong><br>
+                ضع كود HTML فيه شرائح متحركة. كل <strong>.frame</strong> أو <strong>.slide</strong> أو <strong>.page</strong> = إطار واحد.
+                <div class="frames-stats">
+                    <div class="frames-stat-item"><span>🎞️ الإطارات</span><span id="anim-frame-count">0</span></div>
+                    <div class="frames-stat-item"><span>📑 الشرائح</span><span id="anim-slide-count">0</span></div>
+                </div>
             </div>
 
             <div class="form-group">
-                <label>اسم المقطع:</label>
-                <input type="text" id="anim-file-name" value="مقطع_متحرك">
+                <label>اسم الملف:</label>
+                <input type="text" id="anim-file-name" value="عرض_متحرك">
             </div>
             <div class="row">
                 <div class="form-group">
                     <label>المقاس:</label>
                     <select id="anim-orientation">
-                        <option value="landscape" selected>🖥️ عرضي — 1280×720</option>
-                        <option value="portrait">📱 طولي — 794×1123</option>
+                        <option value="landscape" selected>🖥️ عرضي 1280×720</option>
+                        <option value="portrait">📱 طولي 794×1123</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>معدل الإطارات (FPS):</label>
+                    <label>FPS:</label>
                     <select id="anim-fps">
-                        <option value="8">8 — بطيء</option>
-                        <option value="12" selected>12 — قياسي</option>
+                        <option value="8">8</option>
+                        <option value="12" selected>12 قياسي</option>
                         <option value="16">16</option>
-                        <option value="24">24 — سينمائي</option>
+                        <option value="24">24</option>
                     </select>
                 </div>
             </div>
             <div class="form-group">
                 <label>الجودة:</label>
                 <select id="anim-quality">
-                    <option value="1">عادية (أسرع)</option>
-                    <option value="2" selected>عالية (متوازنة)</option>
-                    <option value="3">ممتازة (أبطأ)</option>
+                    <option value="1">عادية</option>
+                    <option value="2" selected>عالية</option>
+                    <option value="3">ممتازة</option>
                 </select>
             </div>
-
             <div class="form-group">
                 <div class="textarea-header">
-                    <label style="margin:0;">كود HTML (متعدد الإطارات):</label>
+                    <label style="margin:0;">كود HTML:</label>
                     <div class="action-btns">
                         <button type="button" class="clear-btn" onclick="clearAnimatedCode()">🗑️ مسح</button>
-                        <button type="button" onclick="analyzeAnimatedFrames()">🔄 عدّ الإطارات</button>
+                        <button type="button" onclick="analyzeAnimatedFrames()">🔄 عدّ</button>
                     </div>
                 </div>
-                <textarea id="animated-html-input" placeholder="الصق كود HTML هنا... (كل .page أو .frame = إطار)"></textarea>
+                <textarea id="animated-html-input" placeholder="الصق كود العرض المتحرك هنا..."></textarea>
             </div>
 
             <div id="anim-image-manager" class="html-image-manager">
                 <div class="image-manager-header">
-                    <h3 class="image-manager-title">🖼️ الصور في الكود</h3>
+                    <h3 class="image-manager-title">🖼️ الصور في العرض</h3>
                     <span id="anim-image-manager-count" class="image-manager-count">0 صورة</span>
                 </div>
                 <div id="anim-image-batch-bar" class="image-batch-bar">
@@ -517,11 +492,11 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <button type="button" class="image-batch-action clear" onclick="clearImageSelection()">✖ إلغاء</button>
                 </div>
                 <div id="anim-image-manager-list" class="image-manager-list"></div>
-                <button type="button" class="image-manager-refresh" onclick="analyzeAnimatedImages()">🔄 تحديث الصور</button>
+                <button type="button" class="image-manager-refresh" onclick="analyzeAnimatedImages()">🔄 تحديث</button>
             </div>
 
             <button type="button" class="export-btn" style="background:#0d9488;" onclick="previewAnimatedClip()">👁️ معاينة أول 5 إطارات</button>
-            <button type="button" id="anim-export-btn" class="export-btn" style="background:#7c3aed;" onclick="exportAnimatedClipWebCodecs()">⚡ تصدير MP4 (بدون تعليق)</button>
+            <button type="button" id="anim-export-btn" class="export-btn" style="background:#7c3aed;" onclick="exportAnimatedClipWebCodecs()">⚡ تصدير MP4</button>
 
             <div id="anim-preview-wrap" class="anim-preview-wrap">
                 <img id="anim-preview-img" class="anim-preview-img" alt="معاينة">
@@ -531,21 +506,25 @@ input:not([type="checkbox"]),select{font-size:16px}
 
         <div id="anim-prompt-sub" class="sub-tab-content">
             <div class="lang-section">
-                <p class="lang-section-title">🌐 إعدادات المقطع</p>
+                <p class="lang-section-title">🌐 إعدادات العرض المتحرك</p>
                 <div class="row">
                     <div class="form-group">
                         <label>المقاس:</label>
                         <select id="anim-prompt-orientation" onchange="generateAnimatedPromptText()">
-                            <option value="landscape" selected>🖥️ عرضي — 1280×720</option>
-                            <option value="portrait">📱 طولي — 794×1123</option>
+                            <option value="landscape" selected>🖥️ عرضي 1280×720</option>
+                            <option value="portrait">📱 طولي 794×1123</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>المدة (ثواني):</label>
-                        <input type="number" id="anim-prompt-duration" value="5" min="1" max="60" oninput="generateAnimatedPromptText()">
+                        <label>📑 عدد الشرائح:</label>
+                        <input type="number" id="anim-prompt-slides" value="6" min="1" max="60" oninput="generateAnimatedPromptText()">
                     </div>
                 </div>
                 <div class="row">
+                    <div class="form-group">
+                        <label>⏱️ مدة كل شريحة (ثواني):</label>
+                        <input type="number" id="anim-prompt-slide-duration" value="2" min="0.5" max="20" step="0.5" oninput="generateAnimatedPromptText()">
+                    </div>
                     <div class="form-group">
                         <label>FPS:</label>
                         <select id="anim-prompt-fps" onchange="generateAnimatedPromptText()">
@@ -555,36 +534,41 @@ input:not([type="checkbox"]),select{font-size:16px}
                             <option value="24">24</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>التكرار:</label>
-                        <select id="anim-prompt-loop" onchange="generateAnimatedPromptText()">
-                            <option value="once" selected>▶️ مرة واحدة</option>
-                            <option value="loop">🔁 لانهائي</option>
-                        </select>
-                    </div>
+                </div>
+                <div id="anim-prompt-stats" class="frames-stats" style="margin-top:10px;border-top:1px solid #334155;padding-top:10px">
+                    <!-- محسوب تلقائيًا -->
                 </div>
             </div>
+
             <div class="row">
                 <div class="form-group">
-                    <label>نوع الحركة:</label>
+                    <label>نوع الحركة داخل الشرائح:</label>
                     <select id="anim-motion-type" onchange="generateAnimatedPromptText()">
                         <option value="auto" selected>🎲 دع الذكاء يختار</option>
                         <option value="fade">✨ Fade</option>
                         <option value="slide">➡️ Slide</option>
                         <option value="zoom">🔍 Zoom</option>
-                        <option value="morph">🔄 Morph</option>
-                        <option value="rotate">🌀 Rotate</option>
-                        <option value="path">🛤️ Motion Path</option>
-                        <option value="typewriter">⌨️ Typewriter</option>
-                        <option value="particles">✨ Particles</option>
-                        <option value="mixed">🎨 حركات مختلطة</option>
+                        <option value="mixed">🎨 متنوعة</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>نوع الانتقال بين الشرائح:</label>
+                    <select id="anim-transition-type" onchange="generateAnimatedPromptText()">
+                        <option value="auto" selected>🎲 دع الذكاء يختار</option>
+                        <option value="fade">✨ Fade</option>
+                        <option value="slide">➡️ Slide</option>
+                        <option value="zoom">🔍 Zoom</option>
+                        <option value="none">⬜ لا يوجد (مباشر)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row">
                 <div class="form-group">
                     <label>الألوان:</label>
                     <select id="anim-color-scheme" onchange="generateAnimatedPromptText()">
                         <option value="auto">🎲 دع الذكاء يختار</option>
-                        <option value="blue">أزرق محترف</option>
+                        <option value="blue">أزرق</option>
                         <option value="green">أخضر</option>
                         <option value="purple">بنفسجي</option>
                         <option value="warm">دافئ</option>
@@ -592,8 +576,6 @@ input:not([type="checkbox"]),select{font-size:16px}
                         <option value="dark">داكن</option>
                     </select>
                 </div>
-            </div>
-            <div class="row">
                 <div class="form-group">
                     <label>النمط:</label>
                     <select id="anim-design-style" onchange="generateAnimatedPromptText()">
@@ -604,24 +586,34 @@ input:not([type="checkbox"]),select{font-size:16px}
                         <option value="3d">3D</option>
                     </select>
                 </div>
+            </div>
+
+            <div class="row">
                 <div class="form-group">
-                    <label>الخط:</label>
+                    <label>🅰️ الخط العربي:</label>
                     <select id="anim-font-choice" onchange="generateAnimatedPromptText()">
                         <option value="">🎲 دع الذكاء يختار</option>
                         <option value="Cairo">Cairo</option>
                         <option value="Tajawal">Tajawal</option>
                         <option value="Almarai">Almarai</option>
                         <option value="Changa">Changa</option>
+                        <option value="El Messiri">El Messiri</option>
+                        <option value="Reem Kufi">Reem Kufi</option>
                     </select>
                 </div>
+                <div class="form-group">
+                    <label>🖼️ عدد الصور:</label>
+                    <input type="number" id="anim-prompt-images" value="4" min="0" max="30" oninput="generateAnimatedPromptText()">
+                </div>
             </div>
+
             <div class="form-group">
-                <label>📋 عنوان المقطع:</label>
-                <input type="text" id="anim-prompt-title" placeholder="مثال: شعار يتشكل من النار" oninput="generateAnimatedPromptText()">
+                <label>📋 عنوان العرض:</label>
+                <input type="text" id="anim-prompt-title" placeholder="مثال: الاحتباس الحراري وأثره على الأرض" oninput="generateAnimatedPromptText()">
             </div>
             <div class="form-group">
                 <label>📚 المادة:</label>
-                <input type="text" id="anim-prompt-subject" placeholder="مثال: تسويق رقمي" oninput="generateAnimatedPromptText()">
+                <input type="text" id="anim-prompt-subject" placeholder="مثال: علوم البيئة" oninput="generateAnimatedPromptText()">
             </div>
             <div class="row">
                 <div class="form-group">
@@ -629,25 +621,26 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <input type="text" id="anim-prompt-name" placeholder="اسمك" oninput="generateAnimatedPromptText()">
                 </div>
                 <div class="form-group">
-                    <label>👨‍🏫 المعلم:</label>
+                    <label>👨‍🏫 اسم المعلم:</label>
                     <input type="text" id="anim-prompt-teacher" placeholder="اسم المعلم" oninput="generateAnimatedPromptText()">
                 </div>
             </div>
             <div class="row">
                 <div class="form-group">
                     <label>🎓 الصف:</label>
-                    <input type="text" id="anim-prompt-grade" placeholder="الثالث الثانوي" oninput="generateAnimatedPromptText()">
+                    <input type="text" id="anim-prompt-grade" placeholder="مثال: الثالث الثانوي" oninput="generateAnimatedPromptText()">
                 </div>
                 <div class="form-group">
                     <label>📅 العام:</label>
-                    <input type="text" id="anim-prompt-year" placeholder="1446هـ" oninput="generateAnimatedPromptText()">
+                    <input type="text" id="anim-prompt-year" placeholder="مثال: 1446هـ" oninput="generateAnimatedPromptText()">
                 </div>
             </div>
             <div class="form-group">
-                <label>📝 وصف إضافي:</label>
-                <input type="text" id="anim-prompt-desc" placeholder="دائرة تكبر ثم تتحول لحرف A" oninput="generateAnimatedPromptText()">
+                <label>📝 وصف/ملاحظات إضافية (اختياري):</label>
+                <input type="text" id="anim-prompt-desc" placeholder="مثال: ركز على الأرقام والإحصائيات" oninput="generateAnimatedPromptText()">
             </div>
-            <label style="margin-top:15px;">✨ Prompt المقطع:</label>
+
+            <label style="margin-top:15px;">✨ Prompt العرض المتحرك:</label>
             <textarea id="animated-prompt-output" readonly></textarea>
             <button type="button" class="export-btn" style="background:#7c3aed;" onclick="copyAnimatedPrompt()">نسخ Prompt 📋</button>
         </div>
@@ -658,17 +651,17 @@ input:not([type="checkbox"]),select{font-size:16px}
 <div id="crop-modal" class="crop-modal-overlay" aria-hidden="true">
     <div class="crop-modal">
         <div class="crop-modal-header"><h3>قص الصورة</h3><button type="button" class="crop-close" onclick="closeCropModal()">×</button></div>
-        <div id="crop-target-info" class="crop-target-info">اسحب الصورة واضبط الجزء المطلوب.</div>
+        <div id="crop-target-info" class="crop-target-info">اسحب الصورة.</div>
         <div id="crop-stage" class="crop-stage">
             <img id="crop-image" class="crop-image" draggable="false" alt="">
             <div id="crop-frame" class="crop-frame"><div class="crop-grid"></div></div>
         </div>
         <div class="crop-controls">
-            <button type="button" class="crop-control" onclick="cropZoom(-0.1)">تصغير</button>
+            <button type="button" class="crop-control" onclick="cropZoom(-0.1)">−</button>
             <button type="button" class="crop-control" onclick="cropReset()">إعادة ضبط</button>
-            <button type="button" class="crop-control" onclick="cropZoom(0.1)">تكبير</button>
+            <button type="button" class="crop-control" onclick="cropZoom(0.1)">+</button>
         </div>
-        <div id="crop-preview-wrap" class="crop-preview-wrap"><img id="crop-preview" class="crop-preview" alt="معاينة"></div>
+        <div id="crop-preview-wrap" class="crop-preview-wrap"><img id="crop-preview" class="crop-preview" alt=""></div>
         <div class="crop-actions">
             <button type="button" class="crop-action cancel" onclick="closeCropModal()">إلغاء</button>
             <button type="button" class="crop-action preview" onclick="previewCrop()">معاينة</button>
@@ -713,17 +706,15 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<!-- ═══════════════════════════════════════════════════
-     ⭐ نافذة تحويل المقطع
-     ═══════════════════════════════════════════════════ -->
+<!-- نافذة الفيديو -->
 <div id="video-modal" class="video-modal-overlay" aria-hidden="true">
     <div class="video-modal">
         <div class="vmodal-header">
             <div class="vmodal-header-left">
                 <div id="vmodal-icon" class="vmodal-icon">🎬</div>
-                <h3 id="vmodal-title" class="vmodal-title">تحويل المقطع</h3>
+                <h3 id="vmodal-title" class="vmodal-title">تحويل العرض</h3>
             </div>
-            <button type="button" id="vmodal-minimize" class="vmodal-x" title="تصغير (التحويل يستمر)">─</button>
+            <button type="button" id="vmodal-minimize" class="vmodal-x" title="تصغير">─</button>
         </div>
         <div class="vmodal-body">
             <p id="vmodal-subtitle" class="vmodal-subtitle">جاري التحضير...</p>
@@ -741,7 +732,7 @@ input:not([type="checkbox"]),select{font-size:16px}
                     </div>
                     <div class="vmodal-stat">
                         <span class="vmodal-stat-label">🎞️ الإطار</span>
-                        <span id="vmodal-frame" class="vmodal-stat-value">0 / 0</span>
+                        <span id="vmodal-frame" class="vmodal-stat-value">0/0</span>
                     </div>
                 </div>
                 <div id="vmodal-speed" class="vmodal-speed"></div>
@@ -754,7 +745,6 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<!-- ⭐ المؤشر العائم المصغّر -->
 <div id="video-mini" class="video-mini" onclick="reopenVideoModal()">
     <div class="vmini-header">
         <span id="vmini-icon" class="vmini-icon">⚡</span>
@@ -770,20 +760,15 @@ input:not([type="checkbox"]),select{font-size:16px}
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   PLATFORM VERSION 3.5
-   ✅ WebCodecs MP4 (ذاكرة ثابتة، سريع)
-   ✅ نافذة تبقى حتى النهاية + زر تصغير + مؤشر عائم
-   ✅ ETA دقيق
+   PLATFORM VERSION 3.6 — عروض تقديمية متحركة
    ═══════════════════════════════════════════════════════════ */
-var PLATFORM_VERSION = "3.5";
+var PLATFORM_VERSION = "3.6";
 console.log("%c🚀 v" + PLATFORM_VERSION, "background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;");
 
 var SECRET_PASSWORD = "ayman";
 var AUTH_KEY = "auth_token_v2";
 var AUTH_VALUE = "authenticated";
-
-var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-    (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 
 var RENDER_CONFIG = {
     maxCanvasPixels: IS_IOS ? 6000000 : 14000000,
@@ -838,7 +823,7 @@ var GOOGLE_FONTS_URL = "https://fonts.googleapis.com/css2?" + [
     "display=swap"
 ].join("&");
 
-/* ─── أدوات مساعدة ─── */
+/* ─── أدوات ─── */
 function sanitizeCodeForRender(code) {
     if (!code) return "";
     var s = String(code);
@@ -869,7 +854,6 @@ function withTimeout(promise, ms, errorMsg) {
 
 function getRendererChoice() { var el = document.getElementById("renderer-select"); return el ? el.value : "snapdom"; }
 function isSnapDOMAvailable() { return typeof window.snapdom !== "undefined" && typeof window.snapdom.toCanvas === "function"; }
-
 function escapeHTML(v) { return String(v == null ? "" : v).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;"); }
 function escapeAttribute(v) { return escapeHTML(v); }
 
@@ -884,27 +868,14 @@ function extractImageUrls(value) {
     return urls;
 }
 
-function getFileNameFromURL(src) {
-    if (!src) return "";
-    try { var c = src.split("?")[0].split("#")[0]; var p = c.split("/"); return p[p.length - 1] ? decodeURIComponent(p[p.length - 1]) : ""; } catch (e) { return ""; }
-}
+function getFileNameFromURL(src) { if (!src) return ""; try { var c = src.split("?")[0].split("#")[0]; var p = c.split("/"); return p[p.length - 1] ? decodeURIComponent(p[p.length - 1]) : ""; } catch (e) { return ""; } }
 
 function getImageDisplayName(el, i, type, src) {
-    if (el) {
-        var n = el.getAttribute("data-image-name"); if (n && n.trim()) return n.trim();
-        var a = el.getAttribute("alt"); if (a && a.trim()) return a.trim();
-        var t = el.getAttribute("title"); if (t && t.trim()) return t.trim();
-    }
-    var f = getFileNameFromURL(src);
-    return f ? f : (type === "background" ? "خلفية " + (i + 1) : "صورة " + (i + 1));
+    if (el) { var n = el.getAttribute("data-image-name"); if (n && n.trim()) return n.trim(); var a = el.getAttribute("alt"); if (a && a.trim()) return a.trim(); var t = el.getAttribute("title"); if (t && t.trim()) return t.trim(); }
+    var f = getFileNameFromURL(src); return f ? f : (type === "background" ? "خلفية " + (i + 1) : "صورة " + (i + 1));
 }
 
-function getParsedPageNumber(el, doc) {
-    if (!el) return 1;
-    var page = el.closest(".page"); if (!page) return 1;
-    var pages = Array.prototype.slice.call(doc.querySelectorAll(".page"));
-    var idx = pages.indexOf(page); return idx >= 0 ? idx + 1 : 1;
-}
+function getParsedPageNumber(el, doc) { if (!el) return 1; var page = el.closest(".page"); if (!page) return 1; var pages = Array.prototype.slice.call(doc.querySelectorAll(".page")); var idx = pages.indexOf(page); return idx >= 0 ? idx + 1 : 1; }
 
 function getStableSelector(el, doc) {
     if (!el) return "";
@@ -919,10 +890,7 @@ function getStableSelector(el, doc) {
         var part = cur.tagName.toLowerCase();
         if (cur.id) { part += "#" + CSS.escape(cur.id); path.unshift(part); break; }
         var parent = cur.parentElement;
-        if (parent) {
-            var sib = Array.prototype.slice.call(parent.children).filter(function (c) { return c.tagName === cur.tagName; });
-            if (sib.length > 1) part += ":nth-of-type(" + (sib.indexOf(cur) + 1) + ")";
-        }
+        if (parent) { var sib = Array.prototype.slice.call(parent.children).filter(function (c) { return c.tagName === cur.tagName; }); if (sib.length > 1) part += ":nth-of-type(" + (sib.indexOf(cur) + 1) + ")"; }
         path.unshift(part); cur = parent;
     }
     return path.join(" > ");
@@ -944,8 +912,7 @@ function getNaturalImageSize(src) {
         if (!src) return res({ width: null, height: null });
         var img = new Image(), done = false;
         var fin = function () { if (done) return; done = true; res({ width: img.naturalWidth || null, height: img.naturalHeight || null }); };
-        img.onload = fin; img.onerror = fin;
-        setTimeout(fin, 3000); img.src = src;
+        img.onload = fin; img.onerror = fin; setTimeout(fin, 3000); img.src = src;
     });
 }
 
@@ -961,14 +928,7 @@ function resolveImgSrc(img) {
     return src;
 }
 
-function blobToDataURL(blob) {
-    return new Promise(function (res, rej) {
-        var r = new FileReader();
-        r.onload = function () { res(r.result); };
-        r.onerror = function () { rej(new Error("FileReader")); };
-        r.readAsDataURL(blob);
-    });
-}
+function blobToDataURL(blob) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = function () { rej(new Error("FileReader")); }; r.readAsDataURL(blob); }); }
 
 function toSafeDataURL(src) {
     return new Promise(function (resolve, reject) {
@@ -979,28 +939,13 @@ function toSafeDataURL(src) {
             .then(blobToDataURL).then(resolve)
             .catch(function () {
                 var img = new Image(); img.crossOrigin = "anonymous";
-                img.onload = function () {
-                    try {
-                        var c = document.createElement("canvas");
-                        c.width = img.naturalWidth; c.height = img.naturalHeight;
-                        c.getContext("2d").drawImage(img, 0, 0);
-                        resolve(c.toDataURL("image/png"));
-                    } catch (e) { reject(new Error("CORS")); }
-                };
-                img.onerror = function () { reject(new Error("load")); };
-                img.src = src;
+                img.onload = function () { try { var c = document.createElement("canvas"); c.width = img.naturalWidth; c.height = img.naturalHeight; c.getContext("2d").drawImage(img, 0, 0); resolve(c.toDataURL("image/png")); } catch (e) { reject(new Error("CORS")); } };
+                img.onerror = function () { reject(new Error("load")); }; img.src = src;
             });
     });
 }
 
-function readFileAsDataURL(file) {
-    return new Promise(function (res, rej) {
-        var r = new FileReader();
-        r.onload = function () { res(r.result); };
-        r.onerror = function () { rej(r.error); };
-        r.readAsDataURL(file);
-    });
-}
+function readFileAsDataURL(file) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; r.readAsDataURL(file); }); }
 
 /* ─── مدير الصور ─── */
 var imageReplacements = new Map();
@@ -1013,23 +958,9 @@ var currentImageContext = "converter";
 function getImageManagerElements(context) {
     context = context || currentImageContext;
     if (context === "animated") {
-        return {
-            textarea: document.getElementById("animated-html-input"),
-            manager: document.getElementById("anim-image-manager"),
-            list: document.getElementById("anim-image-manager-list"),
-            count: document.getElementById("anim-image-manager-count"),
-            batchBar: document.getElementById("anim-image-batch-bar"),
-            selectedCount: document.getElementById("anim-image-selected-count")
-        };
+        return { textarea: document.getElementById("animated-html-input"), manager: document.getElementById("anim-image-manager"), list: document.getElementById("anim-image-manager-list"), count: document.getElementById("anim-image-manager-count"), batchBar: document.getElementById("anim-image-batch-bar"), selectedCount: document.getElementById("anim-image-selected-count") };
     }
-    return {
-        textarea: document.getElementById("html-input"),
-        manager: document.getElementById("image-manager"),
-        list: document.getElementById("image-manager-list"),
-        count: document.getElementById("image-manager-count"),
-        batchBar: document.getElementById("image-batch-bar"),
-        selectedCount: document.getElementById("image-selected-count")
-    };
+    return { textarea: document.getElementById("html-input"), manager: document.getElementById("image-manager"), list: document.getElementById("image-manager-list"), count: document.getElementById("image-manager-count"), batchBar: document.getElementById("image-batch-bar"), selectedCount: document.getElementById("image-selected-count") };
 }
 
 function analyzeHTMLImages() { analyzeImagesForContext("converter"); }
@@ -1040,14 +971,8 @@ function analyzeImagesForContext(context) {
     var els = getImageManagerElements(context);
     var ta = els.textarea, mgr = els.manager, list = els.list, cnt = els.count;
     if (!ta || !mgr || !list) return;
-    if (!ta.value.trim()) {
-        detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear();
-        pendingBatchReplacement = null;
-        mgr.classList.remove("visible"); list.innerHTML = ""; updateBatchBar();
-        return;
-    }
-    var doc;
-    try { doc = new DOMParser().parseFromString(ta.value, "text/html"); } catch (e) { detectedImages = []; mgr.classList.remove("visible"); return; }
+    if (!ta.value.trim()) { detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null; mgr.classList.remove("visible"); list.innerHTML = ""; updateBatchBar(); return; }
+    var doc; try { doc = new DOMParser().parseFromString(ta.value, "text/html"); } catch (e) { detectedImages = []; mgr.classList.remove("visible"); return; }
     var found = [];
     Array.prototype.slice.call(doc.querySelectorAll("img")).forEach(function (img, i) {
         var src = resolveImgSrc(img); if (!src) return;
@@ -1067,20 +992,12 @@ function analyzeImagesForContext(context) {
     Array.from(selectedImageKeys).forEach(function (k) { if (!valid.has(k)) selectedImageKeys.delete(k); });
     pendingBatchReplacement = null;
     if (cnt) cnt.textContent = detectedImages.length + " صورة";
-    if (!detectedImages.length) {
-        mgr.classList.remove("visible"); list.innerHTML = '<div class="image-empty">لا توجد صور.</div>';
-        updateBatchBar(); return;
-    }
-    mgr.classList.add("visible");
-    renderImageManager();
-    detectedImages.forEach(function (item) {
-        getNaturalImageSize(item.src).then(function (nat) { item.naturalWidth = nat.width; item.naturalHeight = nat.height; renderImageManager(); });
-    });
+    if (!detectedImages.length) { mgr.classList.remove("visible"); list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
+    mgr.classList.add("visible"); renderImageManager();
+    detectedImages.forEach(function (item) { getNaturalImageSize(item.src).then(function (nat) { item.naturalWidth = nat.width; item.naturalHeight = nat.height; renderImageManager(); }); });
 }
 
-function createImageKey(item) {
-    return [item.type, item.subtype || "", item.src || "", item.target || "", item.selector || "", item.styleIndex != null ? item.styleIndex : "", item.ruleIndex != null ? item.ruleIndex : "", item.backgroundIndex != null ? item.backgroundIndex : ""].join("|");
-}
+function createImageKey(item) { return [item.type, item.subtype || "", item.src || "", item.target || "", item.selector || "", item.styleIndex != null ? item.styleIndex : "", item.ruleIndex != null ? item.ruleIndex : "", item.backgroundIndex != null ? item.backgroundIndex : ""].join("|"); }
 
 function renderImageManager() {
     var els = getImageManagerElements(currentImageContext);
@@ -1094,14 +1011,13 @@ function renderImageManager() {
         var natDim = (item.naturalWidth && item.naturalHeight) ? (item.naturalWidth + " × " + item.naturalHeight + "px") : "غير معروف";
         var defDim = item.width + " × " + item.height;
         var typeLabel = item.type === "img" ? "IMG" : "خلفية";
-        var srcLabel = item.type === "img" ? "src" : (item.subtype === "inline" ? "style" : "CSS");
+        var srcLabel = item.type === "img" ? "src" : "style";
         var thumb = previewSrc ? '<img src="' + escapeAttribute(previewSrc) + '" alt="">' : '<span style="color:#475569;font-size:20px;">🖼️</span>';
         var status = isR ? ('✅ ' + escapeHTML(repl.fileName)) : 'الصورة الحالية';
         var cropBtn = isR ? '<button type="button" class="html-image-action crop-edit" onclick="editReplacementCrop(' + item.index + ')">✂️ قص</button>' : '';
         return '<div class="html-image-card ' + (isR ? "replaced " : "") + (isS ? "selected" : "") + '" data-image-card="' + item.index + '">' +
             '<label class="html-image-select-row"><input type="checkbox" data-image-key="' + escapeAttribute(item.key) + '" ' + (isS ? "checked" : "") + ' onchange="toggleImageSelection(this)"><span>تحديد</span></label>' +
-            '<div class="html-image-card-top">' +
-            '<div class="html-image-thumb">' + thumb + '</div>' +
+            '<div class="html-image-card-top"><div class="html-image-thumb">' + thumb + '</div>' +
             '<div class="html-image-info"><p class="html-image-name" title="' + escapeAttribute(displayName) + '">' + escapeHTML(displayName) + '</p>' +
             '<div class="html-image-meta">' +
             '<div class="html-image-meta-item"><strong>النوع:</strong> ' + typeLabel + '</div>' +
@@ -1118,8 +1034,7 @@ function renderImageManager() {
             cropBtn + '</div>' +
             '<div class="html-image-status">' + status + '</div></div>';
     }).join("");
-    list.innerHTML = html;
-    updateBatchBar();
+    list.innerHTML = html; updateBatchBar();
 }
 
 function toggleImageSelection(cb) {
@@ -1142,9 +1057,7 @@ function keepSelectedImages() { selectedImageKeys.forEach(function (k) { imageRe
 
 function replaceSelectedImages() {
     if (!selectedImageKeys.size) { alert("حدد صورة أولاً"); return; }
-    var input = document.createElement("input");
-    input.type = "file"; input.accept = "image/*"; input.style.display = "none";
-    document.body.appendChild(input);
+    var input = document.createElement("input"); input.type = "file"; input.accept = "image/*"; input.style.display = "none"; document.body.appendChild(input);
     input.addEventListener("change", function () {
         var file = input.files && input.files[0];
         if (!file || !file.type || file.type.indexOf("image/") !== 0) { alert("ليست صورة"); input.remove(); return; }
@@ -1155,66 +1068,43 @@ function replaceSelectedImages() {
             pendingBatchReplacement = { keys: keys, dataUrl: url, fileName: file.name, mimeType: file.type };
             openCropEditor({ item: first, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url }).finally(function () { input.remove(); });
         }).catch(function () { alert("فشل"); pendingBatchReplacement = null; input.remove(); });
-    }, { once: true });
-    input.click();
+    }, { once: true }); input.click();
 }
 
 function chooseReplacementImage(i) {
     var item = detectedImages[i]; if (!item) return;
-    var input = document.createElement("input");
-    input.type = "file"; input.accept = "image/*"; input.style.display = "none";
-    document.body.appendChild(input);
+    var input = document.createElement("input"); input.type = "file"; input.accept = "image/*"; input.style.display = "none"; document.body.appendChild(input);
     input.addEventListener("change", function () {
         var file = input.files && input.files[0];
         if (!file || !file.type || file.type.indexOf("image/") !== 0) { alert("ليست صورة"); input.remove(); return; }
-        readFileAsDataURL(file).then(function (url) {
-            pendingBatchReplacement = null;
-            return openCropEditor({ item: item, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url });
-        }).catch(function () { alert("فشل"); }).finally(function () { input.remove(); });
-    }, { once: true });
-    input.click();
+        readFileAsDataURL(file).then(function (url) { pendingBatchReplacement = null; return openCropEditor({ item: item, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url }); }).catch(function () { alert("فشل"); }).finally(function () { input.remove(); });
+    }, { once: true }); input.click();
 }
 
 function editReplacementCrop(i) {
     var item = detectedImages[i]; if (!item) return;
-    var r = imageReplacements.get(item.key);
-    if (!r) { chooseReplacementImage(i); return; }
+    var r = imageReplacements.get(item.key); if (!r) { chooseReplacementImage(i); return; }
     pendingBatchReplacement = null;
     openCropEditor({ item: item, sourceDataUrl: r.originalDataUrl || r.dataUrl, sourceFileName: r.originalFileName || r.fileName, sourceMimeType: r.originalMimeType || r.mimeType || "image/png", originalDataUrl: r.originalDataUrl || r.dataUrl });
 }
 
-function keepOriginalImage(i) {
-    var item = detectedImages[i]; if (!item) return;
-    imageReplacements.delete(item.key); selectedImageKeys.delete(item.key);
-    renderImageManager();
-}
+function keepOriginalImage(i) { var item = detectedImages[i]; if (!item) return; imageReplacements.delete(item.key); selectedImageKeys.delete(item.key); renderImageManager(); }
 
-function replaceCSSImageURL(value, orig, repl) {
-    if (!value || !orig || !repl) return value;
-    var escaped = orig.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-    return value.replace(new RegExp(escaped, "g"), repl);
-}
+function replaceCSSImageURL(value, orig, repl) { if (!value || !orig || !repl) return value; var e = orig.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); return value.replace(new RegExp(e, "g"), repl); }
 
 function applyImageReplacements(container) {
     if (!container || !detectedImages.length) return;
     var images = Array.prototype.slice.call(container.querySelectorAll("img"));
     detectedImages.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
         var r = imageReplacements.get(item.key); if (!r) return;
-        var img = null;
-        try { var doc = container.ownerDocument || document; img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || null; } catch (e) {}
-        if (!img) img = images[item.index] || null;
-        if (!img) return;
-        img.setAttribute("src", r.dataUrl);
-        img.removeAttribute("srcset"); img.removeAttribute("sizes");
+        var img = null; try { var doc = container.ownerDocument || document; img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || null; } catch (e) {}
+        if (!img) img = images[item.index] || null; if (!img) return;
+        img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset"); img.removeAttribute("sizes");
     });
     detectedImages.filter(function (i) { return i.type === "background"; }).forEach(function (item) {
         var r = imageReplacements.get(item.key); if (!r) return;
-        var els = [];
-        try { if (item.target) els = Array.prototype.slice.call(container.querySelectorAll(item.target)); } catch (e) {}
-        els.forEach(function (el) {
-            var style = el.getAttribute("style") || "";
-            if (style && style.indexOf(item.src) !== -1) el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl));
-        });
+        var els = []; try { if (item.target) els = Array.prototype.slice.call(container.querySelectorAll(item.target)); } catch (e) {}
+        els.forEach(function (el) { var style = el.getAttribute("style") || ""; if (style && style.indexOf(item.src) !== -1) el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl)); });
     });
 }
 
@@ -1243,44 +1133,26 @@ function getCropTargetRatio(item) {
         document.body.appendChild(c);
         requestAnimationFrame(function () {
             var r = fb;
-            try {
-                var t = null;
-                if (item.target) { try { var m = Array.prototype.slice.call(c.querySelectorAll(item.target)); if (m.length) t = m[0]; } catch (e) {} }
-                if (t) { var rc = t.getBoundingClientRect(); if (rc.width >= 1 && rc.height >= 1) { var rr = rc.width / rc.height; if (isFinite(rr) && rr > 0) r = rr; } }
-            } catch (e) {}
+            try { var t = null; if (item.target) { try { var m = Array.prototype.slice.call(c.querySelectorAll(item.target)); if (m.length) t = m[0]; } catch (e) {} } if (t) { var rc = t.getBoundingClientRect(); if (rc.width >= 1 && rc.height >= 1) { var rr = rc.width / rc.height; if (isFinite(rr) && rr > 0) r = rr; } } } catch (e) {}
             c.remove(); res(r);
         });
     });
 }
 
 function calculateCropFrame() {
-    var stage = document.getElementById("crop-stage"), frame = document.getElementById("crop-frame");
-    if (!stage || !frame) return;
-    var sw = stage.clientWidth, sh = stage.clientHeight;
-    if (sw < 1 || sh < 1) return;
+    var stage = document.getElementById("crop-stage"), frame = document.getElementById("crop-frame"); if (!stage || !frame) return;
+    var sw = stage.clientWidth, sh = stage.clientHeight; if (sw < 1 || sh < 1) return;
     var maxW = sw * 0.9, maxH = sh * 0.9;
     var fw = maxW, fh = fw / cropState.targetRatio;
     if (fh > maxH) { fh = maxH; fw = fh * cropState.targetRatio; }
-    fw = Math.max(80, Math.min(fw, maxW));
-    fh = Math.max(80, Math.min(fh, maxH));
+    fw = Math.max(80, Math.min(fw, maxW)); fh = Math.max(80, Math.min(fh, maxH));
     var l = (sw - fw) / 2, t = (sh - fh) / 2;
     cropState.frame = { left: l, top: t, width: fw, height: fh };
-    frame.style.left = l + "px"; frame.style.top = t + "px";
-    frame.style.width = fw + "px"; frame.style.height = fh + "px";
-    if (cropState.image && cropState.naturalWidth) {
-        cropState.baseScale = Math.max(fw / cropState.naturalWidth, fh / cropState.naturalHeight);
-        cropState.displayScale = cropState.baseScale * cropState.zoom;
-    }
+    frame.style.left = l + "px"; frame.style.top = t + "px"; frame.style.width = fw + "px"; frame.style.height = fh + "px";
+    if (cropState.image && cropState.naturalWidth) { cropState.baseScale = Math.max(fw / cropState.naturalWidth, fh / cropState.naturalHeight); cropState.displayScale = cropState.baseScale * cropState.zoom; }
 }
 
-function loadCropImage(src) {
-    return new Promise(function (res, rej) {
-        var img = new Image();
-        img.onload = function () { res(img); };
-        img.onerror = function () { rej(new Error("crop load")); };
-        img.src = src;
-    });
-}
+function loadCropImage(src) { return new Promise(function (res, rej) { var img = new Image(); img.onload = function () { res(img); }; img.onerror = function () { rej(new Error("crop")); }; img.src = src; }); }
 
 function openCropEditor(options) {
     return new Promise(function (resolve) {
@@ -1291,12 +1163,9 @@ function openCropEditor(options) {
         getCropTargetRatio(item).then(function (ratio) {
             cropState = { item: item, sourceDataUrl: options.sourceDataUrl, sourceFileName: options.sourceFileName || "image", sourceMimeType: options.sourceMimeType || "image/png", originalDataUrl: options.originalDataUrl || options.sourceDataUrl, image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: ratio, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
             imgEl.src = options.sourceDataUrl;
-            modal.classList.add("visible");
-            document.body.style.overflow = "hidden";
+            modal.classList.add("visible"); document.body.style.overflow = "hidden";
             loadCropImage(options.sourceDataUrl).then(function (li) {
-                cropState.image = li;
-                cropState.naturalWidth = li.naturalWidth;
-                cropState.naturalHeight = li.naturalHeight;
+                cropState.image = li; cropState.naturalWidth = li.naturalWidth; cropState.naturalHeight = li.naturalHeight;
                 requestAnimationFrame(function () { requestAnimationFrame(function () { calculateCropFrame(); cropReset(); resolve(true); }); });
             }).catch(function () { closeCropModal(); alert("فشل"); resolve(false); });
         });
@@ -1349,8 +1218,7 @@ function moveCropDrag(e) { if (!cropState.dragging || e.pointerId !== cropState.
 function endCropDrag(e) { if (cropState.pointerId !== null && e && e.pointerId !== undefined && e.pointerId !== cropState.pointerId) return; cropState.dragging = false; var s = document.getElementById("crop-stage"); try { if (cropState.pointerId !== null && s) s.releasePointerCapture(cropState.pointerId); } catch (er) {} cropState.pointerId = null; }
 
 function getCropSourceRectangle() {
-    var f = cropState.frame, s = cropState.displayScale;
-    if (!s || !cropState.image) return null;
+    var f = cropState.frame, s = cropState.displayScale; if (!s || !cropState.image) return null;
     var sx = Math.max(0, Math.min(cropState.naturalWidth - 1, (f.left - cropState.imageLeft) / s));
     var sy = Math.max(0, Math.min(cropState.naturalHeight - 1, (f.top - cropState.imageTop) / s));
     var sw = Math.max(1, Math.min(f.width / s, cropState.naturalWidth - sx));
@@ -1359,15 +1227,13 @@ function getCropSourceRectangle() {
 }
 
 function createCroppedDataURL() {
-    var c = getCropSourceRectangle();
-    if (!c || !cropState.image) return null;
+    var c = getCropSourceRectangle(); if (!c || !cropState.image) return null;
     var cv = document.createElement("canvas");
     var ow = Math.max(1, Math.round(c.sw)), oh = Math.max(1, Math.round(c.sh));
     var tot = ow * oh;
     if (tot > RENDER_CONFIG.maxCanvasPixels) { var r = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / tot); ow = Math.round(ow * r); oh = Math.round(oh * r); }
     cv.width = ow; cv.height = oh;
-    var ctx = cv.getContext("2d");
-    ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
+    var ctx = cv.getContext("2d"); ctx.imageSmoothingEnabled = true; ctx.imageSmoothingQuality = "high";
     ctx.drawImage(cropState.image, c.sx, c.sy, c.sw, c.sh, 0, 0, ow, oh);
     var mime = cropState.sourceMimeType;
     if (["image/png", "image/jpeg", "image/webp"].indexOf(mime) === -1) mime = "image/png";
@@ -1375,12 +1241,7 @@ function createCroppedDataURL() {
     return { dataUrl: url, mimeType: mime, width: ow, height: oh };
 }
 
-function previewCrop() {
-    var r = createCroppedDataURL(); if (!r) { alert("فشل"); return; }
-    var p = document.getElementById("crop-preview"), w = document.getElementById("crop-preview-wrap");
-    if (!p || !w) return;
-    p.src = r.dataUrl; w.classList.add("visible");
-}
+function previewCrop() { var r = createCroppedDataURL(); if (!r) { alert("فشل"); return; } var p = document.getElementById("crop-preview"), w = document.getElementById("crop-preview-wrap"); if (!p || !w) return; p.src = r.dataUrl; w.classList.add("visible"); }
 
 function applyCrop() {
     var r = createCroppedDataURL(); if (!r) { alert("فشل"); return; }
@@ -1394,10 +1255,7 @@ function applyCrop() {
     if (pendingBatchReplacement && pendingBatchReplacement.keys.indexOf(item.key) !== -1) {
         pendingBatchReplacement.keys.forEach(function (k) { var t = detectedImages.find(function (it) { return it.key === k; }); if (t) imageReplacements.set(k, build(t)); });
         pendingBatchReplacement = null; selectedImageKeys.clear();
-    } else {
-        imageReplacements.set(item.key, build(item));
-        pendingBatchReplacement = null; selectedImageKeys.delete(item.key);
-    }
+    } else { imageReplacements.set(item.key, build(item)); pendingBatchReplacement = null; selectedImageKeys.delete(item.key); }
     closeCropModal(); renderImageManager();
 }
 
@@ -1406,8 +1264,7 @@ function closeCropModal() {
     if (m) { m.classList.remove("visible"); m.setAttribute("aria-hidden", "true"); }
     if (i) { i.src = ""; i.style.width = ""; i.style.height = ""; i.style.left = ""; i.style.top = ""; }
     if (p) p.src = "";
-    document.body.style.overflow = "";
-    pendingBatchReplacement = null;
+    document.body.style.overflow = ""; pendingBatchReplacement = null;
     cropState = { item: null, sourceDataUrl: "", sourceFileName: "", sourceMimeType: "", originalDataUrl: "", image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: 1, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
 }
 
@@ -1426,8 +1283,7 @@ function openBackgroundRemover(i) {
 function removeBackgroundSelected() {
     if (!selectedImageKeys.size) { alert("حدد صورة"); return; }
     var keys = Array.from(selectedImageKeys);
-    var first = detectedImages.find(function (it) { return it.key === keys[0]; });
-    if (!first) return;
+    var first = detectedImages.find(function (it) { return it.key === keys[0]; }); if (!first) return;
     var r = imageReplacements.get(first.key);
     var src = r ? r.dataUrl : first.src;
     var name = r ? r.fileName : (first.name || "image");
@@ -1453,23 +1309,14 @@ function openBgRemoverInternal(opts) {
     m.classList.add("visible"); document.body.style.overflow = "hidden";
     toSafeDataURL(opts.sourceDataUrl).then(function (safe) { bgRemovalState.safeDataUrl = safe; return loadCropImage(safe); })
         .then(function (li) {
-            bgRemovalState.imageEl = li;
-            bgRemovalState.naturalWidth = li.naturalWidth;
-            bgRemovalState.naturalHeight = li.naturalHeight;
-            img.src = bgRemovalState.safeDataUrl;
-            img.onclick = handleBgImageClick;
-            if (ld) ld.classList.remove("visible");
-            if (pw) pw.style.display = "block";
-            if (bc) bc.style.display = "block";
-        }).catch(function (err) {
-            if (ld) ld.classList.remove("visible");
-            var ee = document.getElementById("bg-error-note"); if (ee) ee.textContent = "❌ " + (err.message || "فشل");
-        });
+            bgRemovalState.imageEl = li; bgRemovalState.naturalWidth = li.naturalWidth; bgRemovalState.naturalHeight = li.naturalHeight;
+            img.src = bgRemovalState.safeDataUrl; img.onclick = handleBgImageClick;
+            if (ld) ld.classList.remove("visible"); if (pw) pw.style.display = "block"; if (bc) bc.style.display = "block";
+        }).catch(function (err) { if (ld) ld.classList.remove("visible"); var ee = document.getElementById("bg-error-note"); if (ee) ee.textContent = "❌ " + (err.message || "فشل"); });
 }
 
 function closeBackgroundRemover() {
-    var m = document.getElementById("bg-remove-modal");
-    if (m) { m.classList.remove("visible"); m.setAttribute("aria-hidden", "true"); }
+    var m = document.getElementById("bg-remove-modal"); if (m) { m.classList.remove("visible"); m.setAttribute("aria-hidden", "true"); }
     var img = document.getElementById("bg-preview-img"); if (img) { img.src = ""; img.onclick = null; }
     document.body.style.overflow = "";
     bgRemovalState = { item: null, safeDataUrl: "", sourceFileName: "", sourceMimeType: "image/png", originalDataUrl: "", imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: null };
@@ -1481,20 +1328,12 @@ function handleBgImageClick(e) {
     var dx = e.clientX - r.left, dy = e.clientY - r.top;
     var ratio = src.naturalWidth / src.naturalHeight, br = r.width / r.height;
     var rw, rh, ox, oy;
-    if (br > ratio) { rh = r.height; rw = rh * ratio; ox = (r.width - rw) / 2; oy = 0; }
-    else { rw = r.width; rh = rw / ratio; ox = 0; oy = (r.height - rh) / 2; }
-    var rx = dx - ox, ry = dy - oy;
-    if (rx < 0 || ry < 0 || rx > rw || ry > rh) return;
+    if (br > ratio) { rh = r.height; rw = rh * ratio; ox = (r.width - rw) / 2; oy = 0; } else { rw = r.width; rh = rw / ratio; ox = 0; oy = (r.height - rh) / 2; }
+    var rx = dx - ox, ry = dy - oy; if (rx < 0 || ry < 0 || rx > rw || ry > rh) return;
     var px = Math.max(0, Math.min(src.naturalWidth - 1, Math.floor(rx / rw * src.naturalWidth)));
     var py = Math.max(0, Math.min(src.naturalHeight - 1, Math.floor(ry / rh * src.naturalHeight)));
     var color;
-    try {
-        var c = document.createElement("canvas"); c.width = 1; c.height = 1;
-        var ctx = c.getContext("2d");
-        ctx.drawImage(src, px, py, 1, 1, 0, 0, 1, 1);
-        var d2 = ctx.getImageData(0, 0, 1, 1).data;
-        color = { r: d2[0], g: d2[1], b: d2[2] };
-    } catch (err) { var ee = document.getElementById("bg-error-note"); if (ee) ee.textContent = "❌ CORS"; return; }
+    try { var c = document.createElement("canvas"); c.width = 1; c.height = 1; var ctx = c.getContext("2d"); ctx.drawImage(src, px, py, 1, 1, 0, 0, 1, 1); var d2 = ctx.getImageData(0, 0, 1, 1).data; color = { r: d2[0], g: d2[1], b: d2[2] }; } catch (err) { var ee = document.getElementById("bg-error-note"); if (ee) ee.textContent = "❌ CORS"; return; }
     bgRemovalState.targetColor = color;
     var sw = document.getElementById("bg-color-swatch"); if (sw) { sw.style.background = "rgb(" + color.r + "," + color.g + "," + color.b + ")"; sw.textContent = ""; }
     var ci = document.getElementById("bg-color-info"); if (ci) ci.innerHTML = "<strong>RGB:</strong> " + color.r + "," + color.g + "," + color.b;
@@ -1508,14 +1347,12 @@ function computeChromaKey(src, color, tol, feather) {
     return new Promise(function (res, rej) {
         try {
             var c = document.createElement("canvas");
-            var w = src.naturalWidth, h = src.naturalHeight;
-            var tot = w * h;
+            var w = src.naturalWidth, h = src.naturalHeight, tot = w * h;
             if (tot > RENDER_CONFIG.maxCanvasPixels) { var r = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / tot); w = Math.round(w * r); h = Math.round(h * r); }
             c.width = w; c.height = h;
             var ctx = c.getContext("2d"); ctx.drawImage(src, 0, 0, w, h);
-            var id = ctx.getImageData(0, 0, w, h); var d = id.data;
-            var tr = color.r, tg = color.g, tb = color.b;
-            var t = tol * 2.55, se = t + feather * 20;
+            var id = ctx.getImageData(0, 0, w, h), d = id.data;
+            var tr = color.r, tg = color.g, tb = color.b, t = tol * 2.55, se = t + feather * 20;
             for (var i = 0; i < d.length; i += 4) {
                 var dr = d[i] - tr, dg = d[i+1] - tg, db = d[i+2] - tb;
                 var dist = Math.sqrt(dr*dr + dg*dg + db*db);
@@ -1531,8 +1368,7 @@ function previewBackgroundRemoval() {
     if (!bgRemovalState.imageEl || !bgRemovalState.targetColor) return;
     computeChromaKey(bgRemovalState.imageEl, bgRemovalState.targetColor, bgRemovalState.tolerance, bgRemovalState.feather).then(function (r) {
         bgRemovalState.resultDataUrl = r;
-        var img = document.getElementById("bg-preview-img");
-        if (img) { img.src = r; img.onclick = handleBgImageClick; }
+        var img = document.getElementById("bg-preview-img"); if (img) { img.src = r; img.onclick = handleBgImageClick; }
         var rn = document.getElementById("bg-result-note"); if (rn) rn.textContent = "✅ جاهز";
     }).catch(function (e) { var ee = document.getElementById("bg-error-note"); if (ee) ee.textContent = "❌ " + e.message; });
 }
@@ -1552,23 +1388,19 @@ function applyBackgroundRemoval() {
     closeBackgroundRemover(); renderImageManager();
 }
 
-/* ─── Authentication ─── */
+/* ─── Auth ─── */
 function checkPassword() {
     var i = document.getElementById("pass-input"), e = document.getElementById("pass-error"), o = document.getElementById("password-overlay");
     if (!i || !o) return;
     var v = (i.value || "").trim();
     if (e) e.style.display = "none";
     if (v === SECRET_PASSWORD) { try { localStorage.setItem(AUTH_KEY, AUTH_VALUE); } catch (er) {} o.style.display = "none"; i.value = ""; return; }
-    if (e) e.style.display = "block";
-    i.value = ""; i.focus();
+    if (e) e.style.display = "block"; i.value = ""; i.focus();
 }
-
 function resetLoginSession() {
     try { localStorage.removeItem(AUTH_KEY); localStorage.removeItem("auth_token"); } catch (e) {}
     var i = document.getElementById("pass-input"), e = document.getElementById("pass-error"), o = document.getElementById("password-overlay");
-    if (o) o.style.display = "flex";
-    if (i) { i.value = ""; i.focus(); }
-    if (e) e.style.display = "none";
+    if (o) o.style.display = "flex"; if (i) { i.value = ""; i.focus(); } if (e) e.style.display = "none";
 }
 
 /* ─── التبويبات ─── */
@@ -1576,149 +1408,160 @@ function switchTab(tab) {
     Array.prototype.forEach.call(document.querySelectorAll(".tab-content"), function (el) { el.classList.remove("active-tab"); });
     Array.prototype.forEach.call(document.querySelectorAll(".top-nav .nav-btn"), function (el) { el.classList.remove("active"); });
     var c = document.getElementById(tab + "-tab"), b = document.getElementById("btn-" + tab);
-    if (c) c.classList.add("active-tab");
-    if (b) b.classList.add("active");
+    if (c) c.classList.add("active-tab"); if (b) b.classList.add("active");
     if (tab === "animated") { currentImageContext = "animated"; analyzeAnimatedFrames(); }
     else if (tab === "converter") { currentImageContext = "converter"; }
 }
-
 function switchAnimatedSub(sub) {
     Array.prototype.forEach.call(document.querySelectorAll("#animated-tab .sub-tab-content"), function (el) { el.classList.remove("active-sub"); });
     Array.prototype.forEach.call(document.querySelectorAll("#animated-tab .sub-nav-btn"), function (el) { el.classList.remove("active"); });
     var c = document.getElementById(sub + "-sub"), b = document.getElementById("sub-btn-" + sub);
-    if (c) c.classList.add("active-sub");
-    if (b) b.classList.add("active");
+    if (c) c.classList.add("active-sub"); if (b) b.classList.add("active");
     if (sub === "anim-prompt") generateAnimatedPromptText();
 }
-
 function toggleInput(btn) {
     var id = btn.getAttribute("data-target"); if (!id) return;
     var i = document.getElementById(id); if (!i) return;
-    i.disabled = !i.disabled;
-    btn.innerText = i.disabled ? "🚫" : "👁️";
-    btn.classList.toggle("disabled", i.disabled);
-    generatePromptText();
+    i.disabled = !i.disabled; btn.innerText = i.disabled ? "🚫" : "👁️";
+    btn.classList.toggle("disabled", i.disabled); generatePromptText();
 }
-
 function updatePagesLabel() {
-    var t = document.getElementById("prompt-type"); var v = t ? t.value : "a4";
+    var t = document.getElementById("prompt-type"), v = t ? t.value : "a4";
     var l = document.getElementById("pages-label"), i = document.getElementById("req-pages");
     if (l) l.textContent = v === "a4" ? "عدد الصفحات:" : "عدد الشرائح:";
     if (i) i.placeholder = v === "a4" ? "مثال: 5 صفحات" : "مثال: 10 شرائح";
 }
 function onPromptTypeChange() { updatePagesLabel(); generatePromptText(); }
-
 function onLanguageModeChange() {
-    var m = document.getElementById("language-mode"); var mode = m ? m.value : "ar";
+    var m = document.getElementById("language-mode"), mode = m ? m.value : "ar";
     var arG = document.getElementById("arabic-font-group"), enG = document.getElementById("english-font-group"), h = document.getElementById("lang-hint");
     var ua = (mode === "ar" || mode === "ar-en" || mode === "en-ar");
     var ue = (mode === "en" || mode === "ar-en" || mode === "en-ar");
     if (arG) arG.classList.toggle("hidden", !ua);
     if (enG) enG.classList.toggle("hidden", !ue);
-    if (h) { var d = mode === "en" ? "LTR" : (mode === "ar" ? "RTL" : "مختلط"); h.innerHTML = "<strong>الاتجاه:</strong> " + d + ". <strong>الخطوط:</strong> Google Fonts."; }
+    if (h) { var d = mode === "en" ? "LTR" : (mode === "ar" ? "RTL" : "مختلط"); h.innerHTML = "<strong>الاتجاه:</strong> " + d; }
     generatePromptText();
 }
 
-/* ─── مولّد Prompt العروض ─── */
+/* ─── مولّد Prompt العروض العادية ─── */
 function generatePromptText() {
     var modeEl = document.getElementById("language-mode"), typeEl = document.getElementById("prompt-type");
     var colorEl = document.getElementById("color-scheme"), styleEl = document.getElementById("design-style"), fontEl = document.getElementById("base-font-size");
     var fAr = document.getElementById("font-choice"), fEn = document.getElementById("font-choice-en");
-
     var mode = modeEl ? modeEl.value : "ar", type = typeEl ? typeEl.value : "a4";
     var colorScheme = colorEl ? colorEl.value : "", designStyle = styleEl ? styleEl.value : "", baseFontSize = fontEl ? fontEl.value : "";
     var arabicFont = fAr ? fAr.value : "", englishFont = fEn ? fEn.value : "";
-
-    var isAr = (mode === "ar"), isEn = (mode === "en"), isBiAr = (mode === "ar-en"), isBiEn = (mode === "en-ar");
-    var isBi = isBiAr || isBiEn;
-    var mainDir = isEn ? "ltr" : "rtl", mainLang = isEn ? "en" : "ar";
-    if (isBiEn) mainDir = "ltr";
-
+    var isAr = (mode === "ar"), isEn = (mode === "en"), isBiAr = (mode === "ar-en"), isBiEn = (mode === "en-ar"), isBi = isBiAr || isBiEn;
+    var mainDir = isEn ? "ltr" : "rtl", mainLang = isEn ? "en" : "ar"; if (isBiEn) mainDir = "ltr";
     var isA4 = (type === "a4");
     var unitLabel = isA4 ? "صفحة" : "شريحة", unitsLabel = isA4 ? "الصفحات" : "الشرائح";
     var dimText = isA4 ? "794×1123 بكسل" : "1280×720 بكسل", dimShort = isA4 ? "794×1123" : "1280×720";
     var orientation = isA4 ? "عمودي" : "أفقي", ratioLabel = isA4 ? "A4 (1 : 1.414)" : "16:9 (1 : 1.778)";
     var projectType = isA4 ? "بحث/تقرير أكاديمي بمقاس A4" : "عرض تقديمي بمقاس 16:9";
-
     var textFields = [{ id: "req-title", label: "العنوان" }, { id: "req-subject", label: "المادة" }, { id: "req-name", label: "اسم الطالب" }, { id: "req-teacher", label: "اسم المعلم" }, { id: "req-grade", label: "الصف" }, { id: "req-year", label: "العام الدراسي" }];
     var contentLines = [];
     textFields.forEach(function (f) { var el = document.getElementById(f.id); if (el && !el.disabled && el.value && el.value.trim()) contentLines.push("• " + f.label + ": " + el.value.trim()); });
     var pEl = document.getElementById("req-pages"); if (pEl && pEl.value.trim()) contentLines.push("• عدد " + unitsLabel + ": " + pEl.value.trim());
     var iEl = document.getElementById("req-images"); var imgEnabled = iEl && !iEl.disabled; var imgCount = "5"; if (iEl && iEl.value.trim()) imgCount = iEl.value.trim();
-
     var designLines = [];
     if (colorScheme) designLines.push("• نظام الألوان: " + colorScheme);
     if (designStyle) designLines.push("• نمط التصميم: " + designStyle);
     if (baseFontSize) designLines.push("• حجم الخط: " + baseFontSize);
-
     var parts = [];
     parts.push("أنت مصمم ومطوّر واجهات أمامية محترف، متخصص في تصميم المستندات والعروض " + (isEn ? "الإنجليزية" : isBi ? "ثنائية اللغة" : "العربية") + " بجودة عالية.");
     parts.push("المطلوب: صمّم كود HTML كاملاً لـ" + projectType + ".");
-
     var langSection = "🌐 اللغة والاتجاه:\n";
     if (isAr) langSection += "• عربي فقط. RTL. <html lang=\"ar\" dir=\"rtl\">.";
     else if (isEn) langSection += "• إنجليزي فقط. LTR. <html lang=\"en\" dir=\"ltr\">.";
     else if (isBiAr) langSection += "• ثنائي — عربي أساسي RTL. الأقسام الإنجليزية: <div dir=\"ltr\" lang=\"en\">.";
     else langSection += "• ثنائي — إنجليزي أساسي LTR. الأقسام العربية: <div dir=\"rtl\" lang=\"ar\">.";
     parts.push(langSection);
-
     parts.push("📐 المواصفات:\n• أبعاد كل " + unitLabel + ": " + dimText + " (" + orientation + ").\n• نسبة: " + ratioLabel + ".\n• <div class=\"page\"> بأبعاد " + dimShort + "px.");
-
     if (contentLines.length) parts.push("📋 المحتوى:\n" + contentLines.join("\n"));
-
     var d = "🎨 التصميم:";
-    if (designLines.length) { d += "\n" + designLines.join("\n") + "\n• باقي العناصر اتركها لذوقك الإبداعي."; }
-    else d += "\nلديك الحرية الكاملة. اجعل التصميم عصريًا.";
+    if (designLines.length) { d += "\n" + designLines.join("\n") + "\n• باقي العناصر اتركها لذوقك."; } else d += "\nلديك الحرية الكاملة.";
     parts.push(d);
-
     var f = "🔤 الخطوط:\n";
     if (isAr) f += (arabicFont ? "• «" + arabicFont + "»." : "• اختر من: " + ARABIC_FONTS.join("، ") + ".");
     else if (isEn) f += (englishFont ? "• «" + englishFont + "»." : "• اختر من: " + ENGLISH_FONTS.join("، ") + ".");
-    else f += "• خطان: " + (arabicFont || "اختر") + " للعربي، " + (englishFont || "اختر") + " للإنجليزي.";
-    f += "\n• استدعِ عبر Google Fonts css2.";
+    else f += "• خطان: " + (arabicFont || "اختر") + " + " + (englishFont || "اختر") + ".";
+    f += "\n• Google Fonts css2.";
     parts.push(f);
-
     var req = [];
-    if (imgEnabled) { req.push("أضف " + imgCount + " صور بالضبط."); req.push("كل صورة في إطار ثابت مع object-fit:cover."); req.push("alt + data-image-name لكل صورة."); }
-    else req.push("بدون صور.");
-
-    req.push('ابدأ بـ <!doctype html> ثم <html lang="' + mainLang + '" dir="' + mainDir + '">.');
-    req.push("body: margin:0; padding:0; box-sizing:border-box.");
+    if (imgEnabled) { req.push("أضف " + imgCount + " صور بالضبط."); req.push("كل صورة في إطار ثابت مع object-fit:cover."); req.push("alt + data-image-name."); } else req.push("بدون صور.");
+    req.push('<!doctype html> ثم <html lang="' + mainLang + '" dir="' + mainDir + '">.');
+    req.push("body: margin:0; padding:0.");
     req.push("املأ كل " + unitLabel + " بمحتوى متوازن.");
     req.push("محتوى حقيقي — لا نص حشو.");
-    req.push("نوّع التخطيط — لا تكرر نفس التصميم.");
-    if (isBi) { req.push("افصل بين اللغتين بصريًا."); req.push("لا تخلط النصين."); }
+    req.push("نوّع التخطيط.");
+    if (isBi) { req.push("افصل اللغتين بصريًا."); }
     parts.push("✅ المتطلبات:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
-    parts.push("ابدأ الآن بإخراج الكود كاملاً.");
-
+    parts.push("ابدأ الآن.");
     var out = document.getElementById("final-prompt-output"); if (out) out.value = parts.join("\n\n");
 }
 
 function copyGeneratedPrompt() {
     var out = document.getElementById("final-prompt-output"); if (!out) return;
     var text = out.value;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { alert("✅ تم النسخ!"); }).catch(function () { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } });
-    } else { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function () { alert("✅ تم النسخ!"); }).catch(function () { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }); }
+    else { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }
 }
 
-/* ─── مولّد Prompt المقاطع ─── */
+/* ═══════════════════════════════════════════════════════
+   ⭐⭐ مولّد Prompt العرض المتحرك — الجديد
+   ═══════════════════════════════════════════════════════ */
+function calculateSlideStats() {
+    var slides = Number(document.getElementById("anim-prompt-slides").value) || 6;
+    var duration = Number(document.getElementById("anim-prompt-slide-duration").value) || 2;
+    var fps = Number(document.getElementById("anim-prompt-fps").value) || 12;
+    var framesPerSlide = Math.round(duration * fps);
+    var totalFrames = slides * framesPerSlide;
+    var totalSeconds = slides * duration;
+    return { slides: slides, duration: duration, fps: fps, framesPerSlide: framesPerSlide, totalFrames: totalFrames, totalSeconds: totalSeconds };
+}
+
+function updateAnimPromptStats() {
+    var stats = calculateSlideStats();
+    var statsEl = document.getElementById("anim-prompt-stats");
+    if (!statsEl) return;
+    statsEl.innerHTML =
+        '<div class="frames-stat-item"><span>📑 الشرائح</span><span>' + stats.slides + '</span></div>' +
+        '<div class="frames-stat-item"><span>🎞️ إطارات/شريحة</span><span>' + stats.framesPerSlide + '</span></div>' +
+        '<div class="frames-stat-item"><span>🎬 إجمالي الإطارات</span><span>' + stats.totalFrames + '</span></div>' +
+        '<div class="frames-stat-item"><span>⏱️ المدة</span><span>' + stats.totalSeconds + 'ث</span></div>';
+}
+
 function generateAnimatedPromptText() {
-    var oEl = document.getElementById("anim-prompt-orientation"), dEl = document.getElementById("anim-prompt-duration"), fEl = document.getElementById("anim-prompt-fps");
-    var lEl = document.getElementById("anim-prompt-loop"), mEl = document.getElementById("anim-motion-type"), cEl = document.getElementById("anim-color-scheme");
-    var sEl = document.getElementById("anim-design-style"), foEl = document.getElementById("anim-font-choice");
-    var tEl = document.getElementById("anim-prompt-title"), subEl = document.getElementById("anim-prompt-subject");
-    var nEl = document.getElementById("anim-prompt-name"), teEl = document.getElementById("anim-prompt-teacher");
-    var gEl = document.getElementById("anim-prompt-grade"), yEl = document.getElementById("anim-prompt-year"), deEl = document.getElementById("anim-prompt-desc");
+    updateAnimPromptStats();
+
+    var oEl = document.getElementById("anim-prompt-orientation");
+    var sEl = document.getElementById("anim-prompt-slides");
+    var sdEl = document.getElementById("anim-prompt-slide-duration");
+    var fEl = document.getElementById("anim-prompt-fps");
+    var mEl = document.getElementById("anim-motion-type");
+    var trEl = document.getElementById("anim-transition-type");
+    var cEl = document.getElementById("anim-color-scheme");
+    var styEl = document.getElementById("anim-design-style");
+    var foEl = document.getElementById("anim-font-choice");
+    var imEl = document.getElementById("anim-prompt-images");
+    var tEl = document.getElementById("anim-prompt-title");
+    var subEl = document.getElementById("anim-prompt-subject");
+    var nEl = document.getElementById("anim-prompt-name");
+    var teEl = document.getElementById("anim-prompt-teacher");
+    var gEl = document.getElementById("anim-prompt-grade");
+    var yEl = document.getElementById("anim-prompt-year");
+    var deEl = document.getElementById("anim-prompt-desc");
 
     var orientation = oEl ? oEl.value : "landscape";
-    var duration = Number(dEl ? dEl.value : 5) || 5;
+    var slides = Number(sEl ? sEl.value : 6) || 6;
+    var slideDuration = Number(sdEl ? sdEl.value : 2) || 2;
     var fps = Number(fEl ? fEl.value : 12) || 12;
-    var loop = lEl ? lEl.value : "once";
     var motionType = mEl ? mEl.value : "auto";
+    var transitionType = trEl ? trEl.value : "auto";
     var colorScheme = cEl ? cEl.value : "auto";
-    var designStyle = sEl ? sEl.value : "auto";
+    var designStyle = styEl ? styEl.value : "auto";
     var fontChoice = foEl ? foEl.value : "";
+    var imagesCount = Number(imEl ? imEl.value : 4) || 0;
     var title = tEl ? tEl.value.trim() : "";
     var subject = subEl ? subEl.value.trim() : "";
     var name = nEl ? nEl.value.trim() : "";
@@ -1730,75 +1573,222 @@ function generateAnimatedPromptText() {
     var isL = orientation === "landscape";
     var width = isL ? 1280 : 794, height = isL ? 720 : 1123;
     var oText = isL ? "عرضي" : "طولي";
-    var rText = isL ? "16:9" : "A4";
-    var totalFrames = Math.round(duration * fps);
+    var rText = isL ? "16:9" : "A4 (1:1.414)";
 
-    var mM = { "fade": "Fade تدريجي.", "slide": "Slide.", "zoom": "Zoom.", "morph": "Morph.", "rotate": "Rotate.", "path": "Motion Path.", "typewriter": "Typewriter.", "particles": "Particles.", "mixed": "مختلطة — fade ثم slide ثم zoom.", "auto": "🎲 اختر نوعًا مناسبًا.", "custom": "إبداعية." };
-    var mText = mM[motionType] || mM.auto;
-    var cText = (colorScheme === "auto" || !colorScheme) ? "🎲 اختر ألوانًا احترافية." : "ألوان: " + colorScheme;
-    var sText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا." : "نمط: " + designStyle;
+    var framesPerSlide = Math.round(slideDuration * fps);
+    var totalFrames = slides * framesPerSlide;
+    var totalSeconds = slides * slideDuration;
+
+    var motionMap = {
+        "auto": "🎲 اختر نوع الحركة الأمثل لكل شريحة (fade, slide, zoom, typewriter, particle…) — نوّع بين الشرائح حسب طبيعة المحتوى.",
+        "fade": "Fade In تدريجي لكل عناصر الشريحة.",
+        "slide": "Slide من الأسفل/الجانب.",
+        "zoom": "Zoom تدريجي من الصغير للكبير.",
+        "mixed": "🎨 نوّع بين الشرائح: بعضها fade، بعضها slide، بعضها zoom… حسب ما يناسب المحتوى."
+    };
+    var motionText = motionMap[motionType] || motionMap.auto;
+
+    var transitionMap = {
+        "auto": "🎲 اختر انتقالاً مناسبًا بين كل شريحة والتي تليها (fade, slide, zoom…) — نوّع ليكون العرض احترافيًا.",
+        "fade": "انتقال Fade ناعم بين الشرائح.",
+        "slide": "انتقال Slide (انزلاق) بين الشرائح.",
+        "zoom": "انتقال Zoom بين الشرائح.",
+        "none": "لا يوجد انتقال — كل شريحة تبدأ مباشرة (الانتقال داخل الإطار الأخير والأول للشريحة التالية)."
+    };
+    var transitionText = transitionMap[transitionType] || transitionMap.auto;
+
+    var colorText = (colorScheme === "auto" || !colorScheme) ? "🎲 اختر نظام ألوان احترافيًا يخدم الموضوع." : "نظام الألوان: " + colorScheme;
+    var styleText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا (زجاجي/بسيط/جريء/3D)." : "نمط التصميم: " + designStyle;
 
     var parts = [];
-    parts.push("أنت مصمم Motion Designer محترف. متخصص في مقاطع Frame-by-Frame عبر HTML/CSS فقط — بدون JS أو animations.");
-    parts.push("🎬 المطلوب: كود HTML كامل يُنتج مقطعًا متحركًا بنظام Frame-by-Frame.");
 
+    /* المقدمة */
+    parts.push("أنت مصمم Motion Designer ومطوّر واجهات أمامية محترف، متخصص في تصميم **عروض تقديمية متحركة (Animated Presentations)** بنظام Frame-by-Frame عبر HTML/CSS ثابت فقط.");
+
+    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** بنفس بنية العروض التقديمية العادية، لكن **بحركات** — كأنه فيديو بكل شريحة تتحرك داخليًا ثم تنتقل للشريحة التالية.");
+
+    /* بيانات المشروع */
     var proj = [];
-    if (title) proj.push("• العنوان: " + title);
+    if (title) proj.push("• عنوان العرض: " + title);
     if (subject) proj.push("• المادة: " + subject);
-    if (name) proj.push("• اسم الطالب: " + name);
+    if (name) proj.push("• اسم الطالب/المقدِّم: " + name);
     if (teacher) proj.push("• اسم المعلم: " + teacher);
     if (grade) proj.push("• الصف: " + grade);
-    if (year) proj.push("• العام: " + year);
-    if (desc) proj.push("• وصف: " + desc);
-    if (proj.length) parts.push("📋 بيانات المشروع:\n" + proj.join("\n") + "\n\n⚠️ أدرج هذه البيانات بشكل أنيق.");
+    if (year) proj.push("• العام الدراسي: " + year);
+    if (desc) proj.push("• ملاحظات إضافية: " + desc);
 
-    parts.push("📐 المواصفات:\n• الأبعاد: " + width + "×" + height + " (" + oText + ").\n• النسبة: " + rText + ".\n• الإطارات: " + totalFrames + " بالضبط (" + duration + "ث × " + fps + " FPS).\n• FPS: " + fps + ".\n• المدة: " + duration + "ث.\n• النمط: " + (loop === "loop" ? "🔁 تكرار." : "▶️ مرة واحدة.") + "\n• كل إطار: width:" + width + "px; height:" + height + "px.");
+    if (proj.length) {
+        parts.push("📋 بيانات المشروع:\n" + proj.join("\n") + "\n\n⚠️ أدرج هذه البيانات بشكل أنيق في الشريحة الأولى (شريحة العنوان).");
+    }
 
-    parts.push("🏗️ البنية:\n• كل إطار: <div class=\"frame\" data-frame=\"N\"> — N من 1 إلى " + totalFrames + ".\n• كل .frame: position:relative.\n• داخل <div id=\"animation\">.\n\n⚠️ لا @keyframes/transition/animation/JS.");
+    /* المواصفات */
+    parts.push(
+        "📐 المواصفات الإلزامية:\n" +
+        "• الأبعاد: " + width + "×" + height + " بكسل (" + oText + ").\n" +
+        "• النسبة: " + rText + ".\n" +
+        "• عدد الشرائح: **" + slides + " شريحة** بالضبط.\n" +
+        "• مدة كل شريحة: " + slideDuration + " ثانية.\n" +
+        "• معدل الإطارات: " + fps + " FPS.\n" +
+        "• الإطارات لكل شريحة: " + framesPerSlide + " إطار.\n" +
+        "• **إجمالي الإطارات: " + totalFrames + " إطار** بالضبط.\n" +
+        "• المدة الكلية: " + totalSeconds + " ثانية.\n" +
+        "• ⚠️ كل إطار بأبعاد " + width + "×" + height + " بالضبط."
+    );
 
-    parts.push("🎞️ الحركة:\n• " + mText + "\n• التدرج منتظم.\n• " + (loop === "loop" ? "الأول والأخير متقاربين (seamless)." : "الأخير = الحالة النهائية."));
+    /* بنية الكود */
+    parts.push(
+        "🏗️ بنية الكود (إلزامية):\n" +
+        "```html\n" +
+        "<div id=\"animation\">\n" +
+        "  <!-- الشريحة 1: الإطارات 1-" + framesPerSlide + " -->\n" +
+        "  <div class=\"frame\" data-frame=\"1\" data-slide=\"1\">...</div>\n" +
+        "  <div class=\"frame\" data-frame=\"2\" data-slide=\"1\">...</div>\n" +
+        "  ...\n" +
+        "  <div class=\"frame\" data-frame=\"" + framesPerSlide + "\" data-slide=\"1\">...</div>\n" +
+        "  \n" +
+        "  <!-- الشريحة 2: الإطارات " + (framesPerSlide + 1) + "-" + (2 * framesPerSlide) + " -->\n" +
+        "  <div class=\"frame\" data-frame=\"" + (framesPerSlide + 1) + "\" data-slide=\"2\">...</div>\n" +
+        "  ...\n" +
+        "</div>\n" +
+        "```\n" +
+        "• كل إطار `<div class=\"frame\" data-frame=\"N\" data-slide=\"S\">`.\n" +
+        "• N من 1 إلى " + totalFrames + ".\n" +
+        "• S من 1 إلى " + slides + ".\n" +
+        "• كل إطار بأبعاد " + width + "×" + height + " بكسل."
+    );
 
-    parts.push("🎨 التصميم:\n• " + cText + "\n• " + sText);
+    /* التخطيط الإلزامي */
+    parts.push(
+        "📊 خطة الشرائح (إلزامية):\n" +
+        "وزّع " + slides + " شرائح على هذا النموذج:\n" +
+        "• **الشريحة 1: العنوان الرئيسي** — عنوان العرض + المادة + اسم الطالب + المعلم + الصف + العام (كل عنصر يظهر تدريجيًا).\n" +
+        "• **الشريحة 2: المقدمة** — عنوان + 2-3 نقاط تظهر واحدة تلو الأخرى.\n" +
+        (slides > 3 ? "• **الشرائح 3 إلى " + (slides - 1) + ": المحتوى** — وزّع عليها مواضيع العرض. نوّع التخطيطات بين:\n" +
+            "   - شريحة نقاط (Bullet Points)\n" +
+            "   - شريحة أرقام كبيرة (Big Numbers/Stats)\n" +
+            (imagesCount > 0 ? "   - شريحة صور (" + imagesCount + " صور إجمالاً موزعة على الشرائح)\n" : "") +
+            "   - شريحة بطاقات (Cards)\n" +
+            "   - شريحة مخطط بياني (Bar/Line chart)\n" +
+            "   - شريحة جدول مقارنة\n" +
+            "   - شريحة خط زمني (Timeline)\n" : "") +
+        "• **الشريحة " + slides + ": الخاتمة** — ملخص + شكراً.\n\n" +
+        "⚠️ **أنت تختار محتوى كل شريحة** — اكتب محتوى علمي حقيقي يخدم الموضوع، ووزّع المواضيع بمنطق تعليمي سليم (مقدمة → شرح → تفاصيل → أمثلة → خاتمة)."
+    );
 
-    parts.push("🔤 الخطوط:\n" + (fontChoice ? "• «" + fontChoice + "»." : "• اختر خطًا عربيًا.") + "\n• RTL (lang=\"ar\" dir=\"rtl\").\n• Google Fonts css2.");
+    /* الصور */
+    if (imagesCount > 0) {
+        parts.push(
+            "🖼️ الصور (إلزامي):\n" +
+            "• أضف **" + imagesCount + " صور** بالضبط موزعة على الشرائح.\n" +
+            "• كل صورة داخل إطار (حاوية) ثابت الأبعاد مع `object-fit:cover` و `overflow:hidden`.\n" +
+            "• روابط HTTPS صالحة من Unsplash أو نحوه.\n" +
+            "• **مهم:** أضف لكل صورة `alt` وصفي و `data-image-name` باسم واضح بالإنجليزية.\n" +
+            "• لا تضع صورة بحجم صغير جداً — لكل صورة حضور بصري مناسب."
+        );
+    } else {
+        parts.push("🖼️ بدون صور — اعتمد على الأشكال والأيقونات والرسوم.");
+    }
 
-    var req = ["<!doctype html> ثم <html lang=\"ar\" dir=\"rtl\">.", "body: margin:0; padding:0.", "كل .frame بأبعاد " + width + "×" + height + ".", "لا animations ولا JS.", "محتوى حقيقي.", "إطارات: " + totalFrames + " بالضبط.", "داخل #animation.", "أخرج الكود كاملاً."];
-    parts.push("✅ المتطلبات:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
-    parts.push("ابدأ الآن.");
+    /* الحركات */
+    parts.push(
+        "🎞️ الحركة داخل الشرائح:\n" +
+        "• " + motionText + "\n" +
+        "• كل شريحة تتحرك من الإطار الأول (عناصرها غير ظاهرة/صغيرة) حتى الإطار الأخير (" + framesPerSlide + " — الشريحة كاملة).\n" +
+        "• التدرج منتظم عبر الإطارات (مثلاً: opacity من 0 إلى 1 على " + framesPerSlide + " إطار).\n" +
+        "• **مهم:** داخل كل شريحة، العناصر تظهر **واحداً تلو الآخر** (تسلسل منطقي)."
+    );
 
-    var out = document.getElementById("animated-prompt-output"); if (out) out.value = parts.join("\n\n");
+    /* الانتقال بين الشرائح */
+    parts.push(
+        "🔀 الانتقال بين الشرائح:\n" +
+        "• " + transitionText + "\n" +
+        "• الانتقال يحدث في الإطارات الأخيرة من الشريحة الحالية والأولى من التالية.\n" +
+        "• ⚠️ لا تكرر نفس نوع الانتقال — نوّع بين الشرائح إذا كان الخيار «دع الذكاء يختار»."
+    );
+
+    /* التصميم */
+    parts.push(
+        "🎨 التصميم:\n" +
+        "• " + colorText + "\n" +
+        "• " + styleText + "\n" +
+        "• كل شريحة بتصميم مميز لكن متناسق (نفس الهوية البصرية).\n" +
+        "• استخدم عناوين كبيرة واضحة + مساحات تنفس.\n" +
+        "• عناصر بصرية إضافية: أيقونات، أشكال هندسية، خطوط فاصلة."
+    );
+
+    /* الخطوط */
+    parts.push(
+        "🔤 الخطوط:\n" +
+        (fontChoice ? "• الخط المطلوب: «" + fontChoice + "» من Google Fonts.\n" : "• اختر خطًا عربيًا أنيقًا من: " + ARABIC_FONTS.slice(0, 8).join("، ") + ".\n") +
+        "• الاتجاه: RTL (`<html lang=\"ar\" dir=\"rtl\">`).\n" +
+        "• الأوزان: 400/600/700/800 للتباين.\n" +
+        "• استدعاء: `<link href=\"https://fonts.googleapis.com/css2?family=...&display=swap\" rel=\"stylesheet\">`."
+    );
+
+    /* المتطلبات */
+    var req = [
+        "ابدأ الملف بـ `<!doctype html>` ثم `<html lang=\"ar\" dir=\"rtl\">`.",
+        "خصائص body: `margin:0; padding:0; box-sizing:border-box`.",
+        "**" + totalFrames + " إطار بالضبط** — لا أكثر ولا أقل.",
+        "**" + slides + " شرائح** — كل شريحة = " + framesPerSlide + " إطار.",
+        "كل `.frame` بأبعاد " + width + "×" + height + " بالضبط.",
+        "⚠️ **لا `@keyframes` ولا `transition` ولا `animation` في CSS** — الحركة كلها عبر الفروقات بين الإطارات.",
+        "⚠️ **لا JavaScript** ولا مكتبات خارجية.",
+        "استخدم inline styles أو `<style>` داخل `<head>` فقط.",
+        "محتوى حقيقي علمي — **لا نص حشو** (Lorem Ipsum).",
+        "أدرج بيانات المشروع (العنوان، المادة، الطالب، المعلم...) في الشريحة الأولى.",
+        "نوّع التخطيطات بين الشرائح — لا تكرر نفس التصميم.",
+        "ضع كل الإطارات داخل `<div id=\"animation\">`.",
+        "أخرج الكود كاملاً في كتلة ```html``` واحدة — دون أي شرح إضافي."
+    ];
+
+    parts.push("✅ المتطلبات الإلزامية:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
+
+    /* مثال توضيحي صغير */
+    parts.push(
+        "💡 مثال توضيحي للبنية (شريحة العنوان بـ " + framesPerSlide + " إطار):\n" +
+        "```html\n" +
+        "<!-- الإطار 1: كل شيء مخفي -->\n" +
+        "<div class=\"frame\" data-frame=\"1\" data-slide=\"1\" style=\"width:" + width + "px;height:" + height + "px;position:relative;background:#f8fafc;\">\n" +
+        "  <h1 style=\"opacity:0;transform:translateY(40px);\">عنوان العرض</h1>\n" +
+        "</div>\n\n" +
+        "<!-- الإطار 2: العنوان بدأ يظهر -->\n" +
+        "<div class=\"frame\" data-frame=\"2\" data-slide=\"1\" style=\"...\">\n" +
+        "  <h1 style=\"opacity:0.1;transform:translateY(36px);\">عنوان العرض</h1>\n" +
+        "</div>\n\n" +
+        "...\n\n" +
+        "<!-- الإطار " + framesPerSlide + ": الشريحة كاملة -->\n" +
+        "<div class=\"frame\" data-frame=\"" + framesPerSlide + "\" data-slide=\"1\" style=\"...\">\n" +
+        "  <h1 style=\"opacity:1;transform:translateY(0);\">عنوان العرض</h1>\n" +
+        "  <p>اسم الطالب | اسم المعلم | الصف</p>\n" +
+        "</div>\n" +
+        "```"
+    );
+
+    parts.push("🎬 ابدأ الآن بإخراج الكود كاملاً في كتلة ```html``` واحدة.");
+
+    var out = document.getElementById("animated-prompt-output");
+    if (out) out.value = parts.join("\n\n");
 }
 
 function copyAnimatedPrompt() {
     var out = document.getElementById("animated-prompt-output"); if (!out) return;
     var text = out.value;
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(function () { alert("✅ تم النسخ!"); }).catch(function () { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } });
-    } else { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }
+    if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(text).then(function () { alert("✅ تم النسخ!"); }).catch(function () { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }); }
+    else { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }
 }
 
-/* ─── معاينة الكود ─── */
+/* ─── معاينة الكود العادي ─── */
 function previewCode() {
     var i = document.getElementById("html-input"); if (!i || !i.value.trim()) return;
     var safe = sanitizeCodeForRender(i.value);
     var f = document.getElementById("format-select"); var isA4 = f && f.value === "pdf-a4";
-    var dimText = isA4 ? "A4 — 794×1123px" : "16:9 — 1280×720px";
+    var dimText = isA4 ? "A4" : "16:9";
     var win = window.open("", "_blank"); if (!win) { alert("منع"); return; }
     win.document.open(); win.document.write(safe); win.document.close();
-    var apply = function () {
-        try { applyImageReplacementsToDocument(win.document); } catch (e) {}
-        try {
-            if (!win.document.getElementById("__pv_badge")) {
-                var b = win.document.createElement("div"); b.id = "__pv_badge";
-                b.style.cssText = "position:fixed;top:14px;left:14px;background:rgba(15,23,42,.92);color:#f8fafc;padding:9px 16px;border-radius:22px;font-family:system-ui;font-size:12px;font-weight:bold;z-index:2147483647;pointer-events:none;";
-                b.textContent = "📐 " + dimText + " — v" + PLATFORM_VERSION;
-                win.document.body.appendChild(b);
-            }
-        } catch (e) {}
-    };
+    var apply = function () { try { applyImageReplacementsToDocument(win.document); } catch (e) {} };
     win.addEventListener("load", apply); setTimeout(apply, 500);
 }
-
 function applyImageReplacementsToDocument(doc) {
     if (!doc || !detectedImages.length) return;
     var images = Array.prototype.slice.call(doc.querySelectorAll("img"));
@@ -1809,66 +1799,49 @@ function applyImageReplacementsToDocument(doc) {
         img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset");
     });
 }
-
 function clearCode() {
     if (!confirm("مسح الكود؟")) return;
     var i = document.getElementById("html-input"); if (i) i.value = "";
     currentImageContext = "converter";
     detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null;
     var m = document.getElementById("image-manager"), l = document.getElementById("image-manager-list");
-    if (m) m.classList.remove("visible"); if (l) l.innerHTML = "";
-    updateBatchBar();
+    if (m) m.classList.remove("visible"); if (l) l.innerHTML = ""; updateBatchBar();
 }
-
 function clearAnimatedCode() {
     if (!confirm("مسح الكود؟")) return;
     var i = document.getElementById("animated-html-input"); if (i) i.value = "";
     currentImageContext = "animated";
     detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null;
     var m = document.getElementById("anim-image-manager"), l = document.getElementById("anim-image-manager-list");
-    if (m) m.classList.remove("visible"); if (l) l.innerHTML = "";
-    updateBatchBar(); updateAnimFrameCount(0);
+    if (m) m.classList.remove("visible"); if (l) l.innerHTML = ""; updateBatchBar();
+    updateAnimFrameCount(0, 0);
 }
 
-/* ─── الخطوط + أدوات التصيير ─── */
+/* ─── الخطوط وأدوات التصيير ─── */
 function waitForFonts() {
     return new Promise(function (resolve) {
         if (!document.querySelector('link[data-render-fonts]')) {
-            var link = document.createElement("link");
-            link.rel = "stylesheet"; link.setAttribute("data-render-fonts", "true"); link.href = GOOGLE_FONTS_URL;
+            var link = document.createElement("link"); link.rel = "stylesheet"; link.setAttribute("data-render-fonts", "true"); link.href = GOOGLE_FONTS_URL;
             document.head.appendChild(link);
             var done = false;
             var t = setTimeout(function () { if (!done) { done = true; step2(); } }, 4000);
             link.onload = function () { if (!done) { done = true; clearTimeout(t); step2(); } };
             link.onerror = function () { if (!done) { done = true; clearTimeout(t); step2(); } };
         } else step2();
-
         function step2() {
             if (!document.fonts) { setTimeout(resolve, 1500); return; }
             var jobs = [];
-            ARABIC_FONTS.slice(0, 6).concat(ENGLISH_FONTS.slice(0, 8)).forEach(function (f) {
-                [400, 700].forEach(function (w) { try { jobs.push(document.fonts.load(w + ' 16px "' + f + '"').catch(function () { return null; })); } catch (e) {} });
-            });
+            ARABIC_FONTS.slice(0, 6).concat(ENGLISH_FONTS.slice(0, 8)).forEach(function (f) { [400, 700].forEach(function (w) { try { jobs.push(document.fonts.load(w + ' 16px "' + f + '"').catch(function () { return null; })); } catch (e) {} }); });
             var timeout = new Promise(function (r) { setTimeout(r, RENDER_CONFIG.fontTimeout); });
             var work = Promise.all(jobs).then(function () { return document.fonts.ready; }).catch(function () { return null; });
             Promise.race([work, timeout]).then(function () { setTimeout(resolve, IS_IOS ? 500 : 250); });
         }
     });
 }
-
-function getSafeScale(w, h, req) {
-    var s = Number(req) || 1;
-    var p = w * h * s * s;
-    if (p > RENDER_CONFIG.maxCanvasPixels) s = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / (w * h));
-    return Math.max(1, Math.min(s, 3));
-}
+function getSafeScale(w, h, req) { var s = Number(req) || 1; var p = w * h * s * s; if (p > RENDER_CONFIG.maxCanvasPixels) s = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / (w * h)); return Math.max(1, Math.min(s, 3)); }
 
 function createRenderContainer(code, width, height) {
-    if (!document.querySelector('link[data-render-fonts]')) {
-        var link = document.createElement("link");
-        link.rel = "stylesheet"; link.setAttribute("data-render-fonts", "true"); link.href = GOOGLE_FONTS_URL;
-        document.head.appendChild(link);
-    }
+    if (!document.querySelector('link[data-render-fonts]')) { var link = document.createElement("link"); link.rel = "stylesheet"; link.setAttribute("data-render-fonts", "true"); link.href = GOOGLE_FONTS_URL; document.head.appendChild(link); }
     var c = document.createElement("div");
     c.style.cssText = "position:absolute;left:-100000px;top:0;width:" + width + "px;min-height:" + height + "px;margin:0;padding:0;opacity:1;visibility:visible;pointer-events:none;z-index:-1;background:#ffffff;overflow:visible;contain:layout style;";
     c.dir = "rtl"; c.setAttribute("data-render-container", "true");
@@ -1877,7 +1850,6 @@ function createRenderContainer(code, width, height) {
     fix.textContent = "[data-render-container]{box-sizing:border-box!important}[data-render-container]*{box-sizing:border-box}[data-render-container] img{visibility:visible!important;opacity:1!important;max-width:none}";
     c.appendChild(fix); document.body.appendChild(c); return c;
 }
-
 function waitImage(img, timeout) {
     timeout = timeout || 5000;
     return new Promise(function (resolve) {
@@ -1889,75 +1861,56 @@ function waitImage(img, timeout) {
         timer = setTimeout(function () { fin(false); }, timeout);
     });
 }
-
 function prepareImages(c) {
     var imgs = Array.prototype.slice.call(c.querySelectorAll("img"));
     if (!imgs.length) return Promise.resolve();
     return Promise.all(imgs.map(function (i) { return waitImage(i, RENDER_CONFIG.imageTimeout).catch(function () { return false; }); }));
 }
-
 function inlineAllImages(container) {
     var imgs = Array.prototype.slice.call(container.querySelectorAll("img"));
     return Promise.all(imgs.map(function (img) {
         var src = img.getAttribute("src") || img.src || ""; if (!src) return Promise.resolve();
         if (src.indexOf("data:") === 0) return waitImage(img, RENDER_CONFIG.imageTimeout);
-        return toSafeDataURL(src).then(function (url) {
-            img.removeAttribute("srcset"); img.removeAttribute("sizes"); img.removeAttribute("loading");
-            img.setAttribute("src", url);
-            return waitImage(img, RENDER_CONFIG.imageTimeout);
-        }).catch(function () { return false; });
+        return toSafeDataURL(src).then(function (url) { img.removeAttribute("srcset"); img.removeAttribute("sizes"); img.removeAttribute("loading"); img.setAttribute("src", url); return waitImage(img, RENDER_CONFIG.imageTimeout); }).catch(function () { return false; });
     }));
 }
-
 function inlineBackgroundImages(container) {
     var els = Array.prototype.slice.call(container.querySelectorAll("*"));
     return Promise.all(els.map(function (el) {
-        var bg = "";
-        try { bg = getComputedStyle(el).backgroundImage || ""; } catch (e) { return Promise.resolve(); }
+        var bg = ""; try { bg = getComputedStyle(el).backgroundImage || ""; } catch (e) { return Promise.resolve(); }
         if (!bg || bg === "none") return Promise.resolve();
         var urls = extractImageUrls(bg); if (!urls.length) return Promise.resolve();
         var finalBg = bg, chain = Promise.resolve();
-        urls.forEach(function (url) {
-            if (!url || url.indexOf("data:") === 0) return;
-            chain = chain.then(function () { return toSafeDataURL(url).then(function (u2) { finalBg = finalBg.split(url).join(u2); }).catch(function () {}); });
-        });
+        urls.forEach(function (url) { if (!url || url.indexOf("data:") === 0) return; chain = chain.then(function () { return toSafeDataURL(url).then(function (u2) { finalBg = finalBg.split(url).join(u2); }).catch(function () {}); }); });
         return chain.then(function () { try { el.style.setProperty("background-image", finalBg, "important"); } catch (e) {} });
     }));
 }
 
-/* ─── PDF / PPTX ─── */
+/* ─── PDF/PPTX ─── */
 function renderPageHtml2Canvas(page, w, h, q) {
     var scale = getSafeScale(w, h, q);
     var ow = page.style.width, oh = page.style.height, om = page.style.minHeight;
-    page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px";
-    void page.offsetHeight;
-    return html2canvas(page, { scale: scale, width: w, height: h, windowWidth: w, windowHeight: h, useCORS: true, allowTaint: false, backgroundColor: "#ffffff", imageTimeout: RENDER_CONFIG.imageTimeout, logging: false, removeContainer: true, scrollX: 0, scrollY: 0, x: 0, y: 0 }).then(function (c) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; return c; }).catch(function (e) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; throw e; });
+    page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; void page.offsetHeight;
+    return html2canvas(page, { scale: scale, width: w, height: h, windowWidth: w, windowHeight: h, useCORS: true, allowTaint: false, backgroundColor: "#ffffff", imageTimeout: RENDER_CONFIG.imageTimeout, logging: false, removeContainer: true }).then(function (c) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; return c; }).catch(function (e) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; throw e; });
 }
-
 function renderPageSnapDOM(page, w, h, q) {
     return new Promise(function (res, rej) {
         if (!isSnapDOMAvailable()) return rej(new Error("SnapDOM"));
         var scale = getSafeScale(w, h, q);
         var ow = page.style.width, oh = page.style.height, om = page.style.minHeight;
-        page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px";
-        void page.offsetHeight;
+        page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; void page.offsetHeight;
         var cleanup = function () { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; };
         var opts = { scale: scale, dpr: scale, backgroundColor: "#ffffff", embedFonts: true, fast: false, useProxy: false, width: w, height: h };
-        var fonts = Promise.resolve();
-        try { if (document.fonts && document.fonts.ready) fonts = Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 3000); })]); } catch (e) {}
-        var imgs = Promise.resolve();
-        try { var list = Array.prototype.slice.call(page.querySelectorAll("img")); if (list.length) imgs = Promise.all(list.map(function (i) { return waitImage(i, RENDER_CONFIG.imageTimeout).catch(function () { return false; }); })); } catch (e) {}
-        Promise.all([fonts, imgs]).then(function () { var p = window.snapdom.toCanvas(page, opts); return withTimeout(p, RENDER_CONFIG.snapdomTimeout, "SnapDOM timeout"); })
-            .then(function (c) { cleanup(); if (!c || !c.width) return rej(new Error("empty")); res(c); })
-            .catch(function (e) { cleanup(); rej(e); });
+        var fonts = Promise.resolve(); try { if (document.fonts && document.fonts.ready) fonts = Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 3000); })]); } catch (e) {}
+        var imgs = Promise.resolve(); try { var list = Array.prototype.slice.call(page.querySelectorAll("img")); if (list.length) imgs = Promise.all(list.map(function (i) { return waitImage(i, RENDER_CONFIG.imageTimeout).catch(function () { return false; }); })); } catch (e) {}
+        Promise.all([fonts, imgs]).then(function () { return withTimeout(window.snapdom.toCanvas(page, opts), RENDER_CONFIG.snapdomTimeout, "SnapDOM timeout"); })
+            .then(function (c) { cleanup(); if (!c || !c.width) return rej(new Error("empty")); res(c); }).catch(function (e) { cleanup(); rej(e); });
     });
 }
-
 function renderPageUnified(page, w, h, q, useSnap) {
     if (useSnap) return renderPageSnapDOM(page, w, h, q).catch(function () { return renderPageHtml2Canvas(page, w, h, q); });
     return renderPageHtml2Canvas(page, w, h, q);
 }
-
 function canvasToJPEG(c) { return c.toDataURL("image/jpeg", RENDER_CONFIG.jpegQuality); }
 function releaseCanvas(c) { if (!c) return; try { c.width = 1; c.height = 1; } catch (e) {} }
 function getPages(c) { var p = Array.prototype.slice.call(c.querySelectorAll(".page")); if (p.length) return p; return [c]; }
@@ -1986,17 +1939,11 @@ function generatePPTX() {
         .then(function () { return prepareImages(c); })
         .then(function () {
             var pages = getPages(c);
-            var pptx = new PptxGenJS();
-            pptx.layout = "LAYOUT_WIDE"; pptx.author = "v" + PLATFORM_VERSION; pptx.title = name;
+            var pptx = new PptxGenJS(); pptx.layout = "LAYOUT_WIDE"; pptx.author = "v" + PLATFORM_VERSION; pptx.title = name;
             var chain = Promise.resolve();
             pages.forEach(function (p, idx) {
                 chain = chain.then(function () { if (btn) btn.innerText = "📸 " + (idx + 1) + "/" + pages.length; return renderPageUnified(p, w, h, quality, useSnap); })
-                    .then(function (cv) {
-                        var img = canvasToJPEG(cv);
-                        var s = pptx.addSlide(); s.background = { color: "FFFFFF" };
-                        s.addImage({ data: img, x: 0, y: 0, w: 13.333333, h: 7.5 });
-                        releaseCanvas(cv); return new Promise(function (r) { setTimeout(r, 20); });
-                    });
+                    .then(function (cv) { var img = canvasToJPEG(cv); var s = pptx.addSlide(); s.background = { color: "FFFFFF" }; s.addImage({ data: img, x: 0, y: 0, w: 13.333333, h: 7.5 }); releaseCanvas(cv); return new Promise(function (r) { setTimeout(r, 20); }); });
             });
             return chain.then(function () { return pptx.writeFile({ fileName: name + ".pptx" }); });
         }).finally(function () { try { c.remove(); } catch (e) {} });
@@ -2009,7 +1956,7 @@ function generatePDF() {
     var isA4 = f.value === "pdf-a4";
     var w = isA4 ? 794 : 1280, h = isA4 ? 1123 : 720;
     var useSnap = (getRendererChoice() === "snapdom") && isSnapDOMAvailable();
-    if (btn) btn.innerText = "⏳ تحضير PDF...";
+    if (btn) btn.innerText = "⏳ تحضير...";
     var c = createRenderContainer(i.value, w, h);
     return Promise.resolve().then(function () { applyImageReplacements(c); return waitForFonts(); })
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
@@ -2022,12 +1969,7 @@ function generatePDF() {
             var chain = Promise.resolve();
             pages.forEach(function (p, idx) {
                 chain = chain.then(function () { if (btn) btn.innerText = "📸 " + (idx + 1) + "/" + pages.length; return renderPageUnified(p, w, h, quality, useSnap); })
-                    .then(function (cv) {
-                        var img = canvasToJPEG(cv);
-                        if (idx > 0) pdf.addPage([w, h], isA4 ? "p" : "l");
-                        pdf.addImage(img, "JPEG", 0, 0, w, h, undefined, "FAST");
-                        releaseCanvas(cv); return new Promise(function (r) { setTimeout(r, 20); });
-                    });
+                    .then(function (cv) { var img = canvasToJPEG(cv); if (idx > 0) pdf.addPage([w, h], isA4 ? "p" : "l"); pdf.addImage(img, "JPEG", 0, 0, w, h, undefined, "FAST"); releaseCanvas(cv); return new Promise(function (r) { setTimeout(r, 20); }); });
             });
             return chain.then(function () { var blob = pdf.output("blob"); downloadBlob(blob, name + ".pdf"); });
         }).finally(function () { try { c.remove(); } catch (e) {} });
@@ -2036,22 +1978,13 @@ function generatePDF() {
 function sanitizeFileName(n) { return String(n).trim().replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, "_").substring(0, 100) || "file"; }
 function downloadBlob(blob, name) { var u = URL.createObjectURL(blob); var a = document.createElement("a"); a.href = u; a.download = name; a.style.display = "none"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 10000); }
 
-/* ─── Wake Lock ─── */
+/* ─── Wake Lock + BeforeUnload ─── */
 var _wakeLock = null;
 async function _acquireWakeLock() { if (!('wakeLock' in navigator)) return; try { _wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {} }
 function _releaseWakeLock() { if (_wakeLock) { _wakeLock.release().catch(function () {}); _wakeLock = null; } }
-
-/* ─── BeforeUnload ─── */
 var _encodingActive = false, _beforeUnloadHandler = null;
-function _enableLeaveWarning() {
-    _encodingActive = true;
-    _beforeUnloadHandler = function (e) { if (!_encodingActive) return; e.preventDefault(); e.returnValue = "⚠️ المقطع قيد الإنشاء"; return e.returnValue; };
-    window.addEventListener("beforeunload", _beforeUnloadHandler);
-}
-function _disableLeaveWarning() {
-    _encodingActive = false;
-    if (_beforeUnloadHandler) { window.removeEventListener("beforeunload", _beforeUnloadHandler); _beforeUnloadHandler = null; }
-}
+function _enableLeaveWarning() { _encodingActive = true; _beforeUnloadHandler = function (e) { if (!_encodingActive) return; e.preventDefault(); e.returnValue = "⚠️ العرض قيد الإنشاء"; return e.returnValue; }; window.addEventListener("beforeunload", _beforeUnloadHandler); }
+function _disableLeaveWarning() { _encodingActive = false; if (_beforeUnloadHandler) { window.removeEventListener("beforeunload", _beforeUnloadHandler); _beforeUnloadHandler = null; } }
 
 function _formatTime(s) {
     if (!isFinite(s) || s < 0) return "—";
@@ -2061,23 +1994,45 @@ function _formatTime(s) {
     var h = Math.floor(m / 60); return h + ":" + (m % 60 < 10 ? "0" : "") + (m % 60) + ":" + (sec < 10 ? "0" : "") + sec;
 }
 
-/* ─── استخراج الإطارات ─── */
+/* ─── استخراج الإطارات والشرائح ─── */
 function extractFramesFromCode(code) {
     if (!code || !code.trim()) return [];
     var doc; try { doc = new DOMParser().parseFromString(code, "text/html"); } catch (e) { return []; }
     var frames = Array.prototype.slice.call(doc.querySelectorAll(".frame"));
-    if (!frames.length) frames = Array.prototype.slice.call(doc.querySelectorAll(".page"));
     if (!frames.length) frames = Array.prototype.slice.call(doc.querySelectorAll(".slide"));
+    if (!frames.length) frames = Array.prototype.slice.call(doc.querySelectorAll(".page"));
     return frames;
 }
 
-function updateAnimFrameCount(n) { var el = document.getElementById("anim-frame-count"); if (el) el.textContent = n + " إطار"; }
+function countUniqueSlides(code) {
+    if (!code || !code.trim()) return 0;
+    var doc; try { doc = new DOMParser().parseFromString(code, "text/html"); } catch (e) { return 0; }
+    var slides = doc.querySelectorAll(".frame[data-slide]");
+    if (slides.length) {
+        var set = new Set();
+        Array.prototype.forEach.call(slides, function (s) { set.add(s.getAttribute("data-slide")); });
+        return set.size;
+    }
+    var s = doc.querySelectorAll(".slide");
+    if (s.length) return s.length;
+    var p = doc.querySelectorAll(".page");
+    if (p.length) return p.length;
+    return 0;
+}
+
+function updateAnimFrameCount(frames, slides) {
+    var fEl = document.getElementById("anim-frame-count");
+    var sEl = document.getElementById("anim-slide-count");
+    if (fEl) fEl.textContent = frames;
+    if (sEl) sEl.textContent = slides;
+}
 
 function analyzeAnimatedFrames() {
     var t = document.getElementById("animated-html-input"); if (!t) return;
-    if (!t.value.trim()) { updateAnimFrameCount(0); return; }
+    if (!t.value.trim()) { updateAnimFrameCount(0, 0); return; }
     var frames = extractFramesFromCode(t.value);
-    updateAnimFrameCount(frames.length);
+    var slides = countUniqueSlides(t.value);
+    updateAnimFrameCount(frames.length, slides);
     analyzeAnimatedImages();
 }
 
@@ -2101,10 +2056,13 @@ function previewAnimatedClip() {
     waitForFonts().then(function () { return inlineAllImages(c); }).then(function () { return inlineBackgroundImages(c); })
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
         .then(function () {
-            var all = Array.prototype.slice.call(c.querySelectorAll(".frame, .page, .slide"));
+            var all = Array.prototype.slice.call(c.querySelectorAll(".frame, .slide, .page"));
             if (!all.length) all = [c];
             all.forEach(function (f) { if (f !== c) { f.style.position = "absolute"; f.style.left = "-100000px"; f.style.top = "0"; } });
-            var preview = all.slice(0, 5);
+            /* اختر أول 5 إطارات موزعة */
+            var step = Math.max(1, Math.floor(all.length / 5));
+            var preview = [];
+            for (var i = 0; i < all.length && preview.length < 5; i += step) preview.push(all[i]);
             var canvases = [];
             var chain = Promise.resolve();
             preview.forEach(function (frame) {
@@ -2127,16 +2085,16 @@ function previewAnimatedClip() {
                     ctx.drawImage(cv, col * dims.width, row * dims.height, dims.width, dims.height);
                     ctx.fillStyle = "rgba(124,58,237,.9)"; ctx.fillRect(col * dims.width + 8, row * dims.height + 8, 70, 28);
                     ctx.fillStyle = "#fff"; ctx.font = "bold 14px system-ui"; ctx.textAlign = "center";
-                    ctx.fillText("إطار " + (idx + 1), col * dims.width + 43, row * dims.height + 27);
+                    ctx.fillText("إطار " + (idx * step + 1), col * dims.width + 43, row * dims.height + 27);
                 });
                 img.src = combo.toDataURL("image/png");
-                note.textContent = "✅ " + canvases.length + " إطارات";
+                note.textContent = "✅ " + canvases.length + " إطارات من أصل " + all.length;
             });
         }).catch(function (e) { note.textContent = "❌ " + e.message; }).finally(function () { try { c.remove(); } catch (e) {} });
 }
 
 /* ═══════════════════════════════════════════════════════
-   ⭐ نافذة الفيديو + المؤشر العائم
+   نافذة الفيديو
    ═══════════════════════════════════════════════════════ */
 var _vmodalCancelled = false;
 var _vmodalMinimized = false;
@@ -2145,127 +2103,63 @@ var _vmodalChoiceResolve = null;
 function showVideoStartModal(opts) {
     return new Promise(function (resolve) {
         _vmodalChoiceResolve = resolve;
-        _vmodalCancelled = false;
-        _vmodalMinimized = false;
-
+        _vmodalCancelled = false; _vmodalMinimized = false;
         var overlay = document.getElementById("video-modal");
-        var icon = document.getElementById("vmodal-icon");
-        var title = document.getElementById("vmodal-title");
-        var subtitle = document.getElementById("vmodal-subtitle");
-        var details = document.getElementById("vmodal-details");
-        var progressWrap = document.getElementById("vmodal-progress-wrap");
-        var actions = document.getElementById("vmodal-actions");
-        var startBtn = document.getElementById("vmodal-start");
-        var cancelBtn = document.getElementById("vmodal-cancel");
-        var minimizeBtn = document.getElementById("vmodal-minimize");
-
+        var icon = document.getElementById("vmodal-icon"), title = document.getElementById("vmodal-title"), subtitle = document.getElementById("vmodal-subtitle"), details = document.getElementById("vmodal-details"), progressWrap = document.getElementById("vmodal-progress-wrap"), actions = document.getElementById("vmodal-actions"), startBtn = document.getElementById("vmodal-start"), cancelBtn = document.getElementById("vmodal-cancel"), minimizeBtn = document.getElementById("vmodal-minimize");
         if (icon) { icon.textContent = opts.icon || "🎬"; icon.className = "vmodal-icon"; }
-        if (title) title.textContent = opts.title || "تحويل المقطع";
+        if (title) title.textContent = opts.title || "تحويل العرض";
         if (subtitle) subtitle.textContent = opts.subtitle || "";
-
-        if (details && opts.details && opts.details.length) {
-            details.innerHTML = opts.details.map(function (d) {
-                return '<div class="vmodal-details-row"><span>' + d.label + '</span><span>' + d.value + '</span></div>';
-            }).join("");
-            details.style.display = "block";
-        } else { details.innerHTML = ""; details.style.display = "none"; }
-
+        if (details && opts.details && opts.details.length) { details.innerHTML = opts.details.map(function (d) { return '<div class="vmodal-details-row"><span>' + d.label + '</span><span>' + d.value + '</span></div>'; }).join(""); details.style.display = "block"; } else { details.innerHTML = ""; details.style.display = "none"; }
         if (progressWrap) progressWrap.style.display = "none";
         if (actions) actions.style.display = "flex";
         if (startBtn) startBtn.style.display = "block";
         if (cancelBtn) { cancelBtn.style.display = "block"; cancelBtn.textContent = "إلغاء"; }
         if (minimizeBtn) minimizeBtn.style.display = "none";
-
-        startBtn.onclick = function () {
-            overlay.classList.remove("visible");
-            if (_vmodalChoiceResolve) _vmodalChoiceResolve("start");
-        };
-        cancelBtn.onclick = function () {
-            overlay.classList.remove("visible");
-            if (_vmodalChoiceResolve) _vmodalChoiceResolve("cancel");
-        };
-
+        startBtn.onclick = function () { overlay.classList.remove("visible"); if (_vmodalChoiceResolve) _vmodalChoiceResolve("start"); };
+        cancelBtn.onclick = function () { overlay.classList.remove("visible"); if (_vmodalChoiceResolve) _vmodalChoiceResolve("cancel"); };
         overlay.classList.add("visible");
     });
 }
 
-function showVideoProgressModal(opts) {
+function showVideoProgressModal() {
     var overlay = document.getElementById("video-modal");
-    var icon = document.getElementById("vmodal-icon");
-    var title = document.getElementById("vmodal-title");
-    var subtitle = document.getElementById("vmodal-subtitle");
-    var details = document.getElementById("vmodal-details");
-    var progressWrap = document.getElementById("vmodal-progress-wrap");
-    var actions = document.getElementById("vmodal-actions");
-    var startBtn = document.getElementById("vmodal-start");
-    var cancelBtn = document.getElementById("vmodal-cancel");
-    var minimizeBtn = document.getElementById("vmodal-minimize");
-
+    var icon = document.getElementById("vmodal-icon"), title = document.getElementById("vmodal-title"), subtitle = document.getElementById("vmodal-subtitle"), details = document.getElementById("vmodal-details"), progressWrap = document.getElementById("vmodal-progress-wrap"), actions = document.getElementById("vmodal-actions"), startBtn = document.getElementById("vmodal-start"), cancelBtn = document.getElementById("vmodal-cancel"), minimizeBtn = document.getElementById("vmodal-minimize");
     if (icon) { icon.textContent = "⚡"; icon.className = "vmodal-icon"; }
     if (title) title.textContent = "جاري التحويل...";
-    if (subtitle) subtitle.textContent = "لا تغلق الصفحة — يمكنك التصغير ⬆ والتحويل سيستمر";
+    if (subtitle) subtitle.textContent = "لا تغلق الصفحة — يمكنك التصغير والتحويل سيستمر.";
     if (details) details.style.display = "none";
     if (progressWrap) progressWrap.style.display = "block";
     if (actions) actions.style.display = "flex";
     if (startBtn) startBtn.style.display = "none";
     if (cancelBtn) { cancelBtn.textContent = "إلغاء التحويل"; cancelBtn.style.display = "block"; cancelBtn.disabled = false; }
     if (minimizeBtn) minimizeBtn.style.display = "flex";
-
-    cancelBtn.onclick = function () {
-        if (confirm("هل تريد فعلاً إلغاء التحويل؟")) {
-            _vmodalCancelled = true;
-            cancelBtn.disabled = true;
-            cancelBtn.textContent = "جاري الإلغاء...";
-        }
-    };
+    cancelBtn.onclick = function () { if (confirm("هل تريد فعلاً إلغاء التحويل؟")) { _vmodalCancelled = true; cancelBtn.disabled = true; cancelBtn.textContent = "جاري الإلغاء..."; } };
     minimizeBtn.onclick = function () { minimizeVideoModal(); };
-
-    /* إظهار النافذة + إخفاء المؤشر */
     overlay.classList.add("visible");
-    var mini = document.getElementById("video-mini");
-    if (mini) mini.classList.remove("visible");
+    var mini = document.getElementById("video-mini"); if (mini) mini.classList.remove("visible");
     _vmodalMinimized = false;
 }
 
 function minimizeVideoModal() {
-    var overlay = document.getElementById("video-modal");
-    if (overlay) overlay.classList.remove("visible");
-    var mini = document.getElementById("video-mini");
-    if (mini) {
-        mini.className = "video-mini visible";
-        var i = document.getElementById("vmini-icon"); if (i) i.textContent = "⚡";
-        var t = document.getElementById("vmini-title"); if (t) t.textContent = "جاري التحويل";
-    }
+    var overlay = document.getElementById("video-modal"); if (overlay) overlay.classList.remove("visible");
+    var mini = document.getElementById("video-mini"); if (mini) mini.classList.add("visible");
     _vmodalMinimized = true;
 }
 
 function reopenVideoModal() {
-    var mini = document.getElementById("video-mini");
-    if (mini) mini.classList.remove("visible");
-    var overlay = document.getElementById("video-modal");
-    if (overlay) overlay.classList.add("visible");
+    var mini = document.getElementById("video-mini"); if (mini) mini.classList.remove("visible");
+    var overlay = document.getElementById("video-modal"); if (overlay) overlay.classList.add("visible");
     _vmodalMinimized = false;
 }
 
 function updateVideoProgress(data) {
-    /* data: { percent, elapsed, eta, frame, total, speed } */
-    var fill = document.getElementById("vmodal-progress-fill");
-    var elapsedEl = document.getElementById("vmodal-elapsed");
-    var etaEl = document.getElementById("vmodal-eta");
-    var frameEl = document.getElementById("vmodal-frame");
-    var speedEl = document.getElementById("vmodal-speed");
-
+    var fill = document.getElementById("vmodal-progress-fill"), elapsedEl = document.getElementById("vmodal-elapsed"), etaEl = document.getElementById("vmodal-eta"), frameEl = document.getElementById("vmodal-frame"), speedEl = document.getElementById("vmodal-speed");
     if (fill && data.percent != null) fill.style.width = Math.min(100, data.percent) + "%";
     if (elapsedEl && data.elapsed != null) elapsedEl.textContent = _formatTime(data.elapsed);
     if (etaEl && data.eta != null) etaEl.textContent = data.eta > 0 ? _formatTime(data.eta) : "—";
-    if (frameEl && data.frame != null && data.total != null) frameEl.textContent = data.frame + " / " + data.total;
-    if (speedEl && data.speed != null) speedEl.textContent = "⚡ " + data.speed + " إطار/ثانية";
-
-    /* المؤشر العائم */
-    var mPercent = document.getElementById("vmini-percent");
-    var mFill = document.getElementById("vmini-bar-fill");
-    var mFrame = document.getElementById("vmini-frame");
-    var mEta = document.getElementById("vmini-eta");
+    if (frameEl && data.frame != null && data.total != null) frameEl.textContent = data.frame + "/" + data.total;
+    if (speedEl && data.speed != null) speedEl.textContent = "⚡ " + data.speed + " إطار/ث";
+    var mPercent = document.getElementById("vmini-percent"), mFill = document.getElementById("vmini-bar-fill"), mFrame = document.getElementById("vmini-frame"), mEta = document.getElementById("vmini-eta");
     if (mPercent && data.percent != null) mPercent.textContent = Math.round(data.percent) + "%";
     if (mFill && data.percent != null) mFill.style.width = Math.min(100, data.percent) + "%";
     if (mFrame && data.frame != null && data.total != null) mFrame.textContent = data.frame + "/" + data.total;
@@ -2273,48 +2167,20 @@ function updateVideoProgress(data) {
 }
 
 function finishVideoModal(success, message, extraDetails) {
-    var icon = document.getElementById("vmodal-icon");
-    var title = document.getElementById("vmodal-title");
-    var subtitle = document.getElementById("vmodal-subtitle");
-    var progressWrap = document.getElementById("vmodal-progress-wrap");
-    var actions = document.getElementById("vmodal-actions");
-    var startBtn = document.getElementById("vmodal-start");
-    var cancelBtn = document.getElementById("vmodal-cancel");
-    var minimizeBtn = document.getElementById("vmodal-minimize");
-    var overlay = document.getElementById("video-modal");
-    var details = document.getElementById("vmodal-details");
-
-    /* أخفِ المؤشر العائم */
-    var mini = document.getElementById("video-mini");
-    if (mini) mini.classList.remove("visible");
-
+    var icon = document.getElementById("vmodal-icon"), title = document.getElementById("vmodal-title"), subtitle = document.getElementById("vmodal-subtitle"), progressWrap = document.getElementById("vmodal-progress-wrap"), actions = document.getElementById("vmodal-actions"), startBtn = document.getElementById("vmodal-start"), cancelBtn = document.getElementById("vmodal-cancel"), minimizeBtn = document.getElementById("vmodal-minimize"), overlay = document.getElementById("video-modal"), details = document.getElementById("vmodal-details");
+    var mini = document.getElementById("video-mini"); if (mini) mini.classList.remove("visible");
     if (success) {
         if (icon) { icon.textContent = "✅"; icon.className = "vmodal-icon"; }
         if (title) title.textContent = "اكتمل بنجاح!";
         if (subtitle) subtitle.textContent = message || "جاري التحميل...";
         if (progressWrap) progressWrap.style.display = "block";
-        var fill = document.getElementById("vmodal-progress-fill");
-        if (fill) fill.style.width = "100%";
-
-        if (details && extraDetails && extraDetails.length) {
-            details.innerHTML = extraDetails.map(function (d) {
-                return '<div class="vmodal-details-row"><span>' + d.label + '</span><span>' + d.value + '</span></div>';
-            }).join("");
-            details.style.display = "block";
-        }
-
+        var fill = document.getElementById("vmodal-progress-fill"); if (fill) fill.style.width = "100%";
+        if (details && extraDetails && extraDetails.length) { details.innerHTML = extraDetails.map(function (d) { return '<div class="vmodal-details-row"><span>' + d.label + '</span><span>' + d.value + '</span></div>'; }).join(""); details.style.display = "block"; }
         if (actions) actions.style.display = "flex";
         if (startBtn) startBtn.style.display = "none";
-        if (cancelBtn) {
-            cancelBtn.textContent = "إغلاق";
-            cancelBtn.disabled = false;
-            cancelBtn.onclick = function () { overlay.classList.remove("visible"); };
-        }
+        if (cancelBtn) { cancelBtn.textContent = "إغلاق"; cancelBtn.disabled = false; cancelBtn.onclick = function () { overlay.classList.remove("visible"); }; }
         if (minimizeBtn) minimizeBtn.style.display = "none";
-
-        /* إعادة فتح النافذة إذا كانت مصغّرة */
         if (overlay) overlay.classList.add("visible");
-
     } else {
         if (icon) { icon.textContent = "❌"; icon.className = "vmodal-icon"; }
         if (title) title.textContent = "فشل";
@@ -2328,270 +2194,144 @@ function finishVideoModal(success, message, extraDetails) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   ⭐⭐ التصدير الرئيسي — WebCodecs MP4 ⭐⭐
+   التصدير الرئيسي — WebCodecs
    ═══════════════════════════════════════════════════════ */
 async function exportAnimatedClipWebCodecs() {
     if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
-        await showVideoStartModal({ icon: "⚠️", title: "المتصفح غير مدعوم", subtitle: "WebCodecs غير متاح. استخدم Chrome 94+ / Edge 94+ / Safari 16+", details: [] }).then(function () {});
+        await showVideoStartModal({ icon: "⚠️", title: "المتصفح غير مدعوم", subtitle: "WebCodecs غير متاح. استخدم Chrome 94+ / Edge 94+ / Safari 16+", details: [] });
         return;
     }
     if (typeof Mp4Muxer === 'undefined' || !isSnapDOMAvailable()) {
-        await showVideoStartModal({ icon: "⚠️", title: "مكتبة ناقصة", subtitle: "Mp4Muxer أو SnapDOM غير محمّلة. انتظر ثوانٍ وأعد المحاولة.", details: [] }).then(function () {});
+        await showVideoStartModal({ icon: "⚠️", title: "مكتبة ناقصة", subtitle: "Mp4Muxer أو SnapDOM غير محمّلة.", details: [] });
         return;
     }
-
     var t = document.getElementById("animated-html-input");
-    if (!t || !t.value.trim()) {
-        await showVideoStartModal({ icon: "📝", title: "لا يوجد كود", subtitle: "الصق كود المقطع أولاً.", details: [] }).then(function () {});
-        return;
-    }
-
-    currentImageContext = "animated";
-    analyzeAnimatedImages();
-
+    if (!t || !t.value.trim()) { await showVideoStartModal({ icon: "📝", title: "لا يوجد كود", subtitle: "الصق كود العرض أولاً.", details: [] }); return; }
+    currentImageContext = "animated"; analyzeAnimatedImages();
     var frames = extractFramesFromCode(t.value);
-    if (!frames.length) {
-        await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .page أو .frame في الكود.", details: [] }).then(function () {});
-        return;
-    }
-
+    if (!frames.length) { await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .frame أو .slide أو .page في الكود.", details: [] }); return; }
     var fps = Number(document.getElementById("anim-fps").value) || 12;
     var quality = Number(document.getElementById("anim-quality").value) || 2;
     var name = sanitizeFileName(document.getElementById("anim-file-name").value || "animation");
     var dims = getAnimatedDimensions();
     var totalFrames = frames.length;
     var durationSec = totalFrames / fps;
-
-    /* تقدير الوقت */
+    var slidesCount = countUniqueSlides(t.value);
     var perFrame = quality === 3 ? 0.08 : quality === 1 ? 0.03 : 0.05;
     var estimatedSec = totalFrames * perFrame + 2;
-
-    /* ⭐ نافذة قبل البدء */
-    var choice = await showVideoStartModal({
-        icon: "🎬",
-        title: "تحويل المقطع إلى MP4",
-        subtitle: "اضغط «ابدأ الآن» للتحويل. يمكنك تصغير النافذة — التحويل سيستمر.",
-        details: [
-            { label: "🎞️ عدد الإطارات", value: totalFrames },
-            { label: "⏱️ مدة المقطع", value: durationSec.toFixed(1) + " ثانية" },
-            { label: "📐 الأبعاد", value: dims.width + " × " + dims.height },
-            { label: "🎬 معدل الإطارات", value: fps + " FPS" },
-            { label: "⏳ الوقت المتوقع", value: "~" + _formatTime(estimatedSec) }
-        ]
-    });
-
+    var details = [
+        { label: "📑 الشرائح", value: slidesCount > 0 ? slidesCount : "غير محدد" },
+        { label: "🎞️ الإطارات", value: totalFrames },
+        { label: "⏱️ المدة", value: durationSec.toFixed(1) + " ث" },
+        { label: "📐 الأبعاد", value: dims.width + " × " + dims.height },
+        { label: "🎬 FPS", value: fps },
+        { label: "⏳ الوقت المتوقع", value: "~" + _formatTime(estimatedSec) }
+    ];
+    var choice = await showVideoStartModal({ icon: "🎬", title: "تحويل العرض إلى MP4", subtitle: "اضغط «ابدأ الآن». يمكنك تصغير النافذة.", details: details });
     if (choice !== "start") return;
-
-    /* ⭐ نافذة التقدم */
     showVideoProgressModal();
-
-    _vmodalCancelled = false;
-    _vmodalMinimized = false;
+    _vmodalCancelled = false; _vmodalMinimized = false;
     _enableLeaveWarning();
     var container = null;
-
     try {
         container = createRenderContainer(t.value, dims.width, dims.height);
         applyImageReplacements(container);
-
         updateVideoProgress({ percent: 2, elapsed: 0, eta: estimatedSec, frame: 0, total: totalFrames, speed: 0 });
-
         await waitForFonts();
-        await inlineAllImages(container);
-        await inlineBackgroundImages(container);
-        await prepareImages(container);
-
+        await inlineAllImages(container); await inlineBackgroundImages(container); await prepareImages(container);
         var frameElements = Array.prototype.slice.call(container.querySelectorAll(".frame"));
-        if (!frameElements.length) frameElements = Array.prototype.slice.call(container.querySelectorAll(".page"));
         if (!frameElements.length) frameElements = Array.prototype.slice.call(container.querySelectorAll(".slide"));
+        if (!frameElements.length) frameElements = Array.prototype.slice.call(container.querySelectorAll(".page"));
         if (!frameElements.length) frameElements = [container];
-
-        frameElements.forEach(function (f) {
-            if (f !== container) {
-                f.style.position = "absolute";
-                f.style.left = "-100000px";
-                f.style.top = "0";
-                f.style.width = dims.width + "px";
-                f.style.height = dims.height + "px";
-            }
-        });
-
-        var mainCanvas = document.createElement("canvas");
-        mainCanvas.width = dims.width;
-        mainCanvas.height = dims.height;
+        frameElements.forEach(function (f) { if (f !== container) { f.style.position = "absolute"; f.style.left = "-100000px"; f.style.top = "0"; f.style.width = dims.width + "px"; f.style.height = dims.height + "px"; } });
+        var mainCanvas = document.createElement("canvas"); mainCanvas.width = dims.width; mainCanvas.height = dims.height;
         var mainCtx = mainCanvas.getContext("2d", { alpha: false });
-
         var bitrate = { 1: 1500000, 2: 4000000, 3: 8000000 }[quality] || 4000000;
         var chosenCodec = null;
         var candidates = [{ codec: 'avc1.42001f', mux: 'avc' }, { codec: 'avc1.4d0028', mux: 'avc' }];
-        for (var ci = 0; ci < candidates.length; ci++) {
-            try {
-                var sup = await VideoEncoder.isConfigSupported({ codec: candidates[ci].codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps });
-                if (sup.supported) { chosenCodec = candidates[ci]; break; }
-            } catch (e) {}
-        }
+        for (var ci = 0; ci < candidates.length; ci++) { try { var sup = await VideoEncoder.isConfigSupported({ codec: candidates[ci].codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps }); if (sup.supported) { chosenCodec = candidates[ci]; break; } } catch (e) {} }
         if (!chosenCodec) throw new Error("لا يوجد codec H.264 مدعوم");
-
-        var muxer = new Mp4Muxer.Muxer({
-            target: new Mp4Muxer.ArrayBufferTarget(),
-            video: { codec: chosenCodec.mux, width: dims.width, height: dims.height },
-            fastStart: 'in-memory'
-        });
-
+        var muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: chosenCodec.mux, width: dims.width, height: dims.height }, fastStart: 'in-memory' });
         var encError = null;
-        var encoder = new VideoEncoder({
-            output: function (chunk, meta) { try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; } },
-            error: function (e) { encError = e; }
-        });
+        var encoder = new VideoEncoder({ output: function (chunk, meta) { try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; } }, error: function (e) { encError = e; } });
         encoder.configure({ codec: chosenCodec.codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps, latencyMode: 'realtime', hardwareAcceleration: 'prefer-hardware' });
-
         await _acquireWakeLock();
-        var startTime = performance.now();
-        var frameTimes = [];
-
+        var startTime = performance.now(); var frameTimes = [];
         for (var i = 0; i < totalFrames; i++) {
             if (_vmodalCancelled) throw new Error("تم الإلغاء");
             if (encError) throw encError;
-
             var frameStart = performance.now();
-
-            for (var k = 0; k < frameElements.length; k++) {
-                if (frameElements[k] !== container) frameElements[k].style.left = "-100000px";
-            }
-            if (frameElements[i] !== container) {
-                frameElements[i].style.left = "0";
-                frameElements[i].style.top = "0";
-                frameElements[i].style.position = "relative";
-            }
-
+            for (var k = 0; k < frameElements.length; k++) { if (frameElements[k] !== container) frameElements[k].style.left = "-100000px"; }
+            if (frameElements[i] !== container) { frameElements[i].style.left = "0"; frameElements[i].style.top = "0"; frameElements[i].style.position = "relative"; }
             await new Promise(function (r) { requestAnimationFrame(r); });
-
             var snapCanvas;
-            try {
-                snapCanvas = await window.snapdom.toCanvas(frameElements[i], {
-                    scale: 1, dpr: 1, backgroundColor: "#ffffff",
-                    embedFonts: false, fast: true,
-                    width: dims.width, height: dims.height
-                });
-            } catch (err) {
-                snapCanvas = await html2canvas(frameElements[i], {
-                    scale: 1, width: dims.width, height: dims.height,
-                    backgroundColor: "#ffffff", useCORS: true, logging: false
-                });
-            }
-
-            mainCtx.fillStyle = "#ffffff";
-            mainCtx.fillRect(0, 0, dims.width, dims.height);
+            try { snapCanvas = await window.snapdom.toCanvas(frameElements[i], { scale: 1, dpr: 1, backgroundColor: "#ffffff", embedFonts: false, fast: true, width: dims.width, height: dims.height }); }
+            catch (err) { snapCanvas = await html2canvas(frameElements[i], { scale: 1, width: dims.width, height: dims.height, backgroundColor: "#ffffff", useCORS: true, logging: false }); }
+            mainCtx.fillStyle = "#ffffff"; mainCtx.fillRect(0, 0, dims.width, dims.height);
             mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
-
-            if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) {
-                try { snapCanvas.width = 1; snapCanvas.height = 1; } catch (e) {}
-            }
-
-            var vf = new VideoFrame(mainCanvas, {
-                timestamp: Math.round(i * 1000000 / fps),
-                duration: Math.round(1000000 / fps)
-            });
+            if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) { try { snapCanvas.width = 1; snapCanvas.height = 1; } catch (e) {} }
+            var vf = new VideoFrame(mainCanvas, { timestamp: Math.round(i * 1000000 / fps), duration: Math.round(1000000 / fps) });
             encoder.encode(vf, { keyFrame: i % 60 === 0 });
             vf.close();
-
-            if (encoder.encodeQueueSize > 20) {
-                while (encoder.encodeQueueSize > 10) { await new Promise(function (r) { setTimeout(r, 3); }); }
-            }
-
+            if (encoder.encodeQueueSize > 20) { while (encoder.encodeQueueSize > 10) { await new Promise(function (r) { setTimeout(r, 3); }); } }
             var frameTime = performance.now() - frameStart;
-            frameTimes.push(frameTime);
-            if (frameTimes.length > 20) frameTimes.shift();
+            frameTimes.push(frameTime); if (frameTimes.length > 20) frameTimes.shift();
             var avgFrameTime = frameTimes.reduce(function (a, b) { return a + b; }, 0) / frameTimes.length;
             var eta = (totalFrames - i - 1) * avgFrameTime / 1000;
             var percent = ((i + 1) / totalFrames) * 100;
             var elapsed = (performance.now() - startTime) / 1000;
             var speed = Math.round(1000 / avgFrameTime);
-
             updateVideoProgress({ percent: percent, elapsed: elapsed, eta: eta, frame: i + 1, total: totalFrames, speed: speed });
-
             if (i % 20 === 0) await new Promise(function (r) { setTimeout(r, 0); });
         }
-
-        var subtitleEl = document.getElementById("vmodal-subtitle");
-        if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
-
-        await encoder.flush();
-        encoder.close();
-        muxer.finalize();
-
+        var subtitleEl = document.getElementById("vmodal-subtitle"); if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
+        await encoder.flush(); encoder.close(); muxer.finalize();
         var blob = new Blob([muxer.target.buffer], { type: 'video/mp4' });
         var totalSecs = (performance.now() - startTime) / 1000;
         var sizeMB = (blob.size / 1024 / 1024).toFixed(2);
-
         var url = URL.createObjectURL(blob);
-        var a = document.createElement("a");
-        a.href = url; a.download = name + ".mp4";
-        document.body.appendChild(a); a.click(); a.remove();
+        var a = document.createElement("a"); a.href = url; a.download = name + ".mp4"; document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
-
         finishVideoModal(true, "✅ تم التحميل تلقائيًا", [
-            { label: "📦 حجم الملف", value: sizeMB + " MB" },
+            { label: "📦 الحجم", value: sizeMB + " MB" },
             { label: "⏱️ الوقت الفعلي", value: _formatTime(totalSecs) },
-            { label: "⚡ متوسط السرعة", value: Math.round(totalFrames / totalSecs) + " إطار/ث" }
+            { label: "⚡ السرعة", value: Math.round(totalFrames / totalSecs) + " إطار/ث" }
         ]);
-
     } catch (err) {
         console.error(err);
         finishVideoModal(false, "❌ " + err.message);
     } finally {
-        _releaseWakeLock();
-        _disableLeaveWarning();
+        _releaseWakeLock(); _disableLeaveWarning();
         if (container) { try { container.remove(); } catch (e) {} }
     }
 }
 
-/* ═══════════════════════════════════════════════════════
-   ربط الأحداث
-   ═══════════════════════════════════════════════════════ */
+/* ─── ربط الأحداث ─── */
 document.addEventListener("DOMContentLoaded", function () {
     var lb = document.getElementById("login-btn"); if (lb) lb.addEventListener("click", checkPassword);
     var pi = document.getElementById("pass-input"); if (pi) pi.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); checkPassword(); } });
     var rb = document.getElementById("reset-session-btn"); if (rb) rb.addEventListener("click", resetLoginSession);
-
     Array.prototype.forEach.call(document.querySelectorAll(".toggle-req"), function (b) { b.addEventListener("click", function () { toggleInput(b); }); });
-
     var stage = document.getElementById("crop-stage");
     if (stage) {
-        stage.addEventListener("pointerdown", startCropDrag);
-        stage.addEventListener("pointermove", moveCropDrag);
-        stage.addEventListener("pointerup", endCropDrag);
-        stage.addEventListener("pointercancel", endCropDrag);
+        stage.addEventListener("pointerdown", startCropDrag); stage.addEventListener("pointermove", moveCropDrag);
+        stage.addEventListener("pointerup", endCropDrag); stage.addEventListener("pointercancel", endCropDrag);
         stage.addEventListener("wheel", function (e) { e.preventDefault(); cropZoom(e.deltaY > 0 ? -0.1 : 0.1); }, { passive: false });
     }
-
     var rzT = null;
     window.addEventListener("resize", function () {
         var cm = document.getElementById("crop-modal"); if (!cm || !cm.classList.contains("visible")) return;
         clearTimeout(rzT);
-        rzT = setTimeout(function () {
-            var cm2 = document.getElementById("crop-modal"); if (!cm2 || !cm2.classList.contains("visible")) return;
-            requestAnimationFrame(function () { calculateCropFrame(); cropReset(); });
-        }, 150);
+        rzT = setTimeout(function () { var cm2 = document.getElementById("crop-modal"); if (!cm2 || !cm2.classList.contains("visible")) return; requestAnimationFrame(function () { calculateCropFrame(); cropReset(); }); }, 150);
     });
-
     var ht = document.getElementById("html-input");
-    if (ht) {
-        ht.addEventListener("input", function () { currentImageContext = "converter"; scheduleImageAnalysis(); });
-        ht.addEventListener("paste", function () { setTimeout(analyzeHTMLImages, 100); });
-    }
-
+    if (ht) { ht.addEventListener("input", function () { currentImageContext = "converter"; scheduleImageAnalysis(); }); ht.addEventListener("paste", function () { setTimeout(analyzeHTMLImages, 100); }); }
     var at = document.getElementById("animated-html-input");
     if (at) {
-        at.addEventListener("input", function () {
-            currentImageContext = "animated";
-            clearTimeout(imageAnalysisTimer);
-            imageAnalysisTimer = setTimeout(function () { analyzeAnimatedFrames(); }, 350);
-        });
+        at.addEventListener("input", function () { currentImageContext = "animated"; clearTimeout(imageAnalysisTimer); imageAnalysisTimer = setTimeout(function () { analyzeAnimatedFrames(); }, 350); });
         at.addEventListener("paste", function () { setTimeout(analyzeAnimatedFrames, 150); });
     }
-
-    ["anim-prompt-orientation", "anim-prompt-duration", "anim-prompt-fps", "anim-prompt-loop", "anim-motion-type", "anim-color-scheme", "anim-design-style", "anim-font-choice", "anim-prompt-title", "anim-prompt-subject", "anim-prompt-name", "anim-prompt-teacher", "anim-prompt-grade", "anim-prompt-year", "anim-prompt-desc"].forEach(function (id) {
+    ["anim-prompt-orientation", "anim-prompt-slides", "anim-prompt-slide-duration", "anim-prompt-fps", "anim-motion-type", "anim-transition-type", "anim-color-scheme", "anim-design-style", "anim-font-choice", "anim-prompt-images", "anim-prompt-title", "anim-prompt-subject", "anim-prompt-name", "anim-prompt-teacher", "anim-prompt-grade", "anim-prompt-year", "anim-prompt-desc"].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) { el.addEventListener("input", generateAnimatedPromptText); el.addEventListener("change", generateAnimatedPromptText); }
     });
@@ -2600,11 +2340,8 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener("load", function () {
     try { if (localStorage.getItem(AUTH_KEY) === AUTH_VALUE) { var o = document.getElementById("password-overlay"); if (o) o.style.display = "none"; } } catch (e) {}
     updatePagesLabel(); onLanguageModeChange(); analyzeHTMLImages(); generateAnimatedPromptText();
-    console.log("%c✅ v" + PLATFORM_VERSION, "color:#a78bfa;font-size:12px;");
-    setTimeout(function () {
-        var o = document.getElementById("password-overlay");
-        if (o && o.style.display !== "none") { var p = document.getElementById("pass-input"); if (p) p.focus(); }
-    }, 150);
+    console.log("%c✅ v" + PLATFORM_VERSION + " — عروض متحركة", "color:#a78bfa;font-size:12px;");
+    setTimeout(function () { var o = document.getElementById("password-overlay"); if (o && o.style.display !== "none") { var p = document.getElementById("pass-input"); if (p) p.focus(); } }, 150);
 });
 </script>
 
