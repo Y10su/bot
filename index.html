@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>منصة تحويل الأكواد الذكية v3.6 (PDF / PPTX / عروض متحركة)</title>
+<title>منصة تحويل الأكواد الذكية v3.7</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,7 +58,6 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .image-manager-header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
 .image-manager-title{color:#f8fafc;font-size:14px;font-weight:bold;margin:0}
 .image-manager-count{background:#2563eb;color:#fff;padding:4px 9px;border-radius:20px;font-size:11px;font-weight:bold}
-.image-manager-description{color:#94a3b8;font-size:11px;line-height:1.7;margin:0 0 12px}
 .image-manager-list{display:flex;flex-direction:column;gap:10px}
 .html-image-card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:10px;overflow:hidden;transition:.2s}
 .html-image-card.replaced{border-color:#059669;background:#0f2923}
@@ -151,7 +150,6 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .sub-tab-content.active-sub{display:block}
 .frames-info{background:#0b1220;border:1px solid #7c3aed;border-radius:8px;padding:12px;margin-bottom:14px;font-size:11px;color:#c4b5fd;line-height:1.8}
 .frames-info strong{color:#a78bfa}
-.frames-counter{display:inline-block;background:#7c3aed;color:#fff;padding:2px 10px;border-radius:12px;font-size:11px;font-weight:bold;margin-inline-start:6px}
 .frames-stats{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px;padding-top:8px;border-top:1px solid #334155}
 .frames-stat-item{background:#020617;border-radius:6px;padding:6px 8px;display:flex;justify-content:space-between;font-size:10px}
 .frames-stat-item span:first-child{color:#64748b}
@@ -160,9 +158,6 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .anim-preview-wrap.visible{display:block}
 .anim-preview-img{max-width:100%;max-height:340px;border-radius:8px;border:1px solid #475569}
 .anim-preview-note{color:#a78bfa;font-size:11px;font-weight:bold;margin-top:8px}
-.checkbox-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:10px;background:#0f172a;border:1px solid #334155;border-radius:8px;cursor:pointer;user-select:none}
-.checkbox-row input[type="checkbox"]{width:18px;height:18px;cursor:pointer;accent-color:#7c3aed;flex-shrink:0;margin:0}
-.checkbox-row span{font-size:12px;color:#cbd5e1;font-weight:bold}
 
 .video-modal-overlay{position:fixed;inset:0;z-index:20000;background:rgba(2,6,23,.92);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
 .video-modal-overlay.visible{display:flex}
@@ -174,7 +169,6 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .vmodal-title{margin:0;color:#f8fafc;font-size:16px;font-weight:800}
 .vmodal-x{width:36px;height:36px;border:none;border-radius:10px;background:#334155;color:#cbd5e1;font-size:20px;font-weight:bold;cursor:pointer;transition:.2s;flex-shrink:0;display:flex;align-items:center;justify-content:center}
 .vmodal-x:hover{background:#475569;color:#f8fafc}
-.vmodal-x:active{transform:scale(.94)}
 .vmodal-body{padding:18px}
 .vmodal-subtitle{margin:0 0 16px;color:#94a3b8;font-size:13px;line-height:1.6;text-align:center}
 .vmodal-details{background:#0b1220;border:1px solid #334155;border-radius:10px;padding:12px;margin-bottom:16px}
@@ -194,18 +188,14 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .vmodal-actions{display:flex;gap:10px;padding:0 18px 18px}
 .vmodal-btn{flex:1;border:none;border-radius:10px;padding:13px 12px;cursor:pointer;font-size:14px;font-weight:800;transition:.2s;font-family:inherit}
 .vmodal-btn:hover{transform:translateY(-2px);filter:brightness(1.1)}
-.vmodal-btn:active{transform:translateY(0)}
 .vmodal-cancel{background:#334155;color:#e2e8f0}
 .vmodal-start{background:linear-gradient(135deg,#7c3aed,#2563eb);color:#fff;box-shadow:0 4px 14px rgba(124,58,237,.4)}
 .vmodal-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
 
-.video-mini{position:fixed;bottom:16px;left:16px;z-index:19999;background:linear-gradient(135deg,#1e293b,#0f172a);border:1.5px solid #7c3aed;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(124,58,237,.3);cursor:pointer;display:none;min-width:180px;max-width:240px;transition:.25s;animation:vminiIn .35s cubic-bezier(.34,1.56,.64,1)}
+.video-mini{position:fixed;bottom:16px;left:16px;z-index:19999;background:linear-gradient(135deg,#1e293b,#0f172a);border:1.5px solid #7c3aed;border-radius:14px;padding:12px 14px;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 20px rgba(124,58,237,.3);cursor:pointer;display:none;min-width:180px;max-width:240px}
 .video-mini.visible{display:block}
-.video-mini:hover{transform:translateY(-3px) scale(1.02)}
-@keyframes vminiIn{from{transform:translateY(20px) scale(.85);opacity:0}to{transform:translateY(0) scale(1);opacity:1}}
 .vmini-header{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.vmini-icon{font-size:18px;animation:vminiPulse 2s ease-in-out infinite}
-@keyframes vminiPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.vmini-icon{font-size:18px}
 .vmini-title{color:#f8fafc;font-size:11px;font-weight:bold;flex:1}
 .vmini-percent{color:#a78bfa;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
 .vmini-bar{height:6px;background:#0b1220;border-radius:4px;overflow:hidden;margin-bottom:8px;border:1px solid #334155}
@@ -224,15 +214,6 @@ input:not([type="checkbox"]),select{font-size:16px}
 .crop-stage{height:min(50vh,400px);min-height:220px}
 .box-panel{padding:15px}
 .nav-btn{min-width:calc(50% - 4px);font-size:11px;padding:10px 3px}
-.sub-nav-btn{font-size:11px}
-.video-modal{width:100%;max-height:calc(100vh - 20px)}
-.vmodal-header{padding:14px 14px 8px}
-.vmodal-body{padding:14px}
-.vmodal-actions{padding:0 14px 14px}
-.vmodal-title{font-size:14px}
-.vmodal-icon{font-size:22px}
-.vmodal-stat-value{font-size:12px}
-.vmodal-details-row{font-size:11px}
 .video-mini{bottom:12px;left:12px;right:12px;min-width:auto;max-width:none;padding:10px 12px}
 }
 </style>
@@ -242,7 +223,7 @@ input:not([type="checkbox"]),select{font-size:16px}
 <div id="password-overlay" style="position:fixed;inset:0;background:rgb(15,23,42);z-index:9999;display:none;flex-direction:column;align-items:center;justify-content:center;padding:20px;">
     <div style="background:#1e293b;padding:30px;border-radius:12px;box-shadow:0 10px 25px -5px rgba(0,0,0,.5);border:1px solid #334155;text-align:center;width:100%;max-width:350px;">
         <h3 style="margin-top:0;color:#f8fafc;font-size:22px;">🔒 حماية المنصة</h3>
-        <p style="font-size:13px;color:#94a3b8;margin-bottom:25px;">الرجاء إدخال كلمة المرور.</p>
+        <p style="font-size:13px;color:#94a3b8;margin-bottom:25px;">أدخل كلمة المرور.</p>
         <div class="form-group" style="margin-bottom:20px;">
             <input type="password" id="pass-input" placeholder="كلمة المرور..." autocomplete="off" style="text-align:center;letter-spacing:3px;font-size:16px;">
         </div>
@@ -252,7 +233,7 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.6</span></h2></div>
+<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.7</span></h2></div>
 
 <div class="top-nav">
     <button type="button" class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ التحويل</button>
@@ -272,8 +253,8 @@ input:not([type="checkbox"]),select{font-size:16px}
                 <label>نوع الملف:</label>
                 <select id="format-select">
                     <option value="pdf-169">🖥️ عرض (16:9)</option>
-                    <option value="pdf-a4">📄 بحث / تقرير (A4)</option>
-                    <option value="pptx">📊 عرض تقديمي (PPTX)</option>
+                    <option value="pdf-a4">📄 بحث (A4)</option>
+                    <option value="pptx">📊 عرض PPTX</option>
                 </select>
             </div>
             <div class="form-group">
@@ -431,7 +412,7 @@ input:not([type="checkbox"]),select{font-size:16px}
         <div id="anim-conv-sub" class="sub-tab-content active-sub">
             <div class="frames-info">
                 🎬 <strong>محول العرض المتحرك</strong><br>
-                ضع كود HTML فيه شرائح متحركة. كل <strong>.frame</strong> أو <strong>.slide</strong> أو <strong>.page</strong> = إطار واحد.
+                كل <strong>.frame</strong> أو <strong>.slide</strong> أو <strong>.page</strong> = إطار واحد.
                 <div class="frames-stats">
                     <div class="frames-stat-item"><span>🎞️ الإطارات</span><span id="anim-frame-count">0</span></div>
                     <div class="frames-stat-item"><span>📑 الشرائح</span><span id="anim-slide-count">0</span></div>
@@ -522,7 +503,7 @@ input:not([type="checkbox"]),select{font-size:16px}
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <label>⏱️ مدة كل شريحة (ثواني):</label>
+                        <label>⏱️ مدة كل شريحة (ث):</label>
                         <input type="number" id="anim-prompt-slide-duration" value="2" min="0.5" max="20" step="0.5" oninput="generateAnimatedPromptText()">
                     </div>
                     <div class="form-group">
@@ -535,14 +516,12 @@ input:not([type="checkbox"]),select{font-size:16px}
                         </select>
                     </div>
                 </div>
-                <div id="anim-prompt-stats" class="frames-stats" style="margin-top:10px;border-top:1px solid #334155;padding-top:10px">
-                    <!-- محسوب تلقائيًا -->
-                </div>
+                <div id="anim-prompt-stats" class="frames-stats" style="margin-top:10px;border-top:1px solid #334155;padding-top:10px"></div>
             </div>
 
             <div class="row">
                 <div class="form-group">
-                    <label>نوع الحركة داخل الشرائح:</label>
+                    <label>الحركة داخل الشرائح:</label>
                     <select id="anim-motion-type" onchange="generateAnimatedPromptText()">
                         <option value="auto" selected>🎲 دع الذكاء يختار</option>
                         <option value="fade">✨ Fade</option>
@@ -552,13 +531,13 @@ input:not([type="checkbox"]),select{font-size:16px}
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>نوع الانتقال بين الشرائح:</label>
+                    <label>الانتقال بين الشرائح:</label>
                     <select id="anim-transition-type" onchange="generateAnimatedPromptText()">
                         <option value="auto" selected>🎲 دع الذكاء يختار</option>
                         <option value="fade">✨ Fade</option>
                         <option value="slide">➡️ Slide</option>
                         <option value="zoom">🔍 Zoom</option>
-                        <option value="none">⬜ لا يوجد (مباشر)</option>
+                        <option value="none">⬜ مباشر</option>
                     </select>
                 </div>
             </div>
@@ -609,7 +588,7 @@ input:not([type="checkbox"]),select{font-size:16px}
 
             <div class="form-group">
                 <label>📋 عنوان العرض:</label>
-                <input type="text" id="anim-prompt-title" placeholder="مثال: الاحتباس الحراري وأثره على الأرض" oninput="generateAnimatedPromptText()">
+                <input type="text" id="anim-prompt-title" placeholder="مثال: الاحتباس الحراري" oninput="generateAnimatedPromptText()">
             </div>
             <div class="form-group">
                 <label>📚 المادة:</label>
@@ -628,16 +607,16 @@ input:not([type="checkbox"]),select{font-size:16px}
             <div class="row">
                 <div class="form-group">
                     <label>🎓 الصف:</label>
-                    <input type="text" id="anim-prompt-grade" placeholder="مثال: الثالث الثانوي" oninput="generateAnimatedPromptText()">
+                    <input type="text" id="anim-prompt-grade" placeholder="الثالث الثانوي" oninput="generateAnimatedPromptText()">
                 </div>
                 <div class="form-group">
                     <label>📅 العام:</label>
-                    <input type="text" id="anim-prompt-year" placeholder="مثال: 1446هـ" oninput="generateAnimatedPromptText()">
+                    <input type="text" id="anim-prompt-year" placeholder="1446هـ" oninput="generateAnimatedPromptText()">
                 </div>
             </div>
             <div class="form-group">
-                <label>📝 وصف/ملاحظات إضافية (اختياري):</label>
-                <input type="text" id="anim-prompt-desc" placeholder="مثال: ركز على الأرقام والإحصائيات" oninput="generateAnimatedPromptText()">
+                <label>📝 ملاحظات إضافية:</label>
+                <input type="text" id="anim-prompt-desc" placeholder="ركز على الأرقام والإحصائيات" oninput="generateAnimatedPromptText()">
             </div>
 
             <label style="margin-top:15px;">✨ Prompt العرض المتحرك:</label>
@@ -760,9 +739,14 @@ input:not([type="checkbox"]),select{font-size:16px}
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   PLATFORM VERSION 3.6 — عروض تقديمية متحركة
+   PLATFORM VERSION 3.7 — إصلاحات شاملة
+   ✅ فصل كامل بين سياق التحويل وسياق العرض المتحرك
+   ✅ حل مشكلة تكرار الصور
+   ✅ حل الشاشة البيضاء في الفيديو
+   ✅ حاوية معزولة لا تؤثر على الموقع
+   ✅ تحسينات للجوال
    ═══════════════════════════════════════════════════════════ */
-var PLATFORM_VERSION = "3.6";
+var PLATFORM_VERSION = "3.7";
 console.log("%c🚀 v" + PLATFORM_VERSION, "background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;");
 
 var SECRET_PASSWORD = "ayman";
@@ -782,48 +766,57 @@ var ARABIC_FONTS = ["Cairo","Tajawal","Almarai","Amiri","El Messiri","Reem Kufi"
 var ENGLISH_FONTS = ["Inter","Roboto","Open Sans","Lato","Poppins","Montserrat","Raleway","Nunito","Work Sans","Rubik","Manrope","Urbanist","DM Sans","Playfair Display","Merriweather","Lora","PT Serif","Oswald","Bebas Neue","Anton","JetBrains Mono","Fira Code"];
 
 var GOOGLE_FONTS_URL = "https://fonts.googleapis.com/css2?" + [
-    "family=Cairo:wght@400;500;600;700;800;900",
-    "family=Tajawal:wght@400;500;700;800;900",
-    "family=Almarai:wght@300;400;700;800",
-    "family=Amiri:ital,wght@0,400;0,700;1,400;1,700",
-    "family=El+Messiri:wght@400;500;600;700",
-    "family=Reem+Kufi:wght@400;500;600;700",
-    "family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800",
-    "family=Noto+Naskh+Arabic:wght@400;500;600;700",
-    "family=Changa:wght@400;500;600;700;800",
-    "family=Mada:wght@300;400;500;600;700;800;900",
-    "family=Markazi+Text:wght@400;500;600;700",
-    "family=Harmattan:wght@400;500;600;700",
-    "family=Lemonada:wght@300;400;500;600;700",
-    "family=Rakkas",
-    "family=Aref+Ruqaa:wght@400;700",
-    "family=Scheherazade+New:wght@400;500;600;700",
-    "family=Inter:wght@300;400;500;600;700;800;900",
-    "family=Roboto:wght@300;400;500;700;900",
-    "family=Open+Sans:wght@400;500;600;700;800",
-    "family=Lato:wght@400;700;900",
-    "family=Poppins:wght@400;500;600;700;800;900",
-    "family=Montserrat:wght@400;500;600;700;800;900",
-    "family=Raleway:wght@400;500;600;700;800;900",
-    "family=Nunito:wght@400;600;700;800;900",
-    "family=Work+Sans:wght@400;500;600;700;800;900",
-    "family=Rubik:wght@400;500;600;700;800;900",
-    "family=Manrope:wght@400;500;600;700;800",
-    "family=Urbanist:wght@400;500;600;700;800;900",
-    "family=DM+Sans:wght@400;500;600;700;800;900",
-    "family=Playfair+Display:wght@400;500;600;700;800;900",
-    "family=Merriweather:wght@400;700;900",
-    "family=Lora:wght@400;500;600;700",
-    "family=PT+Serif:wght@400;700",
-    "family=Oswald:wght@400;500;600;700",
-    "family=Bebas+Neue",
-    "family=Anton",
-    "family=JetBrains+Mono:wght@400;500;600;700",
-    "family=Fira+Code:wght@400;500;600;700",
-    "display=swap"
+    "family=Cairo:wght@400;500;600;700;800;900","family=Tajawal:wght@400;500;700;800;900",
+    "family=Almarai:wght@300;400;700;800","family=Amiri:ital,wght@0,400;0,700;1,400;1,700",
+    "family=El+Messiri:wght@400;500;600;700","family=Reem+Kufi:wght@400;500;600;700",
+    "family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800","family=Noto+Naskh+Arabic:wght@400;500;600;700",
+    "family=Changa:wght@400;500;600;700;800","family=Mada:wght@300;400;500;600;700;800;900",
+    "family=Markazi+Text:wght@400;500;600;700","family=Harmattan:wght@400;500;600;700",
+    "family=Lemonada:wght@300;400;500;600;700","family=Rakkas","family=Aref+Ruqaa:wght@400;700",
+    "family=Scheherazade+New:wght@400;500;600;700","family=Inter:wght@300;400;500;600;700;800;900",
+    "family=Roboto:wght@300;400;500;700;900","family=Open+Sans:wght@400;500;600;700;800",
+    "family=Lato:wght@400;700;900","family=Poppins:wght@400;500;600;700;800;900",
+    "family=Montserrat:wght@400;500;600;700;800;900","family=Raleway:wght@400;500;600;700;800;900",
+    "family=Nunito:wght@400;600;700;800;900","family=Work+Sans:wght@400;500;600;700;800;900",
+    "family=Rubik:wght@400;500;600;700;800;900","family=Manrope:wght@400;500;600;700;800",
+    "family=Urbanist:wght@400;500;600;700;800;900","family=DM+Sans:wght@400;500;600;700;800;900",
+    "family=Playfair+Display:wght@400;500;600;700;800;900","family=Merriweather:wght@400;700;900",
+    "family=Lora:wght@400;500;600;700","family=PT+Serif:wght@400;700","family=Oswald:wght@400;500;600;700",
+    "family=Bebas+Neue","family=Anton","family=JetBrains+Mono:wght@400;500;600;700",
+    "family=Fira+Code:wght@400;500;600;700","display=swap"
 ].join("&");
 
-/* ─── أدوات ─── */
+/* ═══════════════════════════════════════════════════════════
+   ⭐ إدارة الحالة المنفصلة لكل سياق (يحل مشكلة تكرار الصور)
+   ═══════════════════════════════════════════════════════════ */
+var currentImageContext = "converter";
+
+var _contexts = {
+    converter: { detected: [], replacements: new Map(), selected: new Set(), pending: null },
+    animated:  { detected: [], replacements: new Map(), selected: new Set(), pending: null }
+};
+
+/* getters تلقائية للسياق الحالي */
+Object.defineProperty(window, "detectedImages", {
+    get: function () { return (_contexts[currentImageContext] || _contexts.converter).detected; },
+    set: function (v) { (_contexts[currentImageContext] || _contexts.converter).detected = v; }
+});
+Object.defineProperty(window, "imageReplacements", {
+    get: function () { return (_contexts[currentImageContext] || _contexts.converter).replacements; },
+    set: function (v) { (_contexts[currentImageContext] || _contexts.converter).replacements = v; }
+});
+Object.defineProperty(window, "selectedImageKeys", {
+    get: function () { return (_contexts[currentImageContext] || _contexts.converter).selected; },
+    set: function (v) { (_contexts[currentImageContext] || _contexts.converter).selected = v; }
+});
+Object.defineProperty(window, "pendingBatchReplacement", {
+    get: function () { return (_contexts[currentImageContext] || _contexts.converter).pending; },
+    set: function (v) { (_contexts[currentImageContext] || _contexts.converter).pending = v; }
+});
+
+var imageAnalysisTimer = null;
+
+/* ─── أدوات مساعدة ─── */
 function sanitizeCodeForRender(code) {
     if (!code) return "";
     var s = String(code);
@@ -918,7 +911,8 @@ function getNaturalImageSize(src) {
 
 function addDetectedImage(list, data) {
     var s = String(data.src || "").trim(); if (!s) return;
-    if (list.some(function (i) { return i.type === data.type && i.src === s && i.target === data.target; })) return;
+    /* منع التكرار بناءً على target + src */
+    if (list.some(function (i) { return i.target === data.target && i.src === s && i.type === data.type; })) return;
     var n = Object.assign({}, data); n.src = s; list.push(n);
 }
 
@@ -948,13 +942,6 @@ function toSafeDataURL(src) {
 function readFileAsDataURL(file) { return new Promise(function (res, rej) { var r = new FileReader(); r.onload = function () { res(r.result); }; r.onerror = function () { rej(r.error); }; r.readAsDataURL(file); }); }
 
 /* ─── مدير الصور ─── */
-var imageReplacements = new Map();
-var detectedImages = [];
-var imageAnalysisTimer = null;
-var selectedImageKeys = new Set();
-var pendingBatchReplacement = null;
-var currentImageContext = "converter";
-
 function getImageManagerElements(context) {
     context = context || currentImageContext;
     if (context === "animated") {
@@ -967,45 +954,61 @@ function analyzeHTMLImages() { analyzeImagesForContext("converter"); }
 function analyzeAnimatedImages() { analyzeImagesForContext("animated"); }
 
 function analyzeImagesForContext(context) {
+    var prev = currentImageContext;
     currentImageContext = context;
-    var els = getImageManagerElements(context);
-    var ta = els.textarea, mgr = els.manager, list = els.list, cnt = els.count;
-    if (!ta || !mgr || !list) return;
-    if (!ta.value.trim()) { detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null; mgr.classList.remove("visible"); list.innerHTML = ""; updateBatchBar(); return; }
-    var doc; try { doc = new DOMParser().parseFromString(ta.value, "text/html"); } catch (e) { detectedImages = []; mgr.classList.remove("visible"); return; }
-    var found = [];
-    Array.prototype.slice.call(doc.querySelectorAll("img")).forEach(function (img, i) {
-        var src = resolveImgSrc(img); if (!src) return;
-        var d = getImageDefinedDimensions(img);
-        addDetectedImage(found, { type: "img", index: i, target: getStableSelector(img, doc), page: getParsedPageNumber(img, doc), name: getImageDisplayName(img, i, "img", src), src: src, alt: img.getAttribute("alt") || "", width: d.width, height: d.height, dimensionSource: d.source });
-    });
-    Array.prototype.slice.call(doc.querySelectorAll("*")).forEach(function (el) {
-        var s = el.getAttribute("style") || ""; if (!s) return;
-        extractImageUrls(s).forEach(function (src) {
-            addDetectedImage(found, { type: "background", subtype: "inline", index: found.length, target: getStableSelector(el, doc), page: getParsedPageNumber(el, doc), name: getImageDisplayName(el, found.length, "background", src), src: src, alt: "", width: "حسب CSS", height: "حسب CSS", dimensionSource: "CSS" });
+    try {
+        var els = getImageManagerElements(context);
+        var ta = els.textarea, mgr = els.manager, list = els.list, cnt = els.count;
+        if (!ta || !mgr || !list) return;
+        var ctxObj = _contexts[context];
+        if (!ta.value.trim()) {
+            ctxObj.detected = []; ctxObj.replacements.clear(); ctxObj.selected.clear(); ctxObj.pending = null;
+            mgr.classList.remove("visible"); list.innerHTML = ""; updateBatchBar();
+            return;
+        }
+        var doc; try { doc = new DOMParser().parseFromString(ta.value, "text/html"); } catch (e) { ctxObj.detected = []; mgr.classList.remove("visible"); return; }
+        var found = [];
+        Array.prototype.slice.call(doc.querySelectorAll("img")).forEach(function (img, i) {
+            var src = resolveImgSrc(img); if (!src) return;
+            var d = getImageDefinedDimensions(img);
+            addDetectedImage(found, { type: "img", index: i, target: getStableSelector(img, doc), page: getParsedPageNumber(img, doc), name: getImageDisplayName(img, i, "img", src), src: src, alt: img.getAttribute("alt") || "", width: d.width, height: d.height, dimensionSource: d.source });
         });
-    });
-    var old = imageReplacements, next = new Map();
-    found.forEach(function (item, i) { item.index = i; item.key = createImageKey(item); if (old.has(item.key)) next.set(item.key, old.get(item.key)); });
-    imageReplacements = next; detectedImages = found;
-    var valid = new Set(found.map(function (it) { return it.key; }));
-    Array.from(selectedImageKeys).forEach(function (k) { if (!valid.has(k)) selectedImageKeys.delete(k); });
-    pendingBatchReplacement = null;
-    if (cnt) cnt.textContent = detectedImages.length + " صورة";
-    if (!detectedImages.length) { mgr.classList.remove("visible"); list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
-    mgr.classList.add("visible"); renderImageManager();
-    detectedImages.forEach(function (item) { getNaturalImageSize(item.src).then(function (nat) { item.naturalWidth = nat.width; item.naturalHeight = nat.height; renderImageManager(); }); });
+        Array.prototype.slice.call(doc.querySelectorAll("*")).forEach(function (el) {
+            var s = el.getAttribute("style") || ""; if (!s) return;
+            extractImageUrls(s).forEach(function (src) {
+                addDetectedImage(found, { type: "background", subtype: "inline", index: found.length, target: getStableSelector(el, doc), page: getParsedPageNumber(el, doc), name: getImageDisplayName(el, found.length, "background", src), src: src, alt: "", width: "حسب CSS", height: "حسب CSS", dimensionSource: "CSS" });
+            });
+        });
+        var old = ctxObj.replacements, next = new Map();
+        found.forEach(function (item, i) { item.index = i; item.key = createImageKey(item); if (old.has(item.key)) next.set(item.key, old.get(item.key)); });
+        ctxObj.replacements = next;
+        ctxObj.detected = found;
+        var valid = new Set(found.map(function (it) { return it.key; }));
+        Array.from(ctxObj.selected).forEach(function (k) { if (!valid.has(k)) ctxObj.selected.delete(k); });
+        ctxObj.pending = null;
+        if (cnt) cnt.textContent = found.length + " صورة";
+        if (!found.length) { mgr.classList.remove("visible"); list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
+        mgr.classList.add("visible");
+        renderImageManager();
+        found.forEach(function (item) { getNaturalImageSize(item.src).then(function (nat) { item.naturalWidth = nat.width; item.naturalHeight = nat.height; renderImageManager(); }); });
+    } finally {
+        currentImageContext = prev;
+    }
 }
 
-function createImageKey(item) { return [item.type, item.subtype || "", item.src || "", item.target || "", item.selector || "", item.styleIndex != null ? item.styleIndex : "", item.ruleIndex != null ? item.ruleIndex : "", item.backgroundIndex != null ? item.backgroundIndex : ""].join("|"); }
+function createImageKey(item) {
+    return [item.type, item.subtype || "", item.target || "", item.src || ""].join("|");
+}
 
 function renderImageManager() {
     var els = getImageManagerElements(currentImageContext);
     var list = els.list; if (!list) return;
-    if (!detectedImages.length) { list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
-    var html = detectedImages.map(function (item) {
-        var repl = imageReplacements.get(item.key);
-        var isR = !!repl, isS = selectedImageKeys.has(item.key);
+    var ctxObj = _contexts[currentImageContext];
+    var detected = ctxObj.detected;
+    if (!detected.length) { list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
+    var html = detected.map(function (item) {
+        var repl = ctxObj.replacements.get(item.key);
+        var isR = !!repl, isS = ctxObj.selected.has(item.key);
         var previewSrc = repl ? repl.dataUrl : item.src;
         var displayName = repl ? repl.fileName : item.name;
         var natDim = (item.naturalWidth && item.naturalHeight) ? (item.naturalWidth + " × " + item.naturalHeight + "px") : "غير معروف";
@@ -1039,7 +1042,8 @@ function renderImageManager() {
 
 function toggleImageSelection(cb) {
     var key = cb.getAttribute("data-image-key"); if (!key) return;
-    if (cb.checked) selectedImageKeys.add(key); else selectedImageKeys.delete(key);
+    var ctxObj = _contexts[currentImageContext];
+    if (cb.checked) ctxObj.selected.add(key); else ctxObj.selected.delete(key);
     var card = cb.closest(".html-image-card"); if (card) card.classList.toggle("selected", cb.checked);
     updateBatchBar();
 }
@@ -1047,62 +1051,75 @@ function toggleImageSelection(cb) {
 function updateBatchBar() {
     var els = getImageManagerElements(currentImageContext);
     if (!els.batchBar || !els.selectedCount) return;
-    var n = selectedImageKeys.size;
+    var n = _contexts[currentImageContext].selected.size;
     els.selectedCount.textContent = n + " محدد";
     els.batchBar.classList.toggle("visible", n > 0);
 }
 
-function clearImageSelection() { selectedImageKeys.clear(); renderImageManager(); }
-function keepSelectedImages() { selectedImageKeys.forEach(function (k) { imageReplacements.delete(k); }); selectedImageKeys.clear(); renderImageManager(); }
+function clearImageSelection() { _contexts[currentImageContext].selected.clear(); renderImageManager(); }
+function keepSelectedImages() {
+    var ctxObj = _contexts[currentImageContext];
+    ctxObj.selected.forEach(function (k) { ctxObj.replacements.delete(k); });
+    ctxObj.selected.clear(); renderImageManager();
+}
 
 function replaceSelectedImages() {
-    if (!selectedImageKeys.size) { alert("حدد صورة أولاً"); return; }
+    var ctxObj = _contexts[currentImageContext];
+    if (!ctxObj.selected.size) { alert("حدد صورة أولاً"); return; }
     var input = document.createElement("input"); input.type = "file"; input.accept = "image/*"; input.style.display = "none"; document.body.appendChild(input);
     input.addEventListener("change", function () {
         var file = input.files && input.files[0];
         if (!file || !file.type || file.type.indexOf("image/") !== 0) { alert("ليست صورة"); input.remove(); return; }
         readFileAsDataURL(file).then(function (url) {
-            var keys = Array.from(selectedImageKeys);
-            var first = detectedImages.find(function (it) { return it.key === keys[0]; });
+            var keys = Array.from(ctxObj.selected);
+            var first = ctxObj.detected.find(function (it) { return it.key === keys[0]; });
             if (!first) { input.remove(); return; }
-            pendingBatchReplacement = { keys: keys, dataUrl: url, fileName: file.name, mimeType: file.type };
+            ctxObj.pending = { keys: keys, dataUrl: url, fileName: file.name, mimeType: file.type };
             openCropEditor({ item: first, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url }).finally(function () { input.remove(); });
-        }).catch(function () { alert("فشل"); pendingBatchReplacement = null; input.remove(); });
+        }).catch(function () { alert("فشل"); ctxObj.pending = null; input.remove(); });
     }, { once: true }); input.click();
 }
 
 function chooseReplacementImage(i) {
-    var item = detectedImages[i]; if (!item) return;
+    var ctxObj = _contexts[currentImageContext];
+    var item = ctxObj.detected[i]; if (!item) return;
     var input = document.createElement("input"); input.type = "file"; input.accept = "image/*"; input.style.display = "none"; document.body.appendChild(input);
     input.addEventListener("change", function () {
         var file = input.files && input.files[0];
         if (!file || !file.type || file.type.indexOf("image/") !== 0) { alert("ليست صورة"); input.remove(); return; }
-        readFileAsDataURL(file).then(function (url) { pendingBatchReplacement = null; return openCropEditor({ item: item, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url }); }).catch(function () { alert("فشل"); }).finally(function () { input.remove(); });
+        readFileAsDataURL(file).then(function (url) { ctxObj.pending = null; return openCropEditor({ item: item, sourceDataUrl: url, sourceFileName: file.name, sourceMimeType: file.type, originalDataUrl: url }); }).catch(function () { alert("فشل"); }).finally(function () { input.remove(); });
     }, { once: true }); input.click();
 }
 
 function editReplacementCrop(i) {
-    var item = detectedImages[i]; if (!item) return;
-    var r = imageReplacements.get(item.key); if (!r) { chooseReplacementImage(i); return; }
-    pendingBatchReplacement = null;
+    var ctxObj = _contexts[currentImageContext];
+    var item = ctxObj.detected[i]; if (!item) return;
+    var r = ctxObj.replacements.get(item.key); if (!r) { chooseReplacementImage(i); return; }
+    ctxObj.pending = null;
     openCropEditor({ item: item, sourceDataUrl: r.originalDataUrl || r.dataUrl, sourceFileName: r.originalFileName || r.fileName, sourceMimeType: r.originalMimeType || r.mimeType || "image/png", originalDataUrl: r.originalDataUrl || r.dataUrl });
 }
 
-function keepOriginalImage(i) { var item = detectedImages[i]; if (!item) return; imageReplacements.delete(item.key); selectedImageKeys.delete(item.key); renderImageManager(); }
+function keepOriginalImage(i) {
+    var ctxObj = _contexts[currentImageContext];
+    var item = ctxObj.detected[i]; if (!item) return;
+    ctxObj.replacements.delete(item.key); ctxObj.selected.delete(item.key); renderImageManager();
+}
 
 function replaceCSSImageURL(value, orig, repl) { if (!value || !orig || !repl) return value; var e = orig.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); return value.replace(new RegExp(e, "g"), repl); }
 
-function applyImageReplacements(container) {
-    if (!container || !detectedImages.length) return;
+function applyImageReplacements(container, contextOverride) {
+    var ctxKey = contextOverride || currentImageContext;
+    var ctxObj = _contexts[ctxKey];
+    if (!container || !ctxObj || !ctxObj.detected.length) return;
     var images = Array.prototype.slice.call(container.querySelectorAll("img"));
-    detectedImages.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
-        var r = imageReplacements.get(item.key); if (!r) return;
+    ctxObj.detected.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
+        var r = ctxObj.replacements.get(item.key); if (!r) return;
         var img = null; try { var doc = container.ownerDocument || document; img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || null; } catch (e) {}
         if (!img) img = images[item.index] || null; if (!img) return;
         img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset"); img.removeAttribute("sizes");
     });
-    detectedImages.filter(function (i) { return i.type === "background"; }).forEach(function (item) {
-        var r = imageReplacements.get(item.key); if (!r) return;
+    ctxObj.detected.filter(function (i) { return i.type === "background"; }).forEach(function (item) {
+        var r = ctxObj.replacements.get(item.key); if (!r) return;
         var els = []; try { if (item.target) els = Array.prototype.slice.call(container.querySelectorAll(item.target)); } catch (e) {}
         els.forEach(function (el) { var style = el.getAttribute("style") || ""; if (style && style.indexOf(item.src) !== -1) el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl)); });
     });
@@ -1117,18 +1134,18 @@ function scheduleImageAnalysis() {
 }
 
 /* ─── محرر القص ─── */
-var cropState = { item: null, sourceDataUrl: "", sourceFileName: "", sourceMimeType: "", originalDataUrl: "", image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: 1, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
+var cropState = { item: null, context: "converter", sourceDataUrl: "", sourceFileName: "", sourceMimeType: "", originalDataUrl: "", image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: 1, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
 
-function getCropTargetRatio(item) {
+function getCropTargetRatio(item, contextKey) {
     return new Promise(function (res) {
         var fb = (item && item.naturalWidth && item.naturalHeight) ? item.naturalWidth / item.naturalHeight : 1;
-        var ta = currentImageContext === "animated" ? document.getElementById("animated-html-input") : document.getElementById("html-input");
+        var ta = contextKey === "animated" ? document.getElementById("animated-html-input") : document.getElementById("html-input");
         if (!ta || !ta.value.trim()) return res(fb);
         var w = 794;
-        if (currentImageContext === "animated") { var o = document.getElementById("anim-orientation"); if (o && o.value === "landscape") w = 1280; }
+        if (contextKey === "animated") { var o = document.getElementById("anim-orientation"); if (o && o.value === "landscape") w = 1280; }
         else { var f = document.getElementById("format-select"); if (f && (f.value === "pdf-169" || f.value === "pptx")) w = 1280; }
         var c = document.createElement("div");
-        c.style.cssText = "position:absolute;left:-99999px;top:0;width:" + w + "px;visibility:hidden;contain:layout;";
+        c.style.cssText = "position:absolute;left:-99999px;top:0;width:" + w + "px;visibility:hidden;contain:layout;pointer-events:none;";
         c.innerHTML = sanitizeCodeForRender(ta.value);
         document.body.appendChild(c);
         requestAnimationFrame(function () {
@@ -1160,8 +1177,9 @@ function openCropEditor(options) {
         var modal = document.getElementById("crop-modal"), imgEl = document.getElementById("crop-image");
         if (!modal || !imgEl) return resolve(false);
         var item = options.item;
-        getCropTargetRatio(item).then(function (ratio) {
-            cropState = { item: item, sourceDataUrl: options.sourceDataUrl, sourceFileName: options.sourceFileName || "image", sourceMimeType: options.sourceMimeType || "image/png", originalDataUrl: options.originalDataUrl || options.sourceDataUrl, image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: ratio, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
+        var contextKey = currentImageContext;
+        getCropTargetRatio(item, contextKey).then(function (ratio) {
+            cropState = { item: item, context: contextKey, sourceDataUrl: options.sourceDataUrl, sourceFileName: options.sourceFileName || "image", sourceMimeType: options.sourceMimeType || "image/png", originalDataUrl: options.originalDataUrl || options.sourceDataUrl, image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: ratio, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
             imgEl.src = options.sourceDataUrl;
             modal.classList.add("visible"); document.body.style.overflow = "hidden";
             loadCropImage(options.sourceDataUrl).then(function (li) {
@@ -1246,16 +1264,17 @@ function previewCrop() { var r = createCroppedDataURL(); if (!r) { alert("فشل
 function applyCrop() {
     var r = createCroppedDataURL(); if (!r) { alert("فشل"); return; }
     var item = cropState.item; if (!item) return;
+    var ctxObj = _contexts[cropState.context];
     var build = function (t) {
-        var old = imageReplacements.get(t.key);
+        var old = ctxObj.replacements.get(t.key);
         var ext = r.mimeType === "image/jpeg" ? ".jpg" : r.mimeType === "image/webp" ? ".webp" : ".png";
         var clean = (cropState.sourceFileName || "image").replace(/\.[^.]+$/, "");
         return { dataUrl: r.dataUrl, fileName: clean + "_cropped" + ext, mimeType: r.mimeType, originalFileName: (old && old.originalFileName) || cropState.sourceFileName, originalMimeType: (old && old.originalMimeType) || cropState.sourceMimeType, originalDataUrl: cropState.originalDataUrl, cropped: true };
     };
-    if (pendingBatchReplacement && pendingBatchReplacement.keys.indexOf(item.key) !== -1) {
-        pendingBatchReplacement.keys.forEach(function (k) { var t = detectedImages.find(function (it) { return it.key === k; }); if (t) imageReplacements.set(k, build(t)); });
-        pendingBatchReplacement = null; selectedImageKeys.clear();
-    } else { imageReplacements.set(item.key, build(item)); pendingBatchReplacement = null; selectedImageKeys.delete(item.key); }
+    if (ctxObj.pending && ctxObj.pending.keys.indexOf(item.key) !== -1) {
+        ctxObj.pending.keys.forEach(function (k) { var t = ctxObj.detected.find(function (it) { return it.key === k; }); if (t) ctxObj.replacements.set(k, build(t)); });
+        ctxObj.pending = null; ctxObj.selected.clear();
+    } else { ctxObj.replacements.set(item.key, build(item)); ctxObj.pending = null; ctxObj.selected.delete(item.key); }
     closeCropModal(); renderImageManager();
 }
 
@@ -1264,37 +1283,39 @@ function closeCropModal() {
     if (m) { m.classList.remove("visible"); m.setAttribute("aria-hidden", "true"); }
     if (i) { i.src = ""; i.style.width = ""; i.style.height = ""; i.style.left = ""; i.style.top = ""; }
     if (p) p.src = "";
-    document.body.style.overflow = ""; pendingBatchReplacement = null;
-    cropState = { item: null, sourceDataUrl: "", sourceFileName: "", sourceMimeType: "", originalDataUrl: "", image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: 1, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
+    document.body.style.overflow = "";
+    cropState = { item: null, context: "converter", sourceDataUrl: "", sourceFileName: "", sourceMimeType: "", originalDataUrl: "", image: null, naturalWidth: 0, naturalHeight: 0, targetRatio: 1, frame: { left: 0, top: 0, width: 0, height: 0 }, imageLeft: 0, imageTop: 0, baseScale: 1, zoom: 1, minZoom: 1, maxZoom: 4, displayScale: 1, dragging: false, pointerId: null, startPointerX: 0, startPointerY: 0, startImageLeft: 0, startImageTop: 0 };
 }
 
 /* ─── إزالة الخلفية ─── */
-var bgRemovalState = { item: null, safeDataUrl: "", sourceFileName: "", sourceMimeType: "image/png", originalDataUrl: "", imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: null };
+var bgRemovalState = { item: null, context: "converter", safeDataUrl: "", sourceFileName: "", sourceMimeType: "image/png", originalDataUrl: "", imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: null };
 
 function openBackgroundRemover(i) {
-    var item = detectedImages[i]; if (!item) return;
-    var r = imageReplacements.get(item.key);
+    var ctxObj = _contexts[currentImageContext];
+    var item = ctxObj.detected[i]; if (!item) return;
+    var r = ctxObj.replacements.get(item.key);
     var src = r ? r.dataUrl : item.src;
     var name = r ? r.fileName : (item.name || "image");
     var mime = r ? r.mimeType : "image/png";
-    openBgRemoverInternal({ item: item, sourceDataUrl: src, sourceFileName: name, sourceMimeType: mime, originalDataUrl: r ? (r.originalDataUrl || src) : src, batchKeys: null });
+    openBgRemoverInternal({ item: item, sourceDataUrl: src, sourceFileName: name, sourceMimeType: mime, originalDataUrl: r ? (r.originalDataUrl || src) : src, batchKeys: null, context: currentImageContext });
 }
 
 function removeBackgroundSelected() {
-    if (!selectedImageKeys.size) { alert("حدد صورة"); return; }
-    var keys = Array.from(selectedImageKeys);
-    var first = detectedImages.find(function (it) { return it.key === keys[0]; }); if (!first) return;
-    var r = imageReplacements.get(first.key);
+    var ctxObj = _contexts[currentImageContext];
+    if (!ctxObj.selected.size) { alert("حدد صورة"); return; }
+    var keys = Array.from(ctxObj.selected);
+    var first = ctxObj.detected.find(function (it) { return it.key === keys[0]; }); if (!first) return;
+    var r = ctxObj.replacements.get(first.key);
     var src = r ? r.dataUrl : first.src;
     var name = r ? r.fileName : (first.name || "image");
     var mime = r ? r.mimeType : "image/png";
-    openBgRemoverInternal({ item: first, sourceDataUrl: src, sourceFileName: name, sourceMimeType: mime, originalDataUrl: r ? (r.originalDataUrl || src) : src, batchKeys: keys });
+    openBgRemoverInternal({ item: first, sourceDataUrl: src, sourceFileName: name, sourceMimeType: mime, originalDataUrl: r ? (r.originalDataUrl || src) : src, batchKeys: keys, context: currentImageContext });
 }
 
 function openBgRemoverInternal(opts) {
     var m = document.getElementById("bg-remove-modal"), img = document.getElementById("bg-preview-img");
     if (!m || !img) return;
-    bgRemovalState = { item: opts.item, safeDataUrl: "", sourceFileName: opts.sourceFileName || "image", sourceMimeType: opts.sourceMimeType || "image/png", originalDataUrl: opts.originalDataUrl || opts.sourceDataUrl, imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: opts.batchKeys };
+    bgRemovalState = { item: opts.item, context: opts.context || currentImageContext, safeDataUrl: "", sourceFileName: opts.sourceFileName || "image", sourceMimeType: opts.sourceMimeType || "image/png", originalDataUrl: opts.originalDataUrl || opts.sourceDataUrl, imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: opts.batchKeys };
     var sw = document.getElementById("bg-color-swatch"); if (sw) { sw.textContent = "لم يُحدد"; sw.style.background = "#020617"; }
     var ci = document.getElementById("bg-color-info"); if (ci) ci.innerHTML = "<strong>اللون:</strong> —";
     var t = document.getElementById("bg-tolerance"); if (t) t.value = 30;
@@ -1319,7 +1340,7 @@ function closeBackgroundRemover() {
     var m = document.getElementById("bg-remove-modal"); if (m) { m.classList.remove("visible"); m.setAttribute("aria-hidden", "true"); }
     var img = document.getElementById("bg-preview-img"); if (img) { img.src = ""; img.onclick = null; }
     document.body.style.overflow = "";
-    bgRemovalState = { item: null, safeDataUrl: "", sourceFileName: "", sourceMimeType: "image/png", originalDataUrl: "", imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: null };
+    bgRemovalState = { item: null, context: "converter", safeDataUrl: "", sourceFileName: "", sourceMimeType: "image/png", originalDataUrl: "", imageEl: null, naturalWidth: 0, naturalHeight: 0, targetColor: null, tolerance: 30, feather: 2, resultDataUrl: null, batchKeys: null };
 }
 
 function handleBgImageClick(e) {
@@ -1376,15 +1397,16 @@ function previewBackgroundRemoval() {
 function applyBackgroundRemoval() {
     if (!bgRemovalState.resultDataUrl) { alert("عاين أولاً"); return; }
     var item = bgRemovalState.item; if (!item) return;
+    var ctxObj = _contexts[bgRemovalState.context];
     var build = function (t) {
-        var old = imageReplacements.get(t.key);
+        var old = ctxObj.replacements.get(t.key);
         var clean = (bgRemovalState.sourceFileName || "image").replace(/\.[^.]+$/, "");
         return { dataUrl: bgRemovalState.resultDataUrl, fileName: clean + "_no-bg.png", mimeType: "image/png", originalFileName: (old && old.originalFileName) || bgRemovalState.sourceFileName, originalMimeType: (old && old.originalMimeType) || bgRemovalState.sourceMimeType, originalDataUrl: (old && old.originalDataUrl) || bgRemovalState.originalDataUrl, bgRemoved: true };
     };
     if (bgRemovalState.batchKeys && bgRemovalState.batchKeys.length) {
-        bgRemovalState.batchKeys.forEach(function (k) { var t = detectedImages.find(function (it) { return it.key === k; }); if (t) imageReplacements.set(k, build(t)); });
-        selectedImageKeys.clear();
-    } else { imageReplacements.set(item.key, build(item)); }
+        bgRemovalState.batchKeys.forEach(function (k) { var t = ctxObj.detected.find(function (it) { return it.key === k; }); if (t) ctxObj.replacements.set(k, build(t)); });
+        ctxObj.selected.clear();
+    } else { ctxObj.replacements.set(item.key, build(item)); }
     closeBackgroundRemover(); renderImageManager();
 }
 
@@ -1507,9 +1529,7 @@ function copyGeneratedPrompt() {
     else { try { out.select(); document.execCommand("copy"); alert("✅ تم النسخ!"); } catch (e) { alert("تعذر"); } }
 }
 
-/* ═══════════════════════════════════════════════════════
-   ⭐⭐ مولّد Prompt العرض المتحرك — الجديد
-   ═══════════════════════════════════════════════════════ */
+/* ─── مولّد Prompt العرض المتحرك ─── */
 function calculateSlideStats() {
     var slides = Number(document.getElementById("anim-prompt-slides").value) || 6;
     var duration = Number(document.getElementById("anim-prompt-slide-duration").value) || 2;
@@ -1527,30 +1547,17 @@ function updateAnimPromptStats() {
     statsEl.innerHTML =
         '<div class="frames-stat-item"><span>📑 الشرائح</span><span>' + stats.slides + '</span></div>' +
         '<div class="frames-stat-item"><span>🎞️ إطارات/شريحة</span><span>' + stats.framesPerSlide + '</span></div>' +
-        '<div class="frames-stat-item"><span>🎬 إجمالي الإطارات</span><span>' + stats.totalFrames + '</span></div>' +
+        '<div class="frames-stat-item"><span>🎬 الإطارات</span><span>' + stats.totalFrames + '</span></div>' +
         '<div class="frames-stat-item"><span>⏱️ المدة</span><span>' + stats.totalSeconds + 'ث</span></div>';
 }
 
 function generateAnimatedPromptText() {
     updateAnimPromptStats();
-
-    var oEl = document.getElementById("anim-prompt-orientation");
-    var sEl = document.getElementById("anim-prompt-slides");
-    var sdEl = document.getElementById("anim-prompt-slide-duration");
-    var fEl = document.getElementById("anim-prompt-fps");
-    var mEl = document.getElementById("anim-motion-type");
-    var trEl = document.getElementById("anim-transition-type");
-    var cEl = document.getElementById("anim-color-scheme");
-    var styEl = document.getElementById("anim-design-style");
-    var foEl = document.getElementById("anim-font-choice");
-    var imEl = document.getElementById("anim-prompt-images");
-    var tEl = document.getElementById("anim-prompt-title");
-    var subEl = document.getElementById("anim-prompt-subject");
-    var nEl = document.getElementById("anim-prompt-name");
-    var teEl = document.getElementById("anim-prompt-teacher");
-    var gEl = document.getElementById("anim-prompt-grade");
-    var yEl = document.getElementById("anim-prompt-year");
-    var deEl = document.getElementById("anim-prompt-desc");
+    var oEl = document.getElementById("anim-prompt-orientation"), sEl = document.getElementById("anim-prompt-slides"), sdEl = document.getElementById("anim-prompt-slide-duration"), fEl = document.getElementById("anim-prompt-fps");
+    var mEl = document.getElementById("anim-motion-type"), trEl = document.getElementById("anim-transition-type");
+    var cEl = document.getElementById("anim-color-scheme"), styEl = document.getElementById("anim-design-style"), foEl = document.getElementById("anim-font-choice");
+    var imEl = document.getElementById("anim-prompt-images"), tEl = document.getElementById("anim-prompt-title"), subEl = document.getElementById("anim-prompt-subject");
+    var nEl = document.getElementById("anim-prompt-name"), teEl = document.getElementById("anim-prompt-teacher"), gEl = document.getElementById("anim-prompt-grade"), yEl = document.getElementById("anim-prompt-year"), deEl = document.getElementById("anim-prompt-desc");
 
     var orientation = oEl ? oEl.value : "landscape";
     var slides = Number(sEl ? sEl.value : 6) || 6;
@@ -1574,7 +1581,6 @@ function generateAnimatedPromptText() {
     var width = isL ? 1280 : 794, height = isL ? 720 : 1123;
     var oText = isL ? "عرضي" : "طولي";
     var rText = isL ? "16:9" : "A4 (1:1.414)";
-
     var framesPerSlide = Math.round(slideDuration * fps);
     var totalFrames = slides * framesPerSlide;
     var totalSeconds = slides * slideDuration;
@@ -1584,188 +1590,133 @@ function generateAnimatedPromptText() {
         "fade": "Fade In تدريجي لكل عناصر الشريحة.",
         "slide": "Slide من الأسفل/الجانب.",
         "zoom": "Zoom تدريجي من الصغير للكبير.",
-        "mixed": "🎨 نوّع بين الشرائح: بعضها fade، بعضها slide، بعضها zoom… حسب ما يناسب المحتوى."
+        "mixed": "🎨 نوّع بين الشرائح: بعضها fade، بعضها slide، بعضها zoom…"
     };
     var motionText = motionMap[motionType] || motionMap.auto;
 
     var transitionMap = {
-        "auto": "🎲 اختر انتقالاً مناسبًا بين كل شريحة والتي تليها (fade, slide, zoom…) — نوّع ليكون العرض احترافيًا.",
+        "auto": "🎲 اختر انتقالاً مناسبًا بين كل شريحة والتي تليها — نوّع ليكون العرض احترافيًا.",
         "fade": "انتقال Fade ناعم بين الشرائح.",
-        "slide": "انتقال Slide (انزلاق) بين الشرائح.",
+        "slide": "انتقال Slide بين الشرائح.",
         "zoom": "انتقال Zoom بين الشرائح.",
-        "none": "لا يوجد انتقال — كل شريحة تبدأ مباشرة (الانتقال داخل الإطار الأخير والأول للشريحة التالية)."
+        "none": "بدون انتقال — مباشر بين الشرائح."
     };
     var transitionText = transitionMap[transitionType] || transitionMap.auto;
 
-    var colorText = (colorScheme === "auto" || !colorScheme) ? "🎲 اختر نظام ألوان احترافيًا يخدم الموضوع." : "نظام الألوان: " + colorScheme;
-    var styleText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا (زجاجي/بسيط/جريء/3D)." : "نمط التصميم: " + designStyle;
+    var colorText = (colorScheme === "auto" || !colorScheme) ? "🎲 اختر نظام ألوان احترافيًا." : "نظام الألوان: " + colorScheme;
+    var styleText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا." : "نمط التصميم: " + designStyle;
 
     var parts = [];
-
-    /* المقدمة */
     parts.push("أنت مصمم Motion Designer ومطوّر واجهات أمامية محترف، متخصص في تصميم **عروض تقديمية متحركة (Animated Presentations)** بنظام Frame-by-Frame عبر HTML/CSS ثابت فقط.");
+    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** — عرض تقديمي كامل مثل العروض العادية، لكن **بحيث كل شريحة تتحرك من إطار لإطار** — ثم ينتقل للشريحة التالية تلقائيًا.");
 
-    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** بنفس بنية العروض التقديمية العادية، لكن **بحركات** — كأنه فيديو بكل شريحة تتحرك داخليًا ثم تنتقل للشريحة التالية.");
-
-    /* بيانات المشروع */
     var proj = [];
     if (title) proj.push("• عنوان العرض: " + title);
     if (subject) proj.push("• المادة: " + subject);
-    if (name) proj.push("• اسم الطالب/المقدِّم: " + name);
+    if (name) proj.push("• اسم الطالب: " + name);
     if (teacher) proj.push("• اسم المعلم: " + teacher);
     if (grade) proj.push("• الصف: " + grade);
-    if (year) proj.push("• العام الدراسي: " + year);
-    if (desc) proj.push("• ملاحظات إضافية: " + desc);
+    if (year) proj.push("• العام: " + year);
+    if (desc) proj.push("• ملاحظات: " + desc);
+    if (proj.length) parts.push("📋 بيانات المشروع:\n" + proj.join("\n") + "\n\n⚠️ أدرجها بأناقة في الشريحة الأولى.");
 
-    if (proj.length) {
-        parts.push("📋 بيانات المشروع:\n" + proj.join("\n") + "\n\n⚠️ أدرج هذه البيانات بشكل أنيق في الشريحة الأولى (شريحة العنوان).");
-    }
-
-    /* المواصفات */
     parts.push(
-        "📐 المواصفات الإلزامية:\n" +
-        "• الأبعاد: " + width + "×" + height + " بكسل (" + oText + ").\n" +
+        "📐 المواصفات:\n" +
+        "• الأبعاد: " + width + "×" + height + " (" + oText + ").\n" +
         "• النسبة: " + rText + ".\n" +
-        "• عدد الشرائح: **" + slides + " شريحة** بالضبط.\n" +
+        "• عدد الشرائح: **" + slides + " شريحة**.\n" +
         "• مدة كل شريحة: " + slideDuration + " ثانية.\n" +
-        "• معدل الإطارات: " + fps + " FPS.\n" +
-        "• الإطارات لكل شريحة: " + framesPerSlide + " إطار.\n" +
-        "• **إجمالي الإطارات: " + totalFrames + " إطار** بالضبط.\n" +
-        "• المدة الكلية: " + totalSeconds + " ثانية.\n" +
-        "• ⚠️ كل إطار بأبعاد " + width + "×" + height + " بالضبط."
+        "• FPS: " + fps + ".\n" +
+        "• الإطارات لكل شريحة: " + framesPerSlide + ".\n" +
+        "• **إجمالي الإطارات: " + totalFrames + "** بالضبط.\n" +
+        "• المدة الكلية: " + totalSeconds + " ثانية."
     );
 
-    /* بنية الكود */
     parts.push(
-        "🏗️ بنية الكود (إلزامية):\n" +
+        "🏗️ بنية الكود:\n" +
         "```html\n" +
         "<div id=\"animation\">\n" +
         "  <!-- الشريحة 1: الإطارات 1-" + framesPerSlide + " -->\n" +
         "  <div class=\"frame\" data-frame=\"1\" data-slide=\"1\">...</div>\n" +
-        "  <div class=\"frame\" data-frame=\"2\" data-slide=\"1\">...</div>\n" +
         "  ...\n" +
         "  <div class=\"frame\" data-frame=\"" + framesPerSlide + "\" data-slide=\"1\">...</div>\n" +
-        "  \n" +
-        "  <!-- الشريحة 2: الإطارات " + (framesPerSlide + 1) + "-" + (2 * framesPerSlide) + " -->\n" +
+        "  <!-- الشريحة 2 -->\n" +
         "  <div class=\"frame\" data-frame=\"" + (framesPerSlide + 1) + "\" data-slide=\"2\">...</div>\n" +
         "  ...\n" +
         "</div>\n" +
         "```\n" +
-        "• كل إطار `<div class=\"frame\" data-frame=\"N\" data-slide=\"S\">`.\n" +
+        "• كل إطار: `<div class=\"frame\" data-frame=\"N\" data-slide=\"S\">`.\n" +
         "• N من 1 إلى " + totalFrames + ".\n" +
         "• S من 1 إلى " + slides + ".\n" +
-        "• كل إطار بأبعاد " + width + "×" + height + " بكسل."
+        "• كل إطار بأبعاد " + width + "×" + height + "."
     );
 
-    /* التخطيط الإلزامي */
     parts.push(
-        "📊 خطة الشرائح (إلزامية):\n" +
-        "وزّع " + slides + " شرائح على هذا النموذج:\n" +
-        "• **الشريحة 1: العنوان الرئيسي** — عنوان العرض + المادة + اسم الطالب + المعلم + الصف + العام (كل عنصر يظهر تدريجيًا).\n" +
-        "• **الشريحة 2: المقدمة** — عنوان + 2-3 نقاط تظهر واحدة تلو الأخرى.\n" +
-        (slides > 3 ? "• **الشرائح 3 إلى " + (slides - 1) + ": المحتوى** — وزّع عليها مواضيع العرض. نوّع التخطيطات بين:\n" +
-            "   - شريحة نقاط (Bullet Points)\n" +
-            "   - شريحة أرقام كبيرة (Big Numbers/Stats)\n" +
-            (imagesCount > 0 ? "   - شريحة صور (" + imagesCount + " صور إجمالاً موزعة على الشرائح)\n" : "") +
-            "   - شريحة بطاقات (Cards)\n" +
-            "   - شريحة مخطط بياني (Bar/Line chart)\n" +
-            "   - شريحة جدول مقارنة\n" +
-            "   - شريحة خط زمني (Timeline)\n" : "") +
+        "📊 خطة الشرائح:\n" +
+        "• **الشريحة 1: العنوان الرئيسي** — عنوان العرض + المادة + الطالب + المعلم + الصف + العام، كل عنصر يظهر تدريجيًا.\n" +
+        "• **الشريحة 2: المقدمة** — 2-3 نقاط تظهر واحدة تلو الأخرى.\n" +
+        (slides > 3 ? "• **الشرائح 3 إلى " + (slides - 1) + ": المحتوى** — وزّع مواضيع العرض. نوّع التخطيطات: نقاط، أرقام كبيرة، بطاقات، مخططات، جداول، خط زمني" + (imagesCount > 0 ? "، وصور" : "") + ".\n" : "") +
         "• **الشريحة " + slides + ": الخاتمة** — ملخص + شكراً.\n\n" +
-        "⚠️ **أنت تختار محتوى كل شريحة** — اكتب محتوى علمي حقيقي يخدم الموضوع، ووزّع المواضيع بمنطق تعليمي سليم (مقدمة → شرح → تفاصيل → أمثلة → خاتمة)."
+        "⚠️ **أنت تختار محتوى كل شريحة** — محتوى علمي حقيقي يخدم الموضوع بتسلسل منطقي."
     );
 
-    /* الصور */
     if (imagesCount > 0) {
         parts.push(
-            "🖼️ الصور (إلزامي):\n" +
+            "🖼️ الصور:\n" +
             "• أضف **" + imagesCount + " صور** بالضبط موزعة على الشرائح.\n" +
-            "• كل صورة داخل إطار (حاوية) ثابت الأبعاد مع `object-fit:cover` و `overflow:hidden`.\n" +
-            "• روابط HTTPS صالحة من Unsplash أو نحوه.\n" +
-            "• **مهم:** أضف لكل صورة `alt` وصفي و `data-image-name` باسم واضح بالإنجليزية.\n" +
-            "• لا تضع صورة بحجم صغير جداً — لكل صورة حضور بصري مناسب."
+            "• كل صورة داخل حاوية ثابتة مع object-fit:cover و overflow:hidden.\n" +
+            "• روابط HTTPS صالحة.\n" +
+            "• أضف alt و data-image-name لكل صورة."
         );
     } else {
-        parts.push("🖼️ بدون صور — اعتمد على الأشكال والأيقونات والرسوم.");
+        parts.push("🖼️ بدون صور.");
     }
 
-    /* الحركات */
     parts.push(
         "🎞️ الحركة داخل الشرائح:\n" +
         "• " + motionText + "\n" +
-        "• كل شريحة تتحرك من الإطار الأول (عناصرها غير ظاهرة/صغيرة) حتى الإطار الأخير (" + framesPerSlide + " — الشريحة كاملة).\n" +
-        "• التدرج منتظم عبر الإطارات (مثلاً: opacity من 0 إلى 1 على " + framesPerSlide + " إطار).\n" +
-        "• **مهم:** داخل كل شريحة، العناصر تظهر **واحداً تلو الآخر** (تسلسل منطقي)."
+        "• كل شريحة تتحرك من الإطار الأول إلى الإطار " + framesPerSlide + " (الشريحة كاملة).\n" +
+        "• التدرج منتظم عبر الإطارات.\n" +
+        "• العناصر تظهر واحدًا تلو الآخر (تسلسل منطقي)."
     );
 
-    /* الانتقال بين الشرائح */
     parts.push(
         "🔀 الانتقال بين الشرائح:\n" +
         "• " + transitionText + "\n" +
-        "• الانتقال يحدث في الإطارات الأخيرة من الشريحة الحالية والأولى من التالية.\n" +
-        "• ⚠️ لا تكرر نفس نوع الانتقال — نوّع بين الشرائح إذا كان الخيار «دع الذكاء يختار»."
+        "• الانتقال في الإطارات الأخيرة من الشريحة الحالية والأولى من التالية.\n" +
+        "• لا تكرر نفس الانتقال."
     );
 
-    /* التصميم */
     parts.push(
         "🎨 التصميم:\n" +
         "• " + colorText + "\n" +
         "• " + styleText + "\n" +
-        "• كل شريحة بتصميم مميز لكن متناسق (نفس الهوية البصرية).\n" +
-        "• استخدم عناوين كبيرة واضحة + مساحات تنفس.\n" +
-        "• عناصر بصرية إضافية: أيقونات، أشكال هندسية، خطوط فاصلة."
+        "• كل شريحة بتصميم مميز لكن متناسق (هوية بصرية موحدة)."
     );
 
-    /* الخطوط */
     parts.push(
         "🔤 الخطوط:\n" +
-        (fontChoice ? "• الخط المطلوب: «" + fontChoice + "» من Google Fonts.\n" : "• اختر خطًا عربيًا أنيقًا من: " + ARABIC_FONTS.slice(0, 8).join("، ") + ".\n") +
-        "• الاتجاه: RTL (`<html lang=\"ar\" dir=\"rtl\">`).\n" +
-        "• الأوزان: 400/600/700/800 للتباين.\n" +
-        "• استدعاء: `<link href=\"https://fonts.googleapis.com/css2?family=...&display=swap\" rel=\"stylesheet\">`."
+        (fontChoice ? "• «" + fontChoice + "» من Google Fonts.\n" : "• اختر خطًا عربيًا أنيقًا.\n") +
+        "• الاتجاه: RTL (lang=\"ar\" dir=\"rtl\").\n" +
+        "• استدعاء: Google Fonts css2."
     );
 
-    /* المتطلبات */
     var req = [
-        "ابدأ الملف بـ `<!doctype html>` ثم `<html lang=\"ar\" dir=\"rtl\">`.",
-        "خصائص body: `margin:0; padding:0; box-sizing:border-box`.",
+        "<!doctype html> ثم <html lang=\"ar\" dir=\"rtl\">.",
+        "body: margin:0; padding:0; box-sizing:border-box.",
         "**" + totalFrames + " إطار بالضبط** — لا أكثر ولا أقل.",
         "**" + slides + " شرائح** — كل شريحة = " + framesPerSlide + " إطار.",
-        "كل `.frame` بأبعاد " + width + "×" + height + " بالضبط.",
-        "⚠️ **لا `@keyframes` ولا `transition` ولا `animation` في CSS** — الحركة كلها عبر الفروقات بين الإطارات.",
-        "⚠️ **لا JavaScript** ولا مكتبات خارجية.",
-        "استخدم inline styles أو `<style>` داخل `<head>` فقط.",
-        "محتوى حقيقي علمي — **لا نص حشو** (Lorem Ipsum).",
-        "أدرج بيانات المشروع (العنوان، المادة، الطالب، المعلم...) في الشريحة الأولى.",
-        "نوّع التخطيطات بين الشرائح — لا تكرر نفس التصميم.",
-        "ضع كل الإطارات داخل `<div id=\"animation\">`.",
-        "أخرج الكود كاملاً في كتلة ```html``` واحدة — دون أي شرح إضافي."
+        "كل .frame بأبعاد " + width + "×" + height + ".",
+        "⚠️ **لا @keyframes ولا transition ولا animation** في CSS.",
+        "⚠️ **لا JavaScript**.",
+        "محتوى حقيقي علمي — **لا نص حشو**.",
+        "أدرج بيانات المشروع في الشريحة الأولى.",
+        "نوّع التخطيطات.",
+        "ضع كل الإطارات داخل <div id=\"animation\">.",
+        "أخرج الكود كاملاً في ```html``` واحدة."
     ];
-
-    parts.push("✅ المتطلبات الإلزامية:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
-
-    /* مثال توضيحي صغير */
-    parts.push(
-        "💡 مثال توضيحي للبنية (شريحة العنوان بـ " + framesPerSlide + " إطار):\n" +
-        "```html\n" +
-        "<!-- الإطار 1: كل شيء مخفي -->\n" +
-        "<div class=\"frame\" data-frame=\"1\" data-slide=\"1\" style=\"width:" + width + "px;height:" + height + "px;position:relative;background:#f8fafc;\">\n" +
-        "  <h1 style=\"opacity:0;transform:translateY(40px);\">عنوان العرض</h1>\n" +
-        "</div>\n\n" +
-        "<!-- الإطار 2: العنوان بدأ يظهر -->\n" +
-        "<div class=\"frame\" data-frame=\"2\" data-slide=\"1\" style=\"...\">\n" +
-        "  <h1 style=\"opacity:0.1;transform:translateY(36px);\">عنوان العرض</h1>\n" +
-        "</div>\n\n" +
-        "...\n\n" +
-        "<!-- الإطار " + framesPerSlide + ": الشريحة كاملة -->\n" +
-        "<div class=\"frame\" data-frame=\"" + framesPerSlide + "\" data-slide=\"1\" style=\"...\">\n" +
-        "  <h1 style=\"opacity:1;transform:translateY(0);\">عنوان العرض</h1>\n" +
-        "  <p>اسم الطالب | اسم المعلم | الصف</p>\n" +
-        "</div>\n" +
-        "```"
-    );
-
-    parts.push("🎬 ابدأ الآن بإخراج الكود كاملاً في كتلة ```html``` واحدة.");
+    parts.push("✅ المتطلبات:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
+    parts.push("🎬 ابدأ الآن.");
 
     var out = document.getElementById("animated-prompt-output");
     if (out) out.value = parts.join("\n\n");
@@ -1782,42 +1733,45 @@ function copyAnimatedPrompt() {
 function previewCode() {
     var i = document.getElementById("html-input"); if (!i || !i.value.trim()) return;
     var safe = sanitizeCodeForRender(i.value);
-    var f = document.getElementById("format-select"); var isA4 = f && f.value === "pdf-a4";
-    var dimText = isA4 ? "A4" : "16:9";
     var win = window.open("", "_blank"); if (!win) { alert("منع"); return; }
     win.document.open(); win.document.write(safe); win.document.close();
-    var apply = function () { try { applyImageReplacementsToDocument(win.document); } catch (e) {} };
+    var apply = function () { try { applyImageReplacementsToDocument(win.document, "converter"); } catch (e) {} };
     win.addEventListener("load", apply); setTimeout(apply, 500);
 }
-function applyImageReplacementsToDocument(doc) {
-    if (!doc || !detectedImages.length) return;
+
+function applyImageReplacementsToDocument(doc, contextKey) {
+    var ctxObj = _contexts[contextKey || "converter"];
+    if (!doc || !ctxObj || !ctxObj.detected.length) return;
     var images = Array.prototype.slice.call(doc.querySelectorAll("img"));
-    detectedImages.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
-        var r = imageReplacements.get(item.key); if (!r) return;
+    ctxObj.detected.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
+        var r = ctxObj.replacements.get(item.key); if (!r) return;
         var img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || images[item.index];
         if (!img) return;
         img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset");
     });
 }
+
 function clearCode() {
     if (!confirm("مسح الكود؟")) return;
     var i = document.getElementById("html-input"); if (i) i.value = "";
-    currentImageContext = "converter";
-    detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null;
+    var ctxObj = _contexts.converter;
+    ctxObj.detected = []; ctxObj.replacements.clear(); ctxObj.selected.clear(); ctxObj.pending = null;
     var m = document.getElementById("image-manager"), l = document.getElementById("image-manager-list");
-    if (m) m.classList.remove("visible"); if (l) l.innerHTML = ""; updateBatchBar();
+    if (m) m.classList.remove("visible"); if (l) l.innerHTML = "";
+    currentImageContext = "converter"; updateBatchBar();
 }
 function clearAnimatedCode() {
     if (!confirm("مسح الكود؟")) return;
     var i = document.getElementById("animated-html-input"); if (i) i.value = "";
-    currentImageContext = "animated";
-    detectedImages = []; imageReplacements.clear(); selectedImageKeys.clear(); pendingBatchReplacement = null;
+    var ctxObj = _contexts.animated;
+    ctxObj.detected = []; ctxObj.replacements.clear(); ctxObj.selected.clear(); ctxObj.pending = null;
     var m = document.getElementById("anim-image-manager"), l = document.getElementById("anim-image-manager-list");
-    if (m) m.classList.remove("visible"); if (l) l.innerHTML = ""; updateBatchBar();
+    if (m) m.classList.remove("visible"); if (l) l.innerHTML = "";
+    currentImageContext = "animated"; updateBatchBar();
     updateAnimFrameCount(0, 0);
 }
 
-/* ─── الخطوط وأدوات التصيير ─── */
+/* ─── الخطوط ─── */
 function waitForFonts() {
     return new Promise(function (resolve) {
         if (!document.querySelector('link[data-render-fonts]')) {
@@ -1831,25 +1785,129 @@ function waitForFonts() {
         function step2() {
             if (!document.fonts) { setTimeout(resolve, 1500); return; }
             var jobs = [];
-            ARABIC_FONTS.slice(0, 6).concat(ENGLISH_FONTS.slice(0, 8)).forEach(function (f) { [400, 700].forEach(function (w) { try { jobs.push(document.fonts.load(w + ' 16px "' + f + '"').catch(function () { return null; })); } catch (e) {} }); });
+            ARABIC_FONTS.slice(0, 5).concat(ENGLISH_FONTS.slice(0, 6)).forEach(function (f) { [400, 700].forEach(function (w) { try { jobs.push(document.fonts.load(w + ' 16px "' + f + '"').catch(function () { return null; })); } catch (e) {} }); });
             var timeout = new Promise(function (r) { setTimeout(r, RENDER_CONFIG.fontTimeout); });
             var work = Promise.all(jobs).then(function () { return document.fonts.ready; }).catch(function () { return null; });
             Promise.race([work, timeout]).then(function () { setTimeout(resolve, IS_IOS ? 500 : 250); });
         }
     });
 }
+
 function getSafeScale(w, h, req) { var s = Number(req) || 1; var p = w * h * s * s; if (p > RENDER_CONFIG.maxCanvasPixels) s = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / (w * h)); return Math.max(1, Math.min(s, 3)); }
 
+/* ═══════════════════════════════════════════════════════════
+   ⭐ حاوية التصيير الجديدة — معزولة تمامًا
+   تعتمد على: 1×1 بكسل + overflow:hidden — لا تؤثر على الصفحة
+   ═══════════════════════════════════════════════════════════ */
 function createRenderContainer(code, width, height) {
-    if (!document.querySelector('link[data-render-fonts]')) { var link = document.createElement("link"); link.rel = "stylesheet"; link.setAttribute("data-render-fonts", "true"); link.href = GOOGLE_FONTS_URL; document.head.appendChild(link); }
-    var c = document.createElement("div");
-    c.style.cssText = "position:absolute;left:-100000px;top:0;width:" + width + "px;min-height:" + height + "px;margin:0;padding:0;opacity:1;visibility:visible;pointer-events:none;z-index:-1;background:#ffffff;overflow:visible;contain:layout style;";
-    c.dir = "rtl"; c.setAttribute("data-render-container", "true");
-    c.innerHTML = sanitizeCodeForRender(code);
+    /* احذف الحاوية القديمة */
+    var old = document.getElementById("__render_stage");
+    if (old) try { old.remove(); } catch (e) {}
+
+    if (!document.querySelector('link[data-render-fonts]')) {
+        var link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.setAttribute("data-render-fonts", "true");
+        link.href = GOOGLE_FONTS_URL;
+        document.head.appendChild(link);
+    }
+
+    /* الحاوية الخارجية: 1×1 بكسل، لا تؤثر على الصفحة */
+    var stage = document.createElement("div");
+    stage.id = "__render_stage";
+    stage.dir = "rtl";
+    stage.style.cssText =
+        "position:fixed;" +
+        "top:0;" +
+        "left:0;" +
+        "width:1px;" +
+        "height:1px;" +
+        "overflow:hidden;" +
+        "pointer-events:none;" +
+        "z-index:-2147483647;" +
+        "opacity:1;" +
+        "visibility:visible;" +
+        "contain:strict;";
+
+    /* الحاوية الداخلية: بأبعاد كاملة، داخل الحاوية الخارجية */
+    var inner = document.createElement("div");
+    inner.id = "__render_stage_inner";
+    inner.style.cssText =
+        "position:absolute;" +
+        "top:0;" +
+        "left:0;" +
+        "width:" + width + "px;" +
+        "height:" + height + "px;" +
+        "background:#ffffff;" +
+        "overflow:hidden;";
+
+    inner.innerHTML = sanitizeCodeForRender(code);
+
+    /* style fix */
     var fix = document.createElement("style");
-    fix.textContent = "[data-render-container]{box-sizing:border-box!important}[data-render-container]*{box-sizing:border-box}[data-render-container] img{visibility:visible!important;opacity:1!important;max-width:none}";
-    c.appendChild(fix); document.body.appendChild(c); return c;
+    fix.textContent =
+        "#__render_stage, #__render_stage * { box-sizing: border-box; }" +
+        "#__render_stage img { visibility: visible !important; opacity: 1 !important; max-width: none; }";
+
+    stage.appendChild(inner);
+    stage.appendChild(fix);
+    document.body.appendChild(stage);
+
+    return stage;
 }
+
+/* استخراج الإطارات من الحاوية */
+function getStageFrames(stage) {
+    if (!stage) return [];
+    var inner = stage.querySelector("#__render_stage_inner") || stage;
+    var frames = inner.querySelectorAll(".frame");
+    if (!frames.length) frames = inner.querySelectorAll(".slide");
+    if (!frames.length) frames = inner.querySelectorAll(".page");
+    if (!frames.length) return [inner];
+    return Array.prototype.slice.call(frames);
+}
+
+function getStageInner(stage) {
+    return stage ? (stage.querySelector("#__render_stage_inner") || stage) : null;
+}
+
+/* تحضير الإطارات: فوق بعضها + كلها مخفية إلا الأول */
+function prepareStageFrames(stage, dims) {
+    var inner = getStageInner(stage);
+    var frames = getStageFrames(stage);
+    var isSingleInner = (frames.length === 1 && frames[0] === inner);
+    if (isSingleInner) {
+        inner.style.position = "relative";
+        inner.style.width = dims.width + "px";
+        inner.style.height = dims.height + "px";
+        inner.style.visibility = "visible";
+        return frames;
+    }
+    frames.forEach(function (f) {
+        f.style.position = "absolute";
+        f.style.top = "0";
+        f.style.left = "0";
+        f.style.width = dims.width + "px";
+        f.style.height = dims.height + "px";
+        f.style.visibility = "hidden";
+    });
+    inner.style.position = "relative";
+    inner.style.width = dims.width + "px";
+    inner.style.height = dims.height + "px";
+    return frames;
+}
+
+function showStageFrame(stage, index) {
+    var inner = getStageInner(stage);
+    var frames = getStageFrames(stage);
+    var isSingleInner = (frames.length === 1 && frames[0] === inner);
+    if (isSingleInner) return;
+    frames.forEach(function (f, i) {
+        f.style.visibility = (i === index) ? "visible" : "hidden";
+    });
+}
+
+/* ─── تحميل الصور ─── */
 function waitImage(img, timeout) {
     timeout = timeout || 5000;
     return new Promise(function (resolve) {
@@ -1889,17 +1947,17 @@ function inlineBackgroundImages(container) {
 /* ─── PDF/PPTX ─── */
 function renderPageHtml2Canvas(page, w, h, q) {
     var scale = getSafeScale(w, h, q);
-    var ow = page.style.width, oh = page.style.height, om = page.style.minHeight;
-    page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; void page.offsetHeight;
-    return html2canvas(page, { scale: scale, width: w, height: h, windowWidth: w, windowHeight: h, useCORS: true, allowTaint: false, backgroundColor: "#ffffff", imageTimeout: RENDER_CONFIG.imageTimeout, logging: false, removeContainer: true }).then(function (c) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; return c; }).catch(function (e) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; throw e; });
+    var ow = page.style.width, oh = page.style.height, om = page.style.minHeight, ov = page.style.visibility;
+    page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; page.style.visibility = "visible"; void page.offsetHeight;
+    return html2canvas(page, { scale: scale, width: w, height: h, windowWidth: w, windowHeight: h, useCORS: true, allowTaint: false, backgroundColor: "#ffffff", imageTimeout: RENDER_CONFIG.imageTimeout, logging: false, removeContainer: true }).then(function (c) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; page.style.visibility = ov; return c; }).catch(function (e) { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; page.style.visibility = ov; throw e; });
 }
 function renderPageSnapDOM(page, w, h, q) {
     return new Promise(function (res, rej) {
         if (!isSnapDOMAvailable()) return rej(new Error("SnapDOM"));
         var scale = getSafeScale(w, h, q);
-        var ow = page.style.width, oh = page.style.height, om = page.style.minHeight;
-        page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; void page.offsetHeight;
-        var cleanup = function () { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; };
+        var ow = page.style.width, oh = page.style.height, om = page.style.minHeight, ov = page.style.visibility;
+        page.style.width = w + "px"; page.style.height = h + "px"; page.style.minHeight = h + "px"; page.style.visibility = "visible"; void page.offsetHeight;
+        var cleanup = function () { page.style.width = ow; page.style.height = oh; page.style.minHeight = om; page.style.visibility = ov; };
         var opts = { scale: scale, dpr: scale, backgroundColor: "#ffffff", embedFonts: true, fast: false, useProxy: false, width: w, height: h };
         var fonts = Promise.resolve(); try { if (document.fonts && document.fonts.ready) fonts = Promise.race([document.fonts.ready, new Promise(function (r) { setTimeout(r, 3000); })]); } catch (e) {}
         var imgs = Promise.resolve(); try { var list = Array.prototype.slice.call(page.querySelectorAll("img")); if (list.length) imgs = Promise.all(list.map(function (i) { return waitImage(i, RENDER_CONFIG.imageTimeout).catch(function () { return false; }); })); } catch (e) {}
@@ -1933,7 +1991,8 @@ function generatePPTX() {
     var useSnap = (getRendererChoice() === "snapdom") && isSnapDOMAvailable();
     if (btn) btn.innerText = "⏳ تحضير...";
     var c = createRenderContainer(code, w, h);
-    return Promise.resolve().then(function () { applyImageReplacements(c); return waitForFonts(); })
+    var convCtx = "converter";
+    return Promise.resolve().then(function () { applyImageReplacements(c, convCtx); return waitForFonts(); })
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
         .then(function () { return inlineAllImages(c); }).then(function () { return inlineBackgroundImages(c); })
         .then(function () { return prepareImages(c); })
@@ -1958,7 +2017,8 @@ function generatePDF() {
     var useSnap = (getRendererChoice() === "snapdom") && isSnapDOMAvailable();
     if (btn) btn.innerText = "⏳ تحضير...";
     var c = createRenderContainer(i.value, w, h);
-    return Promise.resolve().then(function () { applyImageReplacements(c); return waitForFonts(); })
+    var convCtx = "converter";
+    return Promise.resolve().then(function () { applyImageReplacements(c, convCtx); return waitForFonts(); })
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
         .then(function () { return inlineAllImages(c); }).then(function () { return inlineBackgroundImages(c); })
         .then(function () { return prepareImages(c); })
@@ -1978,7 +2038,7 @@ function generatePDF() {
 function sanitizeFileName(n) { return String(n).trim().replace(/[\\/:*?"<>|]/g, "_").replace(/\s+/g, "_").substring(0, 100) || "file"; }
 function downloadBlob(blob, name) { var u = URL.createObjectURL(blob); var a = document.createElement("a"); a.href = u; a.download = name; a.style.display = "none"; document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(u); }, 10000); }
 
-/* ─── Wake Lock + BeforeUnload ─── */
+/* ─── Wake Lock ─── */
 var _wakeLock = null;
 async function _acquireWakeLock() { if (!('wakeLock' in navigator)) return; try { _wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {} }
 function _releaseWakeLock() { if (_wakeLock) { _wakeLock.release().catch(function () {}); _wakeLock = null; } }
@@ -1994,7 +2054,7 @@ function _formatTime(s) {
     var h = Math.floor(m / 60); return h + ":" + (m % 60 < 10 ? "0" : "") + (m % 60) + ":" + (sec < 10 ? "0" : "") + sec;
 }
 
-/* ─── استخراج الإطارات والشرائح ─── */
+/* ─── استخراج الإطارات ─── */
 function extractFramesFromCode(code) {
     if (!code || !code.trim()) return [];
     var doc; try { doc = new DOMParser().parseFromString(code, "text/html"); } catch (e) { return []; }
@@ -2042,6 +2102,7 @@ function getAnimatedDimensions() {
     return { width: 1280, height: 720 };
 }
 
+/* ─── معاينة العرض المتحرك ─── */
 function previewAnimatedClip() {
     var t = document.getElementById("animated-html-input"); if (!t || !t.value.trim()) { alert("الصق الكود"); return; }
     currentImageContext = "animated"; analyzeAnimatedImages();
@@ -2051,26 +2112,30 @@ function previewAnimatedClip() {
     var wrap = document.getElementById("anim-preview-wrap"), img = document.getElementById("anim-preview-img"), note = document.getElementById("anim-preview-note");
     if (!wrap || !img) return;
     note.textContent = "⏳ تحضير..."; wrap.classList.add("visible");
-    var c = createRenderContainer(t.value, dims.width, dims.height);
-    applyImageReplacements(c);
-    waitForFonts().then(function () { return inlineAllImages(c); }).then(function () { return inlineBackgroundImages(c); })
+    var stage = createRenderContainer(t.value, dims.width, dims.height);
+    applyImageReplacements(stage, "animated");
+    waitForFonts().then(function () { return inlineAllImages(stage); }).then(function () { return inlineBackgroundImages(stage); })
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
         .then(function () {
-            var all = Array.prototype.slice.call(c.querySelectorAll(".frame, .slide, .page"));
-            if (!all.length) all = [c];
-            all.forEach(function (f) { if (f !== c) { f.style.position = "absolute"; f.style.left = "-100000px"; f.style.top = "0"; } });
-            /* اختر أول 5 إطارات موزعة */
-            var step = Math.max(1, Math.floor(all.length / 5));
+            var frameEls = getStageFrames(stage);
+            var isSingleInner = (frameEls.length === 1 && frameEls[0] === getStageInner(stage));
+            if (!isSingleInner) {
+                frameEls.forEach(function (f) { f.style.position = "absolute"; f.style.top = "0"; f.style.left = "0"; f.style.width = dims.width + "px"; f.style.height = dims.height + "px"; f.style.visibility = "hidden"; });
+            }
+            var step = Math.max(1, Math.floor(frameEls.length / 5));
             var preview = [];
-            for (var i = 0; i < all.length && preview.length < 5; i += step) preview.push(all[i]);
+            for (var i = 0; i < frameEls.length && preview.length < 5; i += step) preview.push({ el: frameEls[i], idx: i });
             var canvases = [];
             var chain = Promise.resolve();
-            preview.forEach(function (frame) {
+            preview.forEach(function (p) {
                 chain = chain.then(function () {
-                    all.forEach(function (f) { if (f !== c) f.style.left = "-100000px"; });
-                    if (frame !== c) { frame.style.left = "0"; frame.style.top = "0"; }
-                    void frame.offsetHeight;
-                    return html2canvas(frame, { scale: 1, width: dims.width, height: dims.height, backgroundColor: "#ffffff", useCORS: true, logging: false }).then(function (cv) { canvases.push(cv); });
+                    if (!isSingleInner) {
+                        frameEls.forEach(function (f) { f.style.visibility = "hidden"; });
+                        p.el.style.visibility = "visible";
+                    }
+                    return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
+                }).then(function () {
+                    return html2canvas(p.el, { scale: 1, width: dims.width, height: dims.height, backgroundColor: "#ffffff", useCORS: true, logging: false }).then(function (cv) { canvases.push({ cv: cv, idx: p.idx }); });
                 });
             });
             return chain.then(function () {
@@ -2080,22 +2145,22 @@ function previewAnimatedClip() {
                 combo.width = dims.width * cols; combo.height = dims.height * Math.ceil(canvases.length / cols);
                 var ctx = combo.getContext("2d");
                 ctx.fillStyle = "#0b1220"; ctx.fillRect(0, 0, combo.width, combo.height);
-                canvases.forEach(function (cv, idx) {
-                    var col = idx % cols, row = Math.floor(idx / cols);
-                    ctx.drawImage(cv, col * dims.width, row * dims.height, dims.width, dims.height);
+                canvases.forEach(function (item, i) {
+                    var col = i % cols, row = Math.floor(i / cols);
+                    ctx.drawImage(item.cv, col * dims.width, row * dims.height, dims.width, dims.height);
                     ctx.fillStyle = "rgba(124,58,237,.9)"; ctx.fillRect(col * dims.width + 8, row * dims.height + 8, 70, 28);
                     ctx.fillStyle = "#fff"; ctx.font = "bold 14px system-ui"; ctx.textAlign = "center";
-                    ctx.fillText("إطار " + (idx * step + 1), col * dims.width + 43, row * dims.height + 27);
+                    ctx.fillText("إطار " + (item.idx + 1), col * dims.width + 43, row * dims.height + 27);
                 });
                 img.src = combo.toDataURL("image/png");
-                note.textContent = "✅ " + canvases.length + " إطارات من أصل " + all.length;
+                note.textContent = "✅ " + canvases.length + " إطارات من أصل " + frameEls.length;
             });
-        }).catch(function (e) { note.textContent = "❌ " + e.message; }).finally(function () { try { c.remove(); } catch (e) {} });
+        }).catch(function (e) { note.textContent = "❌ " + e.message; }).finally(function () { try { stage.remove(); } catch (e) {} });
 }
 
-/* ═══════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════════════════
    نافذة الفيديو
-   ═══════════════════════════════════════════════════════ */
+   ═══════════════════════════════════════════════════════════ */
 var _vmodalCancelled = false;
 var _vmodalMinimized = false;
 var _vmodalChoiceResolve = null;
@@ -2193,9 +2258,9 @@ function finishVideoModal(success, message, extraDetails) {
     }
 }
 
-/* ═══════════════════════════════════════════════════════
-   التصدير الرئيسي — WebCodecs
-   ═══════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   التصدير الرئيسي — WebCodecs (v3.7)
+   ═══════════════════════════════════════════════════════════ */
 async function exportAnimatedClipWebCodecs() {
     if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
         await showVideoStartModal({ icon: "⚠️", title: "المتصفح غير مدعوم", subtitle: "WebCodecs غير متاح. استخدم Chrome 94+ / Edge 94+ / Safari 16+", details: [] });
@@ -2207,17 +2272,22 @@ async function exportAnimatedClipWebCodecs() {
     }
     var t = document.getElementById("animated-html-input");
     if (!t || !t.value.trim()) { await showVideoStartModal({ icon: "📝", title: "لا يوجد كود", subtitle: "الصق كود العرض أولاً.", details: [] }); return; }
-    currentImageContext = "animated"; analyzeAnimatedImages();
-    var frames = extractFramesFromCode(t.value);
-    if (!frames.length) { await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .frame أو .slide أو .page في الكود.", details: [] }); return; }
+
+    currentImageContext = "animated";
+    analyzeAnimatedImages();
+
+    var framesInCode = extractFramesFromCode(t.value);
+    if (!framesInCode.length) { await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .frame أو .slide أو .page في الكود.", details: [] }); return; }
+
     var fps = Number(document.getElementById("anim-fps").value) || 12;
     var quality = Number(document.getElementById("anim-quality").value) || 2;
     var name = sanitizeFileName(document.getElementById("anim-file-name").value || "animation");
     var dims = getAnimatedDimensions();
-    var totalFrames = frames.length;
+    var totalFrames = framesInCode.length;
     var durationSec = totalFrames / fps;
     var slidesCount = countUniqueSlides(t.value);
-    var perFrame = quality === 3 ? 0.08 : quality === 1 ? 0.03 : 0.05;
+
+    var perFrame = quality === 3 ? 0.08 : quality === 1 ? 0.04 : 0.06;
     var estimatedSec = totalFrames * perFrame + 2;
     var details = [
         { label: "📑 الشرائح", value: slidesCount > 0 ? slidesCount : "غير محدد" },
@@ -2229,80 +2299,189 @@ async function exportAnimatedClipWebCodecs() {
     ];
     var choice = await showVideoStartModal({ icon: "🎬", title: "تحويل العرض إلى MP4", subtitle: "اضغط «ابدأ الآن». يمكنك تصغير النافذة.", details: details });
     if (choice !== "start") return;
+
     showVideoProgressModal();
     _vmodalCancelled = false; _vmodalMinimized = false;
     _enableLeaveWarning();
-    var container = null;
+
+    var stage = null;
+
     try {
-        container = createRenderContainer(t.value, dims.width, dims.height);
-        applyImageReplacements(container);
+        /* إنشاء الحاوية */
+        stage = createRenderContainer(t.value, dims.width, dims.height);
+        applyImageReplacements(stage, "animated");
+
         updateVideoProgress({ percent: 2, elapsed: 0, eta: estimatedSec, frame: 0, total: totalFrames, speed: 0 });
+
         await waitForFonts();
-        await inlineAllImages(container); await inlineBackgroundImages(container); await prepareImages(container);
-        var frameElements = Array.prototype.slice.call(container.querySelectorAll(".frame"));
-        if (!frameElements.length) frameElements = Array.prototype.slice.call(container.querySelectorAll(".slide"));
-        if (!frameElements.length) frameElements = Array.prototype.slice.call(container.querySelectorAll(".page"));
-        if (!frameElements.length) frameElements = [container];
-        frameElements.forEach(function (f) { if (f !== container) { f.style.position = "absolute"; f.style.left = "-100000px"; f.style.top = "0"; f.style.width = dims.width + "px"; f.style.height = dims.height + "px"; } });
-        var mainCanvas = document.createElement("canvas"); mainCanvas.width = dims.width; mainCanvas.height = dims.height;
+        await inlineAllImages(stage);
+        await inlineBackgroundImages(stage);
+        await prepareImages(stage);
+
+        /* تجهيز الإطارات: فوق بعضها */
+        var frameElements = prepareStageFrames(stage, dims);
+
+        /* Canvas واحد */
+        var mainCanvas = document.createElement("canvas");
+        mainCanvas.width = dims.width;
+        mainCanvas.height = dims.height;
         var mainCtx = mainCanvas.getContext("2d", { alpha: false });
+
+        /* إعدادات encoder */
         var bitrate = { 1: 1500000, 2: 4000000, 3: 8000000 }[quality] || 4000000;
         var chosenCodec = null;
         var candidates = [{ codec: 'avc1.42001f', mux: 'avc' }, { codec: 'avc1.4d0028', mux: 'avc' }];
-        for (var ci = 0; ci < candidates.length; ci++) { try { var sup = await VideoEncoder.isConfigSupported({ codec: candidates[ci].codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps }); if (sup.supported) { chosenCodec = candidates[ci]; break; } } catch (e) {} }
+        for (var ci = 0; ci < candidates.length; ci++) {
+            try {
+                var sup = await VideoEncoder.isConfigSupported({ codec: candidates[ci].codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps });
+                if (sup.supported) { chosenCodec = candidates[ci]; break; }
+            } catch (e) {}
+        }
         if (!chosenCodec) throw new Error("لا يوجد codec H.264 مدعوم");
-        var muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: chosenCodec.mux, width: dims.width, height: dims.height }, fastStart: 'in-memory' });
+
+        var muxer = new Mp4Muxer.Muxer({
+            target: new Mp4Muxer.ArrayBufferTarget(),
+            video: { codec: chosenCodec.mux, width: dims.width, height: dims.height },
+            fastStart: 'in-memory'
+        });
+
         var encError = null;
-        var encoder = new VideoEncoder({ output: function (chunk, meta) { try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; } }, error: function (e) { encError = e; } });
-        encoder.configure({ codec: chosenCodec.codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps, latencyMode: 'realtime', hardwareAcceleration: 'prefer-hardware' });
+        var encoder = new VideoEncoder({
+            output: function (chunk, meta) { try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; } },
+            error: function (e) { encError = e; }
+        });
+        encoder.configure({
+            codec: chosenCodec.codec,
+            width: dims.width, height: dims.height,
+            bitrate: bitrate, framerate: fps,
+            latencyMode: 'realtime',
+            hardwareAcceleration: 'prefer-hardware'
+        });
+
         await _acquireWakeLock();
-        var startTime = performance.now(); var frameTimes = [];
+        var startTime = performance.now();
+        var frameTimes = [];
+        var lastYield = performance.now();
+
+        /* الحلقة الرئيسية */
         for (var i = 0; i < totalFrames; i++) {
             if (_vmodalCancelled) throw new Error("تم الإلغاء");
             if (encError) throw encError;
+
             var frameStart = performance.now();
-            for (var k = 0; k < frameElements.length; k++) { if (frameElements[k] !== container) frameElements[k].style.left = "-100000px"; }
-            if (frameElements[i] !== container) { frameElements[i].style.left = "0"; frameElements[i].style.top = "0"; frameElements[i].style.position = "relative"; }
-            await new Promise(function (r) { requestAnimationFrame(r); });
+
+            /* إظهار الإطار الحالي */
+            showStageFrame(stage, i);
+
+            /* انتظر تحديث الرسم */
+            await new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
+
+            /* SnapDOM */
             var snapCanvas;
-            try { snapCanvas = await window.snapdom.toCanvas(frameElements[i], { scale: 1, dpr: 1, backgroundColor: "#ffffff", embedFonts: false, fast: true, width: dims.width, height: dims.height }); }
-            catch (err) { snapCanvas = await html2canvas(frameElements[i], { scale: 1, width: dims.width, height: dims.height, backgroundColor: "#ffffff", useCORS: true, logging: false }); }
-            mainCtx.fillStyle = "#ffffff"; mainCtx.fillRect(0, 0, dims.width, dims.height);
-            mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
-            if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) { try { snapCanvas.width = 1; snapCanvas.height = 1; } catch (e) {} }
-            var vf = new VideoFrame(mainCanvas, { timestamp: Math.round(i * 1000000 / fps), duration: Math.round(1000000 / fps) });
+            try {
+                snapCanvas = await withTimeout(
+                    window.snapdom.toCanvas(frameElements[i], {
+                        scale: 1, dpr: 1,
+                        backgroundColor: "#ffffff",
+                        embedFonts: false,
+                        fast: true,
+                        width: dims.width,
+                        height: dims.height
+                    }),
+                    RENDER_CONFIG.snapdomTimeout,
+                    "SnapDOM timeout"
+                );
+            } catch (err) {
+                snapCanvas = await html2canvas(frameElements[i], {
+                    scale: 1, width: dims.width, height: dims.height,
+                    backgroundColor: "#ffffff", useCORS: true, logging: false
+                });
+            }
+
+            /* نسخ لـ mainCanvas */
+            mainCtx.fillStyle = "#ffffff";
+            mainCtx.fillRect(0, 0, dims.width, dims.height);
+            try {
+                mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
+            } catch (e) {
+                /* fallback */
+                var fallback = await html2canvas(frameElements[i], {
+                    scale: 1, width: dims.width, height: dims.height,
+                    backgroundColor: "#ffffff", useCORS: true, logging: false
+                });
+                mainCtx.drawImage(fallback, 0, 0, dims.width, dims.height);
+                releaseCanvas(fallback);
+            }
+
+            /* تحرير الذاكرة */
+            if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) {
+                releaseCanvas(snapCanvas);
+            }
+
+            /* VideoFrame */
+            var vf = new VideoFrame(mainCanvas, {
+                timestamp: Math.round(i * 1000000 / fps),
+                duration: Math.round(1000000 / fps)
+            });
             encoder.encode(vf, { keyFrame: i % 60 === 0 });
             vf.close();
-            if (encoder.encodeQueueSize > 20) { while (encoder.encodeQueueSize > 10) { await new Promise(function (r) { setTimeout(r, 3); }); } }
+
+            /* Backpressure */
+            if (encoder.encodeQueueSize > 20) {
+                while (encoder.encodeQueueSize > 10) {
+                    await new Promise(function (r) { setTimeout(r, 3); });
+                }
+            }
+
+            /* ETA */
             var frameTime = performance.now() - frameStart;
-            frameTimes.push(frameTime); if (frameTimes.length > 20) frameTimes.shift();
+            frameTimes.push(frameTime);
+            if (frameTimes.length > 20) frameTimes.shift();
             var avgFrameTime = frameTimes.reduce(function (a, b) { return a + b; }, 0) / frameTimes.length;
             var eta = (totalFrames - i - 1) * avgFrameTime / 1000;
             var percent = ((i + 1) / totalFrames) * 100;
             var elapsed = (performance.now() - startTime) / 1000;
-            var speed = Math.round(1000 / avgFrameTime);
+            var speed = Math.round(1000 / Math.max(avgFrameTime, 1));
+
             updateVideoProgress({ percent: percent, elapsed: elapsed, eta: eta, frame: i + 1, total: totalFrames, speed: speed });
-            if (i % 20 === 0) await new Promise(function (r) { setTimeout(r, 0); });
+
+            /* راحة للجهاز كل 15 إطار أو كل 1 ثانية */
+            if (performance.now() - lastYield > 1000 || i % 15 === 0) {
+                await new Promise(function (r) { setTimeout(r, 0); });
+                lastYield = performance.now();
+            }
         }
-        var subtitleEl = document.getElementById("vmodal-subtitle"); if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
-        await encoder.flush(); encoder.close(); muxer.finalize();
+
+        var subtitleEl = document.getElementById("vmodal-subtitle");
+        if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
+
+        await encoder.flush();
+        encoder.close();
+        muxer.finalize();
+
         var blob = new Blob([muxer.target.buffer], { type: 'video/mp4' });
         var totalSecs = (performance.now() - startTime) / 1000;
         var sizeMB = (blob.size / 1024 / 1024).toFixed(2);
+
         var url = URL.createObjectURL(blob);
-        var a = document.createElement("a"); a.href = url; a.download = name + ".mp4"; document.body.appendChild(a); a.click(); a.remove();
+        var a = document.createElement("a");
+        a.href = url; a.download = name + ".mp4";
+        document.body.appendChild(a); a.click(); a.remove();
         setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
+
         finishVideoModal(true, "✅ تم التحميل تلقائيًا", [
             { label: "📦 الحجم", value: sizeMB + " MB" },
             { label: "⏱️ الوقت الفعلي", value: _formatTime(totalSecs) },
-            { label: "⚡ السرعة", value: Math.round(totalFrames / totalSecs) + " إطار/ث" }
+            { label: "⚡ السرعة", value: Math.round(totalFrames / Math.max(totalSecs, 0.1)) + " إطار/ث" }
         ]);
+
     } catch (err) {
         console.error(err);
         finishVideoModal(false, "❌ " + err.message);
     } finally {
-        _releaseWakeLock(); _disableLeaveWarning();
-        if (container) { try { container.remove(); } catch (e) {} }
+        _releaseWakeLock();
+        _disableLeaveWarning();
+        if (stage) { try { stage.remove(); } catch (e) {} }
     }
 }
 
@@ -2312,25 +2491,34 @@ document.addEventListener("DOMContentLoaded", function () {
     var pi = document.getElementById("pass-input"); if (pi) pi.addEventListener("keydown", function (e) { if (e.key === "Enter") { e.preventDefault(); checkPassword(); } });
     var rb = document.getElementById("reset-session-btn"); if (rb) rb.addEventListener("click", resetLoginSession);
     Array.prototype.forEach.call(document.querySelectorAll(".toggle-req"), function (b) { b.addEventListener("click", function () { toggleInput(b); }); });
+
     var stage = document.getElementById("crop-stage");
     if (stage) {
-        stage.addEventListener("pointerdown", startCropDrag); stage.addEventListener("pointermove", moveCropDrag);
-        stage.addEventListener("pointerup", endCropDrag); stage.addEventListener("pointercancel", endCropDrag);
+        stage.addEventListener("pointerdown", startCropDrag);
+        stage.addEventListener("pointermove", moveCropDrag);
+        stage.addEventListener("pointerup", endCropDrag);
+        stage.addEventListener("pointercancel", endCropDrag);
         stage.addEventListener("wheel", function (e) { e.preventDefault(); cropZoom(e.deltaY > 0 ? -0.1 : 0.1); }, { passive: false });
     }
+
     var rzT = null;
     window.addEventListener("resize", function () {
         var cm = document.getElementById("crop-modal"); if (!cm || !cm.classList.contains("visible")) return;
         clearTimeout(rzT);
         rzT = setTimeout(function () { var cm2 = document.getElementById("crop-modal"); if (!cm2 || !cm2.classList.contains("visible")) return; requestAnimationFrame(function () { calculateCropFrame(); cropReset(); }); }, 150);
     });
+
     var ht = document.getElementById("html-input");
-    if (ht) { ht.addEventListener("input", function () { currentImageContext = "converter"; scheduleImageAnalysis(); }); ht.addEventListener("paste", function () { setTimeout(analyzeHTMLImages, 100); }); }
+    if (ht) {
+        ht.addEventListener("input", function () { currentImageContext = "converter"; scheduleImageAnalysis(); });
+        ht.addEventListener("paste", function () { setTimeout(analyzeHTMLImages, 100); });
+    }
     var at = document.getElementById("animated-html-input");
     if (at) {
         at.addEventListener("input", function () { currentImageContext = "animated"; clearTimeout(imageAnalysisTimer); imageAnalysisTimer = setTimeout(function () { analyzeAnimatedFrames(); }, 350); });
         at.addEventListener("paste", function () { setTimeout(analyzeAnimatedFrames, 150); });
     }
+
     ["anim-prompt-orientation", "anim-prompt-slides", "anim-prompt-slide-duration", "anim-prompt-fps", "anim-motion-type", "anim-transition-type", "anim-color-scheme", "anim-design-style", "anim-font-choice", "anim-prompt-images", "anim-prompt-title", "anim-prompt-subject", "anim-prompt-name", "anim-prompt-teacher", "anim-prompt-grade", "anim-prompt-year", "anim-prompt-desc"].forEach(function (id) {
         var el = document.getElementById(id);
         if (el) { el.addEventListener("input", generateAnimatedPromptText); el.addEventListener("change", generateAnimatedPromptText); }
@@ -2339,8 +2527,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 window.addEventListener("load", function () {
     try { if (localStorage.getItem(AUTH_KEY) === AUTH_VALUE) { var o = document.getElementById("password-overlay"); if (o) o.style.display = "none"; } } catch (e) {}
-    updatePagesLabel(); onLanguageModeChange(); analyzeHTMLImages(); generateAnimatedPromptText();
-    console.log("%c✅ v" + PLATFORM_VERSION + " — عروض متحركة", "color:#a78bfa;font-size:12px;");
+    updatePagesLabel();
+    onLanguageModeChange();
+    currentImageContext = "converter";
+    analyzeHTMLImages();
+    generateAnimatedPromptText();
+    console.log("%c✅ v" + PLATFORM_VERSION, "color:#a78bfa;font-size:12px;");
     setTimeout(function () { var o = document.getElementById("password-overlay"); if (o && o.style.display !== "none") { var p = document.getElementById("pass-input"); if (p) p.focus(); } }, 150);
 });
 </script>
