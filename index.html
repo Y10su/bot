@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>منصة تحويل الأكواد الذكية v3.7</title>
+<title>منصة تحويل الأكواد الذكية v3.8</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,13 +63,16 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .html-image-card.replaced{border-color:#059669;background:#0f2923}
 .html-image-card.selected{border-color:#60a5fa;box-shadow:0 0 0 2px rgba(96,165,250,.35)}
 .html-image-card-top{display:flex;align-items:flex-start;gap:10px}
-.html-image-thumb{width:82px;height:70px;flex:0 0 82px;border-radius:7px;background:repeating-conic-gradient(#111827 0% 25%,#0b1220 0% 50%) 50%/14px 14px;border:1px solid #475569;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.html-image-thumb{width:82px;height:70px;flex:0 0 82px;border-radius:7px;background:repeating-conic-gradient(#111827 0% 25%,#0b1220 0% 50%) 50%/14px 14px;border:1px solid #475569;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
 .html-image-thumb img{width:100%;height:100%;object-fit:contain;display:block}
+.html-image-usage-badge{position:absolute;top:3px;right:3px;background:rgba(124,58,237,.95);color:#fff;font-size:9px;font-weight:bold;padding:2px 6px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
 .html-image-info{min-width:0;flex:1}
 .html-image-name{color:#f8fafc;font-size:13px;font-weight:bold;margin:0 0 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .html-image-meta{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px}
 .html-image-meta-item{color:#94a3b8;font-size:10px;line-height:1.5;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .html-image-meta-item strong{color:#cbd5e1}
+.html-image-meta-item.usage-item{grid-column:1/-1}
+.html-image-meta-item.usage-item strong{color:#a78bfa}
 .html-image-url{margin-top:8px;padding:7px 8px;border-radius:6px;background:#020617;color:#64748b;direction:ltr;text-align:left;font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .html-image-actions{display:flex;gap:7px;margin-top:9px;flex-wrap:wrap}
 .html-image-action{flex:1;min-width:calc(50% - 4px);border:none;border-radius:7px;padding:9px 6px;cursor:pointer;font-size:11px;font-weight:bold;transition:.2s}
@@ -233,7 +236,7 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.7</span></h2></div>
+<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.8</span></h2></div>
 
 <div class="top-nav">
     <button type="button" class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ التحويل</button>
@@ -739,14 +742,12 @@ input:not([type="checkbox"]),select{font-size:16px}
 
 <script>
 /* ═══════════════════════════════════════════════════════════
-   PLATFORM VERSION 3.7 — إصلاحات شاملة
-   ✅ فصل كامل بين سياق التحويل وسياق العرض المتحرك
-   ✅ حل مشكلة تكرار الصور
-   ✅ حل الشاشة البيضاء في الفيديو
-   ✅ حاوية معزولة لا تؤثر على الموقع
-   ✅ تحسينات للجوال
+   PLATFORM VERSION 3.8 — حل تكرار الصور
+   ✅ صورة واحدة لكل رابط فريد (src)
+   ✅ عرض عدد مرات الاستخدام
+   ✅ التعديل يُطبق على كل الإطارات تلقائيًا
    ═══════════════════════════════════════════════════════════ */
-var PLATFORM_VERSION = "3.7";
+var PLATFORM_VERSION = "3.8";
 console.log("%c🚀 v" + PLATFORM_VERSION, "background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;");
 
 var SECRET_PASSWORD = "ayman";
@@ -787,7 +788,7 @@ var GOOGLE_FONTS_URL = "https://fonts.googleapis.com/css2?" + [
 ].join("&");
 
 /* ═══════════════════════════════════════════════════════════
-   ⭐ إدارة الحالة المنفصلة لكل سياق (يحل مشكلة تكرار الصور)
+   إدارة الحالة المنفصلة لكل سياق
    ═══════════════════════════════════════════════════════════ */
 var currentImageContext = "converter";
 
@@ -796,7 +797,6 @@ var _contexts = {
     animated:  { detected: [], replacements: new Map(), selected: new Set(), pending: null }
 };
 
-/* getters تلقائية للسياق الحالي */
 Object.defineProperty(window, "detectedImages", {
     get: function () { return (_contexts[currentImageContext] || _contexts.converter).detected; },
     set: function (v) { (_contexts[currentImageContext] || _contexts.converter).detected = v; }
@@ -909,11 +909,32 @@ function getNaturalImageSize(src) {
     });
 }
 
+/* ⭐ v3.8: التوحيد بناءً على src فقط */
 function addDetectedImage(list, data) {
     var s = String(data.src || "").trim(); if (!s) return;
-    /* منع التكرار بناءً على target + src */
-    if (list.some(function (i) { return i.target === data.target && i.src === s && i.type === data.type; })) return;
-    var n = Object.assign({}, data); n.src = s; list.push(n);
+    
+    /* ابحث عن صورة بنفس src ونفس النوع */
+    var existing = list.find(function (i) { return i.src === s && i.type === data.type; });
+    
+    if (existing) {
+        /* أضف target جديد للقائمة إذا لم يكن موجودًا */
+        if (!existing.targets) {
+            existing.targets = [{ target: existing.target, page: existing.page, index: existing.index }];
+        }
+        var alreadyThere = existing.targets.some(function (t) { return t.target === data.target; });
+        if (!alreadyThere && data.target) {
+            existing.targets.push({ target: data.target, page: data.page, index: data.index });
+        }
+        existing.usageCount = existing.targets.length;
+        return;
+    }
+    
+    /* أضف صورة جديدة */
+    var n = Object.assign({}, data);
+    n.src = s;
+    n.targets = data.target ? [{ target: data.target, page: data.page, index: data.index }] : [];
+    n.usageCount = n.targets.length || 1;
+    list.push(n);
 }
 
 function resolveImgSrc(img) {
@@ -968,10 +989,12 @@ function analyzeImagesForContext(context) {
         }
         var doc; try { doc = new DOMParser().parseFromString(ta.value, "text/html"); } catch (e) { ctxObj.detected = []; mgr.classList.remove("visible"); return; }
         var found = [];
-        Array.prototype.slice.call(doc.querySelectorAll("img")).forEach(function (img, i) {
+        var globalImgIndex = 0;
+        Array.prototype.slice.call(doc.querySelectorAll("img")).forEach(function (img) {
             var src = resolveImgSrc(img); if (!src) return;
             var d = getImageDefinedDimensions(img);
-            addDetectedImage(found, { type: "img", index: i, target: getStableSelector(img, doc), page: getParsedPageNumber(img, doc), name: getImageDisplayName(img, i, "img", src), src: src, alt: img.getAttribute("alt") || "", width: d.width, height: d.height, dimensionSource: d.source });
+            addDetectedImage(found, { type: "img", index: globalImgIndex, target: getStableSelector(img, doc), page: getParsedPageNumber(img, doc), name: getImageDisplayName(img, globalImgIndex, "img", src), src: src, alt: img.getAttribute("alt") || "", width: d.width, height: d.height, dimensionSource: d.source });
+            globalImgIndex++;
         });
         Array.prototype.slice.call(doc.querySelectorAll("*")).forEach(function (el) {
             var s = el.getAttribute("style") || ""; if (!s) return;
@@ -979,8 +1002,13 @@ function analyzeImagesForContext(context) {
                 addDetectedImage(found, { type: "background", subtype: "inline", index: found.length, target: getStableSelector(el, doc), page: getParsedPageNumber(el, doc), name: getImageDisplayName(el, found.length, "background", src), src: src, alt: "", width: "حسب CSS", height: "حسب CSS", dimensionSource: "CSS" });
             });
         });
+        
         var old = ctxObj.replacements, next = new Map();
-        found.forEach(function (item, i) { item.index = i; item.key = createImageKey(item); if (old.has(item.key)) next.set(item.key, old.get(item.key)); });
+        found.forEach(function (item, i) {
+            item.index = i;
+            item.key = createImageKey(item);
+            if (old.has(item.key)) next.set(item.key, old.get(item.key));
+        });
         ctxObj.replacements = next;
         ctxObj.detected = found;
         var valid = new Set(found.map(function (it) { return it.key; }));
@@ -996,8 +1024,9 @@ function analyzeImagesForContext(context) {
     }
 }
 
+/* ⭐ v3.8: المفتاح يعتمد على src فقط */
 function createImageKey(item) {
-    return [item.type, item.subtype || "", item.target || "", item.src || ""].join("|");
+    return [item.type, item.subtype || "", item.src || ""].join("|");
 }
 
 function renderImageManager() {
@@ -1015,8 +1044,13 @@ function renderImageManager() {
         var defDim = item.width + " × " + item.height;
         var typeLabel = item.type === "img" ? "IMG" : "خلفية";
         var srcLabel = item.type === "img" ? "src" : "style";
+        var usageCount = item.usageCount || 1;
+        var usageText = usageCount > 1 ? ('مستخدمة في ' + usageCount + ' إطار') : 'مستخدمة مرة واحدة';
         var thumb = previewSrc ? '<img src="' + escapeAttribute(previewSrc) + '" alt="">' : '<span style="color:#475569;font-size:20px;">🖼️</span>';
-        var status = isR ? ('✅ ' + escapeHTML(repl.fileName)) : 'الصورة الحالية';
+        if (usageCount > 1) {
+            thumb += '<div class="html-image-usage-badge">×' + usageCount + '</div>';
+        }
+        var status = isR ? ('✅ ' + escapeHTML(repl.fileName) + ' (يُطبق على ' + usageCount + ' إطار)') : ('الصورة الحالية — ' + usageCount + ' إطار');
         var cropBtn = isR ? '<button type="button" class="html-image-action crop-edit" onclick="editReplacementCrop(' + item.index + ')">✂️ قص</button>' : '';
         return '<div class="html-image-card ' + (isR ? "replaced " : "") + (isS ? "selected" : "") + '" data-image-card="' + item.index + '">' +
             '<label class="html-image-select-row"><input type="checkbox" data-image-key="' + escapeAttribute(item.key) + '" ' + (isS ? "checked" : "") + ' onchange="toggleImageSelection(this)"><span>تحديد</span></label>' +
@@ -1028,7 +1062,9 @@ function renderImageManager() {
             '<div class="html-image-meta-item"><strong>الصفحة:</strong> ' + item.page + '</div>' +
             '<div class="html-image-meta-item"><strong>#:</strong> ' + (item.index + 1) + '</div>' +
             '<div class="html-image-meta-item"><strong>الكود:</strong> ' + escapeHTML(defDim) + '</div>' +
-            '<div class="html-image-meta-item"><strong>الأصل:</strong> ' + natDim + '</div></div></div></div>' +
+            '<div class="html-image-meta-item"><strong>الأصل:</strong> ' + natDim + '</div>' +
+            '<div class="html-image-meta-item usage-item"><strong>🔗 الاستخدام:</strong> ' + usageText + '</div>' +
+            '</div></div></div>' +
             '<div class="html-image-url" title="' + escapeAttribute(item.src) + '">' + escapeHTML(isR ? "تم الاستبدال" : item.src) + '</div>' +
             '<div class="html-image-actions">' +
             '<button type="button" class="html-image-action keep" onclick="keepOriginalImage(' + item.index + ')">↩️ الأصلي</button>' +
@@ -1107,21 +1143,50 @@ function keepOriginalImage(i) {
 
 function replaceCSSImageURL(value, orig, repl) { if (!value || !orig || !repl) return value; var e = orig.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"); return value.replace(new RegExp(e, "g"), repl); }
 
+/* ⭐ v3.8: تطبيق الاستبدال على جميع targets */
 function applyImageReplacements(container, contextOverride) {
     var ctxKey = contextOverride || currentImageContext;
     var ctxObj = _contexts[ctxKey];
     if (!container || !ctxObj || !ctxObj.detected.length) return;
-    var images = Array.prototype.slice.call(container.querySelectorAll("img"));
-    ctxObj.detected.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
+    
+    ctxObj.detected.forEach(function (item) {
         var r = ctxObj.replacements.get(item.key); if (!r) return;
-        var img = null; try { var doc = container.ownerDocument || document; img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || null; } catch (e) {}
-        if (!img) img = images[item.index] || null; if (!img) return;
-        img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset"); img.removeAttribute("sizes");
-    });
-    ctxObj.detected.filter(function (i) { return i.type === "background"; }).forEach(function (item) {
-        var r = ctxObj.replacements.get(item.key); if (!r) return;
-        var els = []; try { if (item.target) els = Array.prototype.slice.call(container.querySelectorAll(item.target)); } catch (e) {}
-        els.forEach(function (el) { var style = el.getAttribute("style") || ""; if (style && style.indexOf(item.src) !== -1) el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl)); });
+        
+        /* اجمع كل الأهداف من item.targets، مع دعم النسخة القديمة */
+        var targets = item.targets && item.targets.length ? item.targets : [{ target: item.target, index: item.index }];
+        
+        if (item.type === "img") {
+            /* استخدم target الأكثر موثوقية */
+            targets.forEach(function (t) {
+                var els = [];
+                try { if (t.target) els = Array.prototype.slice.call(container.querySelectorAll(t.target)); } catch (e) {}
+                els.forEach(function (el) {
+                    if (el.tagName === "IMG") {
+                        el.setAttribute("src", r.dataUrl);
+                        el.removeAttribute("srcset");
+                        el.removeAttribute("sizes");
+                    }
+                });
+            });
+            /* احتياط: استخدم item.index للوصول المباشر */
+            var allImgs = Array.prototype.slice.call(container.querySelectorAll("img"));
+            if (item.index != null && allImgs[item.index]) {
+                allImgs[item.index].setAttribute("src", r.dataUrl);
+                allImgs[item.index].removeAttribute("srcset");
+                allImgs[item.index].removeAttribute("sizes");
+            }
+        } else if (item.type === "background") {
+            targets.forEach(function (t) {
+                var els = [];
+                try { if (t.target) els = Array.prototype.slice.call(container.querySelectorAll(t.target)); } catch (e) {}
+                els.forEach(function (el) {
+                    var style = el.getAttribute("style") || "";
+                    if (style && style.indexOf(item.src) !== -1) {
+                        el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl));
+                    }
+                });
+            });
+        }
     });
 }
 
@@ -1150,7 +1215,13 @@ function getCropTargetRatio(item, contextKey) {
         document.body.appendChild(c);
         requestAnimationFrame(function () {
             var r = fb;
-            try { var t = null; if (item.target) { try { var m = Array.prototype.slice.call(c.querySelectorAll(item.target)); if (m.length) t = m[0]; } catch (e) {} } if (t) { var rc = t.getBoundingClientRect(); if (rc.width >= 1 && rc.height >= 1) { var rr = rc.width / rc.height; if (isFinite(rr) && rr > 0) r = rr; } } } catch (e) {}
+            try {
+                var t = null;
+                /* استخدم أول target من item.targets */
+                var firstTarget = item.targets && item.targets.length ? item.targets[0].target : item.target;
+                if (firstTarget) { try { var m = Array.prototype.slice.call(c.querySelectorAll(firstTarget)); if (m.length) t = m[0]; } catch (e) {} }
+                if (t) { var rc = t.getBoundingClientRect(); if (rc.width >= 1 && rc.height >= 1) { var rr = rc.width / rc.height; if (isFinite(rr) && rr > 0) r = rr; } }
+            } catch (e) {}
             c.remove(); res(r);
         });
     });
@@ -1586,20 +1657,20 @@ function generateAnimatedPromptText() {
     var totalSeconds = slides * slideDuration;
 
     var motionMap = {
-        "auto": "🎲 اختر نوع الحركة الأمثل لكل شريحة (fade, slide, zoom, typewriter, particle…) — نوّع بين الشرائح حسب طبيعة المحتوى.",
+        "auto": "🎲 اختر نوع الحركة الأمثل لكل شريحة — نوّع حسب طبيعة المحتوى.",
         "fade": "Fade In تدريجي لكل عناصر الشريحة.",
         "slide": "Slide من الأسفل/الجانب.",
         "zoom": "Zoom تدريجي من الصغير للكبير.",
-        "mixed": "🎨 نوّع بين الشرائح: بعضها fade، بعضها slide، بعضها zoom…"
+        "mixed": "🎨 نوّع بين الشرائح: fade، slide، zoom…"
     };
     var motionText = motionMap[motionType] || motionMap.auto;
 
     var transitionMap = {
         "auto": "🎲 اختر انتقالاً مناسبًا بين كل شريحة والتي تليها — نوّع ليكون العرض احترافيًا.",
-        "fade": "انتقال Fade ناعم بين الشرائح.",
-        "slide": "انتقال Slide بين الشرائح.",
-        "zoom": "انتقال Zoom بين الشرائح.",
-        "none": "بدون انتقال — مباشر بين الشرائح."
+        "fade": "انتقال Fade ناعم.",
+        "slide": "انتقال Slide.",
+        "zoom": "انتقال Zoom.",
+        "none": "بدون انتقال — مباشر."
     };
     var transitionText = transitionMap[transitionType] || transitionMap.auto;
 
@@ -1607,8 +1678,8 @@ function generateAnimatedPromptText() {
     var styleText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا." : "نمط التصميم: " + designStyle;
 
     var parts = [];
-    parts.push("أنت مصمم Motion Designer ومطوّر واجهات أمامية محترف، متخصص في تصميم **عروض تقديمية متحركة (Animated Presentations)** بنظام Frame-by-Frame عبر HTML/CSS ثابت فقط.");
-    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** — عرض تقديمي كامل مثل العروض العادية، لكن **بحيث كل شريحة تتحرك من إطار لإطار** — ثم ينتقل للشريحة التالية تلقائيًا.");
+    parts.push("أنت مصمم Motion Designer ومطوّر واجهات أمامية محترف، متخصص في تصميم **عروض تقديمية متحركة** بنظام Frame-by-Frame عبر HTML/CSS ثابت فقط.");
+    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** — عرض تقديمي كامل مثل العروض العادية، لكن **كل شريحة تتحرك من إطار لإطار** ثم ينتقل للشريحة التالية تلقائيًا.");
 
     var proj = [];
     if (title) proj.push("• عنوان العرض: " + title);
@@ -1666,7 +1737,8 @@ function generateAnimatedPromptText() {
             "• أضف **" + imagesCount + " صور** بالضبط موزعة على الشرائح.\n" +
             "• كل صورة داخل حاوية ثابتة مع object-fit:cover و overflow:hidden.\n" +
             "• روابط HTTPS صالحة.\n" +
-            "• أضف alt و data-image-name لكل صورة."
+            "• أضف alt و data-image-name لكل صورة.\n" +
+            "• ⚠️ **مهم:** إذا استخدمت نفس الصورة في أكثر من شريحة، استخدم **نفس رابط الصورة بالضبط** — سيتم التعامل معها كصورة واحدة."
         );
     } else {
         parts.push("🖼️ بدون صور.");
@@ -1743,11 +1815,21 @@ function applyImageReplacementsToDocument(doc, contextKey) {
     var ctxObj = _contexts[contextKey || "converter"];
     if (!doc || !ctxObj || !ctxObj.detected.length) return;
     var images = Array.prototype.slice.call(doc.querySelectorAll("img"));
-    ctxObj.detected.filter(function (i) { return i.type === "img"; }).forEach(function (item) {
+    ctxObj.detected.forEach(function (item) {
         var r = ctxObj.replacements.get(item.key); if (!r) return;
-        var img = images.find(function (el) { return getStableSelector(el, doc) === item.target; }) || images[item.index];
-        if (!img) return;
-        img.setAttribute("src", r.dataUrl); img.removeAttribute("srcset");
+        if (item.type !== "img") return;
+        var targets = item.targets && item.targets.length ? item.targets : [{ target: item.target }];
+        targets.forEach(function (t) {
+            var els = [];
+            try { if (t.target) els = Array.prototype.slice.call(doc.querySelectorAll(t.target)); } catch (e) {}
+            els.forEach(function (el) {
+                if (el.tagName === "IMG") { el.setAttribute("src", r.dataUrl); el.removeAttribute("srcset"); }
+            });
+        });
+        if (item.index != null && images[item.index]) {
+            images[item.index].setAttribute("src", r.dataUrl);
+            images[item.index].removeAttribute("srcset");
+        }
     });
 }
 
@@ -1795,12 +1877,8 @@ function waitForFonts() {
 
 function getSafeScale(w, h, req) { var s = Number(req) || 1; var p = w * h * s * s; if (p > RENDER_CONFIG.maxCanvasPixels) s = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / (w * h)); return Math.max(1, Math.min(s, 3)); }
 
-/* ═══════════════════════════════════════════════════════════
-   ⭐ حاوية التصيير الجديدة — معزولة تمامًا
-   تعتمد على: 1×1 بكسل + overflow:hidden — لا تؤثر على الصفحة
-   ═══════════════════════════════════════════════════════════ */
+/* ─── حاوية التصيير معزولة ─── */
 function createRenderContainer(code, width, height) {
-    /* احذف الحاوية القديمة */
     var old = document.getElementById("__render_stage");
     if (old) try { old.remove(); } catch (e) {}
 
@@ -1812,38 +1890,19 @@ function createRenderContainer(code, width, height) {
         document.head.appendChild(link);
     }
 
-    /* الحاوية الخارجية: 1×1 بكسل، لا تؤثر على الصفحة */
     var stage = document.createElement("div");
     stage.id = "__render_stage";
     stage.dir = "rtl";
     stage.style.cssText =
-        "position:fixed;" +
-        "top:0;" +
-        "left:0;" +
-        "width:1px;" +
-        "height:1px;" +
-        "overflow:hidden;" +
-        "pointer-events:none;" +
-        "z-index:-2147483647;" +
-        "opacity:1;" +
-        "visibility:visible;" +
-        "contain:strict;";
+        "position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-2147483647;opacity:1;visibility:visible;contain:strict;";
 
-    /* الحاوية الداخلية: بأبعاد كاملة، داخل الحاوية الخارجية */
     var inner = document.createElement("div");
     inner.id = "__render_stage_inner";
     inner.style.cssText =
-        "position:absolute;" +
-        "top:0;" +
-        "left:0;" +
-        "width:" + width + "px;" +
-        "height:" + height + "px;" +
-        "background:#ffffff;" +
-        "overflow:hidden;";
+        "position:absolute;top:0;left:0;width:" + width + "px;height:" + height + "px;background:#ffffff;overflow:hidden;";
 
     inner.innerHTML = sanitizeCodeForRender(code);
 
-    /* style fix */
     var fix = document.createElement("style");
     fix.textContent =
         "#__render_stage, #__render_stage * { box-sizing: border-box; }" +
@@ -1856,7 +1915,6 @@ function createRenderContainer(code, width, height) {
     return stage;
 }
 
-/* استخراج الإطارات من الحاوية */
 function getStageFrames(stage) {
     if (!stage) return [];
     var inner = stage.querySelector("#__render_stage_inner") || stage;
@@ -1871,7 +1929,6 @@ function getStageInner(stage) {
     return stage ? (stage.querySelector("#__render_stage_inner") || stage) : null;
 }
 
-/* تحضير الإطارات: فوق بعضها + كلها مخفية إلا الأول */
 function prepareStageFrames(stage, dims) {
     var inner = getStageInner(stage);
     var frames = getStageFrames(stage);
@@ -1907,7 +1964,6 @@ function showStageFrame(stage, index) {
     });
 }
 
-/* ─── تحميل الصور ─── */
 function waitImage(img, timeout) {
     timeout = timeout || 5000;
     return new Promise(function (resolve) {
@@ -2118,7 +2174,8 @@ function previewAnimatedClip() {
         .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
         .then(function () {
             var frameEls = getStageFrames(stage);
-            var isSingleInner = (frameEls.length === 1 && frameEls[0] === getStageInner(stage));
+            var inner = getStageInner(stage);
+            var isSingleInner = (frameEls.length === 1 && frameEls[0] === inner);
             if (!isSingleInner) {
                 frameEls.forEach(function (f) { f.style.position = "absolute"; f.style.top = "0"; f.style.left = "0"; f.style.width = dims.width + "px"; f.style.height = dims.height + "px"; f.style.visibility = "hidden"; });
             }
@@ -2259,7 +2316,7 @@ function finishVideoModal(success, message, extraDetails) {
 }
 
 /* ═══════════════════════════════════════════════════════════
-   التصدير الرئيسي — WebCodecs (v3.7)
+   التصدير الرئيسي — WebCodecs
    ═══════════════════════════════════════════════════════════ */
 async function exportAnimatedClipWebCodecs() {
     if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
@@ -2307,7 +2364,6 @@ async function exportAnimatedClipWebCodecs() {
     var stage = null;
 
     try {
-        /* إنشاء الحاوية */
         stage = createRenderContainer(t.value, dims.width, dims.height);
         applyImageReplacements(stage, "animated");
 
@@ -2318,16 +2374,13 @@ async function exportAnimatedClipWebCodecs() {
         await inlineBackgroundImages(stage);
         await prepareImages(stage);
 
-        /* تجهيز الإطارات: فوق بعضها */
         var frameElements = prepareStageFrames(stage, dims);
 
-        /* Canvas واحد */
         var mainCanvas = document.createElement("canvas");
         mainCanvas.width = dims.width;
         mainCanvas.height = dims.height;
         var mainCtx = mainCanvas.getContext("2d", { alpha: false });
 
-        /* إعدادات encoder */
         var bitrate = { 1: 1500000, 2: 4000000, 3: 8000000 }[quality] || 4000000;
         var chosenCodec = null;
         var candidates = [{ codec: 'avc1.42001f', mux: 'avc' }, { codec: 'avc1.4d0028', mux: 'avc' }];
@@ -2363,20 +2416,16 @@ async function exportAnimatedClipWebCodecs() {
         var frameTimes = [];
         var lastYield = performance.now();
 
-        /* الحلقة الرئيسية */
         for (var i = 0; i < totalFrames; i++) {
             if (_vmodalCancelled) throw new Error("تم الإلغاء");
             if (encError) throw encError;
 
             var frameStart = performance.now();
 
-            /* إظهار الإطار الحالي */
             showStageFrame(stage, i);
 
-            /* انتظر تحديث الرسم */
             await new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
 
-            /* SnapDOM */
             var snapCanvas;
             try {
                 snapCanvas = await withTimeout(
@@ -2398,13 +2447,11 @@ async function exportAnimatedClipWebCodecs() {
                 });
             }
 
-            /* نسخ لـ mainCanvas */
             mainCtx.fillStyle = "#ffffff";
             mainCtx.fillRect(0, 0, dims.width, dims.height);
             try {
                 mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
             } catch (e) {
-                /* fallback */
                 var fallback = await html2canvas(frameElements[i], {
                     scale: 1, width: dims.width, height: dims.height,
                     backgroundColor: "#ffffff", useCORS: true, logging: false
@@ -2413,12 +2460,10 @@ async function exportAnimatedClipWebCodecs() {
                 releaseCanvas(fallback);
             }
 
-            /* تحرير الذاكرة */
             if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) {
                 releaseCanvas(snapCanvas);
             }
 
-            /* VideoFrame */
             var vf = new VideoFrame(mainCanvas, {
                 timestamp: Math.round(i * 1000000 / fps),
                 duration: Math.round(1000000 / fps)
@@ -2426,14 +2471,12 @@ async function exportAnimatedClipWebCodecs() {
             encoder.encode(vf, { keyFrame: i % 60 === 0 });
             vf.close();
 
-            /* Backpressure */
             if (encoder.encodeQueueSize > 20) {
                 while (encoder.encodeQueueSize > 10) {
                     await new Promise(function (r) { setTimeout(r, 3); });
                 }
             }
 
-            /* ETA */
             var frameTime = performance.now() - frameStart;
             frameTimes.push(frameTime);
             if (frameTimes.length > 20) frameTimes.shift();
@@ -2445,7 +2488,6 @@ async function exportAnimatedClipWebCodecs() {
 
             updateVideoProgress({ percent: percent, elapsed: elapsed, eta: eta, frame: i + 1, total: totalFrames, speed: speed });
 
-            /* راحة للجهاز كل 15 إطار أو كل 1 ثانية */
             if (performance.now() - lastYield > 1000 || i % 15 === 0) {
                 await new Promise(function (r) { setTimeout(r, 0); });
                 lastYield = performance.now();
@@ -2532,7 +2574,7 @@ window.addEventListener("load", function () {
     currentImageContext = "converter";
     analyzeHTMLImages();
     generateAnimatedPromptText();
-    console.log("%c✅ v" + PLATFORM_VERSION, "color:#a78bfa;font-size:12px;");
+    console.log("%c✅ v" + PLATFORM_VERSION + " — توحيد الصور", "color:#a78bfa;font-size:12px;");
     setTimeout(function () { var o = document.getElementById("password-overlay"); if (o && o.style.display !== "none") { var p = document.getElementById("pass-input"); if (p) p.focus(); } }, 150);
 });
 </script>
