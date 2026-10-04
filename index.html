@@ -2642,6 +2642,12 @@ async function exportAnimatedClipWebCodecs() {
         var startTime = performance.now();
         var frameTimes = [];
         var lastYield = performance.now();
+        // Crash-safety: keep the WebCodecs pipeline deliberately shallow.
+        // A large encoder queue can make Chromium/Safari accumulate native video buffers.
+        var SAFE_QUEUE_HIGH = 5;
+        var SAFE_QUEUE_LOW = 2;
+        var FLUSH_BATCH = 90;
+        var subtitleEl = document.getElementById("vmodal-subtitle");
 
         for (var i = 0; i < totalFrames; i++) {
             if (_vmodalCancelled) throw new Error("تم الإلغاء");
@@ -2698,10 +2704,20 @@ async function exportAnimatedClipWebCodecs() {
             encoder.encode(vf, { keyFrame: i % 60 === 0 });
             vf.close();
 
-            if (encoder.encodeQueueSize > 20) {
-                while (encoder.encodeQueueSize > 10) {
-                    await new Promise(function (r) { setTimeout(r, 3); });
+            if (encoder.encodeQueueSize > SAFE_QUEUE_HIGH) {
+                while (encoder.encodeQueueSize > SAFE_QUEUE_LOW) {
+                    if (encError) throw encError;
+                    await new Promise(function (r) { setTimeout(r, 4); });
                 }
+            }
+
+            // Periodically drain the encoder. This does NOT write individual frames to disk;
+            // it simply prevents a long export from building an ever-growing native queue.
+            if ((i + 1) % FLUSH_BATCH === 0 && i + 1 < totalFrames) {
+                if (subtitleEl) subtitleEl.textContent = "🔄 معالجة دفعة الإطارات " + Math.ceil((i + 1) / FLUSH_BATCH) + "...";
+                await encoder.flush();
+                if (encError) throw encError;
+                await new Promise(function (r) { setTimeout(r, 0); });
             }
 
             var frameTime = performance.now() - frameStart;
@@ -2721,7 +2737,6 @@ async function exportAnimatedClipWebCodecs() {
             }
         }
 
-        var subtitleEl = document.getElementById("vmodal-subtitle");
         if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
 
         await encoder.flush();
