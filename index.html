@@ -206,6 +206,37 @@ textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;re
 .vmini-info{display:flex;justify-content:space-between;font-size:10px;color:#94a3b8;font-variant-numeric:tabular-nums}
 .vmini-info strong{color:#cbd5e1}
 
+
+/* ═══════════════════════════════════════════════════════════
+   v4.0 — أداء أفضل + رفع HTML + معاينة Frame/Clip تفاعلية
+   ═══════════════════════════════════════════════════════════ */
+.code-input-shell{position:relative}
+.code-file-row{display:flex;gap:8px;align-items:center;margin:8px 0 10px;flex-wrap:wrap}
+.code-file-btn{flex:1;min-width:150px;background:#334155;color:#e2e8f0;border:1px solid #475569;border-radius:8px;padding:10px 12px;font-size:12px;font-weight:800;cursor:pointer;text-align:center}
+.code-file-btn:hover{background:#475569;color:#fff}
+.code-file-name{flex:2;min-width:180px;color:#64748b;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code-size-note{font-size:10px;color:#64748b;margin-top:6px;line-height:1.6}
+.code-size-note.warn{color:#fbbf24}
+.anim-preview-panel{display:none;margin-top:14px;background:#080d18;border:1px solid #7c3aed;border-radius:12px;padding:12px}
+.anim-preview-panel.visible{display:block}
+.anim-preview-toolbar{display:flex;align-items:center;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-bottom:10px}
+.anim-preview-badge{background:#1e1b4b;color:#c4b5fd;border:1px solid #6d28d9;border-radius:20px;padding:5px 10px;font-size:10px;font-weight:800}
+.anim-preview-stage{width:100%;aspect-ratio:16/9;background:#020617;border:1px solid #334155;border-radius:9px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.anim-preview-stage.portrait{aspect-ratio:794/1123}
+#anim-preview-canvas{display:block;width:100%;height:100%;object-fit:contain;background:#fff}
+.anim-preview-controls{margin-top:10px}
+.anim-preview-range{width:100%;accent-color:#7c3aed;cursor:pointer}
+.anim-preview-range:disabled{opacity:.45;cursor:not-allowed}
+.anim-preview-time{display:flex;justify-content:space-between;gap:8px;margin-top:6px;color:#94a3b8;font-size:10px;font-variant-numeric:tabular-nums}
+.anim-preview-actions{display:flex;gap:7px;margin-top:9px}
+.anim-preview-action{flex:1;border:0;border-radius:7px;padding:9px 7px;background:#334155;color:#e2e8f0;font-size:11px;font-weight:800;cursor:pointer}
+.anim-preview-action:hover{background:#475569}
+.anim-preview-action.play{background:#7c3aed;color:#fff}
+.anim-preview-action.play:hover{background:#6d28d9}
+.anim-preview-status{text-align:center;color:#a78bfa;font-size:10px;font-weight:700;min-height:15px;margin-top:7px}
+.anim-preview-hint{margin-top:8px;color:#64748b;font-size:10px;line-height:1.6;text-align:center}
+.anim-performance-note{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:9px;color:#94a3b8;font-size:10px;line-height:1.7;margin-top:10px}
+
 @media print{html,body,*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}[data-render-container] img{visibility:visible!important;opacity:1!important}.page{page-break-after:always}}
 img{-webkit-user-drag:none}
 @media (max-width:600px){
@@ -236,7 +267,7 @@ input:not([type="checkbox"]),select{font-size:16px}
     </div>
 </div>
 
-<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v3.8</span></h2></div>
+<div class="header"><h2>🛠️ منصة تحويل الأكواد <span class="version-badge">v4.0</span></h2></div>
 
 <div class="top-nav">
     <button type="button" class="nav-btn active" id="btn-converter" onclick="switchTab('converter')">⚙️ التحويل</button>
@@ -457,10 +488,16 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <label style="margin:0;">كود HTML:</label>
                     <div class="action-btns">
                         <button type="button" class="clear-btn" onclick="clearAnimatedCode()">🗑️ مسح</button>
-                        <button type="button" onclick="analyzeAnimatedFrames()">🔄 عدّ</button>
+                        <button type="button" onclick="analyzeAnimatedFrames(true)">🔄 تحليل</button>
                     </div>
                 </div>
+                <div class="code-file-row">
+                    <label class="code-file-btn" for="animated-html-file">📂 رفع ملف HTML</label>
+                    <input id="animated-html-file" type="file" accept=".html,.htm,text/html" style="display:none">
+                    <span id="animated-html-file-name" class="code-file-name">يمكنك رفع الملف إذا كان الكود طويلًا لتخفيف التقطيع.</span>
+                </div>
                 <textarea id="animated-html-input" placeholder="الصق كود العرض المتحرك هنا..."></textarea>
+                <div id="animated-code-size-note" class="code-size-note">الأفضل رفع ملف HTML عند تجاوز الكود عدة مئات الآلاف من الأحرف.</div>
             </div>
 
             <div id="anim-image-manager" class="html-image-manager">
@@ -479,12 +516,31 @@ input:not([type="checkbox"]),select{font-size:16px}
                 <button type="button" class="image-manager-refresh" onclick="analyzeAnimatedImages()">🔄 تحديث</button>
             </div>
 
-            <button type="button" class="export-btn" style="background:#0d9488;" onclick="previewAnimatedClip()">👁️ معاينة أول 5 إطارات</button>
+            <button type="button" class="export-btn" style="background:#0d9488;" onclick="previewAnimatedClip()">👁️ فتح المعاينة التفاعلية</button>
             <button type="button" id="anim-export-btn" class="export-btn" style="background:#7c3aed;" onclick="exportAnimatedClipWebCodecs()">⚡ تصدير MP4</button>
 
-            <div id="anim-preview-wrap" class="anim-preview-wrap">
-                <img id="anim-preview-img" class="anim-preview-img" alt="معاينة">
-                <div class="anim-preview-note" id="anim-preview-note">معاينة</div>
+            <div id="anim-preview-panel" class="anim-preview-panel">
+                <div class="anim-preview-toolbar">
+                    <span class="anim-preview-badge">🎬 معاينة Frame-by-Frame</span>
+                    <span id="anim-preview-current" class="anim-preview-badge">فريم 0 / 0</span>
+                </div>
+                <div id="anim-preview-stage" class="anim-preview-stage">
+                    <canvas id="anim-preview-canvas" width="1280" height="720"></canvas>
+                </div>
+                <div class="anim-preview-controls">
+                    <input id="anim-preview-range" class="anim-preview-range" type="range" min="0" max="0" value="0" step="1" disabled>
+                    <div class="anim-preview-time">
+                        <span id="anim-preview-frame-label">الفريم 0</span>
+                        <span id="anim-preview-duration-label">0.0 ث</span>
+                    </div>
+                    <div class="anim-preview-actions">
+                        <button type="button" class="anim-preview-action" onclick="previewStep(-1)">◀ السابق</button>
+                        <button type="button" id="anim-preview-play" class="anim-preview-action play" onclick="toggleAnimatedPreview()">▶ تشغيل المقطع</button>
+                        <button type="button" class="anim-preview-action" onclick="previewStep(1)">التالي ▶</button>
+                    </div>
+                    <div id="anim-preview-status" class="anim-preview-status">جاهز للمعاينة</div>
+                    <div class="anim-performance-note">⚡ المعاينة تعمل بجودة أخف من التصدير لتكون سريعة. حرّك الشريط لاختيار أي فريم، وسيتم تصييره عند الحاجة فقط بدل معالجة كل الإطارات دفعة واحدة.</div>
+                </div>
             </div>
         </div>
 
@@ -747,8 +803,8 @@ input:not([type="checkbox"]),select{font-size:16px}
    ✅ عرض عدد مرات الاستخدام
    ✅ التعديل يُطبق على كل الإطارات تلقائيًا
    ═══════════════════════════════════════════════════════════ */
-var PLATFORM_VERSION = "3.8";
-console.log("%c🚀 v" + PLATFORM_VERSION, "background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;");
+var PLATFORM_VERSION = "4.0";
+console.log("%c🚀 v" + PLATFORM_VERSION + " — أداء + معاينة تفاعلية", "background:#7c3aed;color:#fff;padding:4px 8px;border-radius:4px;font-weight:bold;");
 
 var SECRET_PASSWORD = "ayman";
 var AUTH_KEY = "auth_token_v2";
@@ -1624,175 +1680,177 @@ function updateAnimPromptStats() {
 
 function generateAnimatedPromptText() {
     updateAnimPromptStats();
-    var oEl = document.getElementById("anim-prompt-orientation"), sEl = document.getElementById("anim-prompt-slides"), sdEl = document.getElementById("anim-prompt-slide-duration"), fEl = document.getElementById("anim-prompt-fps");
-    var mEl = document.getElementById("anim-motion-type"), trEl = document.getElementById("anim-transition-type");
-    var cEl = document.getElementById("anim-color-scheme"), styEl = document.getElementById("anim-design-style"), foEl = document.getElementById("anim-font-choice");
-    var imEl = document.getElementById("anim-prompt-images"), tEl = document.getElementById("anim-prompt-title"), subEl = document.getElementById("anim-prompt-subject");
-    var nEl = document.getElementById("anim-prompt-name"), teEl = document.getElementById("anim-prompt-teacher"), gEl = document.getElementById("anim-prompt-grade"), yEl = document.getElementById("anim-prompt-year"), deEl = document.getElementById("anim-prompt-desc");
 
-    var orientation = oEl ? oEl.value : "landscape";
-    var slides = Number(sEl ? sEl.value : 6) || 6;
-    var slideDuration = Number(sdEl ? sdEl.value : 2) || 2;
-    var fps = Number(fEl ? fEl.value : 12) || 12;
-    var motionType = mEl ? mEl.value : "auto";
-    var transitionType = trEl ? trEl.value : "auto";
-    var colorScheme = cEl ? cEl.value : "auto";
-    var designStyle = styEl ? styEl.value : "auto";
-    var fontChoice = foEl ? foEl.value : "";
-    var imagesCount = Number(imEl ? imEl.value : 4) || 0;
-    var title = tEl ? tEl.value.trim() : "";
-    var subject = subEl ? subEl.value.trim() : "";
-    var name = nEl ? nEl.value.trim() : "";
-    var teacher = teEl ? teEl.value.trim() : "";
-    var grade = gEl ? gEl.value.trim() : "";
-    var year = yEl ? yEl.value.trim() : "";
-    var desc = deEl ? deEl.value.trim() : "";
+    var val = function(id, fallback) {
+        var el = document.getElementById(id);
+        return el ? String(el.value || "").trim() : (fallback || "");
+    };
+
+    var orientation = val("anim-prompt-orientation","landscape");
+    var slides = Number(val("anim-prompt-slides","6")) || 6;
+    var slideDuration = Number(val("anim-prompt-slide-duration","2")) || 2;
+    var fps = Number(val("anim-prompt-fps","12")) || 12;
+    var motionType = val("anim-motion-type","auto");
+    var transitionType = val("anim-transition-type","auto");
+    var colorScheme = val("anim-color-scheme","auto");
+    var designStyle = val("anim-design-style","auto");
+    var fontChoice = val("anim-font-choice","");
+    var imagesCount = Number(val("anim-prompt-images","4")) || 0;
+    var title = val("anim-prompt-title","");
+    var subject = val("anim-prompt-subject","");
+    var name = val("anim-prompt-name","");
+    var teacher = val("anim-prompt-teacher","");
+    var grade = val("anim-prompt-grade","");
+    var year = val("anim-prompt-year","");
+    var desc = val("anim-prompt-desc","");
 
     var isL = orientation === "landscape";
     var width = isL ? 1280 : 794, height = isL ? 720 : 1123;
-    var oText = isL ? "عرضي" : "طولي";
-    var rText = isL ? "16:9" : "A4 (1:1.414)";
-    var framesPerSlide = Math.round(slideDuration * fps);
+    var ratio = isL ? "16:9" : "A4";
+    var framesPerSlide = Math.max(1, Math.round(slideDuration * fps));
     var totalFrames = slides * framesPerSlide;
     var totalSeconds = slides * slideDuration;
 
     var motionMap = {
-        "auto": "🎲 اختر نوع الحركة الأمثل لكل شريحة — نوّع حسب طبيعة المحتوى.",
-        "fade": "Fade In تدريجي لكل عناصر الشريحة.",
-        "slide": "Slide من الأسفل/الجانب.",
-        "zoom": "Zoom تدريجي من الصغير للكبير.",
-        "mixed": "🎨 نوّع بين الشرائح: fade، slide، zoom…"
+        auto: "اختر حركة مرتبطة بالمعنى نفسه: حركة الجسم، دوران، انتقال، تكبير، رسم، ظهور تدريجي أو تغير موضع. لا تحرك النصوص وحدها.",
+        fade: "ظهور واختفاء تدريجي محدود للعناصر مع بقاء الحركة الأساسية للمشهد واضحة.",
+        slide: "حركة مكانية ناعمة ومقصودة للعناصر أو الكائنات، مع الحفاظ على استمرارية الموضع بين الفريمات.",
+        zoom: "تكبير أو تصغير تدريجي مرتبط بعنصر مهم، مع عدم إرباك المشاهد.",
+        mixed: "تنويع الحركات حسب المحتوى، مع الحفاظ على نفس اللغة البصرية وعدم استخدام حركة لمجرد الزينة."
     };
-    var motionText = motionMap[motionType] || motionMap.auto;
-
     var transitionMap = {
-        "auto": "🎲 اختر انتقالاً مناسبًا بين كل شريحة والتي تليها — نوّع ليكون العرض احترافيًا.",
-        "fade": "انتقال Fade ناعم.",
-        "slide": "انتقال Slide.",
-        "zoom": "انتقال Zoom.",
-        "none": "بدون انتقال — مباشر."
+        auto: "اجعل الانتقال استمرارًا بصريًا لما قبله؛ إذا كان يمكن ربط العنصر الأخير بالعنصر الأول في الشريحة التالية فافعل ذلك.",
+        fade: "Fade قصير وناعم فقط عند الحاجة، وليس انتقالًا مفاجئًا.",
+        slide: "انتقال مكاني ناعم، بحيث يبدو المشهد وكأنه يتحرك إلى المشهد التالي.",
+        zoom: "انتقال Zoom خفيف ومقصود.",
+        none: "لا تستخدم انتقالًا منفصلًا؛ اجعل آخر فريم من المشهد الحالي وأول فريم من المشهد التالي متقاربين بصريًا."
     };
-    var transitionText = transitionMap[transitionType] || transitionMap.auto;
 
-    var colorText = (colorScheme === "auto" || !colorScheme) ? "🎲 اختر نظام ألوان احترافيًا." : "نظام الألوان: " + colorScheme;
-    var styleText = (designStyle === "auto" || !designStyle) ? "🎲 اختر نمطًا عصريًا." : "نمط التصميم: " + designStyle;
+    var project = [];
+    if (title) project.push("العنوان: " + title);
+    if (subject) project.push("المادة: " + subject);
+    if (name) project.push("اسم الطالب/الطالبة: " + name);
+    if (teacher) project.push("المعلم/المعلمة: " + teacher);
+    if (grade) project.push("الصف: " + grade);
+    if (year) project.push("العام: " + year);
+    if (desc) project.push("ملاحظات إضافية: " + desc);
 
     var parts = [];
-    parts.push("أنت مصمم Motion Designer ومطوّر واجهات أمامية محترف، متخصص في تصميم **عروض تقديمية متحركة** بنظام Frame-by-Frame عبر HTML/CSS ثابت فقط.");
-    parts.push("🎬 المطلوب: صمّم **عرضًا تقديميًا متحركًا كاملاً** — عرض تقديمي كامل مثل العروض العادية، لكن **كل شريحة تتحرك من إطار لإطار** ثم ينتقل للشريحة التالية تلقائيًا.");
-
-    var proj = [];
-    if (title) proj.push("• عنوان العرض: " + title);
-    if (subject) proj.push("• المادة: " + subject);
-    if (name) proj.push("• اسم الطالب: " + name);
-    if (teacher) proj.push("• اسم المعلم: " + teacher);
-    if (grade) proj.push("• الصف: " + grade);
-    if (year) proj.push("• العام: " + year);
-    if (desc) proj.push("• ملاحظات: " + desc);
-    if (proj.length) parts.push("📋 بيانات المشروع:\n" + proj.join("\n") + "\n\n⚠️ أدرجها بأناقة في الشريحة الأولى.");
-
     parts.push(
-        "📐 المواصفات:\n" +
-        "• الأبعاد: " + width + "×" + height + " (" + oText + ").\n" +
-        "• النسبة: " + rText + ".\n" +
-        "• عدد الشرائح: **" + slides + " شريحة**.\n" +
-        "• مدة كل شريحة: " + slideDuration + " ثانية.\n" +
-        "• FPS: " + fps + ".\n" +
-        "• الإطارات لكل شريحة: " + framesPerSlide + ".\n" +
-        "• **إجمالي الإطارات: " + totalFrames + "** بالضبط.\n" +
-        "• المدة الكلية: " + totalSeconds + " ثانية."
+        "أنت Motion Designer ومخرج تعليمي ومطوّر Front-End محترف. أنشئ فيديو/عرضًا تعليميًا عربيًا احترافيًا من الصفر بنظام **Frame-by-Frame** باستخدام HTML وCSS ثابت فقط."
     );
 
     parts.push(
-        "🏗️ بنية الكود:\n" +
-        "```html\n" +
-        "<div id=\"animation\">\n" +
-        "  <!-- الشريحة 1: الإطارات 1-" + framesPerSlide + " -->\n" +
-        "  <div class=\"frame\" data-frame=\"1\" data-slide=\"1\">...</div>\n" +
-        "  ...\n" +
-        "  <div class=\"frame\" data-frame=\"" + framesPerSlide + "\" data-slide=\"1\">...</div>\n" +
-        "  <!-- الشريحة 2 -->\n" +
-        "  <div class=\"frame\" data-frame=\"" + (framesPerSlide + 1) + "\" data-slide=\"2\">...</div>\n" +
+        "🎬 **الفكرة الأساسية:**\n" +
+        "لا أريد PowerPoint مع نصوص تتحرك فوق شرائح ثابتة. أريد مشاهد تعليمية متحركة فعلية، بحيث تتغير العناصر بصريًا من فريم إلى فريم لتشرح الفكرة. إذا كان الموضوع علميًا، اجعل الكائن أو الرسم أو السهم أو القياس نفسه يتحرك ويشرح المعلومة، بينما يكون النص مساعدًا ومختصرًا."
+    );
+
+    if (project.length) {
+        parts.push("📋 **بيانات المشروع:**\n" + project.join("\n") + "\nأدرج البيانات المطلوبة فقط وبشكل أنيق، ولا تخترع بيانات ناقصة.");
+    }
+
+    parts.push(
+        "📐 **المواصفات التقنية:**\n" +
+        "• المقاس: " + width + "×" + height + " px.\n" +
+        "• النسبة: " + ratio + ".\n" +
+        "• عدد الشرائح/المشاهد: " + slides + ".\n" +
+        "• لا تجعل مدة كل شريحة ثابتة بشكل أعمى إذا احتاج المحتوى وقتًا أطول؛ الأهم أن يحصل المشاهد على وقت كافٍ للقراءة والفهم.\n" +
+        "• FPS المطلوب: " + fps + ".\n" +
+        "• عند استخدام مدة تقديرية " + slideDuration + " ث للمشهد، يكون المتوسط " + framesPerSlide + " فريمًا للمشهد وقرابة " + totalFrames + " فريمًا إجمالًا، ويمكن زيادة أو تقليل عدد الفريمات حسب الحاجة للقراءة والحركة السلسة."
+    );
+
+    parts.push(
+        "🧩 **طريقة بناء الحركة:**\n" +
+        "1. ابدأ كل مشهد بحالة بصرية واضحة.\n" +
+        "2. غيّر الحالة تدريجيًا عبر الفريمات بدل القفز من وضع إلى آخر.\n" +
+        "3. حافظ على استمرارية مواضع العناصر: إذا تحرك جسم من اليمين إلى اليسار، يجب أن يكون موضعه في كل فريم متسقًا مع الفريم السابق.\n" +
+        "4. استخدم easing بصريًا عبر اختلاف المسافات بين الفريمات نفسها، وليس عبر CSS animation.\n" +
+        "5. لا تجعل كل شيء يتحرك في الوقت نفسه؛ رتّب الحركة على مراحل واضحة.\n" +
+        "6. اترك آخر فريم أو آخر مجموعة فريمات هادئة بما يكفي لقراءة المعلومة.\n" +
+        "7. لا تستخدم انتقالات مفاجئة أو ظهورًا واختفاءً بلا سبب."
+    );
+
+    parts.push(
+        "🏗️ **بنية Frame-by-Frame الإلزامية:**\n" +
+        "استخدم:\n" +
+        '<div id="animation">' + "\n" +
+        '  <div class="frame" data-frame="1" data-slide="1">...</div>' + "\n" +
+        '  <div class="frame" data-frame="2" data-slide="1">...</div>' + "\n" +
         "  ...\n" +
         "</div>\n" +
-        "```\n" +
-        "• كل إطار: `<div class=\"frame\" data-frame=\"N\" data-slide=\"S\">`.\n" +
-        "• N من 1 إلى " + totalFrames + ".\n" +
-        "• S من 1 إلى " + slides + ".\n" +
-        "• كل إطار بأبعاد " + width + "×" + height + "."
+        "كل .frame مستقل ويحتوي الحالة البصرية الكاملة لذلك الفريم. لا تعتمد على JavaScript لتغيير الحالات وقت التشغيل."
     );
 
     parts.push(
-        "📊 خطة الشرائح:\n" +
-        "• **الشريحة 1: العنوان الرئيسي** — عنوان العرض + المادة + الطالب + المعلم + الصف + العام، كل عنصر يظهر تدريجيًا.\n" +
-        "• **الشريحة 2: المقدمة** — 2-3 نقاط تظهر واحدة تلو الأخرى.\n" +
-        (slides > 3 ? "• **الشرائح 3 إلى " + (slides - 1) + ": المحتوى** — وزّع مواضيع العرض. نوّع التخطيطات: نقاط، أرقام كبيرة، بطاقات، مخططات، جداول، خط زمني" + (imagesCount > 0 ? "، وصور" : "") + ".\n" : "") +
-        "• **الشريحة " + slides + ": الخاتمة** — ملخص + شكراً.\n\n" +
-        "⚠️ **أنت تختار محتوى كل شريحة** — محتوى علمي حقيقي يخدم الموضوع بتسلسل منطقي."
+        "🎥 **السلاسة والقراءة — مهم جدًا:**\n" +
+        "• لا تسرّع المحتوى لمجرد تقليل عدد الفريمات.\n" +
+        "• إذا احتاج مشهد إلى وقت للقراءة، زد عدد الفريمات الهادئة بدل ضغط النص.\n" +
+        "• اجعل الحركة مستمرة وناعمة بصريًا من الفريم السابق إلى اللاحق.\n" +
+        "• لا تقطع المشهد في منتصف فكرة.\n" +
+        "• لا تستخدم أكثر من حركة رئيسية أو حركتين متزامنتين إذا كان ذلك سيشتت الانتباه.\n" +
+        "• لا تضع نصًا فوق نص، ولا تسمح بتداخل العناصر أو خروجها من حدود المشهد.\n" +
+        "• كل معلومة مهمة يجب أن تظهر بوضوح، ثم تحصل على فريمات كافية قبل الانتقال."
+    );
+
+    parts.push(
+        "📚 **التسلسل التعليمي:**\n" +
+        "• المشهد 1: تقديم الموضوع بصريًا + البيانات المطلوبة.\n" +
+        "• المشهد 2: تعريف الفكرة أو المشكلة بطريقة سهلة.\n" +
+        "• المشاهد الوسطى: شرح متدرج؛ كل مشهد يضيف فكرة جديدة، ويفضل أن يوضحها بحركة أو رسم أو علاقة بصرية.\n" +
+        "• المشهد الأخير: تلخيص بصري سريع يربط الأفكار ببعضها.\n" +
+        "لا تملأ المشاهد بنقاط نظرية كثيرة؛ اجعل الصورة والحركة تشرحان جزءًا من المعلومة."
     );
 
     if (imagesCount > 0) {
         parts.push(
-            "🖼️ الصور:\n" +
-            "• أضف **" + imagesCount + " صور** بالضبط موزعة على الشرائح.\n" +
-            "• كل صورة داخل حاوية ثابتة مع object-fit:cover و overflow:hidden.\n" +
-            "• روابط HTTPS صالحة.\n" +
-            "• أضف alt و data-image-name لكل صورة.\n" +
-            "• ⚠️ **مهم:** إذا استخدمت نفس الصورة في أكثر من شريحة، استخدم **نفس رابط الصورة بالضبط** — سيتم التعامل معها كصورة واحدة."
+            "🖼️ **الصور:**\n" +
+            "استخدم " + imagesCount + " صور بالضبط عند الحاجة، داخل حاويات ثابتة، مع object-fit:cover وoverflow:hidden. لا تجعل الصور بديلًا عن الحركة التعليمية."
         );
     } else {
-        parts.push("🖼️ بدون صور.");
+        parts.push("🖼️ **الصور:** بدون صور خارجية. أنشئ الرسومات والعناصر التعليمية باستخدام HTML/CSS قدر الإمكان.");
     }
 
     parts.push(
-        "🎞️ الحركة داخل الشرائح:\n" +
-        "• " + motionText + "\n" +
-        "• كل شريحة تتحرك من الإطار الأول إلى الإطار " + framesPerSlide + " (الشريحة كاملة).\n" +
-        "• التدرج منتظم عبر الإطارات.\n" +
-        "• العناصر تظهر واحدًا تلو الآخر (تسلسل منطقي)."
+        "🎞️ **نوع الحركة المختار:** " + (motionMap[motionType] || motionMap.auto) + "\n" +
+        "🔀 **الانتقالات:** " + (transitionMap[transitionType] || transitionMap.auto)
     );
 
     parts.push(
-        "🔀 الانتقال بين الشرائح:\n" +
-        "• " + transitionText + "\n" +
-        "• الانتقال في الإطارات الأخيرة من الشريحة الحالية والأولى من التالية.\n" +
-        "• لا تكرر نفس الانتقال."
+        "🎨 **الهوية البصرية:**\n" +
+        "• الألوان: " + ((colorScheme === "auto" || !colorScheme) ? "اختر لوحة علمية/تعليمية مناسبة للموضوع." : colorScheme) + "\n" +
+        "• النمط: " + ((designStyle === "auto" || !designStyle) ? "اختر أسلوبًا احترافيًا مناسبًا للموضوع." : designStyle) + "\n" +
+        "• حافظ على هوية موحدة بين المشاهد، مع اختلاف التخطيط عند الحاجة.\n" +
+        "• اجعل الخلفيات والعناصر تخدم الشرح ولا تكون مجرد زخرفة."
     );
 
     parts.push(
-        "🎨 التصميم:\n" +
-        "• " + colorText + "\n" +
-        "• " + styleText + "\n" +
-        "• كل شريحة بتصميم مميز لكن متناسق (هوية بصرية موحدة)."
+        "🔤 **النص والخط:**\n" +
+        "• العربية RTL باستخدام lang=\"ar\" dir=\"rtl\".\n" +
+        "• الخط: " + (fontChoice ? fontChoice : "اختر خطًا عربيًا واضحًا واحترافيًا") + ".\n" +
+        "• لا تستخدم letter-spacing سلبي أو ضغطًا للنص.\n" +
+        "• اجعل العناوين كبيرة، والنصوص قصيرة، ومسافات القراءة مريحة."
     );
 
     parts.push(
-        "🔤 الخطوط:\n" +
-        (fontChoice ? "• «" + fontChoice + "» من Google Fonts.\n" : "• اختر خطًا عربيًا أنيقًا.\n") +
-        "• الاتجاه: RTL (lang=\"ar\" dir=\"rtl\").\n" +
-        "• استدعاء: Google Fonts css2."
+        "🚫 **ممنوعات تقنية:**\n" +
+        "• ممنوع JavaScript داخل العرض الناتج.\n" +
+        "• ممنوع @keyframes وanimation وtransition في CSS.\n" +
+        "• ممنوع الاعتماد على setInterval أو requestAnimationFrame أو أي حركة وقت التشغيل.\n" +
+        "• ممنوع إنشاء شريحة ثابتة ثم تحريك النصوص فوقها فقط.\n" +
+        "• ممنوع الفريمات المكررة بلا تغيير بصري حقيقي إلا إذا كانت مطلوبة لإعطاء وقت قراءة.\n" +
+        "• ممنوع النصوص المتداخلة أو الخارجة عن حدود  " + width + "×" + height + "."
     );
 
-    var req = [
-        "<!doctype html> ثم <html lang=\"ar\" dir=\"rtl\">.",
-        "body: margin:0; padding:0; box-sizing:border-box.",
-        "**" + totalFrames + " إطار بالضبط** — لا أكثر ولا أقل.",
-        "**" + slides + " شرائح** — كل شريحة = " + framesPerSlide + " إطار.",
-        "كل .frame بأبعاد " + width + "×" + height + ".",
-        "⚠️ **لا @keyframes ولا transition ولا animation** في CSS.",
-        "⚠️ **لا JavaScript**.",
-        "محتوى حقيقي علمي — **لا نص حشو**.",
-        "أدرج بيانات المشروع في الشريحة الأولى.",
-        "نوّع التخطيطات.",
-        "ضع كل الإطارات داخل <div id=\"animation\">.",
-        "أخرج الكود كاملاً في ```html``` واحدة."
-    ];
-    parts.push("✅ المتطلبات:\n" + req.map(function (r, i) { return (i + 1) + ". " + r; }).join("\n"));
-    parts.push("🎬 ابدأ الآن.");
+    parts.push(
+        "📦 **الإخراج النهائي:**\n" +
+        "أخرج ملف HTML كاملًا وقابلًا للنسخ مباشرة، في كتلة ```html``` واحدة فقط. يجب أن يحتوي على كل CSS وكل الفريمات، ويعمل مباشرة عند فتحه، وتكون كل فريمات العرض قابلة لاكتشافها بواسطة .frame أو .slide أو .page."
+    );
 
+    parts.push("🎬 ابدأ ببناء التجربة التعليمية كاملة الآن، واجعل السلاسة والوضوح واستمرارية الحركة أهم من كثرة المؤثرات.");
     var out = document.getElementById("animated-prompt-output");
     if (out) out.value = parts.join("\n\n");
 }
+
 
 function copyAnimatedPrompt() {
     var out = document.getElementById("animated-prompt-output"); if (!out) return;
@@ -2143,12 +2201,23 @@ function updateAnimFrameCount(frames, slides) {
     if (sEl) sEl.textContent = slides;
 }
 
-function analyzeAnimatedFrames() {
-    var t = document.getElementById("animated-html-input"); if (!t) return;
-    if (!t.value.trim()) { updateAnimFrameCount(0, 0); return; }
-    var frames = extractFramesFromCode(t.value);
-    var slides = countUniqueSlides(t.value);
+function analyzeAnimatedFrames(force) {
+    var t = document.getElementById("animated-html-input");
+    if (!t) return;
+    var code = t.value || "";
+    updateAnimatedCodeSizeNote(code);
+    if (!code.trim()) { updateAnimFrameCount(0, 0); return; }
+
+    /* لا تشغّل DOMParser/تحليل الصور تلقائيًا للكود الضخم. */
+    if (!force && code.length >= 180000) {
+        updateAnimFrameCount("—", "—");
+        return;
+    }
+
+    var frames = extractFramesFromCode(code);
+    var slides = countUniqueSlides(code);
     updateAnimFrameCount(frames.length, slides);
+    currentImageContext = "animated";
     analyzeAnimatedImages();
 }
 
@@ -2158,61 +2227,219 @@ function getAnimatedDimensions() {
     return { width: 1280, height: 720 };
 }
 
+/* ─── v4.0: تحميل ملف HTML + قياس الكود بدون تجميد الواجهة ─── */
+function updateAnimatedCodeSizeNote(code) {
+    var el = document.getElementById("animated-code-size-note");
+    if (!el) return;
+    var n = (code || "").length;
+    var kb = n / 1024;
+    el.textContent = n ? ("حجم الكود: " + (kb < 1024 ? kb.toFixed(1) + " KB" : (kb / 1024).toFixed(2) + " MB") + " — " +
+        (n >= 180000 ? "يفضل عدم التحليل التلقائي؛ استخدم زر «تحليل» أو رفع الملف." : "يمكنك المتابعة أو رفع الملف إذا أصبح الإدخال بطيئًا.")) :
+        "الأفضل رفع ملف HTML عند تجاوز الكود عدة مئات الآلاف من الأحرف.";
+    el.classList.toggle("warn", n >= 180000);
+}
+
+function handleAnimatedHTMLFileUpload(e) {
+    var input = e && e.target;
+    var file = input && input.files && input.files[0];
+    if (!file) return;
+    var nameEl = document.getElementById("animated-html-file-name");
+    var textarea = document.getElementById("animated-html-input");
+    if (nameEl) nameEl.textContent = "⏳ جارٍ قراءة " + file.name + "…";
+    var reader = new FileReader();
+    reader.onload = function () {
+        if (textarea) textarea.value = String(reader.result || "");
+        if (nameEl) nameEl.textContent = "📄 " + file.name + " — " + Math.round(file.size / 1024) + " KB";
+        updateAnimatedCodeSizeNote(textarea ? textarea.value : "");
+        currentImageContext = "animated";
+        setTimeout(function () { analyzeAnimatedFrames(true); }, 20);
+    };
+    reader.onerror = function () {
+        if (nameEl) nameEl.textContent = "❌ تعذر قراءة الملف";
+    };
+    reader.readAsText(file);
+}
+
+/* ─── معاينة تفاعلية lazy — لا ترسم كل الفريمات دفعة واحدة ─── */
+var _animPreview = {
+    code: "",
+    stage: null,
+    frames: [],
+    dims: {width:1280,height:720},
+    current: 0,
+    cache: new Map(),
+    rendering: false,
+    playing: false,
+    playToken: 0,
+    fps: 12
+};
+
+function closeAnimatedPreviewStage() {
+    if (_animPreview.playing) _animPreview.playToken++;
+    _animPreview.playing = false;
+    if (_animPreview.stage) { try { _animPreview.stage.remove(); } catch(e){} }
+    _animPreview.stage = null;
+    _animPreview.cache.clear();
+}
+
+function setupAnimatedPreview() {
+    var t = document.getElementById("animated-html-input");
+    if (!t || !t.value.trim()) { alert("الصق كود العرض أو ارفع ملف HTML أولًا."); return false; }
+    var frames = extractFramesFromCode(t.value);
+    if (!frames.length) { alert("لا توجد إطارات .frame أو .slide أو .page."); return false; }
+
+    closeAnimatedPreviewStage();
+    _animPreview.code = t.value;
+    _animPreview.frames = frames;
+    _animPreview.dims = getAnimatedDimensions();
+    _animPreview.current = 0;
+    _animPreview.fps = Number(document.getElementById("anim-fps").value) || 12;
+
+    var panel = document.getElementById("anim-preview-panel");
+    var stageEl = document.getElementById("anim-preview-stage");
+    var canvas = document.getElementById("anim-preview-canvas");
+    var range = document.getElementById("anim-preview-range");
+    if (!panel || !stageEl || !canvas || !range) return false;
+
+    stageEl.classList.toggle("portrait", _animPreview.dims.height > _animPreview.dims.width);
+    canvas.width = _animPreview.dims.width;
+    canvas.height = _animPreview.dims.height;
+    range.max = String(frames.length - 1);
+    range.value = "0";
+    range.disabled = false;
+    panel.classList.add("visible");
+
+    var cur = document.getElementById("anim-preview-current");
+    if (cur) cur.textContent = "فريم 1 / " + frames.length;
+    return true;
+}
+
+async function buildAnimatedPreviewStage() {
+    if (_animPreview.stage) return _animPreview.stage;
+    var stage = createRenderContainer(_animPreview.code, _animPreview.dims.width, _animPreview.dims.height);
+    applyImageReplacements(stage, "animated");
+    await waitForFonts();
+    await inlineAllImages(stage);
+    await inlineBackgroundImages(stage);
+    await prepareImages(stage);
+    prepareStageFrames(stage, _animPreview.dims);
+    _animPreview.stage = stage;
+    return stage;
+}
+
+async function renderAnimatedPreviewFrame(index) {
+    if (!_animPreview.frames.length) return;
+    index = Math.max(0, Math.min(_animPreview.frames.length - 1, index));
+    _animPreview.current = index;
+    var canvas = document.getElementById("anim-preview-canvas");
+    var status = document.getElementById("anim-preview-status");
+    if (!canvas) return;
+
+    var cached = _animPreview.cache.get(index);
+    if (cached) {
+        var cctx = canvas.getContext("2d");
+        cctx.clearRect(0,0,canvas.width,canvas.height);
+        cctx.drawImage(cached,0,0,canvas.width,canvas.height);
+        updateAnimatedPreviewUI(index);
+        return;
+    }
+
+    if (_animPreview.rendering) return;
+    _animPreview.rendering = true;
+    if (status) status.textContent = "⏳ تصيير الفريم " + (index + 1) + "…";
+
+    try {
+        var stage = await buildAnimatedPreviewStage();
+        showStageFrame(stage, index);
+        await new Promise(function(r){ requestAnimationFrame(function(){requestAnimationFrame(r);}); });
+
+        var target = _animPreview.frames[index];
+        var scale = Math.min(0.6, Math.max(0.35, 720 / _animPreview.dims.width));
+        var cv;
+        try {
+            cv = await withTimeout(window.snapdom.toCanvas(target,{
+                scale:scale,dpr:1,backgroundColor:"#ffffff",embedFonts:false,fast:true,
+                width:_animPreview.dims.width,height:_animPreview.dims.height
+            }),12000,"preview timeout");
+        } catch(e) {
+            cv = await html2canvas(target,{
+                scale:scale,width:_animPreview.dims.width,height:_animPreview.dims.height,
+                backgroundColor:"#ffffff",useCORS:true,logging:false
+            });
+        }
+
+        var small = document.createElement("canvas");
+        small.width = Math.max(1,Math.round(_animPreview.dims.width * scale));
+        small.height = Math.max(1,Math.round(_animPreview.dims.height * scale));
+        small.getContext("2d").drawImage(cv,0,0,small.width,small.height);
+        _animPreview.cache.set(index, small);
+
+        var ctx = canvas.getContext("2d");
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(small,0,0,canvas.width,canvas.height);
+
+        /* احتفظ بعدد محدود من الفريمات حتى لا تستهلك المعاينة الذاكرة. */
+        if (_animPreview.cache.size > 24) {
+            var firstKey = _animPreview.cache.keys().next().value;
+            if (firstKey !== index) _animPreview.cache.delete(firstKey);
+        }
+        if (cv && cv.width) releaseCanvas(cv);
+        updateAnimatedPreviewUI(index);
+    } catch(e) {
+        if (status) status.textContent = "❌ " + (e.message || "فشل تصيير المعاينة");
+    } finally {
+        _animPreview.rendering = false;
+    }
+}
+
+function updateAnimatedPreviewUI(index) {
+    var total = _animPreview.frames.length;
+    var range = document.getElementById("anim-preview-range");
+    var cur = document.getElementById("anim-preview-current");
+    var fl = document.getElementById("anim-preview-frame-label");
+    var dl = document.getElementById("anim-preview-duration-label");
+    var status = document.getElementById("anim-preview-status");
+    if (range) range.value = String(index);
+    if (cur) cur.textContent = "فريم " + (index + 1) + " / " + total;
+    if (fl) fl.textContent = "الفريم " + (index + 1);
+    if (dl) dl.textContent = ((index + 1) / _animPreview.fps).toFixed(2) + " ث";
+    if (status) status.textContent = "✅ المعاينة جاهزة";
+}
+
+function previewStep(delta) {
+    if (!_animPreview.frames.length) return;
+    var next = (_animPreview.current + delta + _animPreview.frames.length) % _animPreview.frames.length;
+    renderAnimatedPreviewFrame(next);
+}
+
+async function toggleAnimatedPreview() {
+    if (!_animPreview.frames.length) {
+        if (!setupAnimatedPreview()) return;
+        await renderAnimatedPreviewFrame(0);
+    }
+    var btn = document.getElementById("anim-preview-play");
+    if (_animPreview.playing) {
+        _animPreview.playToken++;
+        _animPreview.playing = false;
+        if (btn) btn.textContent = "▶ تشغيل المقطع";
+        return;
+    }
+    _animPreview.playing = true;
+    var token = ++_animPreview.playToken;
+    if (btn) btn.textContent = "⏸ إيقاف";
+    while (_animPreview.playing && token === _animPreview.playToken && _animPreview.current < _animPreview.frames.length - 1) {
+        var next = _animPreview.current + 1;
+        await renderAnimatedPreviewFrame(next);
+        await new Promise(function(r){ setTimeout(r, Math.max(16, 1000 / _animPreview.fps)); });
+    }
+    _animPreview.playing = false;
+    if (btn) btn.textContent = "▶ تشغيل المقطع";
+}
+
 /* ─── معاينة العرض المتحرك ─── */
 function previewAnimatedClip() {
-    var t = document.getElementById("animated-html-input"); if (!t || !t.value.trim()) { alert("الصق الكود"); return; }
-    currentImageContext = "animated"; analyzeAnimatedImages();
-    var frames = extractFramesFromCode(t.value);
-    if (!frames.length) { alert("لا توجد إطارات"); return; }
-    var dims = getAnimatedDimensions();
-    var wrap = document.getElementById("anim-preview-wrap"), img = document.getElementById("anim-preview-img"), note = document.getElementById("anim-preview-note");
-    if (!wrap || !img) return;
-    note.textContent = "⏳ تحضير..."; wrap.classList.add("visible");
-    var stage = createRenderContainer(t.value, dims.width, dims.height);
-    applyImageReplacements(stage, "animated");
-    waitForFonts().then(function () { return inlineAllImages(stage); }).then(function () { return inlineBackgroundImages(stage); })
-        .then(function () { return new Promise(function (r) { setTimeout(r, 400); }); })
-        .then(function () {
-            var frameEls = getStageFrames(stage);
-            var inner = getStageInner(stage);
-            var isSingleInner = (frameEls.length === 1 && frameEls[0] === inner);
-            if (!isSingleInner) {
-                frameEls.forEach(function (f) { f.style.position = "absolute"; f.style.top = "0"; f.style.left = "0"; f.style.width = dims.width + "px"; f.style.height = dims.height + "px"; f.style.visibility = "hidden"; });
-            }
-            var step = Math.max(1, Math.floor(frameEls.length / 5));
-            var preview = [];
-            for (var i = 0; i < frameEls.length && preview.length < 5; i += step) preview.push({ el: frameEls[i], idx: i });
-            var canvases = [];
-            var chain = Promise.resolve();
-            preview.forEach(function (p) {
-                chain = chain.then(function () {
-                    if (!isSingleInner) {
-                        frameEls.forEach(function (f) { f.style.visibility = "hidden"; });
-                        p.el.style.visibility = "visible";
-                    }
-                    return new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
-                }).then(function () {
-                    return html2canvas(p.el, { scale: 1, width: dims.width, height: dims.height, backgroundColor: "#ffffff", useCORS: true, logging: false }).then(function (cv) { canvases.push({ cv: cv, idx: p.idx }); });
-                });
-            });
-            return chain.then(function () {
-                if (!canvases.length) { note.textContent = "❌ فشل"; return; }
-                var cols = Math.min(canvases.length, 2);
-                var combo = document.createElement("canvas");
-                combo.width = dims.width * cols; combo.height = dims.height * Math.ceil(canvases.length / cols);
-                var ctx = combo.getContext("2d");
-                ctx.fillStyle = "#0b1220"; ctx.fillRect(0, 0, combo.width, combo.height);
-                canvases.forEach(function (item, i) {
-                    var col = i % cols, row = Math.floor(i / cols);
-                    ctx.drawImage(item.cv, col * dims.width, row * dims.height, dims.width, dims.height);
-                    ctx.fillStyle = "rgba(124,58,237,.9)"; ctx.fillRect(col * dims.width + 8, row * dims.height + 8, 70, 28);
-                    ctx.fillStyle = "#fff"; ctx.font = "bold 14px system-ui"; ctx.textAlign = "center";
-                    ctx.fillText("إطار " + (item.idx + 1), col * dims.width + 43, row * dims.height + 27);
-                });
-                img.src = combo.toDataURL("image/png");
-                note.textContent = "✅ " + canvases.length + " إطارات من أصل " + frameEls.length;
-            });
-        }).catch(function (e) { note.textContent = "❌ " + e.message; }).finally(function () { try { stage.remove(); } catch (e) {} });
+    if (!setupAnimatedPreview()) return;
+    renderAnimatedPreviewFrame(0);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -2557,8 +2784,30 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     var at = document.getElementById("animated-html-input");
     if (at) {
-        at.addEventListener("input", function () { currentImageContext = "animated"; clearTimeout(imageAnalysisTimer); imageAnalysisTimer = setTimeout(function () { analyzeAnimatedFrames(); }, 350); });
-        at.addEventListener("paste", function () { setTimeout(analyzeAnimatedFrames, 150); });
+        var animInputTimer = null;
+        at.addEventListener("input", function () {
+            currentImageContext = "animated";
+            updateAnimatedCodeSizeNote(at.value);
+            clearTimeout(animInputTimer);
+            /* لا نفك DOM ولا نفحص الصور مع كل حرف — هذا كان سببًا رئيسيًا في تعليق الصفحة مع الأكواد الطويلة. */
+            if (at.value.length < 180000) {
+                animInputTimer = setTimeout(function () { analyzeAnimatedFrames(false); }, 900);
+            }
+        });
+        at.addEventListener("paste", function () {
+            setTimeout(function () { updateAnimatedCodeSizeNote(at.value); analyzeAnimatedFrames(true); }, 80);
+        });
+    }
+
+    var af = document.getElementById("animated-html-file");
+    if (af) {
+        af.addEventListener("change", handleAnimatedHTMLFileUpload);
+    }
+    var apr = document.getElementById("anim-preview-range");
+    if (apr) {
+        apr.addEventListener("input", function () {
+            renderAnimatedPreviewFrame(Number(apr.value) || 0);
+        });
     }
 
     ["anim-prompt-orientation", "anim-prompt-slides", "anim-prompt-slide-duration", "anim-prompt-fps", "anim-motion-type", "anim-transition-type", "anim-color-scheme", "anim-design-style", "anim-font-choice", "anim-prompt-images", "anim-prompt-title", "anim-prompt-subject", "anim-prompt-name", "anim-prompt-teacher", "anim-prompt-grade", "anim-prompt-year", "anim-prompt-desc"].forEach(function (id) {
