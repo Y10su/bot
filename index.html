@@ -1987,6 +1987,72 @@ function getStageInner(stage) {
     return stage ? (stage.querySelector("#__render_stage_inner") || stage) : null;
 }
 
+function createSingleFrameRenderContainer(code, width, height) {
+    var old = document.getElementById("__render_stage");
+    if (old) try { old.remove(); } catch (e) {}
+
+    var doc;
+    try { doc = new DOMParser().parseFromString(sanitizeCodeForRender(code), "text/html"); }
+    catch (e) { throw new Error("تعذر تجهيز كود العرض"); }
+
+    if (!document.querySelector('link[data-render-fonts]')) {
+        var fontLink = document.createElement("link");
+        fontLink.rel = "stylesheet";
+        fontLink.setAttribute("data-render-fonts", "true");
+        fontLink.href = GOOGLE_FONTS_URL;
+        document.head.appendChild(fontLink);
+    }
+
+    var stage = document.createElement("div");
+    stage.id = "__render_stage";
+    stage.dir = "rtl";
+    stage.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-2147483647;opacity:1;visibility:visible;contain:strict;";
+
+    var inner = document.createElement("div");
+    inner.id = "__render_stage_inner";
+    inner.style.cssText = "position:absolute;top:0;left:0;width:" + width + "px;height:" + height + "px;background:#ffffff;overflow:hidden;";
+
+    var headStyles = Array.prototype.map.call(doc.querySelectorAll("head style, head link[rel='stylesheet']"), function (el) {
+        return el.outerHTML;
+    }).join("");
+
+    var fix = document.createElement("style");
+    fix.textContent =
+        "#__render_stage, #__render_stage * { box-sizing: border-box; }" +
+        "#__render_stage img { visibility: visible !important; opacity: 1 !important; max-width: none; }";
+
+    stage.appendChild(inner);
+    if (headStyles) {
+        var styleHost = document.createElement("div");
+        styleHost.innerHTML = headStyles;
+        while (styleHost.firstChild) stage.appendChild(styleHost.firstChild);
+    }
+    stage.appendChild(fix);
+    document.body.appendChild(stage);
+
+    /* لا نُبقي شجرة DOM الأصلية ذات مئات الإطارات معلقة في الذاكرة. */
+    doc = null;
+    return stage;
+}
+
+function setSingleFrameRenderContent(stage, frameHTML, width, height) {
+    var inner = getStageInner(stage);
+    if (!inner) return null;
+    inner.style.width = width + "px";
+    inner.style.height = height + "px";
+    inner.innerHTML = frameHTML;
+    var frame = inner.firstElementChild;
+    if (!frame) return null;
+    frame.style.position = "absolute";
+    frame.style.top = "0";
+    frame.style.left = "0";
+    frame.style.width = width + "px";
+    frame.style.height = height + "px";
+    frame.style.visibility = "visible";
+    frame.style.opacity = "1";
+    return frame;
+}
+
 function prepareStageFrames(stage, dims) {
     var inner = getStageInner(stage);
     var frames = getStageFrames(stage);
@@ -2554,22 +2620,43 @@ async function exportAnimatedClipWebCodecs() {
         await showVideoStartModal({ icon: "⚠️", title: "مكتبة ناقصة", subtitle: "Mp4Muxer أو SnapDOM غير محمّلة.", details: [] });
         return;
     }
+
     var t = document.getElementById("animated-html-input");
-    if (!t || !t.value.trim()) { await showVideoStartModal({ icon: "📝", title: "لا يوجد كود", subtitle: "الصق كود العرض أولاً.", details: [] }); return; }
+    if (!t || !t.value.trim()) {
+        await showVideoStartModal({ icon: "📝", title: "لا يوجد كود", subtitle: "الصق كود العرض أولاً.", details: [] });
+        return;
+    }
 
     currentImageContext = "animated";
-    analyzeAnimatedImages();
 
-    var framesInCode = extractFramesFromCode(t.value);
-    if (!framesInCode.length) { await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .frame أو .slide أو .page في الكود.", details: [] }); return; }
+    /*
+       مهم جدًا:
+       النسخة السابقة كانت تضع كل الـ900 إطار داخل DOM في نفس الوقت.
+       هذا يضاعف الذاكرة مع SnapDOM/HTML/CSS ويؤدي إلى قتل التبويب عند
+       عدد إطارات كبير.
+
+       هنا نفصل الإطارات عن بعض: نقرأ الكود مرة واحدة، ثم نحتفظ فقط
+       بـ outerHTML لكل إطار، ونضع إطارًا واحدًا فقط داخل DOM أثناء التصيير.
+       لذلك الذاكرة لا تنمو مع عدد الإطارات بنفس الطريقة السابقة.
+    */
+    var parsedFrames = extractFramesFromCode(t.value);
+    if (!parsedFrames.length) {
+        await showVideoStartModal({ icon: "❓", title: "لا توجد إطارات", subtitle: "تأكد من وجود .frame أو .slide أو .page في الكود.", details: [] });
+        return;
+    }
+
+    var frameHTMLList = parsedFrames.map(function (frame) {
+        return sanitizeCodeForRender(frame.outerHTML);
+    });
+    var totalFrames = frameHTMLList.length;
+    var slidesCount = countUniqueSlides(t.value);
+    parsedFrames = null;
 
     var fps = Number(document.getElementById("anim-fps").value) || 12;
     var quality = Number(document.getElementById("anim-quality").value) || 2;
     var name = sanitizeFileName(document.getElementById("anim-file-name").value || "animation");
     var dims = getAnimatedDimensions();
-    var totalFrames = framesInCode.length;
     var durationSec = totalFrames / fps;
-    var slidesCount = countUniqueSlides(t.value);
 
     var perFrame = quality === 3 ? 0.08 : quality === 1 ? 0.04 : 0.06;
     var estimatedSec = totalFrames * perFrame + 2;
@@ -2579,61 +2666,80 @@ async function exportAnimatedClipWebCodecs() {
         { label: "⏱️ المدة", value: durationSec.toFixed(1) + " ث" },
         { label: "📐 الأبعاد", value: dims.width + " × " + dims.height },
         { label: "🎬 FPS", value: fps },
+        { label: "🛡️ الوضع", value: "ذاكرة منخفضة — إطار واحد فقط" },
         { label: "⏳ الوقت المتوقع", value: "~" + _formatTime(estimatedSec) }
     ];
-    var choice = await showVideoStartModal({ icon: "🎬", title: "تحويل العرض إلى MP4", subtitle: "اضغط «ابدأ الآن». يمكنك تصغير النافذة.", details: details });
+
+    var choice = await showVideoStartModal({
+        icon: "🎬",
+        title: "تحويل العرض إلى MP4",
+        subtitle: "تم تفعيل وضع الذاكرة المنخفضة. يتم تصيير إطار واحد فقط في كل مرة.",
+        details: details
+    });
     if (choice !== "start") return;
 
     showVideoProgressModal();
-    _vmodalCancelled = false; _vmodalMinimized = false;
+    _vmodalCancelled = false;
+    _vmodalMinimized = false;
     _enableLeaveWarning();
 
     var stage = null;
+    var encoder = null;
+    var muxer = null;
+    var mainCanvas = null;
 
     try {
-        stage = createRenderContainer(t.value, dims.width, dims.height);
-        applyImageReplacements(stage, "animated");
-
-        updateVideoProgress({ percent: 2, elapsed: 0, eta: estimatedSec, frame: 0, total: totalFrames, speed: 0 });
-
-        await waitForFonts();
-        await inlineAllImages(stage);
-        await inlineBackgroundImages(stage);
-        await prepareImages(stage);
-
-        var frameElements = prepareStageFrames(stage, dims);
-
+        /* Stage صغير ثابت — لا يحتوي على الإطارات كلها. */
+        stage = createSingleFrameRenderContainer(t.value, dims.width, dims.height);
         var mainCanvas = document.createElement("canvas");
         mainCanvas.width = dims.width;
         mainCanvas.height = dims.height;
-        var mainCtx = mainCanvas.getContext("2d", { alpha: false });
+        var mainCtx = mainCanvas.getContext("2d", { alpha: false, willReadFrequently: false });
+
+        updateVideoProgress({ percent: 1, elapsed: 0, eta: estimatedSec, frame: 0, total: totalFrames, speed: 0 });
+
+        await waitForFonts();
 
         var bitrate = { 1: 1500000, 2: 4000000, 3: 8000000 }[quality] || 4000000;
         var chosenCodec = null;
-        var candidates = [{ codec: 'avc1.42001f', mux: 'avc' }, { codec: 'avc1.4d0028', mux: 'avc' }];
+        var candidates = [
+            { codec: 'avc1.42001f', mux: 'avc' },
+            { codec: 'avc1.4d0028', mux: 'avc' }
+        ];
         for (var ci = 0; ci < candidates.length; ci++) {
             try {
-                var sup = await VideoEncoder.isConfigSupported({ codec: candidates[ci].codec, width: dims.width, height: dims.height, bitrate: bitrate, framerate: fps });
+                var sup = await VideoEncoder.isConfigSupported({
+                    codec: candidates[ci].codec,
+                    width: dims.width,
+                    height: dims.height,
+                    bitrate: bitrate,
+                    framerate: fps
+                });
                 if (sup.supported) { chosenCodec = candidates[ci]; break; }
             } catch (e) {}
         }
         if (!chosenCodec) throw new Error("لا يوجد codec H.264 مدعوم");
 
-        var muxer = new Mp4Muxer.Muxer({
+        muxer = new Mp4Muxer.Muxer({
             target: new Mp4Muxer.ArrayBufferTarget(),
             video: { codec: chosenCodec.mux, width: dims.width, height: dims.height },
             fastStart: 'in-memory'
         });
 
         var encError = null;
-        var encoder = new VideoEncoder({
-            output: function (chunk, meta) { try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; } },
+        encoder = new VideoEncoder({
+            output: function (chunk, meta) {
+                try { muxer.addVideoChunk(chunk, meta); } catch (e) { encError = e; }
+            },
             error: function (e) { encError = e; }
         });
+
         encoder.configure({
             codec: chosenCodec.codec,
-            width: dims.width, height: dims.height,
-            bitrate: bitrate, framerate: fps,
+            width: dims.width,
+            height: dims.height,
+            bitrate: bitrate,
+            framerate: fps,
             latencyMode: 'realtime',
             hardwareAcceleration: 'prefer-hardware'
         });
@@ -2642,12 +2748,12 @@ async function exportAnimatedClipWebCodecs() {
         var startTime = performance.now();
         var frameTimes = [];
         var lastYield = performance.now();
-        // Crash-safety: keep the WebCodecs pipeline deliberately shallow.
-        // A large encoder queue can make Chromium/Safari accumulate native video buffers.
-        var SAFE_QUEUE_HIGH = 5;
-        var SAFE_QUEUE_LOW = 2;
-        var FLUSH_BATCH = 90;
         var subtitleEl = document.getElementById("vmodal-subtitle");
+
+        /* طابور أصغر بكثير + تفريغ دوري. */
+        var SAFE_QUEUE_HIGH = 3;
+        var SAFE_QUEUE_LOW = 1;
+        var FLUSH_BATCH = 45;
 
         for (var i = 0; i < totalFrames; i++) {
             if (_vmodalCancelled) throw new Error("تم الإلغاء");
@@ -2655,15 +2761,25 @@ async function exportAnimatedClipWebCodecs() {
 
             var frameStart = performance.now();
 
-            showStageFrame(stage, i);
+            /* امسح الإطار السابق بالكامل، ثم ضع الإطار الحالي فقط. */
+            var currentFrame = setSingleFrameRenderContent(stage, frameHTMLList[i], dims.width, dims.height);
+            if (!currentFrame) throw new Error("تعذر تجهيز الإطار رقم " + (i + 1));
 
-            await new Promise(function (r) { requestAnimationFrame(function () { requestAnimationFrame(r); }); });
+            /* تطبيق الاستبدالات والصور على الإطار الحالي فقط. */
+            applyImageReplacements(stage, "animated");
+            await inlineAllImages(stage);
+            await inlineBackgroundImages(stage);
+            await prepareImages(stage);
+
+            /* نعطي المتصفح دورة رسم واحدة بدل إبقاء عدة إطارات حية. */
+            await new Promise(function (r) { requestAnimationFrame(r); });
 
             var snapCanvas;
             try {
                 snapCanvas = await withTimeout(
-                    window.snapdom.toCanvas(frameElements[i], {
-                        scale: 1, dpr: 1,
+                    window.snapdom.toCanvas(currentFrame, {
+                        scale: 1,
+                        dpr: 1,
                         backgroundColor: "#ffffff",
                         embedFonts: false,
                         fast: true,
@@ -2674,28 +2790,21 @@ async function exportAnimatedClipWebCodecs() {
                     "SnapDOM timeout"
                 );
             } catch (err) {
-                snapCanvas = await html2canvas(frameElements[i], {
-                    scale: 1, width: dims.width, height: dims.height,
-                    backgroundColor: "#ffffff", useCORS: true, logging: false
+                snapCanvas = await html2canvas(currentFrame, {
+                    scale: 1,
+                    width: dims.width,
+                    height: dims.height,
+                    backgroundColor: "#ffffff",
+                    useCORS: true,
+                    logging: false
                 });
             }
 
             mainCtx.fillStyle = "#ffffff";
             mainCtx.fillRect(0, 0, dims.width, dims.height);
-            try {
-                mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
-            } catch (e) {
-                var fallback = await html2canvas(frameElements[i], {
-                    scale: 1, width: dims.width, height: dims.height,
-                    backgroundColor: "#ffffff", useCORS: true, logging: false
-                });
-                mainCtx.drawImage(fallback, 0, 0, dims.width, dims.height);
-                releaseCanvas(fallback);
-            }
+            mainCtx.drawImage(snapCanvas, 0, 0, dims.width, dims.height);
 
-            if (snapCanvas && snapCanvas !== frameElements[i] && snapCanvas.width) {
-                releaseCanvas(snapCanvas);
-            }
+            if (snapCanvas && snapCanvas.width) releaseCanvas(snapCanvas);
 
             var vf = new VideoFrame(mainCanvas, {
                 timestamp: Math.round(i * 1000000 / fps),
@@ -2707,17 +2816,18 @@ async function exportAnimatedClipWebCodecs() {
             if (encoder.encodeQueueSize > SAFE_QUEUE_HIGH) {
                 while (encoder.encodeQueueSize > SAFE_QUEUE_LOW) {
                     if (encError) throw encError;
-                    await new Promise(function (r) { setTimeout(r, 4); });
+                    await new Promise(function (r) { setTimeout(r, 8); });
                 }
             }
 
-            // Periodically drain the encoder. This does NOT write individual frames to disk;
-            // it simply prevents a long export from building an ever-growing native queue.
+            /* كل 45 إطار: تفريغ فعلي للـencoder ثم تنظيف الـDOM. */
             if ((i + 1) % FLUSH_BATCH === 0 && i + 1 < totalFrames) {
-                if (subtitleEl) subtitleEl.textContent = "🔄 معالجة دفعة الإطارات " + Math.ceil((i + 1) / FLUSH_BATCH) + "...";
+                if (subtitleEl) subtitleEl.textContent = "🔄 معالجة الإطارات " + (i + 1) + " / " + totalFrames + " — تنظيف الذاكرة...";
                 await encoder.flush();
                 if (encError) throw encError;
-                await new Promise(function (r) { setTimeout(r, 0); });
+                var inner = getStageInner(stage);
+                if (inner) inner.innerHTML = "";
+                await new Promise(function (r) { setTimeout(r, 12); });
             }
 
             var frameTime = performance.now() - frameStart;
@@ -2731,26 +2841,32 @@ async function exportAnimatedClipWebCodecs() {
 
             updateVideoProgress({ percent: percent, elapsed: elapsed, eta: eta, frame: i + 1, total: totalFrames, speed: speed });
 
-            if (performance.now() - lastYield > 1000 || i % 15 === 0) {
-                await new Promise(function (r) { setTimeout(r, 0); });
+            if (performance.now() - lastYield > 600 || i % 8 === 0) {
+                await new Promise(function (r) { setTimeout(r, 8); });
                 lastYield = performance.now();
             }
         }
 
-        if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز...";
-
+        if (subtitleEl) subtitleEl.textContent = "🔄 إنهاء الترميز وتجهيز الملف...";
         await encoder.flush();
+        if (encError) throw encError;
         encoder.close();
-        muxer.finalize();
+        encoder = null;
 
-        var blob = new Blob([muxer.target.buffer], { type: 'video/mp4' });
+        /* الآن فقط نُنشئ الـBlob النهائي؛ أثناء التصيير لا توجد نسخ MP4 إضافية. */
+        muxer.finalize();
+        var buffer = muxer.target.buffer;
+        var blob = new Blob([buffer], { type: 'video/mp4' });
         var totalSecs = (performance.now() - startTime) / 1000;
         var sizeMB = (blob.size / 1024 / 1024).toFixed(2);
 
         var url = URL.createObjectURL(blob);
         var a = document.createElement("a");
-        a.href = url; a.download = name + ".mp4";
-        document.body.appendChild(a); a.click(); a.remove();
+        a.href = url;
+        a.download = name + ".mp4";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
         setTimeout(function () { URL.revokeObjectURL(url); }, 10000);
 
         finishVideoModal(true, "✅ تم التحميل تلقائيًا", [
@@ -2760,12 +2876,17 @@ async function exportAnimatedClipWebCodecs() {
         ]);
 
     } catch (err) {
-        console.error(err);
-        finishVideoModal(false, "❌ " + err.message);
+        console.error("Animated export failed:", err);
+        try { if (encoder && encoder.state !== "closed") encoder.close(); } catch (e) {}
+        finishVideoModal(false, "❌ " + (err && err.message ? err.message : "حدث خطأ أثناء التحويل"));
     } finally {
         _releaseWakeLock();
         _disableLeaveWarning();
         if (stage) { try { stage.remove(); } catch (e) {} }
+        mainCanvas = null;
+        frameHTMLList = null;
+        encoder = null;
+        muxer = null;
     }
 }
 
