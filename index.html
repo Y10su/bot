@@ -46,6 +46,7 @@ input:disabled,select:disabled{opacity:.5;cursor:not-allowed;text-decoration:lin
 .action-btns button.clear-btn:hover{background:#991b1b;color:#fef2f2}
 textarea#html-input,textarea#animated-html-input{min-height:200px;resize:vertical;direction:ltr;font-family:monospace;background:#020617;font-size:13px;line-height:1.6}
 textarea#final-prompt-output,textarea#animated-prompt-output{min-height:260px;resize:vertical;direction:rtl;text-align:right;font-family:inherit;background:#020617;font-size:13px;line-height:1.9;white-space:pre-wrap;padding:14px}
+.language-detect-note{margin-top:7px;padding:7px 10px;border-radius:7px;background:#0b1220;border:1px solid #334155;color:#94a3b8;font-size:10px;font-weight:700;text-align:center;direction:rtl;min-height:28px;display:flex;align-items:center;justify-content:center}
 .row{display:flex;gap:12px;width:100%}
 .row .form-group{flex:1;min-width:0}
 .export-btn{background:#2563eb;color:white;border:none;padding:16px;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer;margin-top:10px;transition:.2s;width:100%}
@@ -316,6 +317,7 @@ input:not([type="checkbox"]),select{font-size:16px}
                 </div>
             </div>
             <textarea id="html-input" placeholder="الصق الكود هنا..."></textarea>
+        <div id="html-language-note" class="language-detect-note">التعرّف التلقائي: بانتظار الكود</div>
             <div id="image-manager" class="html-image-manager">
                 <div class="image-manager-header">
                     <h3 class="image-manager-title">🖼️ الصور</h3>
@@ -497,6 +499,7 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <span id="animated-html-file-name" class="code-file-name">يمكنك رفع الملف إذا كان الكود طويلًا لتخفيف التقطيع.</span>
                 </div>
                 <textarea id="animated-html-input" placeholder="الصق كود العرض المتحرك هنا..."></textarea>
+            <div id="animated-language-note" class="language-detect-note">التعرّف التلقائي: بانتظار الكود</div>
                 <div id="animated-code-size-note" class="code-size-note">الأفضل رفع ملف HTML عند تجاوز الكود عدة مئات الآلاف من الأحرف.</div>
             </div>
 
@@ -1935,6 +1938,75 @@ function waitForFonts() {
 
 function getSafeScale(w, h, req) { var s = Number(req) || 1; var p = w * h * s * s; if (p > RENDER_CONFIG.maxCanvasPixels) s = Math.sqrt(RENDER_CONFIG.maxCanvasPixels / (w * h)); return Math.max(1, Math.min(s, 3)); }
 
+/* ─── التعرف التلقائي على لغة واتجاه الكود ─── */
+function detectCodeLanguage(code) {
+    code = String(code || "");
+    var result = { lang:"en", dir:"ltr", label:"English", confidence:0, type:"document" };
+    var htmlMatch = code.match(/<html\\b[^>]*>/i);
+    var htmlTag = htmlMatch ? htmlMatch[0] : "";
+    var langMatch = htmlTag.match(/\\blang\\s*=\\s*["']([^"']+)["']/i) || code.match(/<body\\b[^>]*\\blang\\s*=\\s*["']([^"']+)["']/i);
+    var dirMatch = htmlTag.match(/\\bdir\\s*=\\s*["'](rtl|ltr|auto)["']/i);
+    var explicitLang = langMatch ? String(langMatch[1]).toLowerCase() : "";
+    var explicitDir = dirMatch ? String(dirMatch[1]).toLowerCase() : "";
+    var arabicChars = (code.match(/[\\u0600-\\u06FF\\u0750-\\u077F\\u08A0-\\u08FF]/g) || []).length;
+    var latinChars = (code.match(/[A-Za-zÀ-ÖØ-öø-ÿ]/g) || []).length;
+    var arabicStrong = arabicChars >= 8 && arabicChars >= Math.max(1, latinChars * 0.12);
+    var englishStrong = latinChars >= 8 && latinChars > arabicChars * 2;
+
+    if (/^(ar|ara|ar-[a-z]{2})/.test(explicitLang) || explicitDir === "rtl" || arabicStrong) {
+        result.lang = "ar";
+        result.dir = explicitDir === "ltr" ? "ltr" : "rtl";
+        result.label = result.dir === "rtl" ? "العربية" : "العربية مع اتجاه LTR";
+        result.confidence = explicitLang || explicitDir ? 1 : 0.92;
+    } else if (/^(en|eng|en-[a-z]{2})/.test(explicitLang) || explicitDir === "ltr" || englishStrong) {
+        result.lang = "en";
+        result.dir = explicitDir === "rtl" ? "rtl" : "ltr";
+        result.label = result.dir === "ltr" ? "English" : "English مع اتجاه RTL";
+        result.confidence = explicitLang || explicitDir ? 1 : 0.9;
+    } else if (explicitLang) {
+        result.lang = explicitLang.split("-")[0] || "en";
+        result.dir = explicitDir === "rtl" ? "rtl" : (explicitDir === "ltr" ? "ltr" : "ltr");
+        result.label = result.lang.toUpperCase();
+        result.confidence = 0.75;
+    }
+
+    if (/\\.frame\\b|\\.slide\\b|\\.page\\b/i.test(code)) result.type = "presentation";
+    if (/<article\\b|\\bresearch\\b|\\bبحث\\b|\\bالمراجع\\b|\\breferences\\b/i.test(code)) result.type = "research";
+    return result;
+}
+
+function applyDetectedLanguageToRender(stage, code) {
+    if (!stage) return detectCodeLanguage(code);
+    var d = detectCodeLanguage(code);
+    stage.setAttribute("lang", d.lang);
+    stage.setAttribute("dir", d.dir);
+    stage.style.direction = d.dir;
+    var inner = stage.querySelector("#__render_stage_inner");
+    if (inner) {
+        inner.setAttribute("lang", d.lang);
+        inner.setAttribute("dir", d.dir);
+        inner.style.direction = d.dir;
+    }
+    return d;
+}
+
+function updateDetectedLanguageUI(contextKey) {
+    var id = contextKey === "animated" ? "animated-html-input" : "html-input";
+    var noteId = contextKey === "animated" ? "animated-language-note" : "html-language-note";
+    var ta = document.getElementById(id), note = document.getElementById(noteId);
+    if (!ta || !note) return null;
+    var d = detectCodeLanguage(ta.value);
+    if (!ta.value.trim()) {
+        note.textContent = "التعرّف التلقائي: بانتظار الكود";
+        note.dataset.dir = "";
+        return d;
+    }
+    note.textContent = "تم التعرف: " + d.label + " — " + (d.dir === "rtl" ? "من اليمين لليسار" : "من اليسار لليمين") + (d.type === "presentation" ? " — عرض" : d.type === "research" ? " — بحث" : " — مستند");
+    note.dataset.dir = d.dir;
+    note.dataset.lang = d.lang;
+    return d;
+}
+
 /* ─── حاوية التصيير معزولة ─── */
 function createRenderContainer(code, width, height) {
     var old = document.getElementById("__render_stage");
@@ -1950,7 +2022,7 @@ function createRenderContainer(code, width, height) {
 
     var stage = document.createElement("div");
     stage.id = "__render_stage";
-    stage.dir = "rtl";
+    applyDetectedLanguageToRender(stage, code);
     stage.style.cssText =
         "position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-2147483647;opacity:1;visibility:visible;contain:strict;";
 
@@ -2005,7 +2077,7 @@ function createSingleFrameRenderContainer(code, width, height) {
 
     var stage = document.createElement("div");
     stage.id = "__render_stage";
-    stage.dir = "rtl";
+    applyDetectedLanguageToRender(stage, code);
     stage.style.cssText = "position:fixed;top:0;left:0;width:1px;height:1px;overflow:hidden;pointer-events:none;z-index:-2147483647;opacity:1;visibility:visible;contain:strict;";
 
     var inner = document.createElement("div");
@@ -3191,8 +3263,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     var ht = document.getElementById("html-input");
     if (ht) {
-        ht.addEventListener("input", function () { currentImageContext = "converter"; scheduleImageAnalysis(); });
-        ht.addEventListener("paste", function () { setTimeout(analyzeHTMLImages, 100); });
+        ht.addEventListener("input", function () { currentImageContext = "converter"; updateDetectedLanguageUI("converter"); scheduleImageAnalysis(); });
+        ht.addEventListener("paste", function () { setTimeout(function(){ updateDetectedLanguageUI("converter"); analyzeHTMLImages(); }, 100); });
     }
     var at = document.getElementById("animated-html-input");
     if (at) {
@@ -3232,6 +3304,8 @@ window.addEventListener("load", function () {
     try { if (localStorage.getItem(AUTH_KEY) === AUTH_VALUE) { var o = document.getElementById("password-overlay"); if (o) o.style.display = "none"; } } catch (e) {}
     updatePagesLabel();
     onLanguageModeChange();
+    updateDetectedLanguageUI("converter");
+    updateDetectedLanguageUI("animated");
     currentImageContext = "converter";
     analyzeHTMLImages();
     generateAnimatedPromptText();
