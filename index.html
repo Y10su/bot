@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>منصة تحويل الأكواد الذكية v1.1</title>
+<title>منصة تحويل الأكواد الذكية </title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -2958,6 +2958,30 @@ async function exportAnimatedClipMediaRecorder() {
    إذا الكود ليس SVG صرفًا أو المتصفح لا يدعم الترميز، نرجع للطريقة القديمة تلقائيًا. */
 function _fxSleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
 
+function _fxGrad(v) {
+    var m = v.match(/(radial|linear)-gradient\(([\s\S]*)\)/); if (!m) return null;
+    var parts = [], d = 0, cur = "", a = m[2];
+    for (var k = 0; k < a.length; k++) { var c = a[k]; if (c === "(") d++; if (c === ")") d--; if (c === "," && !d) { parts.push(cur.trim()); cur = ""; } else cur += c; }
+    parts.push(cur.trim());
+    var head = ""; if (!/^(#[0-9a-f]|rgba?\(|hsla?\()/i.test(parts[0]) && parts.length > 2) head = parts.shift();
+    var stops = parts.map(function (p, i) {
+        var mm = p.match(/^(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\)|hsla?\([^)]*\)|[a-zA-Z]+)\s*([\d.]+)?%?/);
+        return mm ? { c: mm[1], o: mm[2] != null ? Math.min(1, parseFloat(mm[2]) / 100) : i / Math.max(1, parts.length - 1) } : null;
+    }).filter(Boolean);
+    if (stops.length < 2) return null;
+    var sx = stops.map(function (s) { return '<stop offset="' + s.o + '" stop-color="' + s.c + '"/>'; }).join(""), g;
+    if (m[1] === "radial") {
+        var at = head.match(/at\s+([\d.]+)%\s+([\d.]+)%/);
+        g = '<radialGradient id="fxbg" cx="' + (at ? at[1] / 100 : .5) + '" cy="' + (at ? at[2] / 100 : .5) + '" r=".75">' + sx + "</radialGradient>";
+    } else {
+        var deg = 180, dm = head.match(/(-?[\d.]+)deg/);
+        if (dm) deg = parseFloat(dm[1]); else if (/to right/.test(head)) deg = 90; else if (/to left/.test(head)) deg = 270; else if (/to top/.test(head)) deg = 0;
+        var r = deg * Math.PI / 180, sn = Math.sin(r), cs = Math.cos(r);
+        g = '<linearGradient id="fxbg" x1="' + (.5 - .5 * sn) + '" y1="' + (.5 + .5 * cs) + '" x2="' + (.5 + .5 * sn) + '" y2="' + (.5 - .5 * cs) + '">' + sx + "</linearGradient>";
+    }
+    return { def: g, first: stops[stops.length - 1].c };
+}
+
 function _fxPrepare(code) {
     var doc; try { doc = new DOMParser().parseFromString(code, "text/html"); } catch (e) { return null; }
     var frames = Array.prototype.slice.call(doc.querySelectorAll(".frame"));
@@ -2974,9 +2998,13 @@ function _fxPrepare(code) {
         Array.prototype.forEach.call(s.childNodes, function (n) { defs += ser.serializeToString(n); });
     });
     var css = Array.prototype.map.call(doc.querySelectorAll("style"), function (s) { return s.textContent; }).join("\n").replace(/\]\]>/g, "");
-    var m = css.match(/\.frame\s*\{[^}]*?background(?:-color)?\s*:\s*(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))/);
+    var rule = css.match(/\.frame\s*\{([^}]*)\}/), bgv = "", bgc = "#ffffff", bgRect = "";
+    if (rule) { var bm = rule[1].match(/background(?:-color|-image)?\s*:\s*([^;]+)/); if (bm) bgv = bm[1]; }
+    var gr = bgv ? _fxGrad(bgv) : null;
+    if (gr) { defs += gr.def; bgRect = '<rect width="100%" height="100%" fill="url(#fxbg)"/>'; bgc = gr.first; }
+    else { var sm = bgv.match(/(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))/); if (sm) bgc = sm[1]; }
     var dir = (doc.documentElement.getAttribute("dir") || doc.body.getAttribute("dir") || "rtl");
-    return { frames: frames, defs: defs, css: css, bg: m ? m[1] : "#ffffff", dir: dir, ser: ser };
+    return { frames: frames, defs: defs, css: css, bg: bgc, bgRect: bgRect, dir: dir, ser: ser };
 }
 
 function _fxFrameSVG(f, P, W, H) {
@@ -2987,7 +3015,7 @@ function _fxFrameSVG(f, P, W, H) {
         inner += P.ser.serializeToString(c);
     }
     return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '">' +
-        P.defs + "<style><![CDATA[" + P.css + ']]></style><g class="' + (f.getAttribute("class") || "frame") + '" style="direction:' + P.dir + '">' + inner + "</g></svg>";
+        P.defs + "<style><![CDATA[" + P.css + ']]></style><g class="' + (f.getAttribute("class") || "frame") + '" style="direction:' + P.dir + '">' + P.bgRect + inner + "</g></svg>";
 }
 
 function _fxRaster(svgStr, ctx, W, H, bg) {
