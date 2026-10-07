@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>منصة تحويل الأكواد الذكية v1.0</title>
+<title>منصة تحويل الأكواد الذكية v1.1</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -471,9 +471,9 @@ input:not([type="checkbox"]),select{font-size:16px}
                     <label>FPS:</label>
                     <select id="anim-fps">
                         <option value="8">8</option>
-                        <option value="12" selected>12 قياسي</option>
+                        <option value="12">12</option>
                         <option value="16">16</option>
-                        <option value="24">24</option>
+                        <option value="24" selected>24 سينمائي</option>
                     </select>
                 </div>
             </div>
@@ -2952,7 +2952,147 @@ async function exportAnimatedClipMediaRecorder() {
     }
 }
 
+/* ═══════════════ المحرّك السريع v1.1: SVG مباشر ← Canvas ← WebCodecs ═══════════════
+   بدل SnapDOM (بطيء ويعلّق) نحوّل كل فريم SVG إلى صورة مباشرة بدون DOM،
+   ونعطي كل إطار توقيتًا ثابتًا = i / fps فيخرج الفيديو سلسًا بدون تقطيع.
+   إذا الكود ليس SVG صرفًا أو المتصفح لا يدعم الترميز، نرجع للطريقة القديمة تلقائيًا. */
+function _fxSleep(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+
+function _fxPrepare(code) {
+    var doc; try { doc = new DOMParser().parseFromString(code, "text/html"); } catch (e) { return null; }
+    var frames = Array.prototype.slice.call(doc.querySelectorAll(".frame"));
+    if (!frames.length) return null;
+    for (var i = 0; i < frames.length; i++) {
+        var f = frames[i];
+        if (f.querySelector("img,video,canvas,foreignObject,iframe,object")) return null;
+        if (!f.children.length) return null;
+        for (var j = 0; j < f.children.length; j++) if (f.children[j].tagName.toLowerCase() !== "svg") return null;
+    }
+    var ser = new XMLSerializer(), defs = "";
+    Array.prototype.forEach.call(doc.querySelectorAll("svg"), function (s) {
+        if (s.closest(".frame")) return;
+        Array.prototype.forEach.call(s.childNodes, function (n) { defs += ser.serializeToString(n); });
+    });
+    var css = Array.prototype.map.call(doc.querySelectorAll("style"), function (s) { return s.textContent; }).join("\n").replace(/\]\]>/g, "");
+    var m = css.match(/\.frame\s*\{[^}]*?background(?:-color)?\s*:\s*(#[0-9a-fA-F]{3,8}|rgba?\([^)]*\))/);
+    var dir = (doc.documentElement.getAttribute("dir") || doc.body.getAttribute("dir") || "rtl");
+    return { frames: frames, defs: defs, css: css, bg: m ? m[1] : "#ffffff", dir: dir, ser: ser };
+}
+
+function _fxFrameSVG(f, P, W, H) {
+    var inner = "";
+    for (var j = 0; j < f.children.length; j++) {
+        var c = f.children[j].cloneNode(true);
+        c.setAttribute("width", W); c.setAttribute("height", H); c.removeAttribute("style");
+        inner += P.ser.serializeToString(c);
+    }
+    return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="' + W + '" height="' + H + '" viewBox="0 0 ' + W + " " + H + '">' +
+        P.defs + "<style><![CDATA[" + P.css + ']]></style><g class="' + (f.getAttribute("class") || "frame") + '" style="direction:' + P.dir + '">' + inner + "</g></svg>";
+}
+
+function _fxRaster(svgStr, ctx, W, H, bg) {
+    return new Promise(function (res, rej) {
+        var url = URL.createObjectURL(new Blob([svgStr], { type: "image/svg+xml;charset=utf-8" }));
+        var img = new Image();
+        img.onload = function () {
+            try { ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H); ctx.drawImage(img, 0, 0, W, H); res(); }
+            catch (e) { rej(e); }
+            finally { URL.revokeObjectURL(url); img.onload = img.onerror = null; img.src = ""; }
+        };
+        img.onerror = function () { URL.revokeObjectURL(url); rej(new Error("تعذّر رسم أحد الإطارات")); };
+        img.src = url;
+    });
+}
+
+/* يرجع true إذا عالج الطلب (نجاح/إلغاء/فشل)، و false إذا لم يكن مناسبًا فيكمل المسار القديم. */
+async function exportAnimatedClipFast(code) {
+    if (typeof VideoEncoder === "undefined" || typeof VideoFrame === "undefined" || typeof Mp4Muxer === "undefined") return false;
+    var P = _fxPrepare(code); if (!P) return false;
+    var dims = getAnimatedDimensions();
+    var W = dims.width & ~1, H = dims.height & ~1;
+    var fps = Number(document.getElementById("anim-fps").value) || 24;
+    var quality = Number(document.getElementById("anim-quality").value) || 2;
+    var name = sanitizeFileName(document.getElementById("anim-file-name").value || "animation");
+    var total = P.frames.length, durationSec = total / fps;
+    var canvas = document.createElement("canvas"); canvas.width = W; canvas.height = H;
+    var ctx = canvas.getContext("2d", { alpha: false });
+
+    /* فحص أولي قبل أي نافذة: رسم الإطار الأول + التأكد أن الكانفاس غير ملوّث. */
+    try { await _fxRaster(_fxFrameSVG(P.frames[0], P, W, H), ctx, W, H, P.bg); ctx.getImageData(0, 0, 1, 1); } catch (e) { console.warn("fast path off:", e); return false; }
+
+    var bitrate = { 1: 2500000, 2: 5000000, 3: 9000000 }[quality] || 5000000;
+    var codec = null, cands = ["avc1.640028", "avc1.4d0028", "avc1.42001f"];
+    for (var ci = 0; ci < cands.length && !codec; ci++) {
+        try { var sup = await VideoEncoder.isConfigSupported({ codec: cands[ci], width: W, height: H, bitrate: bitrate, framerate: fps }); if (sup.supported) codec = cands[ci]; } catch (e) {}
+    }
+    if (!codec) return false;
+
+    var est = total * 0.012 + 3;
+    var choice = await showVideoStartModal({
+        icon: "⚡", title: "تحويل سريع إلى MP4",
+        subtitle: "محرّك SVG مباشر: بدون لقطات شاشة، وكل إطار بتوقيت ثابت فيطلع الفيديو سلسًا.",
+        details: [
+            { label: "🎞️ الإطارات", value: total }, { label: "⏱️ المدة", value: durationSec.toFixed(1) + " ث" },
+            { label: "📐 الأبعاد", value: W + " × " + H }, { label: "🎬 FPS", value: fps },
+            { label: "⏳ الوقت المتوقع", value: "~" + _formatTime(est) }
+        ]
+    });
+    if (choice !== "start") return true;
+
+    showVideoProgressModal(); _vmodalCancelled = false; _vmodalMinimized = false; _enableLeaveWarning();
+    var encoder = null;
+    try {
+        await _acquireWakeLock();
+        var muxer = new Mp4Muxer.Muxer({ target: new Mp4Muxer.ArrayBufferTarget(), video: { codec: "avc", width: W, height: H }, fastStart: "in-memory", firstTimestampBehavior: "offset" });
+        var encErr = null;
+        encoder = new VideoEncoder({
+            output: function (c, m) { try { muxer.addVideoChunk(c, m); } catch (e) { encErr = e; } },
+            error: function (e) { encErr = e; }
+        });
+        encoder.configure({ codec: codec, width: W, height: H, bitrate: bitrate, framerate: fps, latencyMode: "quality" });
+
+        var us = 1000000 / fps, lastSig = null, t0 = performance.now(), lastUi = 0;
+        for (var i = 0; i < total; i++) {
+            if (_vmodalCancelled) throw new Error("تم الإلغاء");
+            if (encErr) throw encErr;
+            var svg = _fxFrameSVG(P.frames[i], P, W, H);
+            if (svg !== lastSig) { await _fxRaster(svg, ctx, W, H, P.bg); lastSig = svg; }   /* إطار مكرر؟ لا نعيد الرسم */
+            var vf = new VideoFrame(canvas, { timestamp: Math.round(i * us), duration: Math.round(us) });
+            encoder.encode(vf, { keyFrame: i % (fps * 2) === 0 });
+            vf.close();
+            while (encoder.encodeQueueSize > 8) { if (encErr) throw encErr; await _fxSleep(4); }
+            var now = performance.now();
+            if (now - lastUi > 200 || i === total - 1) {
+                lastUi = now;
+                var el = (now - t0) / 1000, sp = (i + 1) / Math.max(el, .001);
+                updateVideoProgress({ percent: (i + 1) / total * 100, elapsed: el, eta: (total - i - 1) / sp, frame: i + 1, total: total, speed: Math.round(sp) });
+                await _fxSleep(0);
+            }
+        }
+        var sub = document.getElementById("vmodal-subtitle"); if (sub) sub.textContent = "🔄 إنهاء الترميز وتجهيز الملف...";
+        await encoder.flush(); if (encErr) throw encErr;
+        encoder.close(); encoder = null; muxer.finalize();
+        var blob = new Blob([muxer.target.buffer], { type: "video/mp4" });
+        var secs = (performance.now() - t0) / 1000;
+        var url = URL.createObjectURL(blob), a = document.createElement("a");
+        a.href = url; a.download = name + ".mp4"; document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function () { URL.revokeObjectURL(url); }, 30000);
+        finishVideoModal(true, "✅ تم التحميل تلقائيًا", [
+            { label: "📦 الحجم", value: (blob.size / 1048576).toFixed(2) + " MB" },
+            { label: "⏱️ الوقت الفعلي", value: _formatTime(secs) },
+            { label: "🎞️ المدة", value: durationSec.toFixed(1) + " ث @ " + fps + " FPS" }
+        ]);
+    } catch (err) {
+        console.error("Fast export failed:", err);
+        try { if (encoder && encoder.state !== "closed") encoder.close(); } catch (e) {}
+        finishVideoModal(false, "❌ " + (err && err.message ? err.message : "حدث خطأ أثناء التحويل"));
+    } finally { _releaseWakeLock(); _disableLeaveWarning(); canvas = null; }
+    return true;
+}
+
 async function exportAnimatedClipWebCodecs() {
+    var _fxIn = document.getElementById("animated-html-input");
+    if (_fxIn && _fxIn.value.trim()) { if (await exportAnimatedClipFast(_fxIn.value)) return; }
     if (typeof VideoEncoder === 'undefined' || typeof VideoFrame === 'undefined') {
         await showVideoStartModal({ icon: "⚠️", title: "المتصفح غير مدعوم", subtitle: "WebCodecs غير متاح. استخدم Chrome 94+ / Edge 94+ / Safari 16+", details: [] });
         return;
