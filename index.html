@@ -3481,6 +3481,427 @@ window.addEventListener("load", function () {
     setTimeout(function () { var o = document.getElementById("password-overlay"); if (o && o.style.display !== "none") { var p = document.getElementById("pass-input"); if (p) p.focus(); } }, 150);
 });
 </script>
+<script>
+/* ═══════════════════════════════════════════════════════════════════════════
+   تحديث v1.2 — تخصيص تغيير الصور لكل فريم / مقطع بشكل مستقل (Frame & Clip Scoped)
+   ═══════════════════════════════════════════════════════════════════════════ */
 
+// 1. دالة مساعدة لمعرفة رقم الفريم ورقم المقطع (الشريحة) لأي عنصر داخل الكود
+function getFrameAndSlideMeta(el, doc) {
+    if (!el || !doc) return { frameIndex: 0, frameNum: 1, slideKey: "1", label: "صفحة 1" };
+
+    var frameSelectors = ".frame, .slide, .page";
+    var allFrames = Array.prototype.slice.call(doc.querySelectorAll(frameSelectors));
+    var frameEl = el.closest(frameSelectors);
+    var fIdx = frameEl ? allFrames.indexOf(frameEl) : -1;
+    var fNum = fIdx >= 0 ? (fIdx + 1) : 1;
+
+    var slideAttr = frameEl ? (frameEl.getAttribute("data-slide") || frameEl.getAttribute("data-clip") || frameEl.getAttribute("data-scene")) : null;
+    var sKey = slideAttr ? String(slideAttr).trim() : String(fNum);
+
+    // استخراج عنوان لطيف للشريحة إن وجد
+    var titleText = "";
+    if (frameEl) {
+        var h = frameEl.querySelector("h1, h2, h3, .hd h2, .lb, .title");
+        if (h && h.textContent.trim()) {
+            titleText = " (" + h.textContent.trim().substring(0, 18) + ")";
+        }
+    }
+
+    var label = slideAttr ? ("مقطع " + sKey + titleText) : ("فريم/صفحة " + fNum + titleText);
+    return {
+        frameIndex: fIdx >= 0 ? fIdx : 0,
+        frameNum: fNum,
+        slideKey: sKey,
+        label: label
+    };
+}
+
+// 2. تحديث المفتاح الفريد للصورة ليشمل (معرف الفريم/المقطع) بدلاً من الرابط فقط
+function createImageKey(item) {
+    var scope = item.scopeKey || ("f_" + item.page + "_" + item.index);
+    return [item.type, item.subtype || "", scope, item.src || ""].join("|");
+}
+
+// 3. تجميع الصور حسب المقطع في العرض المتحرك، أو فصلها لكل فريم في العرض العادي
+function addDetectedImage(list, data) {
+    var s = String(data.src || "").trim();
+    if (!s) return;
+
+    // في العرض المتحرك: نجمع الفريمات المتتالية التي تنتمي لنفس المقطع (data-slide) وتحمل نفس الصورة
+    // في العرض العادي: كل شريحة (.page) وكل عنصر صورة مستقل بذاته
+    var existing = list.find(function (i) {
+        return i.src === s && i.type === data.type && i.scopeKey === data.scopeKey;
+    });
+
+    if (existing) {
+        if (!existing.targets) {
+            existing.targets = [{ target: existing.target, page: existing.page, frameIndex: existing.frameIndex, domImgIndex: existing.domImgIndex }];
+        }
+        existing.targets.push({
+            target: data.target,
+            page: data.page,
+            frameIndex: data.frameIndex,
+            domImgIndex: data.domImgIndex,
+            frameImgIndex: data.frameImgIndex
+        });
+        existing.usageCount = existing.targets.length;
+        if (data.frameNum < existing.minFrame) existing.minFrame = data.frameNum;
+        if (data.frameNum > existing.maxFrame) existing.maxFrame = data.frameNum;
+        return;
+    }
+
+    var n = Object.assign({}, data);
+    n.src = s;
+    n.minFrame = data.frameNum || data.page || 1;
+    n.maxFrame = data.frameNum || data.page || 1;
+    n.targets = [{
+        target: data.target,
+        page: data.page,
+        frameIndex: data.frameIndex,
+        domImgIndex: data.domImgIndex,
+        frameImgIndex: data.frameImgIndex
+    }];
+    n.usageCount = 1;
+    list.push(n);
+}
+
+// 4. تحليل الكود واستخراج الصور مع ربطها بالفريمات والمقاطع الخاصة بها فقط
+function analyzeImagesForContext(context) {
+    var prev = currentImageContext;
+    currentImageContext = context;
+    try {
+        var els = getImageManagerElements(context);
+        var ta = els.textarea, mgr = els.manager, list = els.list, cnt = els.count;
+        if (!ta || !mgr || !list) return;
+        var ctxObj = _contexts[context];
+        if (!ta.value.trim()) {
+            ctxObj.detected = []; ctxObj.replacements.clear(); ctxObj.selected.clear(); ctxObj.pending = null;
+            mgr.classList.remove("visible"); list.innerHTML = ""; updateBatchBar();
+            return;
+        }
+        var doc;
+        try { doc = new DOMParser().parseFromString(ta.value, "text/html"); }
+        catch (e) { ctxObj.detected = []; mgr.classList.remove("visible"); return; }
+
+        var found = [];
+        var allDocImgs = Array.prototype.slice.call(doc.querySelectorAll("img"));
+        var frameSelectors = ".frame, .slide, .page";
+
+        allDocImgs.forEach(function (img, domImgIdx) {
+            var src = resolveImgSrc(img);
+            if (!src) return;
+            var d = getImageDefinedDimensions(img);
+            var meta = getFrameAndSlideMeta(img, doc);
+
+            // حساب ترتيب الصورة داخل الفريم الواحد (لو الفريم فيه أكثر من صورة)
+            var frameEl = img.closest(frameSelectors) || doc.body;
+            var imgsInThisFrame = Array.prototype.slice.call(frameEl.querySelectorAll("img"));
+            var frameImgIdx = imgsInThisFrame.indexOf(img);
+
+            // تحديد نطاق العزل (Scope):
+            // في المتحرك: حسب رقم المقطع (Slide) + ترتيب الصورة داخل الفريم
+            // في العادي: كل صورة في كل صفحة لها مفتاح مستقل تماماً
+            var scopeKey = (context === "animated")
+                ? ("slide_" + meta.slideKey + "_pos_" + frameImgIdx)
+                : ("page_" + meta.frameNum + "_img_" + domImgIdx);
+
+            addDetectedImage(found, {
+                type: "img",
+                index: domImgIdx,
+                domImgIndex: domImgIdx,
+                frameIndex: meta.frameIndex,
+                frameNum: meta.frameNum,
+                frameImgIndex: frameImgIdx,
+                slideKey: meta.slideKey,
+                scopeLabel: meta.label,
+                scopeKey: scopeKey,
+                target: getStableSelector(img, doc),
+                page: meta.frameNum,
+                name: getImageDisplayName(img, domImgIdx, "img", src),
+                src: src,
+                alt: img.getAttribute("alt") || "",
+                width: d.width,
+                height: d.height,
+                dimensionSource: d.source
+            });
+        });
+
+        Array.prototype.slice.call(doc.querySelectorAll("*")).forEach(function (el, elIdx) {
+            var s = el.getAttribute("style") || "";
+            if (!s) return;
+            var meta = getFrameAndSlideMeta(el, doc);
+            extractImageUrls(s).forEach(function (src) {
+                var scopeKey = (context === "animated")
+                    ? ("bg_slide_" + meta.slideKey + "_" + src)
+                    : ("bg_page_" + meta.frameNum + "_" + elIdx);
+
+                addDetectedImage(found, {
+                    type: "background",
+                    subtype: "inline",
+                    index: found.length,
+                    frameIndex: meta.frameIndex,
+                    frameNum: meta.frameNum,
+                    slideKey: meta.slideKey,
+                    scopeLabel: meta.label,
+                    scopeKey: scopeKey,
+                    target: getStableSelector(el, doc),
+                    page: meta.frameNum,
+                    name: getImageDisplayName(el, found.length, "background", src),
+                    src: src,
+                    alt: "",
+                    width: "حسب CSS",
+                    height: "حسب CSS",
+                    dimensionSource: "CSS"
+                });
+            });
+        });
+
+        var old = ctxObj.replacements, next = new Map();
+        found.forEach(function (item, i) {
+            item.index = i;
+            item.key = createImageKey(item);
+            if (old.has(item.key)) next.set(item.key, old.get(item.key));
+        });
+        ctxObj.replacements = next;
+        ctxObj.detected = found;
+
+        var valid = new Set(found.map(function (it) { return it.key; }));
+        Array.from(ctxObj.selected).forEach(function (k) { if (!valid.has(k)) ctxObj.selected.delete(k); });
+        ctxObj.pending = null;
+
+        if (cnt) cnt.textContent = found.length + (context === "animated" ? " صورة بمقاطع" : " إطار صورة");
+        if (!found.length) {
+            mgr.classList.remove("visible");
+            list.innerHTML = '<div class="image-empty">لا توجد صور.</div>';
+            updateBatchBar();
+            return;
+        }
+        mgr.classList.add("visible");
+        renderImageManager();
+        found.forEach(function (item) {
+            getNaturalImageSize(item.src).then(function (nat) {
+                item.naturalWidth = nat.width;
+                item.naturalHeight = nat.height;
+                renderImageManager();
+            });
+        });
+    } finally {
+        currentImageContext = prev;
+    }
+}
+
+// 5. عرض البطاقات مع توضيح الفريمات/المقاطع المستهدفة وخانة الرابط المباشر
+function renderImageManager() {
+    var els = getImageManagerElements(currentImageContext);
+    var list = els.list; if (!list) return;
+    var ctxObj = _contexts[currentImageContext];
+    var detected = ctxObj.detected;
+    if (!detected.length) { list.innerHTML = '<div class="image-empty">لا توجد صور.</div>'; updateBatchBar(); return; }
+
+    var html = detected.map(function (item) {
+        var repl = ctxObj.replacements.get(item.key);
+        var isR = !!repl, isS = ctxObj.selected.has(item.key);
+        var previewSrc = repl ? repl.dataUrl : item.src;
+        var displayName = repl ? repl.fileName : item.name;
+        var natDim = (item.naturalWidth && item.naturalHeight) ? (item.naturalWidth + " × " + item.naturalHeight + "px") : "غير معروف";
+        var defDim = item.width + " × " + item.height;
+        var typeLabel = item.type === "img" ? "IMG" : "خلفية";
+        var usageCount = item.usageCount || 1;
+
+        var frameRangeText = (item.minFrame !== item.maxFrame)
+            ? ("الفريمات " + item.minFrame + " إلى " + item.maxFrame + " (" + usageCount + " فريم)")
+            : ("الفريم / الصفحة رقم " + item.minFrame + " فقط");
+
+        var badgeText = (item.minFrame !== item.maxFrame)
+            ? ("فريم " + item.minFrame + "-" + item.maxFrame)
+            : ("فريم " + item.minFrame);
+
+        var thumb = previewSrc ? '<img src="' + escapeAttribute(previewSrc) + '" alt="">' : '<span style="color:#475569;font-size:20px;">🖼️</span>';
+        thumb += '<div class="html-image-usage-badge">' + badgeText + '</div>';
+
+        var status = isR
+            ? ('✅ تم التخصيص لـ ' + frameRangeText)
+            : ('الصورة الأصلية — ' + frameRangeText);
+
+        var cropBtn = isR ? '<button type="button" class="html-image-action crop-edit" onclick="editReplacementCrop(' + item.index + ')">✂️ قص</button>' : '';
+
+        return '<div class="html-image-card ' + (isR ? "replaced " : "") + (isS ? "selected" : "") + '" data-image-card="' + item.index + '">' +
+            '<label class="html-image-select-row"><input type="checkbox" data-image-key="' + escapeAttribute(item.key) + '" ' + (isS ? "checked" : "") + ' onchange="toggleImageSelection(this)"><span>تحديد (' + escapeHTML(item.scopeLabel || badgeText) + ')</span></label>' +
+            '<div class="html-image-card-top"><div class="html-image-thumb">' + thumb + '</div>' +
+            '<div class="html-image-info"><p class="html-image-name" title="' + escapeAttribute(displayName) + '">' + escapeHTML(displayName) + '</p>' +
+            '<div class="html-image-meta">' +
+            '<div class="html-image-meta-item"><strong>الموقع:</strong> ' + escapeHTML(item.scopeLabel || ("صفحة " + item.page)) + '</div>' +
+            '<div class="html-image-meta-item"><strong>النوع:</strong> ' + typeLabel + ' (#' + (item.index + 1) + ')</div>' +
+            '<div class="html-image-meta-item"><strong>الكود:</strong> ' + escapeHTML(defDim) + '</div>' +
+            '<div class="html-image-meta-item"><strong>الأصل:</strong> ' + natDim + '</div>' +
+            '<div class="html-image-meta-item usage-item"><strong>🎯 النطاق:</strong> ' + frameRangeText + '</div>' +
+            '</div></div></div>' +
+            '<div style="display:flex;gap:6px;margin-top:8px;">' +
+            '<input type="text" id="direct-url-input-' + currentImageContext + '-' + item.index + '" placeholder="الصق رابط صورة مباشر لهذا الفريم فقط..." value="' + escapeAttribute(isR && !repl.dataUrl.startsWith("data:") ? repl.dataUrl : "") + '" style="flex:1;padding:6px 8px;font-size:10px;direction:ltr;border-radius:6px;background:#020617;border:1px solid #334155;color:#f8fafc;">' +
+            '<button type="button" onclick="applyDirectUrlReplacement(' + item.index + ')" style="background:#059669;color:#fff;border:none;border-radius:6px;padding:0 10px;font-size:10px;font-weight:bold;cursor:pointer;white-space:nowrap;">🔗 رابط</button>' +
+            '</div>' +
+            '<div class="html-image-actions">' +
+            '<button type="button" class="html-image-action keep" onclick="keepOriginalImage(' + item.index + ')">↩️ الأصلي</button>' +
+            '<button type="button" class="html-image-action replace" onclick="chooseReplacementImage(' + item.index + ')">🖼️ استبدال</button>' +
+            '<button type="button" class="html-image-action remove-bg" onclick="openBackgroundRemover(' + item.index + ')">🪄 خلفية</button>' +
+            cropBtn + '</div>' +
+            '<div class="html-image-status">' + status + '</div></div>';
+    }).join("");
+    list.innerHTML = html;
+    updateBatchBar();
+}
+
+// 6. دالة تطبيق الرابط المباشر على الفريم/المقطع المحدد فقط
+function applyDirectUrlReplacement(idx) {
+    var ctxObj = _contexts[currentImageContext];
+    var item = ctxObj.detected[idx];
+    if (!item) return;
+    var input = document.getElementById("direct-url-input-" + currentImageContext + "-" + idx);
+    if (!input || !input.value.trim()) { alert("الرجاء لصق رابط الصورة أولاً"); return; }
+    var url = input.value.trim();
+    ctxObj.replacements.set(item.key, {
+        dataUrl: url,
+        fileName: getFileNameFromURL(url) || "رابط_مباشر",
+        mimeType: "image/png",
+        originalFileName: item.name,
+        originalDataUrl: url
+    });
+    if (currentImageContext === "animated") _animPreview.cache.clear();
+    renderImageManager();
+}
+
+// 7. تطبيق التغييرات على الفريم المحدد فقط أثناء التصدير والمعاينة (دون المساس بباقي الفريمات)
+function applyImageReplacements(container, contextOverride, activeFrameIndex) {
+    var ctxKey = contextOverride || currentImageContext;
+    var ctxObj = _contexts[ctxKey];
+    if (!container || !ctxObj || !ctxObj.detected.length) return;
+
+    var frameSelectors = ".frame, .slide, .page";
+    var stageFrames = Array.prototype.slice.call(container.querySelectorAll(frameSelectors));
+    var allContainerImgs = Array.prototype.slice.call(container.querySelectorAll("img"));
+
+    ctxObj.detected.forEach(function (item) {
+        var r = ctxObj.replacements.get(item.key);
+        if (!r) return;
+        var targets = item.targets && item.targets.length ? item.targets : [{ target: item.target, frameIndex: item.frameIndex, domImgIndex: item.index, frameImgIndex: 0 }];
+
+        targets.forEach(function (t) {
+            // إذا كنا نصيّر فريماً واحداً فقط في الفيديو المتحرك (Single-Frame Mode)
+            if (typeof activeFrameIndex === "number" && t.frameIndex !== activeFrameIndex) {
+                return;
+            }
+
+            if (item.type === "img") {
+                // الحالة 1: كل الفريمات موجودة داخل الحاوية (في التحويل العادي أو المعاينة)
+                if (stageFrames.length > 1 && t.frameIndex != null && stageFrames[t.frameIndex]) {
+                    var fImgs = Array.prototype.slice.call(stageFrames[t.frameIndex].querySelectorAll("img"));
+                    var targetImg = (t.frameImgIndex != null && fImgs[t.frameImgIndex]) ? fImgs[t.frameImgIndex] : null;
+                    if (!targetImg && t.domImgIndex != null) targetImg = allContainerImgs[t.domImgIndex];
+                    if (targetImg) {
+                        targetImg.setAttribute("src", r.dataUrl);
+                        targetImg.removeAttribute("srcset");
+                        targetImg.removeAttribute("sizes");
+                    }
+                }
+                // الحالة 2: فريم واحد فقط معزول داخل الحاوية (أثناء تصدير الفيديو السريع)
+                else if (stageFrames.length === 1 && typeof activeFrameIndex === "number" && t.frameIndex === activeFrameIndex) {
+                    var singleImgs = Array.prototype.slice.call(stageFrames[0].querySelectorAll("img"));
+                    var sImg = (t.frameImgIndex != null && singleImgs[t.frameImgIndex]) ? singleImgs[t.frameImgIndex] : singleImgs[0];
+                    if (sImg) {
+                        sImg.setAttribute("src", r.dataUrl);
+                        sImg.removeAttribute("srcset");
+                        sImg.removeAttribute("sizes");
+                    }
+                }
+                // الحالة 3: fallback بالترتيب المباشر
+                else if (typeof activeFrameIndex !== "number" && t.domImgIndex != null && allContainerImgs[t.domImgIndex]) {
+                    allContainerImgs[t.domImgIndex].setAttribute("src", r.dataUrl);
+                    allContainerImgs[t.domImgIndex].removeAttribute("srcset");
+                    allContainerImgs[t.domImgIndex].removeAttribute("sizes");
+                }
+            } else if (item.type === "background") {
+                var rootEl = (stageFrames.length > 1 && t.frameIndex != null && stageFrames[t.frameIndex])
+                    ? stageFrames[t.frameIndex]
+                    : container;
+                var bgEls = Array.prototype.slice.call(rootEl.querySelectorAll("*"));
+                bgEls.push(rootEl);
+                bgEls.forEach(function (el) {
+                    var style = el.getAttribute && (el.getAttribute("style") || "");
+                    if (style && style.indexOf(item.src) !== -1) {
+                        el.setAttribute("style", replaceCSSImageURL(style, item.src, r.dataUrl));
+                    }
+                });
+            }
+        });
+    });
+}
+
+// 8. تحديث نافذة المعاينة العادية لتلتزم بعزل الفريمات
+function applyImageReplacementsToDocument(doc, contextKey) {
+    applyImageReplacements(doc.body || doc.documentElement, contextKey || "converter");
+}
+
+// 9. حقن التغييرات داخل الفريمات المفردة قبل تحويلها إلى فيديو MP4
+var _origSetSingleFrameRenderContent = setSingleFrameRenderContent;
+setSingleFrameRenderContent = function (stage, frameHTML, width, height) {
+    var frame = _origSetSingleFrameRenderContent(stage, frameHTML, width, height);
+    if (frame && typeof window.__currentExportFrameIndex === "number") {
+        applyImageReplacements(stage, "animated", window.__currentExportFrameIndex);
+    }
+    return frame;
+};
+
+// مراقبة رقم الفريم أثناء تصدير الفيديو لضمان تطبيق الصورة على الفريم الصحيح فقط
+var _origAnalyzeAnimatedFrames = analyzeAnimatedFrames;
+analyzeAnimatedFrames = function (force) {
+    _animPreview.cache.clear();
+    return _origAnalyzeAnimatedFrames(force);
+};
+
+// تحديث دالة setSingleFrameRenderContent لتتعرف تلقائياً على رقم الفريم من data-frame أو ترتيبه
+(function () {
+    var origSet = _origSetSingleFrameRenderContent;
+    setSingleFrameRenderContent = function (stage, frameHTML, width, height) {
+        var frame = origSet(stage, frameHTML, width, height);
+        if (frame) {
+            var df = frame.getAttribute("data-frame");
+            var fIdx = df ? (parseInt(df, 10) - 1) : null;
+            if (fIdx == null || isNaN(fIdx)) {
+                // مطابقة الفريم من قائمة الكود
+                var ta = document.getElementById("animated-html-input");
+                if (ta) {
+                    var all = extractFramesFromCode(ta.value);
+                    for (var k = 0; k < all.length; k++) {
+                        if (sanitizeCodeForRender(all[k].outerHTML) === frameHTML) {
+                            fIdx = k;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (fIdx != null && fIdx >= 0) {
+                applyImageReplacements(stage, "animated", fIdx);
+            }
+        }
+        return frame;
+    };
+})();
+
+// مسح كاش المعاينة التفاعلية عند اعتماد قص أو إزالة خلفية جديدة لتظهر فوراً في المعاينة
+var _origApplyCrop = applyCrop;
+applyCrop = function () {
+    _origApplyCrop();
+    if (_animPreview) { _animPreview.cache.clear(); if (_animPreview.stage) { try { _animPreview.stage.remove(); } catch(e){} _animPreview.stage = null; } }
+};
+
+var _origApplyBackgroundRemoval = applyBackgroundRemoval;
+applyBackgroundRemoval = function () {
+    _origApplyBackgroundRemoval();
+    if (_animPreview) { _animPreview.cache.clear(); if (_animPreview.stage) { try { _animPreview.stage.remove(); } catch(e){} _animPreview.stage = null; } }
+};
+
+console.log("%c🎯 تم تفعيل تخصيص الصور المستقل لكل فريم / مقطع بنجاح", "color:#34d399;font-weight:bold;font-size:12px;");
+</script>
 </body>
 </html>
